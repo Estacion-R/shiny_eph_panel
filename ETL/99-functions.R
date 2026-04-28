@@ -1,3 +1,136 @@
+### Agrega al microdato las variables derivadas que necesitan los análisis
+### de Formal/Informal. Centraliza la lógica para que tanto 01-extract.R
+### (carga inicial) como 03-update_data.R (regeneración de paneles) usen
+### la misma definición.
+###
+### Vars agregadas:
+###   - formalidad: definición clásica EPH (asalariados con PP07H).
+###   - formalidad_ampliada: OIT 2023 (todos los ocupados con PP07H/PP05I/K).
+###
+### Defensivo: si alguna columna requerida no existe en el df, completamos
+### con NA para que el mutate no rompa.
+agrega_vars_derivadas <- function(df) {
+  vars_requeridas <- c("CAT_OCUP", "PP07H", "PP05I", "PP05K")
+  faltantes <- setdiff(vars_requeridas, names(df))
+  for (col in faltantes) df[[col]] <- NA_integer_
+
+  df |>
+    dplyr::mutate(formalidad = dplyr::case_when(
+      CAT_OCUP == 3 & PP07H == 1 ~ 1L,
+      CAT_OCUP == 3 & PP07H == 2 ~ 2L,
+      TRUE                       ~ NA_integer_
+    )) |>
+    dplyr::mutate(formalidad_ampliada = dplyr::case_when(
+      CAT_OCUP == 3 & PP07H == 1                          ~ 1L,
+      CAT_OCUP == 3 & PP07H == 2                          ~ 2L,
+      CAT_OCUP %in% c(1L, 2L) & (PP05I == 1 | PP05K == 1) ~ 1L,
+      CAT_OCUP %in% c(1L, 2L) & PP05I == 2 & PP05K == 2   ~ 2L,
+      CAT_OCUP == 4                                       ~ 2L,
+      TRUE                                                ~ NA_integer_
+    ))
+}
+
+
+### Regenera incrementalmente un CSV histórico de panel para un análisis
+### dado. Replica el patrón usado por panel_cond_act_historico.csv pero
+### parametrizado por la variable a panelizar.
+###
+### @param path_csv path al CSV histórico (lee y reescribe).
+### @param df_microdato microdato (df_eph_full) con vars derivadas si hace
+###   falta. Idealmente ya pasado por agrega_vars_derivadas().
+### @param var nombre de la columna a panelizar (ej: "ESTADO", "CAT_OCUP").
+### @param etiquetas vector char con las labels para los códigos 1..N.
+### @param categorias vector char con las categorías para armo_tabla_sankey
+###   (suelen coincidir con etiquetas).
+### @param vars_extra vars adicionales del microdato que necesita el panel
+###   (ej: c("CAT_OCUP") cuando var = "CAT_OCUP").
+### @param desde_panel string "YYYY-TN" optional: si se pasa, solo regenera
+###   paneles cuyo trimestre inicial sea >= ese valor (útil para
+###   formalidad_ampliada que solo aplica a 2023-T4+).
+regenerar_panel_historico <- function(path_csv, df_microdato,
+                                      var, etiquetas, categorias,
+                                      vars_extra = character(),
+                                      desde_panel = NULL) {
+
+  panel_existente <- if (file.exists(path_csv)) {
+    readr::read_csv(path_csv, show_col_types = FALSE)
+  } else {
+    tibble::tibble()
+  }
+
+  periodos_existentes <- if (nrow(panel_existente) > 0) {
+    unique(panel_existente$periodo)
+  } else {
+    character(0)
+  }
+
+  paneles_posibles <- df_microdato |>
+    dplyr::distinct(ANO4, TRIMESTRE) |>
+    dplyr::arrange(ANO4, TRIMESTRE) |>
+    dplyr::mutate(
+      anio_post  = dplyr::if_else(TRIMESTRE %in% 1:3, ANO4, ANO4 + 1L),
+      trim_post  = dplyr::if_else(TRIMESTRE %in% 1:3, TRIMESTRE + 1L, 1L),
+      tiene_post = paste(anio_post, trim_post) %in%
+        paste(df_microdato$ANO4, df_microdato$TRIMESTRE)
+    ) |>
+    dplyr::filter(tiene_post) |>
+    dplyr::mutate(periodo = glue::glue("{ANO4}_t{TRIMESTRE}-t{trim_post}"))
+
+  ### Filtro de período mínimo (ej: formalidad_ampliada solo desde 2023-T4)
+  if (!is.null(desde_panel)) {
+    desde_anio <- as.integer(stringr::str_extract(desde_panel, "^[0-9]{4}"))
+    desde_trim <- as.integer(stringr::str_match(desde_panel, "[Tt]([0-9])$")[, 2])
+    paneles_posibles <- paneles_posibles |>
+      dplyr::filter(ANO4 > desde_anio |
+                      (ANO4 == desde_anio & TRIMESTRE >= desde_trim))
+  }
+
+  paneles_a_calcular <- paneles_posibles |>
+    dplyr::filter(!periodo %in% periodos_existentes)
+
+  if (nrow(paneles_a_calcular) == 0) {
+    cat(glue::glue("  [{basename(path_csv)}] sin paneles nuevos.\n\n"))
+    return(invisible(panel_existente))
+  }
+
+  cat(glue::glue("  [{basename(path_csv)}] computando {nrow(paneles_a_calcular)} panel(es) nuevo(s)...\n"))
+
+  vars_panel <- unique(c("ESTADO", "PONDERA", var, vars_extra))
+
+  paneles_nuevos <- paneles_a_calcular |>
+    purrr::pmap_dfr(function(ANO4, TRIMESTRE, anio_post, trim_post, periodo, ...) {
+      df_panel <- armo_base_panel(
+        anio_0 = ANO4, trimestre_0 = TRIMESTRE,
+        anio_1 = anio_post, trimestre_1 = trim_post,
+        df = df_microdato,
+        variables = vars_panel
+      )
+
+      df_prep <- preparo_base(
+        df = df_panel,
+        periodo_base = "t_anterior",
+        var = var,
+        etiquetas = etiquetas
+      )
+
+      purrr::map_dfr(categorias, function(cat) {
+        tryCatch({
+          armo_tabla_sankey(table = df_prep, categoria = cat) |>
+            dplyr::mutate(periodo = as.character(periodo))
+        }, error = function(e) tibble::tibble())
+      })
+    })
+
+  panel_actualizado <- dplyr::bind_rows(panel_existente, paneles_nuevos) |>
+    dplyr::filter(from != "from")  # cleanup defensivo
+
+  readr::write_csv(panel_actualizado, path_csv)
+  cat(glue::glue("  [{basename(path_csv)}] OK ({nrow(panel_actualizado)} filas)\n\n"))
+
+  invisible(panel_actualizado)
+}
+
+
 ### Devuelve los duos trimestrales válidos para un año dado, evaluando contra
 ### los períodos efectivamente disponibles en `periodos_disponibles` (data
 ### frame con columnas ANO4 y TRIMESTRE). Un duo es válido cuando ambos

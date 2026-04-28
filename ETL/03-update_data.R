@@ -160,77 +160,58 @@ cat(glue("Regenerado {path_parquet_tasas}"), "\n")
 
 
 ### -----------------------------------------------------------------------
-### 5. Regenerar histórico de paneles (panel_cond_act_historico.csv)
-###    Solo agregamos los paneles nuevos para no recomputar todo el histórico.
-###    Un "panel" es un par (ANO4, TRIMESTRE) → (ANO4, TRIMESTRE+1) o
-###    (ANO4 + 1, 1) si TRIMESTRE = 4.
+### 5. Regenerar histórico de los 4 paneles del dashboard.
+###    Solo agregamos paneles nuevos (incremental) usando la fn
+###    regenerar_panel_historico() definida en 99-functions.R.
+###
+### Paneles regenerados:
+###   - panel_cond_act_historico.csv          (epic #6 Fase 1)
+###   - panel_cat_ocup_historico.csv          (epic #6 Fase 3)
+###   - panel_formalidad_historico.csv        (epic #6 Fase 4)
+###   - panel_formalidad_ampliada_historico.csv  (#15, solo 2023-T4+)
 ### -----------------------------------------------------------------------
 
-panel_existente <- if (file.exists(path_panel_hist)) {
-  readr::read_csv(path_panel_hist, show_col_types = FALSE)
-} else {
-  tibble()
-}
+### Las vars derivadas (formalidad, formalidad_ampliada) se agregan al
+### microdato antes de regenerar los paneles que las usan.
+df_eph_full <- df_eph_full |> agrega_vars_derivadas()
 
-periodos_panel_existente <- if (nrow(panel_existente) > 0) {
-  unique(panel_existente$periodo)
-} else {
-  character(0)
-}
+cat("\nRegenerando paneles históricos:\n\n")
 
-### Calcular qué paneles podemos armar a partir de los datos completos
-panel_periodos_posibles <- df_eph_full |>
-  distinct(ANO4, TRIMESTRE) |>
-  arrange(ANO4, TRIMESTRE) |>
-  mutate(
-    anio_post  = if_else(TRIMESTRE %in% 1:3, ANO4, ANO4 + 1L),
-    trim_post  = if_else(TRIMESTRE %in% 1:3, TRIMESTRE + 1L, 1L),
-    tiene_post = paste(anio_post, trim_post) %in%
-      paste(df_eph_full$ANO4, df_eph_full$TRIMESTRE)
-  ) |>
-  filter(tiene_post) |>
-  mutate(periodo = glue("{ANO4}_t{TRIMESTRE}-t{trim_post}"))
+regenerar_panel_historico(
+  path_csv = path_panel_hist,  # panel_cond_act_historico.csv
+  df_microdato = df_eph_full,
+  var = "ESTADO",
+  etiquetas = c("Ocupado", "Desocupado", "Inactivo", "Trab_familiar"),
+  categorias = c("Ocupado", "Desocupado", "Inactivo")
+)
 
-paneles_a_calcular <- panel_periodos_posibles |>
-  filter(!periodo %in% periodos_panel_existente)
+regenerar_panel_historico(
+  path_csv = "data_output/panel_cat_ocup_historico.csv",
+  df_microdato = df_eph_full,
+  var = "CAT_OCUP",
+  etiquetas = c("Patron", "Cuenta_propia", "Asalariado", "TFSR"),
+  categorias = c("Patron", "Cuenta_propia", "Asalariado", "TFSR"),
+  vars_extra = "CAT_OCUP"
+)
 
-if (nrow(paneles_a_calcular) == 0) {
-  cat("\nNo hay nuevos paneles que computar (todos ya estaban en el histórico).\n")
-  writeLines(
-    descargas |>
-      mutate(p = glue("{ANO4}-T{TRIMESTRE}")) |>
-      pull(p),
-    path_new_periods
-  )
-  quit(status = 0)
-}
+regenerar_panel_historico(
+  path_csv = "data_output/panel_formalidad_historico.csv",
+  df_microdato = df_eph_full,
+  var = "formalidad",
+  etiquetas = c("Formal", "Informal"),
+  categorias = c("Formal", "Informal"),
+  vars_extra = c("CAT_OCUP", "PP07H", "formalidad")
+)
 
-cat("\nComputando nuevos paneles:\n")
-print(paneles_a_calcular |> select(periodo))
-
-categorias <- c("Ocupado", "Desocupado", "Inactivo")
-
-paneles_nuevos <- paneles_a_calcular |>
-  pmap_dfr(function(ANO4, TRIMESTRE, anio_post, trim_post, periodo, ...) {
-    df_panel <- armo_base_panel(anio_0 = ANO4, trimestre_0 = TRIMESTRE,
-                                anio_1 = anio_post, trimestre_1 = trim_post,
-                                df = df_eph_full)
-
-    df_prep <- preparo_base(df = df_panel, periodo_base = "t_anterior")
-
-    map_dfr(categorias, function(cat) {
-      tryCatch({
-        armo_tabla_sankey(table = df_prep, categoria = cat) |>
-          mutate(periodo = as.character(periodo))
-      }, error = function(e) tibble())
-    })
-  })
-
-panel_actualizado <- bind_rows(panel_existente, paneles_nuevos) |>
-  filter(from != "from")  # cleanup defensivo del data_generator legacy
-
-readr::write_csv(panel_actualizado, path_panel_hist)
-cat(glue("Actualizado {path_panel_hist} ({nrow(panel_actualizado)} filas)"), "\n")
+regenerar_panel_historico(
+  path_csv = "data_output/panel_formalidad_ampliada_historico.csv",
+  df_microdato = df_eph_full,
+  var = "formalidad_ampliada",
+  etiquetas = c("Formal", "Informal"),
+  categorias = c("Formal", "Informal"),
+  vars_extra = c("CAT_OCUP", "PP07H", "PP05I", "PP05K", "formalidad_ampliada"),
+  desde_panel = "2023-T4"
+)
 
 
 ### -----------------------------------------------------------------------
