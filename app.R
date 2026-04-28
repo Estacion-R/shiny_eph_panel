@@ -1,20 +1,18 @@
-
-source("ETL/99-functions.R")
+### Orden de carga:
+###   00-libraries → paquetes
+###   99-functions → lógica de negocio (necesita libs cargadas)
+###   01-extract   → carga datos en memoria (df_eph_full, df_cond_act, df_tasas_mt)
+###   02-transform → componentes UI (necesita los datos cargados)
 source("ETL/00-libraries.R")
+source("ETL/99-functions.R")
 source("ETL/01-extract.R")
 source("ETL/02-transform.R")
+
+library(shinyalert)
 
 waiting_screen <- tagList(
   spin_flower(),
   h4("Bancame un toque...")
-) 
-
-library(shinyalert)
-
-colors <- c(
-  fg = "#405BFF",
-  primary = "#EAFF38",
-  heading_font = "#191919"
 )
 
 options(shiny.useragg = TRUE)
@@ -23,14 +21,17 @@ thematic_shiny(font = "auto")
 # Define UI for application that draws a histogram
 ui <- page_navbar(
   
+  # Tema oficial Estación R
+  # Ref: Proyectos/_activos/identidad_visual/GUIA_DE_ESTILO.md
   theme = bslib::bs_theme(
-    bg = "white",
-    fg = "#191919",
-    primary = "#405BFF",
-    secondary = "#405BFF",
-    heading_font = "#191919",
-    # bslib also makes it easy to import CSS fonts
-    base_font = bslib::font_google("Ubuntu")
+    version      = 5,
+    bg           = "#FFFFFF",
+    fg           = "#191919",
+    primary      = "#405BFF",
+    secondary    = "#EAFF38",
+    base_font    = bslib::font_google("Ubuntu"),
+    heading_font = bslib::font_google("Ubuntu", wght = c(400, 500, 700)),
+    font_scale   = 1
   ),
   
   
@@ -46,7 +47,9 @@ ui <- page_navbar(
   
   useWaitress(color = "#7F7FFF"),
   
-  title = "Análisis de flujo - EPH",
+  title = div(tags$a(href='https://linktr.ee/estacion_r',
+             tags$img(src='https://pbs.twimg.com/profile_banners/1214735980172845056/1716430021/600x200',
+                      height = 50, width = 150)), align = "left"),
   #bg = "white",
   underline = TRUE,
   
@@ -103,10 +106,12 @@ ui <- page_navbar(
     icon = icon("camera-retro"),
     title = "Foto", 
     fluidRow(
-      column(filter_sankey_anio_ant, width = 3),
-      column(filter_sankey_trim_ant, width = 3),
-      column(filter_sankey_categoria, width = 3),
-      column(filter_sankey_periodo_base, width = 3)
+      include_styles,
+      filters, 
+      # column(filter_sankey_anio_ant, width = 3),
+      # column(filter_sankey_trim_ant, width = 3),
+      # column(filter_sankey_categoria, width = 3),
+      # column(filter_sankey_periodo_base, width = 3)
     ),
     layout_columns(
       col_widths = c(4,8),
@@ -126,6 +131,15 @@ ui <- page_navbar(
         highchartOutput("sankey")
       )
       
+    ),
+    div(
+      class = "toggle-filters-wrapper",
+      
+      tags$label(
+        class = "switch",
+        tags$input(type = "checkbox", onclick = "toggleFilters();"),
+        tags$span(class = "slider round")
+      )
     )
   ),
   nav_panel(
@@ -134,6 +148,7 @@ ui <- page_navbar(
     fluidRow(
       column(filter_line_desde, width = 3),
       column(filter_line_hacia, width = 3),
+     
       actionButton(
         "btn_pop", 
         "¿Cómo se interpreta el dato?"
@@ -166,8 +181,10 @@ ui <- page_navbar(
     )
   ),
   nav_spacer(),
+  
   nav_menu(
     title = "+Info",
+    align = "right",
     nav_item(a("Documento metodológico: La nueva EPH", href = "https://www.indec.gob.ar/ftp/cuadros/sociedad/metodologia_eph_continua.pdf")),
     nav_item(a("Paquete {eph}", href = "https://docs.ropensci.org/eph/")),
   ),
@@ -180,7 +197,7 @@ server <- function(input, output) {
   
   shinyalert(
     title = "Buenas!",
-    text = "Esta aplicación está en desarrollo. Si algo no está funcionando, se puede mejorar o incluso tenés una idea para agregar, podés escribirme a pablotisco@gmail.com",
+    text = "Esta aplicación está en desarrollo. Si algo no está funcionando, se puede mejorar o incluso tenés una idea para agregar, podés escribirme a pablotiscornia@estacion-r.com",
     size = "s", 
     closeOnEsc = TRUE,
     closeOnClickOutside = FALSE,

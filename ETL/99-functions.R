@@ -1,24 +1,14 @@
-armo_base_panel <- function(anio_0, trimestre_0, anio_1, trimestre_1){
-  
-  variables <- c("CODUSU", "NRO_HOGAR", "COMPONENTE", "ANO4", "TRIMESTRE", "CH04", "CH06", "ESTADO", "PONDERA")
-  
-  df_eph <- read_parquet("data_raw/df_eph.parquet") |> 
-    select(all_of(variables)) |> 
-    collect()
-  
-  #rownames(df_eph) <- NULL
-  
-  ### Creo lista para insumo de panel
+armo_base_panel <- function(anio_0, trimestre_0, anio_1, trimestre_1, df = df_eph_full){
+
+  ### Filtra el microdato cacheado en memoria por 01-extract.R.
+  ### El argumento df permite testear con bases alternativas sin tocar el global.
   list_eph_panel <- list(
-    df_eph |> filter(ANO4 == anio_0 & TRIMESTRE == trimestre_0),
-    df_eph |> filter(ANO4 == anio_1 & TRIMESTRE == trimestre_1))
-  
-  ### Armo panel
-  df_eph_panel <- organize_panels(bases = list_eph_panel, 
-                                  variables = c("ESTADO", "PONDERA"), 
-                                  window = "trimestral")
-  
-  return(df_eph_panel)
+    df |> filter(ANO4 == anio_0 & TRIMESTRE == trimestre_0),
+    df |> filter(ANO4 == anio_1 & TRIMESTRE == trimestre_1))
+
+  organize_panels(bases = list_eph_panel,
+                  variables = c("ESTADO", "PONDERA"),
+                  window = "trimestral")
 }
 
 
