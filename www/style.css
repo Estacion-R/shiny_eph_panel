@@ -1,6 +1,15 @@
-/* Tipografía y colores base se manejan desde bslib::bs_theme() en app.R
-   con la paleta oficial Estación R (Ubuntu + #405BFF/#EAFF38).
+/* Tipografía y colores base se manejan desde bslib::bs_theme(brand="_brand.yml")
+   en app.R con la paleta oficial Estación R (Ubuntu + #405BFF/#EAFF38).
    Este archivo solo aporta estilos específicos de filtros y overlays. */
+
+:root {
+  --er-azul:       #405BFF;
+  --er-azul-dark:  #1839F4;
+  --er-amarillo:   #EAFF38;
+  --er-negro:      #191919;
+  --er-blanco:     #FFFFFF;
+  --er-gris-claro: #F7F7F7;
+}
 
 #grid-page-wrapper {
   justify-content: center;
@@ -29,7 +38,7 @@
   align-items: baseline;
   gap: 12px;
   padding: 24px 20px;
-  background-color: #F7F7F7;
+  background-color: var(--er-gris-claro);
   border-radius: 8px;
   margin: 16px 0;
   font-size: 1.2rem;
@@ -118,12 +127,12 @@
 
 .nlq-styling .selectize-input {
   background-color: transparent !important;
-  color: #405BFF !important;
+  color: var(--er-azul) !important;
   border: none !important;
   font-size: 1.2rem;
   font-weight: 600;
   outline: none !important;
-  border-bottom: 2px dashed #405BFF !important;
+  border-bottom: 2px dashed var(--er-azul) !important;
   border-radius: 0 !important;
   box-shadow: none !important;
   text-align: center;
@@ -134,16 +143,16 @@
 }
 .nlq-styling .selectize-input:hover {
   background-color: rgba(64, 91, 255, 0.08) !important;
-  border-bottom-color: #1839F4 !important;
+  border-bottom-color: var(--er-azul-dark) !important;
 }
 .nlq-styling .form-control {
   background-color: transparent !important;
-  color: #405BFF;
+  color: var(--er-azul);
   border: none !important;
   font-size: 1.2rem;
   font-weight: 600;
   outline: none !important;
-  border-bottom: 2px dashed #405BFF !important;
+  border-bottom: 2px dashed var(--er-azul) !important;
   border-radius: 0;
   box-shadow: none !important;
   text-align: center;
@@ -216,11 +225,11 @@
 }
 
 input:checked + .slider {
-  background-color: #405BFF;
+  background-color: var(--er-azul);
 }
 
 input:focus + .slider {
-  box-shadow: 0 0 1px #405BFF;
+  box-shadow: 0 0 1px var(--er-azul);
 }
 
 input:checked + .slider:before {
@@ -255,7 +264,7 @@ input:checked + .slider:before {
 }
 
 .nlq-styling .preposition-affix {
-  color: #191919;
+  color: var(--er-negro);
   font-weight: 500;
 }
 

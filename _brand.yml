@@ -1,0 +1,41 @@
+# _brand.yml · Estación R (proyecto: shiny_eph_panel)
+# Copia local sincronizada con la fuente de verdad:
+#   /Pablo/Estación R/Proyectos/_activos/identidad_visual/_brand.yml
+# Mantenerla sincronizada cuando cambie la guía central.
+#
+# Diferencias vs. la fuente:
+# - typography.fonts: solo Ubuntu (Google). Array se carga aparte vía CDN
+#   Fontshare en tags$head() para usarlo en .hero-title del H1 hero.
+# - logo.small/medium: rutas relativas a www/ (lo que sirve Shiny).
+
+color:
+  palette:
+    azul:       "#405BFF"
+    azul-dark:  "#1839F4"
+    amarillo:   "#EAFF38"
+    negro:      "#191919"
+    blanco:     "#FFFFFF"
+    gris-claro: "#F7F7F7"
+
+  foreground: negro
+  background: blanco
+  primary:    azul
+  secondary:  amarillo
+  dark:       negro
+  light:      gris-claro
+
+typography:
+  fonts:
+    - family: Ubuntu
+      source: google
+      weight: [300, 400, 500, 700]
+
+  base:     Ubuntu
+  headings: Ubuntu
+
+  monospace-block:
+    color: "#1839F4"
+
+logo:
+  small:  www/logos/isotipo_estacion_r.svg
+  medium: www/logos/logo_completo_estacion_r.svg

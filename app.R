@@ -20,38 +20,29 @@ thematic_shiny(font = "auto")
 
 # Define UI for application that draws a histogram
 ui <- page_navbar(
-  
-  # Tema oficial Estación R
-  # Ref: Proyectos/_activos/identidad_visual/GUIA_DE_ESTILO.md
-  theme = bslib::bs_theme(
-    version      = 5,
-    bg           = "#FFFFFF",
-    fg           = "#191919",
-    primary      = "#405BFF",
-    secondary    = "#EAFF38",
-    base_font    = bslib::font_google("Ubuntu"),
-    heading_font = bslib::font_google("Ubuntu", wght = c(400, 500, 700)),
-    font_scale   = 1
+
+  # Tema oficial Estación R desde _brand.yml (fuente única de verdad).
+  # Sync con: Proyectos/_activos/identidad_visual/_brand.yml
+  theme = bslib::bs_theme(brand = "_brand.yml"),
+
+  header = tagList(
+    tags$head(
+      tags$link(rel = "icon", type = "image/svg+xml",
+                href = "logos/isotipo_estacion_r.svg")
+    ),
+    useWaitress(color = "#405BFF")
   ),
-  
-  
-  # ##-- Logo ----
-  # list(tags$head(HTML('<link rel="icon", href="img/logo.png",
-  #                       type="image/png" />'))),
-  # 
-  # div(style="padding: 1px 0px; width: '100%'",
-  #     titlePanel(
-  #       title="", windowTitle = "estacion-r"
-  #     )
-  # ),
-  
-  useWaitress(color = "#7F7FFF"),
-  
-  title = div(tags$a(href='https://linktr.ee/estacion_r',
-             tags$img(src='https://pbs.twimg.com/profile_banners/1214735980172845056/1716430021/600x200',
-                      height = 50, width = 150)), align = "left"),
-  #bg = "white",
-  underline = TRUE,
+
+  title = div(
+    tags$a(
+      href = 'https://linktr.ee/estacion_r',
+      tags$img(src = 'logos/logo_completo_estacion_r.svg',
+               height = 40, alt = "Estación R")
+    ),
+    align = "left"
+  ),
+  window_title = "EPH Panel · Estación R",
+  navbar_options = navbar_options(underline = TRUE),
   
   nav_panel(
     icon = icon("circle-info"),
@@ -63,9 +54,14 @@ ui <- page_navbar(
       
       br(),
       
-      titlePanel(title=div(tags$a(href='https://linktr.ee/estacion_r',
-                                  tags$img(src='https://pbs.twimg.com/profile_banners/1214735980172845056/1716430021/600x200',
-                                           height = 105, width = 300)), align = "center")),
+      titlePanel(title = div(
+        tags$a(
+          href = 'https://linktr.ee/estacion_r',
+          tags$img(src = 'logos/logo_completo_estacion_r.svg',
+                   height = 80, alt = "Estación R")
+        ),
+        align = "center"
+      )),
       
       br(),
       
