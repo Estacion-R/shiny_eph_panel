@@ -1,3 +1,25 @@
+### Devuelve los duos trimestrales válidos para un año dado, evaluando contra
+### los períodos efectivamente disponibles en `periodos_disponibles` (data
+### frame con columnas ANO4 y TRIMESTRE). Un duo es válido cuando ambos
+### extremos del panel existen en la base. El duo "4-1" cruza años: requiere
+### (anio, T4) y (anio + 1, T1). Devuelve un named vector apto para usarse
+### como `choices` de selectInput, manteniendo el orden trimestral.
+duos_disponibles_por_anio <- function(anio, periodos_disponibles) {
+  anio <- as.integer(anio)
+  periodos_set <- paste(periodos_disponibles$ANO4, periodos_disponibles$TRIMESTRE)
+
+  duos <- tibble::tibble(
+    label  = c("1-2", "2-3", "3-4", "4-1"),
+    value  = c(1L, 2L, 3L, 4L),
+    inicio = paste(anio, c(1L, 2L, 3L, 4L)),
+    fin    = paste(c(anio, anio, anio, anio + 1L), c(2L, 3L, 4L, 1L))
+  ) |>
+    dplyr::filter(inicio %in% periodos_set & fin %in% periodos_set)
+
+  setNames(duos$value, duos$label)
+}
+
+
 armo_base_panel <- function(anio_0, trimestre_0, anio_1, trimestre_1, df = df_eph_full){
 
   ### Filtra el microdato cacheado en memoria por 01-extract.R.

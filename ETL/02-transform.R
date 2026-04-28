@@ -5,12 +5,20 @@ library(imola)
 library(markdown)
 
 
-### Preparo base df_cond_act: ordeno períodos como factor para que el line chart
-### respete el orden cronológico.
-periodo_categ <- unique(df_cond_act$periodo)
+### Preparo base df_cond_act: ordeno períodos como factor cronológico real.
+### Los IDs vienen en formato "YYYY_tN-tM" (ej: "2003_t4-t1", "2020_t1-t2").
+### Parseo año + trimestre inicial para ordenar correctamente.
+periodo_categ <- df_cond_act |>
+  dplyr::distinct(periodo) |>
+  dplyr::mutate(
+    anio = as.integer(stringr::str_extract(periodo, "^[0-9]{4}")),
+    trim_ini = as.integer(stringr::str_extract(periodo, "(?<=_t)[0-9]"))
+  ) |>
+  dplyr::arrange(anio, trim_ini) |>
+  dplyr::pull(periodo)
 
 df_cond_act <- df_cond_act |>
-  mutate(periodo = factor(periodo, level = periodo_categ))
+  mutate(periodo = factor(periodo, levels = periodo_categ))
 
 
 ### -----------------------------------------------------------------------
@@ -23,10 +31,14 @@ filter_sankey_anio_ant <- selectInput(inputId = "anio_ant",
                                       selected = anio_max_disponible
 )
 
+### Duos válidos para el año por defecto (último disponible). Se recalculan
+### dinámicamente en el server cuando cambia el año seleccionado.
+duos_iniciales <- duos_disponibles_por_anio(anio_max_disponible, periodos_disponibles)
+
 filter_sankey_trim_ant <- selectInput(inputId = "trimestre_ant",
                                       label = "Panel (trimestres consecutivos)",
-                                      choices = c("1-2" = 1, "2-3" = 2, "3-4" = 3, "4-1" = 4),
-                                      selected = 1
+                                      choices = duos_iniciales,
+                                      selected = duos_iniciales[1]
 )
 
 filter_sankey_categoria <- selectInput(inputId = "category",
@@ -115,8 +127,8 @@ filters <- filter_query(
     "entre los trimestres",
     selectInput(inputId = "trimestre_ant",
                 label = "Panel (trimestres consecutivos)",
-                choices = c("1-2" = 1, "2-3" = 2, "3-4" = 3, "4-1" = 4),
-                selected = 1
+                choices = duos_iniciales,
+                selected = duos_iniciales[1]
     ),
     ""
   ),

@@ -29,7 +29,10 @@ ui <- page_navbar(
   header = tagList(
     tags$head(
       tags$link(rel = "icon", type = "image/svg+xml",
-                href = "logos/isotipo_estacion_r.svg")
+                href = "logos/isotipo_estacion_r.svg"),
+      # Array (display) vía CDN Fontshare · usado en .hero-title
+      tags$link(rel = "stylesheet",
+                href = "https://api.fontshare.com/v2/css?f[]=array@400,600,700&display=swap")
     ),
     useWaitress(color = "#405BFF")
   ),
@@ -47,14 +50,11 @@ ui <- page_navbar(
   
   nav_panel(
     icon = icon("circle-info"),
-    title = "Sobre la App", 
+    title = "Sobre la App",
     card(
-      class = "bg-dark",
-      #padding = "20px", gap = "20px",
-      
-      
+
       br(),
-      
+
       titlePanel(title = div(
         tags$a(
           href = 'https://linktr.ee/estacion_r',
@@ -63,15 +63,13 @@ ui <- page_navbar(
         ),
         align = "center"
       )),
-      
+
       br(),
-      
+
       tags$blockquote("En la presente aplicación se va a poder estudiar el comportamiento del mercado de trabajo bajo la estrategia de análisis de panel. Para esto, hablemos un poco de la E-P-H"
       ),
-      
-      #br(),
-      
-      h1("La E-P-H"),
+
+      h1("La E-P-H", class = "hero-title"),
       p(
         strong(em("La Encuesta Permanente de Hogares")), 
         "es una de las fuentes de información sociodemográfica más importante del", a("Sistema Estadístico Nacional (SEN)", href = "https://www.indec.gob.ar/indec/web/Institucional-Indec-SistemaEstadistico"), "Argentino.
@@ -200,17 +198,19 @@ server <- function(input, output, session) {
   shinyalert(
     title = "Buenas!",
     text = "Esta aplicación está en desarrollo. Si algo no está funcionando, se puede mejorar o incluso tenés una idea para agregar, podés escribirme a pablotiscornia@estacion-r.com",
-    size = "s", 
+    size = "s",
     closeOnEsc = TRUE,
     closeOnClickOutside = FALSE,
     html = FALSE,
-    type = "warning",
+    type = "info",
     showConfirmButton = TRUE,
     showCancelButton = FALSE,
     confirmButtonText = "JOYA",
     confirmButtonCol = "#405BFF",
     timer = 0,
-    imageUrl = "",
+    imageUrl = "logos/isotipo_estacion_r.svg",
+    imageWidth = 80,
+    imageHeight = 80,
     animation = TRUE
   )
   
@@ -295,6 +295,7 @@ server <- function(input, output, session) {
 
       hchart(df_cond_act |>
                filter(from == input$desde, to %in% input$hacia) |>
+               arrange(periodo) |>
                mutate(to = case_when(
                  from == "Desocupado_t0" & to == "Inactivo_t1" ~ "% de Desocupados que pasan a la Inactividad",
                  from == "Desocupado_t0" & to == "Desocupado_t1" ~ "% de Desocupados que siguen Desocupados",
