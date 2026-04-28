@@ -1,9 +1,13 @@
 
 source("ETL/00-libraries.R")
 
-### Variables del microdato que usa la app
+### Variables del microdato que usa la app.
+### Las 9 originales soportan el análisis de Condición de actividad.
+### CAT_OCUP, PP07H/J/K se suman para los análisis de Categoría ocupacional
+### y Formal/Informal (Fases 3-4 del epic #6).
 vars_eph <- c("CODUSU", "NRO_HOGAR", "COMPONENTE", "ANO4", "TRIMESTRE",
-              "CH04", "CH06", "ESTADO", "PONDERA")
+              "CH04", "CH06", "ESTADO", "PONDERA",
+              "CAT_OCUP", "PP07H", "PP07J", "PP07K")
 
 ### Carga única del microdato en memoria.
 ### Antes se leía el parquet en cada llamada a armo_base_panel(), lo que
