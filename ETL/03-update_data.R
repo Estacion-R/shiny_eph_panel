@@ -28,6 +28,11 @@ suppressPackageStartupMessages({
   library(purrr)
 })
 
+### Default de download.file() es 60s, que se queda corto para algunos
+### trimestres pesados de INDEC (4-7 MB en redes lentas). 10 minutos es
+### un colchón seguro.
+options(timeout = 600)
+
 source("ETL/99-functions.R")
 
 ### Variables del microdato que persistimos en el parquet
