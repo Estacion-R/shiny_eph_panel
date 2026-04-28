@@ -277,15 +277,19 @@ mod_cat_ocup_server <- function(id) {
           }
         }
 
-        hchart(df_cat_ocup |>
-                 filter(from == input$desde, to %in% input$hacia) |>
-                 filter(input$duo == "todos" |
-                          stringr::str_ends(as.character(periodo), input$duo)) |>
-                 arrange(periodo) |>
-                 mutate(to = purrr::map2_chr(from, to, etiqueta_serie),
-                        id = stringr::str_replace_all(id, "tant", "t0"),
-                        id = stringr::str_replace_all(id, "tpost", "t2")),
-               "areaspline",
+        df_data <- df_cat_ocup |>
+          filter(from == input$desde, to %in% input$hacia) |>
+          filter(input$duo == "todos" |
+                   stringr::str_ends(as.character(periodo), input$duo)) |>
+          arrange(periodo) |>
+          mutate(to = purrr::map2_chr(from, to, etiqueta_serie),
+                 id = stringr::str_replace_all(id, "tant", "t0"),
+                 id = stringr::str_replace_all(id, "tpost", "t2")) |>
+          mutate(isExtremo = (weight == max(weight, na.rm = TRUE)) |
+                              (weight == min(weight, na.rm = TRUE)),
+                 .by = to)
+
+        hchart(df_data, "areaspline",
                hcaes(periodo, weight, group = to)) |>
           hc_add_theme(hc_theme_estacion_r) |>
           hc_chart(zoomType = "x") |>
@@ -294,7 +298,16 @@ mod_cat_ocup_server <- function(id) {
               fillOpacity = 0.18,
               lineWidth = 2.5,
               marker = list(enabled = FALSE,
-                            states = list(hover = list(enabled = TRUE, radius = 5)))
+                            states = list(hover = list(enabled = TRUE, radius = 5))),
+              dataLabels = list(
+                enabled = TRUE,
+                filter = list(property = "isExtremo", operator = "==", value = TRUE),
+                format = "{point.y}%",
+                style = list(fontSize = "0.75em",
+                             textOutline = "2px white",
+                             color = "#191919",
+                             fontWeight = "600")
+              )
             )
           ) |>
           hc_xAxis(
@@ -317,9 +330,12 @@ mod_cat_ocup_server <- function(id) {
             borderColor = "#405BFF",
             borderRadius = 6
           ) |>
-          hc_legend(align = "center", verticalAlign = "top", layout = "horizontal") |>
+          hc_legend(
+            align = "center", verticalAlign = "top", layout = "horizontal",
+            itemStyle = list(cursor = "pointer", fontWeight = "500")
+          ) |>
           hc_caption(
-            text = "Elaboración propia en base a la EPH-INDEC. Arrastrá horizontalmente para hacer zoom."
+            text = "Elaboración propia en base a la EPH-INDEC. Arrastrá horizontalmente para hacer zoom · Click en una serie para mostrarla u ocultarla."
           )
       })
 

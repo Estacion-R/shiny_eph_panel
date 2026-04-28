@@ -263,24 +263,32 @@ mod_cond_act_server <- function(id) {
         ### Filtrando por dúo específico hay ~22 puntos (uno por año), todas.
         tick_interval <- if (input$duo == "todos") 4 else 1
 
-        hchart(df_cond_act |>
-                 filter(from == input$desde, to %in% input$hacia) |>
-                 filter(input$duo == "todos" |
-                          stringr::str_ends(as.character(periodo), input$duo)) |>
-                 arrange(periodo) |>
-                 mutate(to = case_when(
-                   from == "Desocupado_t0" & to == "Inactivo_t1"  ~ "% de Desocupados que pasan a la Inactividad",
-                   from == "Desocupado_t0" & to == "Desocupado_t1" ~ "% de Desocupados que siguen Desocupados",
-                   from == "Desocupado_t0" & to == "Ocupado_t1"   ~ "% de Desocupados que pasan a la Ocupación",
-                   from == "Ocupado_t0"    & to == "Inactivo_t1"  ~ "% de Ocupados que pasan a la Inactividad",
-                   from == "Ocupado_t0"    & to == "Desocupado_t1" ~ "% de Ocupados que pasan a la Desocupación",
-                   from == "Ocupado_t0"    & to == "Ocupado_t1"   ~ "% de Ocupados que siguen Ocupados",
-                   from == "Inactivo_t0"   & to == "Inactivo_t1"  ~ "% de Inactivos que siguen Inactivos",
-                   from == "Inactivo_t0"   & to == "Desocupado_t1" ~ "% de Inactivos que pasan a la Desocupación",
-                   from == "Inactivo_t0"   & to == "Ocupado_t1"   ~ "% de Inactivos que pasan a la Ocupación"),
-                   id = stringr::str_replace_all(id, "tant", "t0"),
-                   id = stringr::str_replace_all(id, "tpost", "t2")),
-               "areaspline",
+        ### Pre-calcula flags de extremos por serie para el dataLabels filter.
+        ### Highcharts usa el atributo isExtremo de cada punto vía
+        ### dataLabels.filter (property == TRUE) para mostrar la etiqueta
+        ### solo en max y min de cada grupo.
+        df_data <- df_cond_act |>
+          filter(from == input$desde, to %in% input$hacia) |>
+          filter(input$duo == "todos" |
+                   stringr::str_ends(as.character(periodo), input$duo)) |>
+          arrange(periodo) |>
+          mutate(to = case_when(
+            from == "Desocupado_t0" & to == "Inactivo_t1"  ~ "% de Desocupados que pasan a la Inactividad",
+            from == "Desocupado_t0" & to == "Desocupado_t1" ~ "% de Desocupados que siguen Desocupados",
+            from == "Desocupado_t0" & to == "Ocupado_t1"   ~ "% de Desocupados que pasan a la Ocupación",
+            from == "Ocupado_t0"    & to == "Inactivo_t1"  ~ "% de Ocupados que pasan a la Inactividad",
+            from == "Ocupado_t0"    & to == "Desocupado_t1" ~ "% de Ocupados que pasan a la Desocupación",
+            from == "Ocupado_t0"    & to == "Ocupado_t1"   ~ "% de Ocupados que siguen Ocupados",
+            from == "Inactivo_t0"   & to == "Inactivo_t1"  ~ "% de Inactivos que siguen Inactivos",
+            from == "Inactivo_t0"   & to == "Desocupado_t1" ~ "% de Inactivos que pasan a la Desocupación",
+            from == "Inactivo_t0"   & to == "Ocupado_t1"   ~ "% de Inactivos que pasan a la Ocupación"),
+            id = stringr::str_replace_all(id, "tant", "t0"),
+            id = stringr::str_replace_all(id, "tpost", "t2")) |>
+          mutate(isExtremo = (weight == max(weight, na.rm = TRUE)) |
+                              (weight == min(weight, na.rm = TRUE)),
+                 .by = to)
+
+        hchart(df_data, "areaspline",
                hcaes(periodo, weight, group = to)) |>
           hc_add_theme(hc_theme_estacion_r) |>
           hc_chart(zoomType = "x") |>
@@ -289,7 +297,16 @@ mod_cond_act_server <- function(id) {
               fillOpacity = 0.18,
               lineWidth = 2.5,
               marker = list(enabled = FALSE,
-                            states = list(hover = list(enabled = TRUE, radius = 5)))
+                            states = list(hover = list(enabled = TRUE, radius = 5))),
+              dataLabels = list(
+                enabled = TRUE,
+                filter = list(property = "isExtremo", operator = "==", value = TRUE),
+                format = "{point.y}%",
+                style = list(fontSize = "0.75em",
+                             textOutline = "2px white",
+                             color = "#191919",
+                             fontWeight = "600")
+              )
             )
           ) |>
           hc_xAxis(
@@ -312,9 +329,12 @@ mod_cond_act_server <- function(id) {
             borderColor = "#405BFF",
             borderRadius = 6
           ) |>
-          hc_legend(align = "center", verticalAlign = "top", layout = "horizontal") |>
+          hc_legend(
+          align = "center", verticalAlign = "top", layout = "horizontal",
+          itemStyle = list(cursor = "pointer", fontWeight = "500")
+        ) |>
           hc_caption(
-            text = "Elaboración propia en base a la EPH-INDEC. Arrastrá horizontalmente para hacer zoom."
+            text = "Elaboración propia en base a la EPH-INDEC. Arrastrá horizontalmente para hacer zoom · Click en una serie para mostrarla u ocultarla."
           )
       })
 
