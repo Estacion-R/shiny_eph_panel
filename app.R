@@ -36,14 +36,17 @@ panel_sobre_la_app <- nav_panel(
   icon = icon("circle-info"),
   card(
     br(),
-    titlePanel(title = div(
+    ### Logo principal grande (issue #23). Reemplaza el shinyalert SUMATE
+    ### que aparecía al cargar.
+    div(
+      style = "text-align: center; padding: 2rem 0 1rem;",
       tags$a(
         href = "https://linktr.ee/estacion_r",
         tags$img(src = "logos/logo_completo_estacion_r.svg",
-                 height = 80, alt = "Estación R")
-      ),
-      align = "center"
-    )),
+                 style = "max-width: 320px; width: 100%; height: auto;",
+                 alt = "Estación R")
+      )
+    ),
     br(),
     tags$blockquote(
       "En la presente aplicación se va a poder estudiar el comportamiento del mercado de trabajo bajo la estrategia de análisis de panel. Para esto, hablemos un poco de la E-P-H"
@@ -181,6 +184,18 @@ ui <- page_fillable(
     ),
 
     panel_info
+  ),
+
+  ### Botón SUMATE flotante (FAB) en esquina inferior derecha (issue #23).
+  ### Reemplaza el shinyalert que aparecía automáticamente al cargar.
+  div(
+    class = "sumate-fab",
+    actionButton(
+      inputId = "sumate_btn",
+      label = "Sumate",
+      icon = icon("envelope"),
+      class = "btn-sumate"
+    )
   )
 )
 
@@ -191,24 +206,28 @@ ui <- page_fillable(
 
 server <- function(input, output, session) {
 
-  shinyalert(
-    title = "Buenas!",
-    text = "Esta aplicación está en desarrollo. Si algo no está funcionando, se puede mejorar o incluso tenés una idea para agregar, podés escribirme a pablotiscornia@estacion-r.com",
-    size = "s",
-    closeOnEsc = TRUE,
-    closeOnClickOutside = FALSE,
-    html = FALSE,
-    type = "info",
-    showConfirmButton = TRUE,
-    showCancelButton = FALSE,
-    confirmButtonText = "JOYA",
-    confirmButtonCol = "#405BFF",
-    timer = 0,
-    imageUrl = "logos/isotipo_estacion_r.svg",
-    imageWidth = 80,
-    imageHeight = 80,
-    animation = TRUE
-  )
+  ### El alert SUMATE ahora se dispara solo al hacer click en el FAB
+  ### (issue #23). Antes aparecía automáticamente al cargar.
+  observeEvent(input$sumate_btn, {
+    shinyalert(
+      title = "Sumate!",
+      text = "Esta aplicación está en desarrollo. Si algo no está funcionando, se puede mejorar o incluso tenés una idea para agregar, podés escribirme a pablotiscornia@estacion-r.com",
+      size = "s",
+      closeOnEsc = TRUE,
+      closeOnClickOutside = TRUE,
+      html = FALSE,
+      type = "info",
+      showConfirmButton = TRUE,
+      showCancelButton = FALSE,
+      confirmButtonText = "JOYA",
+      confirmButtonCol = "#405BFF",
+      timer = 0,
+      imageUrl = "logos/isotipo_estacion_r.svg",
+      imageWidth = 80,
+      imageHeight = 80,
+      animation = TRUE
+    )
+  })
 
   mod_cond_act_server("cond_act")
   mod_cat_ocup_server("cat_ocup")
