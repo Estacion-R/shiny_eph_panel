@@ -12,6 +12,22 @@
 mod_formalidad_ui <- function(id) {
   ns <- NS(id)
 
+  ### Toggle de definición compartido entre Foto y Película. Lo ponemos
+  ### arriba de las dos sub-tabs para que el usuario lo elija una sola vez
+  ### y aplique a ambos gráficos.
+  toggle_definicion <- div(
+    class = "filter-query nlq-styling",
+    style = "margin-bottom: 8px;",
+    tags$span(class = "preposition-affix",
+              "Definición de informalidad:"),
+    selectInput(inputId = ns("definicion"),
+                label = NULL,
+                choices = c("clásica (asalariados · 2003+)" = "clasica",
+                            "ampliada (todos los ocupados · 2023+)" = "ampliada"),
+                selected = "clasica",
+                width = "auto")
+  )
+
   filtros_foto <- filter_query(
     prefix_text = "",
     filter_preposition(
@@ -23,7 +39,7 @@ mod_formalidad_ui <- function(id) {
       ""
     ),
     filter_preposition(
-      "de los asalariados",
+      "de los",
       selectInput(inputId = ns("category"),
                   label = "Categoría de base (el 100%)",
                   choices = c("Formales" = "Formal",
@@ -52,7 +68,7 @@ mod_formalidad_ui <- function(id) {
   filtros_pelicula <- filter_query(
     prefix_text = "",
     filter_preposition(
-      "Mostrar el flujo desde asalariados",
+      "Mostrar el flujo desde",
       selectInput(inputId = ns("desde"),
                   label = "Desde",
                   choices = c("Formales" = "Formal_t0",
@@ -85,34 +101,37 @@ mod_formalidad_ui <- function(id) {
     suffix_text = ""
   )
 
-  bslib::navset_card_tab(
-    bslib::nav_panel(
-      title = "Foto",
-      icon = icon("camera-retro"),
-      fluidRow(filtros_foto),
-      layout_columns(
-        col_widths = c(4, 8),
-        value_box(
-          title = textOutput(ns("pob")),
-          value = textOutput(ns("pob_n")),
-          showcase = bs_icon("person-vcard"),
-          p(textOutput(ns("periodo")))
-        ),
-        card(
-          autoWaiter(color = "#405BFF"),
-          full_screen = TRUE,
-          highchartOutput(ns("sankey"))
+  tagList(
+    toggle_definicion,
+    bslib::navset_card_tab(
+      bslib::nav_panel(
+        title = "Foto",
+        icon = icon("camera-retro"),
+        fluidRow(filtros_foto),
+        layout_columns(
+          col_widths = c(4, 8),
+          value_box(
+            title = textOutput(ns("pob")),
+            value = textOutput(ns("pob_n")),
+            showcase = bs_icon("person-vcard"),
+            p(textOutput(ns("periodo")))
+          ),
+          card(
+            autoWaiter(color = "#405BFF"),
+            full_screen = TRUE,
+            highchartOutput(ns("sankey"))
+          )
         )
-      )
-    ),
-    bslib::nav_panel(
-      title = "Película",
-      icon = icon("video"),
-      filtros_pelicula,
-      card(
-        full_screen = TRUE,
-        min_height = "520px",
-        highchartOutput(ns("line"), height = "100%")
+      ),
+      bslib::nav_panel(
+        title = "Película",
+        icon = icon("video"),
+        filtros_pelicula,
+        card(
+          full_screen = TRUE,
+          min_height = "520px",
+          highchartOutput(ns("line"), height = "100%")
+        )
       )
     )
   )
@@ -161,8 +180,28 @@ mod_formalidad_server <- function(id) {
       sentido <- input$periodo_base
       cat_plural <- etiqueta_plural(input$category)
 
+      ### Selección dinámica entre definición clásica y ampliada (issue #15).
+      ### `definicion` controla:
+      ###   - var_panel: nombre de la variable derivada en df_eph_full.
+      ###   - df_serie: dataframe histórico para el line chart.
+      ###   - universo: "asalariados" o "ocupados", para textos del UI.
+      ###   - caption_def: texto explicativo en el caption del sankey.
+      var_panel <- if (input$definicion == "ampliada") "formalidad_ampliada" else "formalidad"
+      df_serie  <- if (input$definicion == "ampliada") df_formalidad_ampliada else df_formalidad
+      universo  <- if (input$definicion == "ampliada") "ocupados" else "asalariados"
+      caption_def <- if (input$definicion == "ampliada") {
+        "Definición ampliada (OIT 2023, EPH 2023+): asalariados con PP07H + cuenta propia/patrones con PP05I/PP05K."
+      } else {
+        "Definición clásica EPH: solo asalariados (CAT_OCUP=3) vía PP07H."
+      }
+
+      ### Vars que necesitamos del microdato para los dos modos (siempre las
+      ### incluimos para no recomputar al cambiar el toggle).
+      vars_panel_eph <- c("ESTADO", "CAT_OCUP", "PP07H", "PP05I", "PP05K",
+                          "formalidad", "formalidad_ampliada", "PONDERA")
+
       output$pob <- renderText({
-        paste0("Asalariados ", cat_plural)
+        paste0(stringr::str_to_sentence(universo), " ", cat_plural)
       })
 
       output$pob_n <- renderText({
@@ -170,17 +209,21 @@ mod_formalidad_server <- function(id) {
           anio_0 = anio_ant, trimestre_0 = trim_ant,
           anio_1 = anio_post, trimestre_1 = trim_post,
           df = df_eph_full,
-          variables = c("ESTADO", "CAT_OCUP", "PP07H", "formalidad", "PONDERA")
+          variables = vars_panel_eph
         )
 
         codigo <- match(input$category, c("Formal", "Informal"))
 
         n_pob <- df_panel |>
-          filter(formalidad == codigo) |>
+          filter(.data[[var_panel]] == codigo) |>
           summarise(n = sum(PONDERA, na.rm = TRUE)) |>
           pull(n)
 
-        format(n_pob, big.mark = ".", decimal.mark = ",")
+        if (length(n_pob) == 0 || is.na(n_pob)) {
+          "—"
+        } else {
+          format(n_pob, big.mark = ".", decimal.mark = ",")
+        }
       })
 
       output$periodo <- renderText({
@@ -192,36 +235,56 @@ mod_formalidad_server <- function(id) {
           anio_0 = anio_ant, trimestre_0 = trim_ant,
           anio_1 = anio_post, trimestre_1 = trim_post,
           df = df_eph_full,
-          variables = c("ESTADO", "CAT_OCUP", "PP07H", "formalidad", "PONDERA")
+          variables = vars_panel_eph
         )
       })
 
       output$sankey <- renderHighchart({
+        ### Validar que la definición ampliada tenga datos en el panel
+        ### seleccionado (solo aplica para 2023-T4+).
+        if (input$definicion == "ampliada") {
+          n_validos <- df_eph_panel() |>
+            filter(!is.na(formalidad_ampliada)) |>
+            nrow()
+          shiny::validate(shiny::need(
+            n_validos > 0,
+            "La definición ampliada está disponible desde 2023-T4. Elegí un panel más reciente o cambiá a definición clásica."
+          ))
+        }
+
         highcharter::hchart(
           object = armo_tabla_sankey(
             table = preparo_base(
               df = df_eph_panel(),
               periodo_base = input$periodo_base,
-              var = "formalidad",
+              var = var_panel,
               etiquetas = c("Formal", "Informal")),
             categoria = input$category),
           "sankey",
           name = ifelse(sentido == "t_anterior",
-                        glue::glue("Flujo desde asalariados {cat_plural}"),
-                        glue::glue("Flujo hacia asalariados {cat_plural}"))
+                        glue::glue("Flujo desde {universo} {cat_plural}"),
+                        glue::glue("Flujo hacia {universo} {cat_plural}"))
         ) |>
-          hc_title(text = "Movilidad entre asalariados Formales e Informales.") |>
+          hc_title(text = "Movilidad entre Formales e Informales.") |>
           hc_subtitle(text = glue(
             "Panel {ifelse(trim_ant %in% 1:3, paste0(anio_ant, ' - ', 'trimestre ', trim_ant, ' y ', trim_post),
           paste0(anio_ant, ' - ', 'trimestre ', trim_ant, ' y ', anio_ant + 1, ' trimestre ', trim_post))}")) |>
-          hc_caption(text = "Fuente: Elaboración propia en base a la EPH-INDEC. Definición clásica: PP07H sobre asalariados (CAT_OCUP=3).") |>
+          hc_caption(text = paste("Fuente: Elaboración propia en base a la EPH-INDEC.", caption_def)) |>
           hc_add_theme(hc_theme_estacion_r)
       })
 
       output$line <- renderHighchart({
-        mostrar_pandemia <- input$duo == "todos"
-        idx_pandemia_ini <- match("2020_t1-t2", levels(df_formalidad$periodo)) - 1
-        idx_pandemia_fin <- match("2020_t3-t4", levels(df_formalidad$periodo)) - 1
+        ### Validar que el dataframe histórico de la definición elegida
+        ### tenga datos. Si la ampliada está vacía (rebuild aún no corrido),
+        ### mostrar mensaje informativo.
+        shiny::validate(shiny::need(
+          nrow(df_serie) > 0,
+          "Histórico de la definición ampliada todavía no fue computado. Correr ETL/07-build_panel_formalidad_ampliada.R o elegir definición clásica."
+        ))
+
+        mostrar_pandemia <- input$duo == "todos" && input$definicion == "clasica"
+        idx_pandemia_ini <- match("2020_t1-t2", levels(df_serie$periodo)) - 1
+        idx_pandemia_fin <- match("2020_t3-t4", levels(df_serie$periodo)) - 1
 
         plot_bands <- if (mostrar_pandemia &&
                           !is.na(idx_pandemia_ini) &&
@@ -254,7 +317,7 @@ mod_formalidad_server <- function(id) {
           }
         }
 
-        df_data <- df_formalidad |>
+        df_data <- df_serie |>
           filter(from == input$desde, to %in% input$hacia) |>
           filter(input$duo == "todos" |
                    stringr::str_ends(as.character(periodo), input$duo)) |>
@@ -312,7 +375,10 @@ mod_formalidad_server <- function(id) {
             itemStyle = list(cursor = "pointer", fontWeight = "500")
           ) |>
           hc_caption(
-            text = "Elaboración propia en base a la EPH-INDEC. Universo: asalariados. Arrastrá horizontalmente para hacer zoom · Click en una serie para mostrarla u ocultarla."
+            text = paste0(
+              "Elaboración propia en base a la EPH-INDEC. Universo: ", universo,
+              ". Arrastrá horizontalmente para hacer zoom · Click en una serie para mostrarla u ocultarla."
+            )
           )
       })
 

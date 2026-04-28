@@ -29,7 +29,8 @@ options(timeout = 600)
 
 vars_eph <- c("CODUSU", "NRO_HOGAR", "COMPONENTE", "ANO4", "TRIMESTRE",
               "CH04", "CH06", "ESTADO", "PONDERA",
-              "CAT_OCUP", "PP07H", "PP07J", "PP07K")
+              "CAT_OCUP", "PP07H", "PP07J", "PP07K",
+              "PP05I", "PP05K")
 
 cat("Re-bootstrap del parquet con vars:\n  ", paste(vars_eph, collapse = ", "), "\n\n")
 
@@ -50,35 +51,50 @@ n_actual <- arrow::read_parquet(
 n_total <- nrow(periodos_a_descargar)
 cat("Períodos a descargar:", n_total, "\n\n")
 
+### Vars que solo existen en EPH 2023+. Si la primera descarga falla por
+### "variable no disponible", reintentamos sin estas y rellenamos NA.
+vars_solo_2023plus <- c("PP05I", "PP05K")
+
 descargar_trimestre <- function(anio, trim, idx, total) {
   cat(glue("  [{idx}/{total}] {anio}-T{trim}... "))
-  tryCatch({
-    df <- eph::get_microdata(year = anio, period = trim,
-                             vars = vars_eph, type = "individual")
-    if (!is.data.frame(df) || nrow(df) == 0) {
-      cat("VACÍO\n")
-      return(NULL)
-    }
-    df_sel <- df |> select(any_of(vars_eph))
 
-    ### Si faltan columnas en este trimestre (ej: PP07J no existía),
-    ### las llenamos con NA para que bind_rows funcione.
-    faltantes <- setdiff(vars_eph, names(df_sel))
-    if (length(faltantes) > 0) {
-      for (col in faltantes) {
-        df_sel[[col]] <- NA_integer_
-      }
-      df_sel <- df_sel |> select(all_of(vars_eph))
-      cat("ok (faltan: ", paste(faltantes, collapse = ", "), ")\n", sep = "")
-    } else {
-      cat("ok\n")
-    }
+  intentar_descarga <- function(vars_intento) {
+    tryCatch({
+      df <- eph::get_microdata(year = anio, period = trim,
+                               vars = vars_intento, type = "individual")
+      if (!is.data.frame(df) || nrow(df) == 0) return(NULL)
+      df
+    }, error = function(e) e)
+  }
 
-    df_sel
-  }, error = function(e) {
-    cat("ERROR: ", conditionMessage(e), "\n")
-    NULL
-  })
+  ### Intento 1: con todas las vars solicitadas.
+  res <- intentar_descarga(vars_eph)
+
+  ### Intento 2: si falla, probar sin las vars 2023+ (trimestres viejos).
+  if (!is.data.frame(res)) {
+    res <- intentar_descarga(setdiff(vars_eph, vars_solo_2023plus))
+  }
+
+  if (!is.data.frame(res)) {
+    cat("ERROR (ambos intentos)\n")
+    return(NULL)
+  }
+
+  df_sel <- res |> select(any_of(vars_eph))
+
+  ### Rellenar columnas faltantes (PP05I/K en trimestres pre-2023) con NA.
+  faltantes <- setdiff(vars_eph, names(df_sel))
+  if (length(faltantes) > 0) {
+    for (col in faltantes) {
+      df_sel[[col]] <- NA_integer_
+    }
+    df_sel <- df_sel |> select(all_of(vars_eph))
+    cat("ok (NA: ", paste(faltantes, collapse = ", "), ")\n", sep = "")
+  } else {
+    cat("ok\n")
+  }
+
+  df_sel
 }
 
 descargas <- periodos_a_descargar |>

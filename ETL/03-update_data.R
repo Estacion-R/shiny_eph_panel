@@ -37,11 +37,12 @@ source("ETL/99-functions.R")
 
 ### Variables del microdato que persistimos en el parquet.
 ### Las 9 originales soportan el análisis de Condición de actividad.
-### CAT_OCUP, PP07H/J/K se suman para los análisis de Categoría ocupacional
-### y Formal/Informal (Fases 3-4 del epic #6).
+### CAT_OCUP + PP07H/J/K + PP05I/K para los análisis de Categoría ocupacional
+### y Formal/Informal (epic #6 + issue #15).
 vars_eph <- c("CODUSU", "NRO_HOGAR", "COMPONENTE", "ANO4", "TRIMESTRE",
               "CH04", "CH06", "ESTADO", "PONDERA",
-              "CAT_OCUP", "PP07H", "PP07J", "PP07K")
+              "CAT_OCUP", "PP07H", "PP07J", "PP07K",
+              "PP05I", "PP05K")
 
 path_parquet_raw <- "data_raw/df_eph.parquet"
 path_parquet_tasas <- "data_output/df_tasas_mt.parquet"

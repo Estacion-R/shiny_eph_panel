@@ -24,6 +24,10 @@ ordenar_periodo_cronologico <- function(df) {
 df_cond_act   <- ordenar_periodo_cronologico(df_cond_act)
 df_cat_ocup   <- ordenar_periodo_cronologico(df_cat_ocup)
 df_formalidad <- ordenar_periodo_cronologico(df_formalidad)
+### df_formalidad_ampliada puede estar vacía si el bootstrap aún no se corrió.
+if (nrow(df_formalidad_ampliada) > 0) {
+  df_formalidad_ampliada <- ordenar_periodo_cronologico(df_formalidad_ampliada)
+}
 
 
 ### Application dependencies (CSS/JS estáticos)

@@ -10,3 +10,4 @@
 # Salida intermedia del workflow de actualización de datos
 .new_periods.txt
 data_raw/df_eph.parquet.bak
+data_raw/df_eph.parquet.bak2
