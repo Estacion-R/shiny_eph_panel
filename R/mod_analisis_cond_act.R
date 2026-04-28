@@ -99,6 +99,47 @@ mod_cond_act_ui <- function(id) {
       title = "Foto",
       icon = icon("camera-retro"),
       fluidRow(filtros_foto),
+
+      ### Tarjetas con tasas destacadas (issue #16 · opción B).
+      layout_columns(
+        col_widths = c(4, 4, 4),
+        value_box(
+          title = "Persistencia",
+          value = textOutput(ns("tasa_persistencia")),
+          showcase = bs_icon("arrow-repeat"),
+          p("siguen en su categoría")
+        ),
+        value_box(
+          title = "Salida",
+          value = textOutput(ns("tasa_salida")),
+          showcase = bs_icon("box-arrow-right"),
+          theme = "secondary",
+          p("cambiaron a otra categoría")
+        ),
+        value_box(
+          title = "Entrada",
+          value = textOutput(ns("tasa_entrada")),
+          showcase = bs_icon("box-arrow-in-left"),
+          theme = "secondary",
+          p("vinieron de otra categoría")
+        )
+      ),
+
+      ### Sankey + matriz de transición (issue #16 · opción A).
+      layout_columns(
+        col_widths = c(7, 5),
+        card(
+          autoWaiter(color = "#405BFF"),
+          full_screen = TRUE,
+          highchartOutput(ns("sankey"))
+        ),
+        card(
+          card_header("Matriz de transición"),
+          gt::gt_output(ns("matriz_transicion"))
+        )
+      ),
+
+      ### Value box compacto con la población base (lo que era el principal).
       layout_columns(
         col_widths = c(4, 8),
         value_box(
@@ -108,9 +149,9 @@ mod_cond_act_ui <- function(id) {
           p(textOutput(ns("periodo")))
         ),
         card(
-          autoWaiter(color = "#405BFF"),
-          full_screen = TRUE,
-          highchartOutput(ns("sankey"))
+          card_body(
+            p(em("Tip:"), "Pasá el mouse sobre el Sankey o la matriz para ver porcentajes precisos. Las tarjetas de arriba se calculan respecto a la categoría seleccionada en el filtro.")
+          )
         )
       )
     ),
@@ -212,6 +253,29 @@ mod_cond_act_server <- function(id) {
                         trimestre_0 = trim_ant,
                         anio_1 = anio_post,
                         trimestre_1 = trim_post)
+      })
+
+      ### Tarjetas con tasas destacadas (issue #16 · opción B).
+      tasas <- reactive({
+        arma_tasas_destacadas(
+          df_panel = df_eph_panel(),
+          var = "ESTADO",
+          etiquetas = c("Ocupado", "Desocupado", "Inactivo", "Trab_familiar"),
+          categoria = input$category
+        )
+      })
+      output$tasa_persistencia <- renderText({ paste0(tasas()$persistencia, "%") })
+      output$tasa_salida       <- renderText({ paste0(tasas()$salida, "%") })
+      output$tasa_entrada      <- renderText({ paste0(tasas()$entrada, "%") })
+
+      ### Matriz de transición (issue #16 · opción A).
+      output$matriz_transicion <- gt::render_gt({
+        matriz <- arma_matriz_transicion(
+          df_panel = df_eph_panel(),
+          var = "ESTADO",
+          etiquetas = c("Ocupado", "Desocupado", "Inactivo", "Trab_familiar")
+        )
+        arma_matriz_transicion_gt(matriz, titulo = NULL)
       })
 
       output$sankey <- renderHighchart({

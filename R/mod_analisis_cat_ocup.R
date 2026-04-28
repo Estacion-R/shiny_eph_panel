@@ -98,6 +98,46 @@ mod_cat_ocup_ui <- function(id) {
       title = "Foto",
       icon = icon("camera-retro"),
       fluidRow(filtros_foto),
+
+      ### Tarjetas con tasas destacadas (issue #16 · opción B).
+      layout_columns(
+        col_widths = c(4, 4, 4),
+        value_box(
+          title = "Persistencia",
+          value = textOutput(ns("tasa_persistencia")),
+          showcase = bs_icon("arrow-repeat"),
+          p("siguen en su categoría")
+        ),
+        value_box(
+          title = "Salida",
+          value = textOutput(ns("tasa_salida")),
+          showcase = bs_icon("box-arrow-right"),
+          theme = "secondary",
+          p("cambiaron a otra categoría")
+        ),
+        value_box(
+          title = "Entrada",
+          value = textOutput(ns("tasa_entrada")),
+          showcase = bs_icon("box-arrow-in-left"),
+          theme = "secondary",
+          p("vinieron de otra categoría")
+        )
+      ),
+
+      ### Sankey + matriz de transición (issue #16 · opción A).
+      layout_columns(
+        col_widths = c(7, 5),
+        card(
+          autoWaiter(color = "#405BFF"),
+          full_screen = TRUE,
+          highchartOutput(ns("sankey"))
+        ),
+        card(
+          card_header("Matriz de transición"),
+          gt::gt_output(ns("matriz_transicion"))
+        )
+      ),
+
       layout_columns(
         col_widths = c(4, 8),
         value_box(
@@ -107,9 +147,9 @@ mod_cat_ocup_ui <- function(id) {
           p(textOutput(ns("periodo")))
         ),
         card(
-          autoWaiter(color = "#405BFF"),
-          full_screen = TRUE,
-          highchartOutput(ns("sankey"))
+          card_body(
+            p(em("Tip:"), "Las tarjetas se calculan respecto a la categoría seleccionada en el filtro. La matriz muestra todas las transiciones del panel.")
+          )
         )
       )
     ),
@@ -215,6 +255,29 @@ mod_cat_ocup_server <- function(id) {
           df = df_eph_full,
           variables = c("ESTADO", "CAT_OCUP", "PONDERA")
         )
+      })
+
+      ### Tarjetas con tasas destacadas (issue #16 · opción B).
+      tasas <- reactive({
+        arma_tasas_destacadas(
+          df_panel = df_eph_panel(),
+          var = "CAT_OCUP",
+          etiquetas = c("Patron", "Cuenta_propia", "Asalariado", "TFSR"),
+          categoria = input$category
+        )
+      })
+      output$tasa_persistencia <- renderText({ paste0(tasas()$persistencia, "%") })
+      output$tasa_salida       <- renderText({ paste0(tasas()$salida, "%") })
+      output$tasa_entrada      <- renderText({ paste0(tasas()$entrada, "%") })
+
+      ### Matriz de transición (issue #16 · opción A).
+      output$matriz_transicion <- gt::render_gt({
+        matriz <- arma_matriz_transicion(
+          df_panel = df_eph_panel(),
+          var = "CAT_OCUP",
+          etiquetas = c("Patron", "Cuenta_propia", "Asalariado", "TFSR")
+        )
+        arma_matriz_transicion_gt(matriz, titulo = NULL)
       })
 
       output$sankey <- renderHighchart({

@@ -108,6 +108,46 @@ mod_formalidad_ui <- function(id) {
         title = "Foto",
         icon = icon("camera-retro"),
         fluidRow(filtros_foto),
+
+        ### Tarjetas con tasas destacadas (issue #16 · opción B).
+        layout_columns(
+          col_widths = c(4, 4, 4),
+          value_box(
+            title = "Persistencia",
+            value = textOutput(ns("tasa_persistencia")),
+            showcase = bs_icon("arrow-repeat"),
+            p("siguen en su categoría")
+          ),
+          value_box(
+            title = "Salida",
+            value = textOutput(ns("tasa_salida")),
+            showcase = bs_icon("box-arrow-right"),
+            theme = "secondary",
+            p("cambiaron a otra categoría")
+          ),
+          value_box(
+            title = "Entrada",
+            value = textOutput(ns("tasa_entrada")),
+            showcase = bs_icon("box-arrow-in-left"),
+            theme = "secondary",
+            p("vinieron de otra categoría")
+          )
+        ),
+
+        ### Sankey + matriz de transición (issue #16 · opción A).
+        layout_columns(
+          col_widths = c(7, 5),
+          card(
+            autoWaiter(color = "#405BFF"),
+            full_screen = TRUE,
+            highchartOutput(ns("sankey"))
+          ),
+          card(
+            card_header("Matriz de transición"),
+            gt::gt_output(ns("matriz_transicion"))
+          )
+        ),
+
         layout_columns(
           col_widths = c(4, 8),
           value_box(
@@ -117,9 +157,9 @@ mod_formalidad_ui <- function(id) {
             p(textOutput(ns("periodo")))
           ),
           card(
-            autoWaiter(color = "#405BFF"),
-            full_screen = TRUE,
-            highchartOutput(ns("sankey"))
+            card_body(
+              p(em("Tip:"), "Las tarjetas se calculan respecto a la categoría seleccionada y a la definición elegida (clásica o ampliada).")
+            )
           )
         )
       ),
@@ -237,6 +277,57 @@ mod_formalidad_server <- function(id) {
           df = df_eph_full,
           variables = vars_panel_eph
         )
+      })
+
+      ### Tarjetas con tasas destacadas (issue #16 · opción B).
+      ### Las tasas se computan con var_panel (formalidad o
+      ### formalidad_ampliada) según el toggle.
+      tasas <- reactive({
+        ### Si la definición ampliada no tiene datos en este panel, retornar
+        ### marcadores; el output muestra "—" en ese caso.
+        if (input$definicion == "ampliada") {
+          n_validos <- df_eph_panel() |>
+            filter(!is.na(formalidad_ampliada)) |> nrow()
+          if (n_validos == 0) {
+            return(list(persistencia = NA, salida = NA, entrada = NA))
+          }
+        }
+        arma_tasas_destacadas(
+          df_panel = df_eph_panel(),
+          var = var_panel,
+          etiquetas = c("Formal", "Informal"),
+          categoria = input$category
+        )
+      })
+      output$tasa_persistencia <- renderText({
+        v <- tasas()$persistencia
+        if (is.na(v)) "—" else paste0(v, "%")
+      })
+      output$tasa_salida <- renderText({
+        v <- tasas()$salida
+        if (is.na(v)) "—" else paste0(v, "%")
+      })
+      output$tasa_entrada <- renderText({
+        v <- tasas()$entrada
+        if (is.na(v)) "—" else paste0(v, "%")
+      })
+
+      ### Matriz de transición (issue #16 · opción A).
+      output$matriz_transicion <- gt::render_gt({
+        if (input$definicion == "ampliada") {
+          n_validos <- df_eph_panel() |>
+            filter(!is.na(formalidad_ampliada)) |> nrow()
+          shiny::validate(shiny::need(
+            n_validos > 0,
+            "La definición ampliada está disponible desde 2023-T4."
+          ))
+        }
+        matriz <- arma_matriz_transicion(
+          df_panel = df_eph_panel(),
+          var = var_panel,
+          etiquetas = c("Formal", "Informal")
+        )
+        arma_matriz_transicion_gt(matriz, titulo = NULL)
       })
 
       output$sankey <- renderHighchart({

@@ -16,3 +16,5 @@ library(gghighlight)
 library(waiter)
 library(thematic)
 library(ragg)
+library(tidyr)  ### pivot_wider en arma_matriz_transicion()
+library(gt)     ### tabla matriz de transición en Foto
