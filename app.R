@@ -11,6 +11,7 @@ source("ETL/01-extract.R")
 source("ETL/02-transform.R")
 source("ETL/03-hc-theme.R")
 source("R/mod_analisis_cond_act.R")
+source("R/mod_analisis_cat_ocup.R")
 
 library(shinyalert)
 
@@ -165,10 +166,10 @@ ui <- page_fillable(
       mod_cond_act_ui("cond_act")
     ),
 
-    panel_proximamente(
-      titulo = "Categoría ocupacional",
-      icono_id = "user-tie",
-      descripcion = "Movilidad entre Patrón, Cuenta propia, Asalariado y Trabajador familiar dentro de la población Ocupada."
+    nav_panel(
+      title = "Categoría ocupacional",
+      icon = icon("user-tie"),
+      mod_cat_ocup_ui("cat_ocup")
     ),
 
     panel_proximamente(
@@ -208,6 +209,7 @@ server <- function(input, output, session) {
   )
 
   mod_cond_act_server("cond_act")
+  mod_cat_ocup_server("cat_ocup")
 }
 
 

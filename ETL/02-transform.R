@@ -5,20 +5,24 @@ library(imola)
 library(markdown)
 
 
-### Preparo base df_cond_act: ordeno períodos como factor cronológico real.
+### Helper: ordena períodos cronológicamente como factor.
 ### Los IDs vienen en formato "YYYY_tN-tM" (ej: "2003_t4-t1", "2020_t1-t2").
 ### Parseo año + trimestre inicial para ordenar correctamente.
-periodo_categ <- df_cond_act |>
-  dplyr::distinct(periodo) |>
-  dplyr::mutate(
-    anio = as.integer(stringr::str_extract(periodo, "^[0-9]{4}")),
-    trim_ini = as.integer(stringr::str_extract(periodo, "(?<=_t)[0-9]"))
-  ) |>
-  dplyr::arrange(anio, trim_ini) |>
-  dplyr::pull(periodo)
+ordenar_periodo_cronologico <- function(df) {
+  niveles <- df |>
+    dplyr::distinct(periodo) |>
+    dplyr::mutate(
+      anio = as.integer(stringr::str_extract(periodo, "^[0-9]{4}")),
+      trim_ini = as.integer(stringr::str_extract(periodo, "(?<=_t)[0-9]"))
+    ) |>
+    dplyr::arrange(anio, trim_ini) |>
+    dplyr::pull(periodo)
 
-df_cond_act <- df_cond_act |>
-  mutate(periodo = factor(periodo, levels = periodo_categ))
+  df |> mutate(periodo = factor(periodo, levels = niveles))
+}
+
+df_cond_act <- ordenar_periodo_cronologico(df_cond_act)
+df_cat_ocup <- ordenar_periodo_cronologico(df_cat_ocup)
 
 
 ### Application dependencies (CSS/JS estáticos)

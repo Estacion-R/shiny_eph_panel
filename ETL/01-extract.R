@@ -18,6 +18,11 @@ df_eph_full <- arrow::read_parquet("data_raw/df_eph.parquet") |>
 ### Histórico pre-computado por data_generator.R
 df_cond_act <- arrow::read_csv_arrow("data_output/panel_cond_act_historico.csv")
 
+### Histórico pre-computado por ETL/05-build_panel_cat_ocup.R
+### Movilidad entre Categorías ocupacionales (CAT_OCUP=1..4) dentro de la
+### población Ocupada. Mismo schema que df_cond_act.
+df_cat_ocup <- arrow::read_csv_arrow("data_output/panel_cat_ocup_historico.csv")
+
 ### Tasas del mercado de trabajo (totales por trimestre)
 df_tasas_mt <- arrow::read_parquet("data_output/df_tasas_mt.parquet")
 

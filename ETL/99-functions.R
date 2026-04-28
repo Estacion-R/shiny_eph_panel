@@ -20,7 +20,13 @@ duos_disponibles_por_anio <- function(anio, periodos_disponibles) {
 }
 
 
-armo_base_panel <- function(anio_0, trimestre_0, anio_1, trimestre_1, df = df_eph_full){
+### Arma la base de panel con los pares (t0, t1) de los entrevistados que
+### aparecen en ambos trimestres consecutivos. Por default panteliza ESTADO
+### + PONDERA (Condición de actividad). El parámetro `variables` permite
+### incluir más columnas para análisis adicionales (CAT_OCUP, formalidad, etc.).
+armo_base_panel <- function(anio_0, trimestre_0, anio_1, trimestre_1,
+                            df = df_eph_full,
+                            variables = c("ESTADO", "PONDERA")){
 
   ### Filtra el microdato cacheado en memoria por 01-extract.R.
   ### El argumento df permite testear con bases alternativas sin tocar el global.
@@ -29,50 +35,73 @@ armo_base_panel <- function(anio_0, trimestre_0, anio_1, trimestre_1, df = df_ep
     df |> filter(ANO4 == anio_1 & TRIMESTRE == trimestre_1))
 
   organize_panels(bases = list_eph_panel,
-                  variables = c("ESTADO", "PONDERA"),
+                  variables = variables,
                   window = "trimestral")
 }
 
 
-######################################################
-preparo_base <- function(df, periodo_base = "t_posterior"){
-  
+### Agrega el panel resumiendo por (categoria_t0, categoria_t1) y calculando
+### el porcentaje sobre el período base elegido. Output: tibble (from, to,
+### weight=porc_base, id, periodo_base).
+###
+### Parámetros:
+###   - var: columna del panel a resumir (default "ESTADO" para Condición
+###     de actividad; usar "CAT_OCUP" para Categoría ocupacional, etc.).
+###   - etiquetas: vector char donde el i-ésimo elemento es la etiqueta
+###     del código i (default = etiquetas de ESTADO, indexadas en 1..4).
+###     Para CAT_OCUP: c("Patron", "Cuenta_propia", "Asalariado", "TFSR").
+preparo_base <- function(df,
+                         periodo_base = "t_posterior",
+                         var = "ESTADO",
+                         etiquetas = c("Ocupado", "Desocupado", "Inactivo",
+                                       "Trab_familiar")){
+
   assertthat::assert_that(periodo_base %in% c("t_anterior", "t_posterior"),
                           msg = "Las opciones válidas son 't_posterior' o 't_anterior'")
-  
-  tabla <- df |> 
-    select(ESTADO, ESTADO_t1, PONDERA, PONDERA_t1) |>
-    mutate(ESTADO = case_when(ESTADO == 1 ~ "Ocupado_tant",
-                              ESTADO == 2 ~ "Desocupado_tant",
-                              ESTADO == 3 ~ "Inactivo_tant",
-                              ESTADO == 4 ~ "Trab_familiar_tpost"),
-           ESTADO_t1 = case_when(ESTADO_t1 == 1 ~ "Ocupado_tpost",
-                                 ESTADO_t1 == 2 ~ "Desocupado_tpost",
-                                 ESTADO_t1 == 3 ~ "Inactivo_tpost",
-                                 ESTADO_t1 == 4 ~ "Trab_familiar_tpost"))
-  
+
+  var_t1 <- paste0(var, "_t1")
+
+  ### Renombrar var/var_t1 a ESTADO/ESTADO_t1 para que el resto del código
+  ### siga siendo legible. ESTADO acá es solo un alias interno.
+  tabla <- df |>
+    select(dplyr::all_of(c(var, var_t1, "PONDERA", "PONDERA_t1"))) |>
+    rename(ESTADO    = !!rlang::sym(var),
+           ESTADO_t1 = !!rlang::sym(var_t1))
+
+  ### Mapeo código → etiqueta_tant / etiqueta_tpost. Solo aplica a códigos
+  ### dentro del rango definido en `etiquetas`; otros valores quedan NA y se
+  ### filtran al sumar.
+  codigos <- seq_along(etiquetas)
+  recode_t0 <- setNames(paste0(etiquetas, "_tant"), as.character(codigos))
+  recode_t1 <- setNames(paste0(etiquetas, "_tpost"), as.character(codigos))
+
+  tabla <- tabla |>
+    mutate(ESTADO    = unname(recode_t0[as.character(ESTADO)]),
+           ESTADO_t1 = unname(recode_t1[as.character(ESTADO_t1)])) |>
+    filter(!is.na(ESTADO) & !is.na(ESTADO_t1))
+
   if(periodo_base == "t_anterior"){
-    tabla <- tabla |> 
+    tabla <- tabla |>
       summarise(casos = sum(PONDERA),
-                .by = c("ESTADO", "ESTADO_t1")) |> 
-      group_by(ESTADO) |> 
+                .by = c("ESTADO", "ESTADO_t1")) |>
+      group_by(ESTADO) |>
       mutate(porc_base = round(casos / sum(casos) * 100, 1),
              periodo_base = "t_anterior",
-             id = paste(ESTADO, ESTADO_t1, sep = " - ")) |> ungroup() |> 
+             id = paste(ESTADO, ESTADO_t1, sep = " - ")) |> ungroup() |>
       select(ESTADO, ESTADO_t1, porc_base, id, periodo_base)
   }
-    
-  if(periodo_base == "t_posterior"){ 
-    tabla <- tabla |> 
+
+  if(periodo_base == "t_posterior"){
+    tabla <- tabla |>
       summarise(casos = sum(PONDERA_t1),
-                .by = c("ESTADO_t1", "ESTADO")) |> 
-      group_by(ESTADO_t1) |> 
+                .by = c("ESTADO_t1", "ESTADO")) |>
+      group_by(ESTADO_t1) |>
       mutate(porc_base = round(casos / sum(casos) * 100, 1),
              periodo_base = "t_posterior",
-             id = paste(ESTADO, ESTADO_t1, sep = " - ")) |> ungroup() |> 
+             id = paste(ESTADO, ESTADO_t1, sep = " - ")) |> ungroup() |>
       select(ESTADO, ESTADO_t1, porc_base, id, periodo_base)
-  } 
-  
+  }
+
   return(tabla)
 }
 
