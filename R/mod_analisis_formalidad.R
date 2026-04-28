@@ -167,7 +167,7 @@ mod_formalidad_ui <- function(id) {
           ),
           card(
             card_body(
-              p(em("Tip:"), "Las tarjetas se calculan respecto a la categoría seleccionada y a la definición elegida (clásica o ampliada).")
+              p(em("Nota:"), "Las tarjetas se calculan respecto a la categoría seleccionada y a la definición elegida (clásica o ampliada).")
             )
           )
         )
@@ -440,14 +440,17 @@ mod_formalidad_server <- function(id) {
           ))
         }
 
-        highcharter::hchart(
-          object = armo_tabla_sankey(
+        tabla_sankey <- armo_tabla_sankey(
             table = preparo_base(
               df = df_eph_panel(),
               periodo_base = input$periodo_base,
               var = var_panel,
               etiquetas = c("Formal", "Informal")),
-            categoria = input$category),
+            categoria = input$category) |>
+          dplyr::mutate(dplyr::across(c(from, to), sankey_label_legible))
+
+        highcharter::hchart(
+          object = tabla_sankey,
           "sankey",
           name = ifelse(sentido == "t_anterior",
                         glue::glue("Flujo desde {universo} {cat_plural}"),

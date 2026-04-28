@@ -95,6 +95,34 @@ arma_tasas_destacadas <- function(df_panel, var, etiquetas, categoria) {
 }
 
 
+### Convierte un código técnico ("Ocupado_t0", "Cuenta_propia_t1", "TFSR_t0")
+### en una etiqueta legible para Sankey (issue #25).
+###   "Ocupado_t0"        → "Ocupados (t0)"
+###   "Cuenta_propia_t1"  → "Cuenta propia (t1)"
+###   "TFSR_t0"           → "Trab. familiares (t0)"
+###
+### Vectorizado: acepta vector char de cualquier largo.
+sankey_label_legible <- function(codigos) {
+  mapeo <- c(
+    "Ocupado"       = "Ocupados",
+    "Desocupado"    = "Desocupados",
+    "Inactivo"      = "Inactivos",
+    "Trab_familiar" = "Trab. familiares",
+    "Patron"        = "Patrones",
+    "Cuenta_propia" = "Cuenta propia",
+    "Asalariado"    = "Asalariados",
+    "TFSR"          = "Trab. familiares",
+    "Formal"        = "Formales",
+    "Informal"      = "Informales"
+  )
+  base   <- gsub("_t[01]$", "", codigos)
+  sufijo <- stringr::str_extract(codigos, "t[01]$")
+  legible <- unname(mapeo[base])
+  legible[is.na(legible)] <- base[is.na(legible)]  # fallback si no está en el mapeo
+  paste0(legible, " (", sufijo, ")")
+}
+
+
 ### Formatea un delta en puntos porcentuales con flecha y signo (issue #21).
 ### Ejemplos: 1.2 → "↑ +1.2 pp" / -0.5 → "↓ -0.5 pp" / 0 → "= 0.0 pp".
 formato_delta <- function(delta) {
@@ -168,6 +196,11 @@ arma_line_chart_areaspline <- function(df_data,
   highcharter::hchart(df_data, "areaspline",
                       highcharter::hcaes(periodo, weight, group = to)) |>
     highcharter::hc_add_theme(hc_theme_estacion_r) |>
+    ### Paleta diferenciada para line charts con 3+ series (issue #26).
+    ### Evita repetir azul (en otro tono también) y mantiene identidad
+    ### con azul Estación R como primer color. Naranja y amarillo
+    ### Estación R como acentos. Verde como cuarto color.
+    highcharter::hc_colors(c("#405BFF", "#FF7043", "#EAFF38", "#7CB342")) |>
     highcharter::hc_chart(zoomType = "x") |>
     highcharter::hc_plotOptions(
       areaspline = list(
@@ -195,7 +228,27 @@ arma_line_chart_areaspline <- function(df_data,
     highcharter::hc_yAxis(
       title = list(text = "% del total"),
       labels = list(format = "{value}%"),
-      gridLineDashStyle = "Dot"
+      gridLineDashStyle = "Dot",
+      ### Eje Y adaptativo a media ±1.5 SD (issue #27). Si la dispersión
+      ### es baja (datos casi constantes), garantizamos rango mínimo de
+      ### ±2 pp para que la variación sea legible. Clamp a 0-100 para
+      ### no pasarse de los límites naturales del porcentaje.
+      min = local({
+        stats <- df_data |>
+          dplyr::filter(!is.na(weight)) |>
+          dplyr::summarise(media = mean(weight, na.rm = TRUE),
+                           desv  = stats::sd(weight, na.rm = TRUE))
+        rango <- max(2, 1.5 * (if (is.na(stats$desv)) 0 else stats$desv))
+        max(0, stats$media - rango)
+      }),
+      max = local({
+        stats <- df_data |>
+          dplyr::filter(!is.na(weight)) |>
+          dplyr::summarise(media = mean(weight, na.rm = TRUE),
+                           desv  = stats::sd(weight, na.rm = TRUE))
+        rango <- max(2, 1.5 * (if (is.na(stats$desv)) 0 else stats$desv))
+        min(100, stats$media + rango)
+      })
     ) |>
     highcharter::hc_tooltip(
       shared = TRUE,

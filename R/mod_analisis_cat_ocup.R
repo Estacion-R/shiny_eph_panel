@@ -157,7 +157,7 @@ mod_cat_ocup_ui <- function(id) {
         ),
         card(
           card_body(
-            p(em("Tip:"), "Las tarjetas se calculan respecto a la categoría seleccionada en el filtro. La matriz muestra todas las transiciones del panel.")
+            p(em("Nota:"), "Las tarjetas se calculan respecto a la categoría seleccionada en el filtro. La matriz muestra todas las transiciones del panel.")
           )
         )
       )
@@ -408,14 +408,17 @@ mod_cat_ocup_server <- function(id) {
       })
 
       output$sankey <- renderHighchart({
-        highcharter::hchart(
-          object = armo_tabla_sankey(
+        tabla_sankey <- armo_tabla_sankey(
             table = preparo_base(
               df = df_eph_panel(),
               periodo_base = input$periodo_base,
               var = "CAT_OCUP",
               etiquetas = c("Patron", "Cuenta_propia", "Asalariado", "TFSR")),
-            categoria = input$category),
+            categoria = input$category) |>
+          dplyr::mutate(dplyr::across(c(from, to), sankey_label_legible))
+
+        highcharter::hchart(
+          object = tabla_sankey,
           "sankey",
           name = ifelse(sentido == "t_anterior",
                         glue::glue("Flujo desde {cat_plural}"),

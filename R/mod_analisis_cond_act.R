@@ -159,7 +159,7 @@ mod_cond_act_ui <- function(id) {
         ),
         card(
           card_body(
-            p(em("Tip:"), "Pasá el mouse sobre el Sankey o la matriz para ver porcentajes precisos. Las tarjetas de arriba se calculan respecto a la categoría seleccionada en el filtro.")
+            p(em("Nota:"), "Pasá el mouse sobre el Sankey o la matriz para ver porcentajes precisos. Las tarjetas de arriba se calculan respecto a la categoría seleccionada en el filtro.")
           )
         )
       )
@@ -231,7 +231,7 @@ mod_cond_act_ui <- function(id) {
 
       div(
         style = "padding: 0 1rem 1rem;",
-        p(em("Tip:"), "Usá la comparación para mirar el mismo dúo trimestral en dos años distintos (ej: pre vs post pandemia) y entender cómo cambió la dinámica de movilidad.")
+        p(em("Nota:"), "Usá la comparación para mirar el mismo dúo trimestral en dos años distintos (ej: pre vs post pandemia) y entender cómo cambió la dinámica de movilidad.")
       )
     ),
 
@@ -460,12 +460,12 @@ mod_cond_act_server <- function(id) {
           glue::glue("Flujo hacia la {categoria_lab}")
         }
 
-        highcharter::hchart(
-          armo_tabla_sankey(
+        tabla <- armo_tabla_sankey(
             preparo_base(df_p, periodo_base = input$comp_periodo_base),
-            categoria = input$comp_category),
-          "sankey", name = sentido_label
-        ) |>
+            categoria = input$comp_category) |>
+          dplyr::mutate(dplyr::across(c(from, to), sankey_label_legible))
+
+        highcharter::hchart(tabla, "sankey", name = sentido_label) |>
           hc_subtitle(text = glue::glue("Panel {anio} - trimestre {trim} y {trim_post}")) |>
           hc_add_theme(hc_theme_estacion_r)
       }
@@ -524,12 +524,15 @@ mod_cond_act_server <- function(id) {
       })
 
       output$sankey <- renderHighchart({
-        highcharter::hchart(
-          object = armo_tabla_sankey(
+        tabla_sankey <- armo_tabla_sankey(
             table = preparo_base(
               df = df_eph_panel(),
               periodo_base = input$periodo_base),
-            categoria = input$category),
+            categoria = input$category) |>
+          dplyr::mutate(dplyr::across(c(from, to), sankey_label_legible))
+
+        highcharter::hchart(
+          object = tabla_sankey,
           "sankey",
           name = ifelse(sentido == "t_anterior",
                         glue::glue("Flujo desde la {categoria_lab}"),
