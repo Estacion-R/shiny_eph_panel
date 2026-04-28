@@ -71,6 +71,7 @@ jobs:
         run: rm -f .new_periods.txt
 
       - name: Crear Pull Request con datos actualizados
+        id: cpr
         if: steps.check.outputs.has_new == 'true'
         uses: peter-evans/create-pull-request@v6
         with:
@@ -85,7 +86,8 @@ jobs:
             ## Actualización automática de datos EPH
 
             El workflow detectó nuevos microdatos publicados por INDEC y
-            ejecutó el script `ETL/03-update_data.R`.
+            ejecutó el script `ETL/03-update_data.R`. Este PR se mergea
+            automáticamente y dispara el deploy a shinyapps.io.
 
             ### Períodos agregados
             ```
@@ -97,11 +99,6 @@ jobs:
             - `data_output/df_tasas_mt.parquet` (totales por trimestre)
             - `data_output/panel_cond_act_historico.csv` (paneles para line chart)
 
-            ### Próximos pasos
-            1. Revisar el diff (especialmente los nuevos períodos en el CSV histórico)
-            2. Mergear el PR
-            3. Re-deployar a shinyapps.io: `rsconnect::deployApp()`
-
             ---
             *Generado por `.github/workflows/update_eph_data.yml`*
           branch: auto/update-eph-data
@@ -110,3 +107,66 @@ jobs:
             data_raw/df_eph.parquet
             data_output/df_tasas_mt.parquet
             data_output/panel_cond_act_historico.csv
+
+      - name: Auto-merge del PR
+        if: steps.cpr.outputs.pull-request-number
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh pr merge ${{ steps.cpr.outputs.pull-request-number }} \
+            --repo ${{ github.repository }} \
+            --merge \
+            --delete-branch
+          echo "::notice title=PR mergeado::PR #${{ steps.cpr.outputs.pull-request-number }} mergeado automáticamente"
+
+      ### -----------------------------------------------------------------
+      ### Deploy en el mismo job para evitar tener que esperar el trigger
+      ### de deploy_shinyapps.yml (los workflows triggereados por GITHUB_TOKEN
+      ### no disparan otros workflows). Re-checkout porque el merge cambió master.
+      ### -----------------------------------------------------------------
+
+      - name: Re-checkout master post-merge
+        if: steps.cpr.outputs.pull-request-number
+        uses: actions/checkout@v4
+        with:
+          ref: master
+
+      - name: Instalar dependencias del sistema para Shiny
+        if: steps.cpr.outputs.pull-request-number
+        run: |
+          sudo apt-get install -y libfontconfig1-dev libfreetype6-dev libpng-dev \
+            libtiff5-dev libjpeg-dev libharfbuzz-dev libfribidi-dev \
+            libudunits2-dev libgdal-dev libgeos-dev libproj-dev
+
+      - name: Instalar paquetes para deploy
+        if: steps.cpr.outputs.pull-request-number
+        run: |
+          source("init.R")
+          install.packages("rsconnect")
+        shell: Rscript {0}
+
+      - name: Configurar y deployar a shinyapps.io
+        if: steps.cpr.outputs.pull-request-number
+        env:
+          SHINYAPPS_NAME: ${{ secrets.SHINYAPPS_NAME }}
+          SHINYAPPS_TOKEN: ${{ secrets.SHINYAPPS_TOKEN }}
+          SHINYAPPS_SECRET: ${{ secrets.SHINYAPPS_SECRET }}
+        run: |
+          rsconnect::setAccountInfo(
+            name   = Sys.getenv("SHINYAPPS_NAME"),
+            token  = Sys.getenv("SHINYAPPS_TOKEN"),
+            secret = Sys.getenv("SHINYAPPS_SECRET")
+          )
+          rsconnect::deployApp(
+            appName        = "shiny_eph_panel",
+            account        = Sys.getenv("SHINYAPPS_NAME"),
+            forceUpdate    = TRUE,
+            launch.browser = FALSE,
+            logLevel       = "normal"
+          )
+        shell: Rscript {0}
+
+      - name: Notificar deploy exitoso
+        if: steps.cpr.outputs.pull-request-number && success()
+        run: |
+          echo "::notice title=Ciclo completo OK::PR mergeado + deploy en https://estacionr.shinyapps.io/shiny_eph_panel/"
