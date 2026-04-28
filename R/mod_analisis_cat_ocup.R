@@ -240,29 +240,6 @@ mod_cat_ocup_server <- function(id) {
       })
 
       output$line <- renderHighchart({
-        ### Plotband pandemia solo cuando se ven todos los duos.
-        mostrar_pandemia <- input$duo == "todos"
-        idx_pandemia_ini <- match("2020_t1-t2", levels(df_cat_ocup$periodo)) - 1
-        idx_pandemia_fin <- match("2020_t3-t4", levels(df_cat_ocup$periodo)) - 1
-
-        plot_bands <- if (mostrar_pandemia &&
-                          !is.na(idx_pandemia_ini) &&
-                          !is.na(idx_pandemia_fin)) {
-          list(list(
-            from = idx_pandemia_ini,
-            to = idx_pandemia_fin,
-            color = "rgba(234, 255, 56, 0.30)",
-            label = list(
-              text = "Pandemia COVID-19",
-              style = list(color = "#191919", fontWeight = "600")
-            )
-          ))
-        } else {
-          list()
-        }
-
-        tick_interval <- if (input$duo == "todos") 4 else 1
-
         ### Genera la etiqueta humana de la serie a partir de from/to.
         etiqueta_serie <- function(from, to) {
           partir_de <- gsub("_t0$", "", from)
@@ -289,54 +266,13 @@ mod_cat_ocup_server <- function(id) {
                               (weight == min(weight, na.rm = TRUE)),
                  .by = to)
 
-        hchart(df_data, "areaspline",
-               hcaes(periodo, weight, group = to)) |>
-          hc_add_theme(hc_theme_estacion_r) |>
-          hc_chart(zoomType = "x") |>
-          hc_plotOptions(
-            areaspline = list(
-              fillOpacity = 0.18,
-              lineWidth = 2.5,
-              marker = list(enabled = FALSE,
-                            states = list(hover = list(enabled = TRUE, radius = 5))),
-              dataLabels = list(
-                enabled = TRUE,
-                filter = list(property = "isExtremo", operator = "==", value = TRUE),
-                format = "{point.y}%",
-                style = list(fontSize = "0.75em",
-                             textOutline = "2px white",
-                             color = "#191919",
-                             fontWeight = "600")
-              )
-            )
-          ) |>
-          hc_xAxis(
-            title = list(text = NULL),
-            tickInterval = tick_interval,
-            plotBands = plot_bands,
-            labels = list(rotation = -45, style = list(fontSize = "0.85em"))
-          ) |>
-          hc_yAxis(
-            title = list(text = "% del total"),
-            labels = list(format = "{value}%"),
-            gridLineDashStyle = "Dot"
-          ) |>
-          hc_tooltip(
-            shared = TRUE,
-            useHTML = TRUE,
-            headerFormat = "<span style='font-size: 0.9em; color: #191919;'><b>{point.key}</b></span><br/>",
-            pointFormat = "<span style='color: {series.color}'>●</span> {series.name}: <b>{point.y}%</b><br/>",
-            backgroundColor = "rgba(255,255,255,0.96)",
-            borderColor = "#405BFF",
-            borderRadius = 6
-          ) |>
-          hc_legend(
-            align = "center", verticalAlign = "top", layout = "horizontal",
-            itemStyle = list(cursor = "pointer", fontWeight = "500")
-          ) |>
-          hc_caption(
-            text = "Elaboración propia en base a la EPH-INDEC. Arrastrá horizontalmente para hacer zoom · Click en una serie para mostrarla u ocultarla."
-          )
+        arma_line_chart_areaspline(
+          df_data = df_data,
+          levels_periodo = levels(df_cat_ocup$periodo),
+          mostrar_pandemia = input$duo == "todos",
+          tick_interval = if (input$duo == "todos") 4 else 1,
+          caption_text = "Elaboración propia en base a la EPH-INDEC. Arrastrá horizontalmente para hacer zoom · Click en una serie para mostrarla u ocultarla."
+        )
       })
 
     })
