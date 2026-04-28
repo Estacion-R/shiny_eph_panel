@@ -273,13 +273,16 @@ server <- function(input, output, session) {
     })
     
     output$line <- renderHighchart({
-      ### Índice 0-based del comienzo de la pandemia para plotBand (Highcharts
-      ### usa categorías indexadas desde 0). Si "2020_t1-t2" no existe en la
-      ### base por algún motivo, omitimos el plotBand.
+      ### El plotBand de pandemia solo tiene sentido cuando se ven todos los
+      ### duos (los índices 0-based se calculan sobre la serie completa).
+      ### Si Pablo filtra a un dúo específico (peras con peras), lo omitimos.
+      mostrar_pandemia <- input$duo == "todos"
       idx_pandemia_ini <- match("2020_t1-t2", levels(df_cond_act$periodo)) - 1
       idx_pandemia_fin <- match("2020_t3-t4", levels(df_cond_act$periodo)) - 1
 
-      plot_bands <- if (!is.na(idx_pandemia_ini) && !is.na(idx_pandemia_fin)) {
+      plot_bands <- if (mostrar_pandemia &&
+                        !is.na(idx_pandemia_ini) &&
+                        !is.na(idx_pandemia_fin)) {
         list(list(
           from = idx_pandemia_ini,
           to = idx_pandemia_fin,
@@ -293,8 +296,14 @@ server <- function(input, output, session) {
         list()
       }
 
+      ### tickInterval: con todos los duos hay ~80 puntos, mostramos cada 4.
+      ### Filtrando por dúo específico hay ~22 puntos (uno por año), conviene
+      ### mostrar todas las labels.
+      tick_interval <- if (input$duo == "todos") 4 else 1
+
       hchart(df_cond_act |>
                filter(from == input$desde, to %in% input$hacia) |>
+               filter(input$duo == "todos" | stringr::str_ends(as.character(periodo), input$duo)) |>
                arrange(periodo) |>
                mutate(to = case_when(
                  from == "Desocupado_t0" & to == "Inactivo_t1" ~ "% de Desocupados que pasan a la Inactividad",
@@ -322,7 +331,7 @@ server <- function(input, output, session) {
         ) |>
         hc_xAxis(
           title = list(text = NULL),
-          tickInterval = 4,
+          tickInterval = tick_interval,
           plotBands = plot_bands,
           labels = list(rotation = -45, style = list(fontSize = "0.85em"))
         ) |>

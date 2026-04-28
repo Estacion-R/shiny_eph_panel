@@ -157,9 +157,23 @@ filter_line_hacia <- selectInput(inputId = "hacia",
                                  multiple = TRUE
 )
 
+### Filtro de dúo trimestral: por default muestra todos los duos (serie completa).
+### Si se elige uno específico (ej: t1-t2), filtra el data al sufijo correspondiente
+### permitiendo comparar el mismo dúo año a año (peras con peras).
+filter_line_duo <- selectInput(inputId = "duo",
+                               label = "Trimestres",
+                               choices = c("Todos los trimestres" = "todos",
+                                           "1-2" = "t1-t2",
+                                           "2-3" = "t2-t3",
+                                           "3-4" = "t3-t4",
+                                           "4-1" = "t4-t1"),
+                               selected = "todos"
+)
+
 filters_line <- filter_query(
   prefix_text = "",
   filter_preposition("Mostrar el flujo desde la", filter_line_desde, ""),
   filter_preposition("hacia", filter_line_hacia, ""),
+  filter_preposition("en los trimestres", filter_line_duo, ""),
   suffix_text = ""
 )
