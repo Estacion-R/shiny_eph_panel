@@ -8,6 +8,9 @@ library(highcharter)
 library(arrow)
 library(glue)
 library(bslib)
+### bs_theme(brand = "_brand.yml") requiere el paquete brand.yml en runtime.
+### Sin este library() explícito, rsconnect no lo detecta y el deploy falla.
+library(brand.yml)
 library(bsicons)
 library(gghighlight)
 library(waiter)
