@@ -163,6 +163,43 @@ mod_cat_ocup_ui <- function(id) {
       )
     ),
     bslib::nav_panel(
+      title = "Tasas",
+      icon = icon("chart-line"),
+      filter_query(
+        prefix_text = "",
+        filter_preposition(
+          "Mostrar la evolución de las tasas para los",
+          selectInput(inputId = ns("tasas_category"),
+                      label = "Categoría",
+                      choices = c("Patrones" = "Patron",
+                                  "Cuenta propia" = "Cuenta_propia",
+                                  "Asalariados" = "Asalariado",
+                                  "Trab familiares" = "TFSR"),
+                      selected = "Asalariado"),
+          ""
+        ),
+        filter_preposition(
+          "en los trimestres",
+          selectInput(inputId = ns("tasas_duo"),
+                      label = "Trimestres",
+                      choices = c("Todos los trimestres" = "todos",
+                                  "1-2" = "t1-t2",
+                                  "2-3" = "t2-t3",
+                                  "3-4" = "t3-t4",
+                                  "4-1" = "t4-t1"),
+                      selected = "todos"),
+          ""
+        ),
+        suffix_text = ""
+      ),
+      card(
+        full_screen = TRUE,
+        min_height = "520px",
+        highchartOutput(ns("tasas_chart"), height = "100%")
+      )
+    ),
+
+    bslib::nav_panel(
       title = "Película",
       icon = icon("video"),
       filtros_pelicula,
@@ -332,6 +369,42 @@ mod_cat_ocup_server <- function(id) {
           etiquetas = c("Patron", "Cuenta_propia", "Asalariado", "TFSR")
         )
         arma_matriz_transicion_gt(matriz, titulo = NULL)
+      })
+
+      ### Sub-tab "Tasas" (issue #22).
+      output$tasas_chart <- renderHighchart({
+        shiny::validate(shiny::need(
+          nrow(df_tasas_cat_ocup) > 0,
+          "Histórico de tasas todavía no fue computado. Correr ETL/08-build_tasas_historico.R."
+        ))
+
+        df_data <- df_tasas_cat_ocup |>
+          filter(categoria == input$tasas_category) |>
+          filter(input$tasas_duo == "todos" |
+                   stringr::str_ends(as.character(periodo), input$tasas_duo)) |>
+          arrange(periodo) |>
+          tidyr::pivot_longer(c(persistencia, salida, entrada),
+                              names_to = "to", values_to = "weight") |>
+          mutate(to = recode(to,
+                             persistencia = "Persistencia",
+                             salida = "Salida",
+                             entrada = "Entrada"),
+                 id = paste0(categoria, "_", to)) |>
+          mutate(isExtremo = (weight == max(weight, na.rm = TRUE)) |
+                              (weight == min(weight, na.rm = TRUE)),
+                 .by = to)
+
+        arma_line_chart_areaspline(
+          df_data = df_data,
+          levels_periodo = levels(df_tasas_cat_ocup$periodo),
+          mostrar_pandemia = input$tasas_duo == "todos",
+          tick_interval = if (input$tasas_duo == "todos") 4 else 1,
+          caption_text = paste0(
+            "Tasas de movilidad por panel para los ",
+            etiqueta_plural(input$tasas_category),
+            ". Elaboración propia en base a EPH-INDEC."
+          )
+        )
       })
 
       output$sankey <- renderHighchart({

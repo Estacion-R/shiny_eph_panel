@@ -29,6 +29,20 @@ if (nrow(df_formalidad_ampliada) > 0) {
   df_formalidad_ampliada <- ordenar_periodo_cronologico(df_formalidad_ampliada)
 }
 
+### Históricos de tasas (issue #22). Mismo factor cronológico.
+if (nrow(df_tasas_cond_act) > 0) {
+  df_tasas_cond_act <- ordenar_periodo_cronologico(df_tasas_cond_act)
+}
+if (nrow(df_tasas_cat_ocup) > 0) {
+  df_tasas_cat_ocup <- ordenar_periodo_cronologico(df_tasas_cat_ocup)
+}
+if (nrow(df_tasas_formalidad) > 0) {
+  df_tasas_formalidad <- ordenar_periodo_cronologico(df_tasas_formalidad)
+}
+if (nrow(df_tasas_formalidad_amp) > 0) {
+  df_tasas_formalidad_amp <- ordenar_periodo_cronologico(df_tasas_formalidad_amp)
+}
+
 
 ### Application dependencies (CSS/JS estáticos)
 include_styles <- tags$head(

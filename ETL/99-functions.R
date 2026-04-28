@@ -131,6 +131,67 @@ regenerar_panel_historico <- function(path_csv, df_microdato,
 }
 
 
+### Pre-computa el histórico de tasas (Persistencia / Salida / Entrada)
+### para todos los paneles disponibles y todas las categorías. Output:
+### tibble con cols (periodo, categoria, persistencia, salida, entrada).
+###
+### Reusa arma_tasas_destacadas() de R/utils_analisis.R por categoría y
+### período. Issue #22.
+build_tasas_historico <- function(df_microdato, var, etiquetas,
+                                  vars_extra = character(),
+                                  desde_panel = NULL) {
+
+  ### Necesitamos arma_tasas_destacadas (en R/utils_analisis.R). El script
+  ### que llama a esta fn debe haber hecho source antes.
+  stopifnot(exists("arma_tasas_destacadas"))
+
+  paneles <- df_microdato |>
+    dplyr::distinct(ANO4, TRIMESTRE) |>
+    dplyr::arrange(ANO4, TRIMESTRE) |>
+    dplyr::mutate(
+      anio_post  = dplyr::if_else(TRIMESTRE %in% 1:3, ANO4, ANO4 + 1L),
+      trim_post  = dplyr::if_else(TRIMESTRE %in% 1:3, TRIMESTRE + 1L, 1L),
+      tiene_post = paste(anio_post, trim_post) %in%
+        paste(df_microdato$ANO4, df_microdato$TRIMESTRE)
+    ) |>
+    dplyr::filter(tiene_post) |>
+    dplyr::mutate(periodo = glue::glue("{ANO4}_t{TRIMESTRE}-t{trim_post}"))
+
+  if (!is.null(desde_panel)) {
+    desde_anio <- as.integer(stringr::str_extract(desde_panel, "^[0-9]{4}"))
+    desde_trim <- as.integer(stringr::str_match(desde_panel, "[Tt]([0-9])$")[, 2])
+    paneles <- paneles |>
+      dplyr::filter(ANO4 > desde_anio |
+                      (ANO4 == desde_anio & TRIMESTRE >= desde_trim))
+  }
+
+  vars_panel <- unique(c("ESTADO", "PONDERA", var, vars_extra))
+
+  paneles |>
+    purrr::pmap_dfr(function(ANO4, TRIMESTRE, anio_post, trim_post, periodo, ...) {
+      df_panel <- armo_base_panel(
+        anio_0 = ANO4, trimestre_0 = TRIMESTRE,
+        anio_1 = anio_post, trimestre_1 = trim_post,
+        df = df_microdato,
+        variables = vars_panel
+      )
+
+      purrr::map_dfr(etiquetas, function(cat) {
+        tryCatch({
+          tasas <- arma_tasas_destacadas(df_panel, var, etiquetas, cat)
+          tibble::tibble(
+            periodo = as.character(periodo),
+            categoria = cat,
+            persistencia = tasas$persistencia,
+            salida = tasas$salida,
+            entrada = tasas$entrada
+          )
+        }, error = function(e) tibble::tibble())
+      })
+    })
+}
+
+
 ### Devuelve los duos trimestrales válidos para un año dado, evaluando contra
 ### los períodos efectivamente disponibles en `periodos_disponibles` (data
 ### frame con columnas ANO4 y TRIMESTRE). Un duo es válido cuando ambos

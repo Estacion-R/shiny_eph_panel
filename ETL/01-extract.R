@@ -53,6 +53,25 @@ rm(path_amp)
 ### Tasas del mercado de trabajo (totales por trimestre)
 df_tasas_mt <- arrow::read_parquet("data_output/df_tasas_mt.parquet")
 
+### Históricos de tasas (Persistencia / Salida / Entrada) por análisis.
+### Pre-computados por ETL/08-build_tasas_historico.R (issue #22).
+### Schema: (periodo, categoria, persistencia, salida, entrada).
+### Carga condicional: si el script no se corrió, queda tibble vacía y el
+### sub-tab Tasas muestra mensaje informativo.
+cargar_tasas_csv <- function(path) {
+  if (file.exists(path)) {
+    arrow::read_csv_arrow(path)
+  } else {
+    tibble::tibble(periodo = character(), categoria = character(),
+                   persistencia = double(), salida = double(),
+                   entrada = double())
+  }
+}
+df_tasas_cond_act        <- cargar_tasas_csv("data_output/tasas_cond_act_historico.csv")
+df_tasas_cat_ocup        <- cargar_tasas_csv("data_output/tasas_cat_ocup_historico.csv")
+df_tasas_formalidad      <- cargar_tasas_csv("data_output/tasas_formalidad_historico.csv")
+df_tasas_formalidad_amp  <- cargar_tasas_csv("data_output/tasas_formalidad_ampliada_historico.csv")
+
 ### Rango de períodos disponibles (insumo para los selectInput dinámicos).
 ### Se exponen como variables globales para usarse en 02-transform.R y app.R
 periodos_disponibles <- df_eph_full |>
