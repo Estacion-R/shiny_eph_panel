@@ -7,6 +7,7 @@ source("ETL/00-libraries.R")
 source("ETL/99-functions.R")
 source("ETL/01-extract.R")
 source("ETL/02-transform.R")
+source("ETL/03-hc-theme.R")
 
 library(shinyalert)
 
@@ -155,15 +156,9 @@ ui <- page_navbar(
         )
     ),
     card(
-      #card_header("Flujo de la Condición de Actividad - PELÍCULA"),
-      # !!!filters_line,
-      highchartOutput("line"),
-      #plotOutput("line"),
-      mainPanel(
-        
-        
-        #textOutput("text")
-      )
+      full_screen = TRUE,
+      min_height = "520px",
+      highchartOutput("line", height = "100%")
     )
   ),
   nav_spacer(),
@@ -179,8 +174,29 @@ ui <- page_navbar(
 
 
 # Define server logic required to draw a histogram
-server <- function(input, output) {
-  
+server <- function(input, output, session) {
+
+  ### Recalcula los duos trimestrales válidos cuando cambia el año.
+  ### Si el duo previamente seleccionado sigue disponible, se preserva;
+  ### si no, se cae al primer duo válido del año.
+  observeEvent(input$anio_ant, {
+    duos <- duos_disponibles_por_anio(input$anio_ant, periodos_disponibles)
+
+    seleccion_actual <- isolate(input$trimestre_ant)
+    seleccion_nueva <- if (!is.null(seleccion_actual) && seleccion_actual %in% duos) {
+      seleccion_actual
+    } else {
+      duos[1]
+    }
+
+    updateSelectInput(
+      session,
+      "trimestre_ant",
+      choices = duos,
+      selected = seleccion_nueva
+    )
+  })
+
   shinyalert(
     title = "Buenas!",
     text = "Esta aplicación está en desarrollo. Si algo no está funcionando, se puede mejorar o incluso tenés una idea para agregar, podés escribirme a pablotiscornia@estacion-r.com",
@@ -252,53 +268,80 @@ server <- function(input, output) {
         hc_subtitle(text = glue(
           "Panel {ifelse(trim_ant %in% 1:3, paste0(anio_ant, ' - ', 'trimestre ', trim_ant, ' y ', trim_post), 
         paste0(anio_ant, ' - ', 'trimestre ', trim_ant, ' y ', anio_ant + 1, ' trimestre ', trim_post))}")) |> 
-        hc_caption(text = "Fuente: Elaboración propia en base a la EPH-INDEC") |> 
-        hc_add_theme(hc_theme_smpl())
+        hc_caption(text = "Fuente: Elaboración propia en base a la EPH-INDEC") |>
+        hc_add_theme(hc_theme_estacion_r)
     })
     
     output$line <- renderHighchart({
-      hchart(df_cond_act |> 
-               filter(from == input$desde, to %in% input$hacia) |> 
+      ### Índice 0-based del comienzo de la pandemia para plotBand (Highcharts
+      ### usa categorías indexadas desde 0). Si "2020_t1-t2" no existe en la
+      ### base por algún motivo, omitimos el plotBand.
+      idx_pandemia_ini <- match("2020_t1-t2", levels(df_cond_act$periodo)) - 1
+      idx_pandemia_fin <- match("2020_t3-t4", levels(df_cond_act$periodo)) - 1
+
+      plot_bands <- if (!is.na(idx_pandemia_ini) && !is.na(idx_pandemia_fin)) {
+        list(list(
+          from = idx_pandemia_ini,
+          to = idx_pandemia_fin,
+          color = "rgba(234, 255, 56, 0.30)",
+          label = list(
+            text = "Pandemia COVID-19",
+            style = list(color = "#191919", fontWeight = "600")
+          )
+        ))
+      } else {
+        list()
+      }
+
+      hchart(df_cond_act |>
+               filter(from == input$desde, to %in% input$hacia) |>
                mutate(to = case_when(
-                 from == "Desocupado_t0" & to == "Inactivo_t1" ~ "% de Desocupados que pasan a la Inactividad:",
-                 from == "Desocupado_t0" & to == "Desocupado_t1" ~ "% de Desocupados que pasan a la Desocupación:",
-                 from == "Desocupado_t0" & to == "Ocupado_t1" ~ "% de Desocupados que pasan a la Ocupación:",
-                 from == "Ocupado_t0" & to == "Inactivo_t1" ~ "% de Ocupados que pasan a la Inactividad:",
-                 from == "Ocupado_t0" & to == "Desocupado_t1" ~ "% de Ocupados que pasan a la Desocupación:",
-                 from == "Ocupado_t0" & to == "Ocupado_t1" ~ "% de Ocupados que pasan a la Ocupación:",
-                 from == "Inactivo_t0" & to == "Inactivo_t1" ~ "% de Inactivos que pasan a la Inactividad:",
-                 from == "Inactivo_t0" & to == "Desocupado_t1" ~ "% de Inactivos que pasan a la Desocupación:",
-                 from == "Inactivo_t0" & to == "Ocupado_t1" ~ "% de Inactivos que pasan a la Ocupación:"),
+                 from == "Desocupado_t0" & to == "Inactivo_t1" ~ "% de Desocupados que pasan a la Inactividad",
+                 from == "Desocupado_t0" & to == "Desocupado_t1" ~ "% de Desocupados que siguen Desocupados",
+                 from == "Desocupado_t0" & to == "Ocupado_t1" ~ "% de Desocupados que pasan a la Ocupación",
+                 from == "Ocupado_t0" & to == "Inactivo_t1" ~ "% de Ocupados que pasan a la Inactividad",
+                 from == "Ocupado_t0" & to == "Desocupado_t1" ~ "% de Ocupados que pasan a la Desocupación",
+                 from == "Ocupado_t0" & to == "Ocupado_t1" ~ "% de Ocupados que siguen Ocupados",
+                 from == "Inactivo_t0" & to == "Inactivo_t1" ~ "% de Inactivos que siguen Inactivos",
+                 from == "Inactivo_t0" & to == "Desocupado_t1" ~ "% de Inactivos que pasan a la Desocupación",
+                 from == "Inactivo_t0" & to == "Ocupado_t1" ~ "% de Inactivos que pasan a la Ocupación"),
                  id = stringr::str_replace_all(id, "tant", "t0"),
                  id = stringr::str_replace_all(id, "tpost", "t2")),
-             "line", 
-             hcaes(periodo, weight, group = to)) |> 
-        hc_add_theme(hc_theme_smpl()) |> 
-        hc_tooltip(
-          pointFormat = "<span  style='color: {series.color}'> {series.name} <b>{point.y}</b><br/></span>",
-          shadow = TRUE,
-          backgroundColor = "white",
-          style = list(textOutline = "3px #00000"),
-          borderColor = "red",
-          borderWidth = 0
-        ) |> 
-        hc_annotations(
-          list(
-            labelOptions = list(
-              shape = "connector",
-              align = "right",
-              justify = FALSE,
-              crop = TRUE,
-              style = list(fontSize = "0.8em", textOutline = "1px white")
-            ),
-            labels = list(
-              list(point = list(x = 11, y = 40, xAxis = 0, yAxis = 0), 
-                   text = "Comienzo de la Pandemia")
-            )
+             "areaspline",
+             hcaes(periodo, weight, group = to)) |>
+        hc_add_theme(hc_theme_estacion_r) |>
+        hc_chart(zoomType = "x") |>
+        hc_plotOptions(
+          areaspline = list(
+            fillOpacity = 0.18,
+            lineWidth = 2.5,
+            marker = list(enabled = FALSE,
+                          states = list(hover = list(enabled = TRUE, radius = 5)))
           )
-        )|>  
+        ) |>
+        hc_xAxis(
+          title = list(text = NULL),
+          tickInterval = 4,
+          plotBands = plot_bands,
+          labels = list(rotation = -45, style = list(fontSize = "0.85em"))
+        ) |>
+        hc_yAxis(
+          title = list(text = "% del total"),
+          labels = list(format = "{value}%"),
+          gridLineDashStyle = "Dot"
+        ) |>
+        hc_tooltip(
+          shared = TRUE,
+          useHTML = TRUE,
+          headerFormat = "<span style='font-size: 0.9em; color: #191919;'><b>{point.key}</b></span><br/>",
+          pointFormat = "<span style='color: {series.color}'>●</span> {series.name}: <b>{point.y}%</b><br/>",
+          backgroundColor = "rgba(255,255,255,0.96)",
+          borderColor = "#405BFF",
+          borderRadius = 6
+        ) |>
+        hc_legend(align = "center", verticalAlign = "top", layout = "horizontal") |>
         hc_caption(
-          text = "Elaboración propia en base a la EPH-INDEC."
+          text = "Elaboración propia en base a la EPH-INDEC. Arrastrá horizontalmente para hacer zoom."
         )
     })
     
