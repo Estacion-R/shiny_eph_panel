@@ -12,6 +12,7 @@ source("ETL/02-transform.R")
 source("ETL/03-hc-theme.R")
 source("R/mod_analisis_cond_act.R")
 source("R/mod_analisis_cat_ocup.R")
+source("R/mod_analisis_formalidad.R")
 
 library(shinyalert)
 
@@ -172,10 +173,10 @@ ui <- page_fillable(
       mod_cat_ocup_ui("cat_ocup")
     ),
 
-    panel_proximamente(
-      titulo = "Formal / Informal",
-      icono_id = "id-card",
-      descripcion = "Movilidad entre empleo formal e informal, según definición OIT (asalariados con aportes + cuenta propia con monotributo)."
+    nav_panel(
+      title = "Formal / Informal",
+      icon = icon("id-card"),
+      mod_formalidad_ui("formalidad")
     ),
 
     panel_info
@@ -210,6 +211,7 @@ server <- function(input, output, session) {
 
   mod_cond_act_server("cond_act")
   mod_cat_ocup_server("cat_ocup")
+  mod_formalidad_server("formalidad")
 }
 
 

@@ -21,8 +21,9 @@ ordenar_periodo_cronologico <- function(df) {
   df |> mutate(periodo = factor(periodo, levels = niveles))
 }
 
-df_cond_act <- ordenar_periodo_cronologico(df_cond_act)
-df_cat_ocup <- ordenar_periodo_cronologico(df_cat_ocup)
+df_cond_act   <- ordenar_periodo_cronologico(df_cond_act)
+df_cat_ocup   <- ordenar_periodo_cronologico(df_cat_ocup)
+df_formalidad <- ordenar_periodo_cronologico(df_formalidad)
 
 
 ### Application dependencies (CSS/JS estáticos)
