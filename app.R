@@ -184,18 +184,6 @@ ui <- page_fillable(
     ),
 
     panel_info
-  ),
-
-  ### Botón SUMATE flotante (FAB) en esquina inferior derecha (issue #23).
-  ### Reemplaza el shinyalert que aparecía automáticamente al cargar.
-  div(
-    class = "sumate-fab",
-    actionButton(
-      inputId = "sumate_btn",
-      label = "Sumate",
-      icon = icon("envelope"),
-      class = "btn-sumate"
-    )
   )
 )
 
@@ -206,28 +194,25 @@ ui <- page_fillable(
 
 server <- function(input, output, session) {
 
-  ### El alert SUMATE ahora se dispara solo al hacer click en el FAB
-  ### (issue #23). Antes aparecía automáticamente al cargar.
-  observeEvent(input$sumate_btn, {
-    shinyalert(
-      title = "Sumate!",
-      text = "Esta aplicación está en desarrollo. Si algo no está funcionando, se puede mejorar o incluso tenés una idea para agregar, podés escribirme a pablotiscornia@estacion-r.com",
-      size = "s",
-      closeOnEsc = TRUE,
-      closeOnClickOutside = TRUE,
-      html = FALSE,
-      type = "info",
-      showConfirmButton = TRUE,
-      showCancelButton = FALSE,
-      confirmButtonText = "JOYA",
-      confirmButtonCol = "#405BFF",
-      timer = 0,
-      imageUrl = "logos/isotipo_estacion_r.svg",
-      imageWidth = 80,
-      imageHeight = 80,
-      animation = TRUE
-    )
-  })
+  ### Alert de bienvenida al cargar la app.
+  shinyalert(
+    title = "Buenas!",
+    text = "Esta aplicación está en desarrollo. Si algo no está funcionando, se puede mejorar o incluso tenés una idea para agregar, podés escribirme a pablotiscornia@estacion-r.com",
+    size = "s",
+    closeOnEsc = TRUE,
+    closeOnClickOutside = FALSE,
+    html = FALSE,
+    type = "info",
+    showConfirmButton = TRUE,
+    showCancelButton = FALSE,
+    confirmButtonText = "JOYA",
+    confirmButtonCol = "#405BFF",
+    timer = 0,
+    imageUrl = "logos/isotipo_estacion_r.svg",
+    imageWidth = 80,
+    imageHeight = 80,
+    animation = TRUE
+  )
 
   mod_cond_act_server("cond_act")
   mod_cat_ocup_server("cat_ocup")

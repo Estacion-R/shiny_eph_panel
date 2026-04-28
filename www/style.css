@@ -19,81 +19,54 @@
 
 /* Identidad de color (issue #24): texto principal negro, azul solo
    como acento (sidebar/tab activo, links, filtros NLQ).
-   ----------------------------------------------------------------- */
 
-/* Sidebar lateral (navset_pill_list): items en negro + negrita. */
-.nav-pills .nav-link,
-.nav-pills > li > a {
-  color: var(--er-negro);
-  font-weight: 600;
+   Estrategia: setear las variables CSS de Bootstrap que controlan
+   los nav-pills/nav-tabs. Esto pisa los defaults de bs_theme sin
+   pelear con prioridad de selectores ni !important. */
+:root {
+  /* Sidebar (.nav-pills) */
+  --bs-nav-pills-link-color:        #191919;
+  --bs-nav-pills-link-active-color: #405BFF;
+  --bs-nav-pills-link-active-bg:    rgba(64, 91, 255, 0.08);
+
+  /* Tabs internos (.nav-tabs) */
+  --bs-nav-tabs-link-color:        #191919;
+  --bs-nav-tabs-link-active-color: #405BFF;
+  --bs-nav-link-color:             #191919;
+  --bs-nav-link-hover-color:       #1839F4;
 }
 
-/* Item del sidebar activo: azul + fondo azul claro. */
+/* Reforzar con selector directo por si bslib redeclara las vars en su
+   theme. El !important final pisa cualquier override. */
+.nav-pills .nav-link {
+  color: #191919 !important;
+  font-weight: 600;
+}
 .nav-pills .nav-link.active,
-.nav-pills .nav-link:active,
-.nav-pills > .active > a,
-.nav-pills > .active > a:hover,
-.nav-pills > .active > a:focus {
-  color: var(--er-azul) !important;
+.nav-pills .show > .nav-link {
+  color: #405BFF !important;
   background-color: rgba(64, 91, 255, 0.08) !important;
   font-weight: 700;
 }
-
-/* Hover en items no activos del sidebar. */
-.nav-pills .nav-link:hover {
-  color: var(--er-azul-dark);
+.nav-pills .nav-link:hover:not(.active) {
+  color: #1839F4 !important;
   background-color: rgba(64, 91, 255, 0.04);
 }
 
-/* Tabs internos (navset_card_tab): negro + activo azul. */
-.nav-tabs .nav-link,
-.nav-tabs > li > a {
-  color: var(--er-negro);
+.nav-tabs .nav-link {
+  color: #191919 !important;
   font-weight: 500;
 }
-.nav-tabs .nav-link.active,
-.nav-tabs > li.active > a,
-.nav-tabs > li > a.active {
-  color: var(--er-azul) !important;
+.nav-tabs .nav-link.active {
+  color: #405BFF !important;
   font-weight: 700;
-  border-bottom-color: var(--er-azul);
+  border-bottom-color: #405BFF !important;
 }
 
-/* Headings de cards y secciones: negro por default, azul reservado para
-   acentos (filtros NLQ, links). */
+/* Card headers en negro (azul queda para acentos) */
 .card-header {
-  color: var(--er-negro);
+  color: #191919;
   font-weight: 600;
-}
-
-/* Botón flotante "Sumate" en esquina inferior derecha (issue #23). */
-.sumate-fab {
-  position: fixed;
-  bottom: 1.5rem;
-  right: 1.5rem;
-  z-index: 1000;
-}
-.sumate-fab .btn,
-.sumate-fab .btn-sumate {
-  background-color: var(--er-amarillo);
-  color: var(--er-negro);
-  font-weight: 600;
-  border: 2px solid var(--er-negro);
-  border-radius: 999px;
-  padding: 0.6rem 1.4rem;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
-}
-.sumate-fab .btn:hover {
-  background-color: var(--er-amarillo);
-  color: var(--er-negro);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.24);
-}
-.sumate-fab .btn:focus,
-.sumate-fab .btn:active {
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(64, 91, 255, 0.4);
 }
 
 #grid-page-wrapper {
