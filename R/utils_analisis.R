@@ -114,13 +114,36 @@ arma_line_chart_areaspline <- function(df_data,
                                        mostrar_pandemia = TRUE,
                                        tick_interval = 4,
                                        caption_text) {
+  ### PlotBand pandemia COVID-19 (2020-T1-T2 a 2020-T3-T4).
   idx_pand_ini <- match("2020_t1-t2", levels_periodo) - 1
   idx_pand_fin <- match("2020_t3-t4", levels_periodo) - 1
 
-  plot_bands <- if (mostrar_pandemia &&
-                    !is.na(idx_pand_ini) &&
-                    !is.na(idx_pand_fin)) {
-    list(list(
+  ### PlotBand período de intervención INDEC (issue #20).
+  ### El INDEC fue intervenido entre ene-2007 y dic-2015 (decretos 181/15
+  ### y 55/16). La advertencia oficial dice que las series de ese período
+  ### "deben ser consideradas con reservas". Marcamos con banda gris.
+  idx_int_ini <- match("2007_t1-t2", levels_periodo) - 1
+  idx_int_fin <- match("2015_t4-t1", levels_periodo) - 1
+
+  plot_bands <- list()
+
+  if (!is.na(idx_int_ini) && !is.na(idx_int_fin)) {
+    plot_bands <- c(plot_bands, list(list(
+      from = idx_int_ini,
+      to = idx_int_fin,
+      color = "rgba(150, 150, 150, 0.20)",
+      label = list(
+        text = "Intervención INDEC",
+        style = list(color = "#404040", fontWeight = "500",
+                     fontSize = "0.85em")
+      )
+    )))
+  }
+
+  if (mostrar_pandemia &&
+      !is.na(idx_pand_ini) &&
+      !is.na(idx_pand_fin)) {
+    plot_bands <- c(plot_bands, list(list(
       from = idx_pand_ini,
       to = idx_pand_fin,
       color = "rgba(234, 255, 56, 0.30)",
@@ -128,9 +151,7 @@ arma_line_chart_areaspline <- function(df_data,
         text = "Pandemia COVID-19",
         style = list(color = "#191919", fontWeight = "600")
       )
-    ))
-  } else {
-    list()
+    )))
   }
 
   highcharter::hchart(df_data, "areaspline",
@@ -178,5 +199,21 @@ arma_line_chart_areaspline <- function(df_data,
       align = "center", verticalAlign = "top", layout = "horizontal",
       itemStyle = list(cursor = "pointer", fontWeight = "500")
     ) |>
-    highcharter::hc_caption(text = caption_text)
+    highcharter::hc_caption(
+      useHTML = TRUE,
+      text = paste0(
+        caption_text,
+        ### Nota metodológica de intervención INDEC (issue #20). Solo si
+        ### el período cubierto incluye 2007-2015.
+        if (!is.na(idx_int_ini) && !is.na(idx_int_fin)) {
+          paste0(
+            " · <span style='color:#404040'>Series 2007-2015: período de intervención INDEC, leer con reservas ",
+            "(<a href='https://www.indec.gob.ar/ftp/cuadros/sociedad/anexo_informe_eph_23_08_16.pdf' ",
+            "target='_blank' style='color:#405BFF'>anexo INDEC 2016</a>).</span>"
+          )
+        } else {
+          ""
+        }
+      )
+    )
 }

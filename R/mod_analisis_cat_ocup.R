@@ -125,8 +125,10 @@ mod_cat_ocup_ui <- function(id) {
       ),
 
       ### Sankey + matriz de transición (issue #16 · opción A).
+      ### Proporción 5/7: matriz lado derecho con más espacio para que la
+      ### tabla NxN se vea completa sin scroll horizontal (issue #19).
       layout_columns(
-        col_widths = c(7, 5),
+        col_widths = c(5, 7),
         card(
           autoWaiter(color = "#405BFF"),
           full_screen = TRUE,
