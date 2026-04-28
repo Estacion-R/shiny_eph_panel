@@ -99,28 +99,35 @@ mod_cat_ocup_ui <- function(id) {
       icon = icon("camera-retro"),
       fluidRow(filtros_foto),
 
-      ### Tarjetas con tasas destacadas (issue #16 · opción B).
+      ### Tarjetas con tasas destacadas + delta vs año anterior
+      ### (issues #16 + #21).
       layout_columns(
         col_widths = c(4, 4, 4),
         value_box(
           title = "Persistencia",
           value = textOutput(ns("tasa_persistencia")),
           showcase = bs_icon("arrow-repeat"),
-          p("siguen en su categoría")
+          p("siguen en su categoría"),
+          p(textOutput(ns("delta_persistencia")),
+            style = "font-size: 0.8em; opacity: 0.85; margin-top: 4px;")
         ),
         value_box(
           title = "Salida",
           value = textOutput(ns("tasa_salida")),
           showcase = bs_icon("box-arrow-right"),
           theme = "secondary",
-          p("cambiaron a otra categoría")
+          p("cambiaron a otra categoría"),
+          p(textOutput(ns("delta_salida")),
+            style = "font-size: 0.8em; opacity: 0.85; margin-top: 4px;")
         ),
         value_box(
           title = "Entrada",
           value = textOutput(ns("tasa_entrada")),
           showcase = bs_icon("box-arrow-in-left"),
           theme = "secondary",
-          p("vinieron de otra categoría")
+          p("vinieron de otra categoría"),
+          p(textOutput(ns("delta_entrada")),
+            style = "font-size: 0.8em; opacity: 0.85; margin-top: 4px;")
         )
       ),
 
@@ -268,9 +275,54 @@ mod_cat_ocup_server <- function(id) {
           categoria = input$category
         )
       })
+
+      ### Delta vs mismo dúo trimestral del año anterior (issue #21).
+      tasas_anio_ant <- reactive({
+        anio_prev <- anio_ant - 1
+        if (anio_prev < min(anios_disponibles)) return(NULL)
+        anio_post_prev <- anio_post - 1
+        existe <- paste(anio_prev, trim_ant) %in%
+                    paste(periodos_disponibles$ANO4, periodos_disponibles$TRIMESTRE) &&
+                  paste(anio_post_prev, trim_post) %in%
+                    paste(periodos_disponibles$ANO4, periodos_disponibles$TRIMESTRE)
+        if (!existe) return(NULL)
+        df_prev <- armo_base_panel(
+          anio_0 = anio_prev, trimestre_0 = trim_ant,
+          anio_1 = anio_post_prev, trimestre_1 = trim_post,
+          df = df_eph_full,
+          variables = c("ESTADO", "CAT_OCUP", "PONDERA")
+        )
+        arma_tasas_destacadas(
+          df_panel = df_prev, var = "CAT_OCUP",
+          etiquetas = c("Patron", "Cuenta_propia", "Asalariado", "TFSR"),
+          categoria = input$category
+        )
+      })
+
+      delta_label <- reactive({
+        anio_prev <- anio_ant - 1
+        glue::glue("vs {anio_prev} T{trim_ant}-T{trim_post}")
+      })
+
       output$tasa_persistencia <- renderText({ paste0(tasas()$persistencia, "%") })
       output$tasa_salida       <- renderText({ paste0(tasas()$salida, "%") })
       output$tasa_entrada      <- renderText({ paste0(tasas()$entrada, "%") })
+
+      output$delta_persistencia <- renderText({
+        ant <- tasas_anio_ant()
+        if (is.null(ant)) return("sin comparación previa")
+        paste(formato_delta(tasas()$persistencia - ant$persistencia), delta_label())
+      })
+      output$delta_salida <- renderText({
+        ant <- tasas_anio_ant()
+        if (is.null(ant)) return("sin comparación previa")
+        paste(formato_delta(tasas()$salida - ant$salida), delta_label())
+      })
+      output$delta_entrada <- renderText({
+        ant <- tasas_anio_ant()
+        if (is.null(ant)) return("sin comparación previa")
+        paste(formato_delta(tasas()$entrada - ant$entrada), delta_label())
+      })
 
       ### Matriz de transición (issue #16 · opción A).
       output$matriz_transicion <- gt::render_gt({

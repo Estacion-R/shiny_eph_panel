@@ -95,6 +95,17 @@ arma_tasas_destacadas <- function(df_panel, var, etiquetas, categoria) {
 }
 
 
+### Formatea un delta en puntos porcentuales con flecha y signo (issue #21).
+### Ejemplos: 1.2 → "↑ +1.2 pp" / -0.5 → "↓ -0.5 pp" / 0 → "= 0.0 pp".
+formato_delta <- function(delta) {
+  if (is.null(delta) || length(delta) == 0 || is.na(delta)) {
+    return("sin comparación")
+  }
+  signo <- if (delta > 0.05) "↑ +" else if (delta < -0.05) "↓ " else "= "
+  paste0(signo, sprintf("%.1f", delta), " pp")
+}
+
+
 ### Construye el highchart areaspline para la pestaña Película de
 ### cualquier análisis de panel.
 ###
