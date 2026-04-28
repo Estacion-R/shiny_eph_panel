@@ -11,6 +11,12 @@
   --er-gris-claro: #F7F7F7;
 }
 
+/* Display: H1 hero con Array (cargada vía CDN Fontshare en tags$head) */
+.hero-title {
+  font-family: 'Array', 'Ubuntu', sans-serif;
+  font-weight: 700;
+}
+
 #grid-page-wrapper {
   justify-content: center;
   align-items: center;

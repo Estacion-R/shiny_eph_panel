@@ -1,0 +1,19 @@
+# Archivos que NO se incluyen en el bundle a shinyapps.io
+# https://docs.posit.co/connect/user/troubleshooting/#deployment-ignored-files
+
+# CI / Git
+.github/
+.gitignore
+.new_periods.txt
+
+# Scripts de test y desarrollo (no usados por la app productiva)
+app_test.R
+ETL/TEST_app.R
+ETL/data_generator.R
+ETL/data_viz.R
+ETL/03-update_data.R
+
+# Outputs intermedios del data_generator legacy
+data_output/paneles_eph_Desocupado.csv
+data_output/paneles_eph_Inactivo.csv
+data_output/paneles_eph_Ocupado.csv
