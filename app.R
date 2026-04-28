@@ -135,19 +135,18 @@ ui <- page_navbar(
   ),
   nav_panel(
     icon = icon("video"),
-    title = "Película", 
-    fluidRow(
-      column(filter_line_desde, width = 3),
-      column(filter_line_hacia, width = 3),
-     
+    title = "Película",
+    filters_line,
+    div(
+      style = "text-align: center; margin-bottom: 16px;",
       actionButton(
-        "btn_pop", 
+        "btn_pop",
         "¿Cómo se interpreta el dato?"
       ) |>
         popover(title = "Ejemplo de lectura",
-                
+
                 p("Si las opciones fijadas son:",
-                  br(), 
+                  br(),
                   strong("Desde:"), "Desocupado",
                   br(),
                   strong("Hacia:"), "Ocupación",

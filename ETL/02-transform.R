@@ -145,7 +145,9 @@ filter_line_hacia <- selectInput(inputId = "hacia",
                                  multiple = TRUE
 )
 
-filters_line <- list(
-  filter_line_desde,
-  filter_line_hacia
+filters_line <- filter_query(
+  prefix_text = "",
+  filter_preposition("Mostrar el flujo desde la", filter_line_desde, ""),
+  filter_preposition("hacia", filter_line_hacia, ""),
+  suffix_text = ""
 )
