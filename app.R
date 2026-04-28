@@ -130,16 +130,7 @@ ui <- page_navbar(
         full_screen = TRUE,
         highchartOutput("sankey")
       )
-      
-    ),
-    div(
-      class = "toggle-filters-wrapper",
-      
-      tags$label(
-        class = "switch",
-        tags$input(type = "checkbox", onclick = "toggleFilters();"),
-        tags$span(class = "slider round")
-      )
+
     )
   ),
   nav_panel(

@@ -18,26 +18,27 @@
 .filter-preposition {
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: baseline;
   white-space: nowrap;
-  gap: 10px;
+  gap: 8px;
 }
 .filter-query {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  align-items: center;
-  white-space: nowrap;
-  gap: 10px;
+  align-items: baseline;
+  gap: 12px;
+  padding: 24px 20px;
+  background-color: #F7F7F7;
+  border-radius: 8px;
+  margin: 16px 0;
+  font-size: 1.2rem;
+  font-weight: 500;
+  line-height: 1.6;
 }
 
 .shiny-input-container {
-  width: 50px !important;
   margin-bottom: 0px;
-}
-
-#hp, #mpg {
-  margin-bottom: 15px;
 }
 
 .code-view {
@@ -117,33 +118,37 @@
 
 .nlq-styling .selectize-input {
   background-color: transparent !important;
-  color: #405BFF;
+  color: #405BFF !important;
   border: none !important;
-  font-size: 120%;
+  font-size: 1.2rem;
+  font-weight: 600;
   outline: none !important;
-  border-bottom: 1px dashed #405BFF !important;
+  border-bottom: 2px dashed #405BFF !important;
   border-radius: 0 !important;
   box-shadow: none !important;
   text-align: center;
-  /* padding-left: 40%; */
-  padding-left: 0;
-  padding-right: 0;
+  padding: 2px 8px !important;
+  min-height: auto;
+  min-width: max-content;
+  cursor: pointer;
+}
+.nlq-styling .selectize-input:hover {
+  background-color: rgba(64, 91, 255, 0.08) !important;
+  border-bottom-color: #1839F4 !important;
 }
 .nlq-styling .form-control {
   background-color: transparent !important;
   color: #405BFF;
   border: none !important;
-  font-size: 120%;
+  font-size: 1.2rem;
+  font-weight: 600;
   outline: none !important;
-  border-bottom: 1px dashed #405BFF !important;
+  border-bottom: 2px dashed #405BFF !important;
   border-radius: 0;
   box-shadow: none !important;
   text-align: center;
-  padding-bottom: 0px;
-  margin-bottom: 1px !important;
-  padding-left: 0;
-  padding-right: 0;
-  padding-bottom: 5px;
+  padding: 2px 8px;
+  margin-bottom: 0 !important;
 }
 
 .nlq-styling .selectize-control.single .selectize-input:after {
@@ -152,7 +157,8 @@
 }
 
 .nlq-styling .selectize-control {
-  width: 50px !important;
+  width: auto !important;
+  min-width: max-content;
   padding: 0 !important;
   margin: 0 !important;
 }
@@ -245,7 +251,16 @@ input:checked + .slider:before {
 
 .default-styling .control-label,
 .nlq-styling .preposition-affix {
-  display: block;
+  display: inline;
+}
+
+.nlq-styling .preposition-affix {
+  color: #191919;
+  font-weight: 500;
+}
+
+.nlq-styling .preposition-affix:empty {
+  display: none;
 }
 
 .default-styling .shiny-input-container {

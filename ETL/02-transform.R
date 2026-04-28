@@ -71,7 +71,7 @@ filter_preposition <- function(prefix_text, input, suffix_text) {
 
 filter_query <- function(prefix_text = "", ..., suffix_text = "") {
   div(
-    class = "default-styling filter-query",
+    class = "filter-query nlq-styling",
     tags$span(class = "preposition-affix", prefix_text),
     ...,
     tags$span(class = "preposition-affix", suffix_text)
@@ -98,11 +98,11 @@ filters <- filter_query(
                         choices = c("Ocupados" = "Ocupado",
                                     "Desocupados" = "Desocupado",
                                     "Inactivos" = "Inactivo")),
-    suffix_text = "    ,"
+    suffix_text = ""
   ),
 
   filter_preposition(
-    ", para el año",
+    "para el año",
     selectInput(inputId = "anio_ant",
                 label = "Año del panel",
                 choices = anios_disponibles,
