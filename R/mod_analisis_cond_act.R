@@ -156,6 +156,77 @@ mod_cond_act_ui <- function(id) {
       )
     ),
     bslib::nav_panel(
+      title = "Comparar",
+      icon = icon("layer-group"),
+      filter_query(
+        prefix_text = "",
+        filter_preposition(
+          "Comparar el",
+          selectInput(inputId = ns("comp_periodo_base"),
+                      label = "Sentido",
+                      choices = c("destino" = "t_anterior",
+                                  "origen" = "t_posterior")),
+          ""
+        ),
+        filter_preposition(
+          "de los",
+          selectInput(inputId = ns("comp_category"),
+                      label = "Categoría",
+                      choices = c("Ocupados" = "Ocupado",
+                                  "Desocupados" = "Desocupado",
+                                  "Inactivos" = "Inactivo")),
+          ""
+        ),
+        filter_preposition(
+          "entre",
+          selectInput(inputId = ns("comp_anio_a"),
+                      label = "Año A",
+                      choices = anios_disponibles,
+                      selected = max(anios_disponibles) - 5),
+          "y"
+        ),
+        filter_preposition(
+          "",
+          selectInput(inputId = ns("comp_anio_b"),
+                      label = "Año B",
+                      choices = anios_disponibles,
+                      selected = anio_max_disponible),
+          ""
+        ),
+        filter_preposition(
+          "en los trimestres",
+          selectInput(inputId = ns("comp_trimestre"),
+                      label = "Panel",
+                      choices = c("1-2" = 1, "2-3" = 2, "3-4" = 3, "4-1" = 4),
+                      selected = 1),
+          ""
+        ),
+        suffix_text = ""
+      ),
+
+      layout_columns(
+        col_widths = c(6, 6),
+        card(
+          card_header(textOutput(ns("comp_header_a"))),
+          autoWaiter(color = "#405BFF"),
+          full_screen = TRUE,
+          highchartOutput(ns("sankey_a"))
+        ),
+        card(
+          card_header(textOutput(ns("comp_header_b"))),
+          autoWaiter(color = "#EAFF38"),
+          full_screen = TRUE,
+          highchartOutput(ns("sankey_b"))
+        )
+      ),
+
+      div(
+        style = "padding: 0 1rem 1rem;",
+        p(em("Tip:"), "Usá la comparación para mirar el mismo dúo trimestral en dos años distintos (ej: pre vs post pandemia) y entender cómo cambió la dinámica de movilidad.")
+      )
+    ),
+
+    bslib::nav_panel(
       title = "Película",
       icon = icon("video"),
       filtros_pelicula,
@@ -276,6 +347,49 @@ mod_cond_act_server <- function(id) {
           etiquetas = c("Ocupado", "Desocupado", "Inactivo", "Trab_familiar")
         )
         arma_matriz_transicion_gt(matriz, titulo = NULL)
+      })
+
+      ### Comparar paneles (issue #16 · opción C). Renderiza 2 Sankey
+      ### lado a lado para el mismo dúo trimestral en años distintos.
+      arma_sankey_comparativo <- function(anio_panel, anio_label) {
+        anio <- as.numeric(anio_panel)
+        trim <- as.numeric(input$comp_trimestre)
+        anio_post <- if (trim %in% 1:3) anio else anio + 1
+        trim_post <- if (trim %in% 1:3) trim + 1 else 1
+
+        df_p <- armo_base_panel(anio_0 = anio, trimestre_0 = trim,
+                                anio_1 = anio_post, trimestre_1 = trim_post)
+
+        categoria_lab <- ifelse(input$comp_category == "Ocupado", "Ocupación",
+                                ifelse(input$comp_category == "Desocupado",
+                                       "Desocupación", "Inactividad"))
+        sentido_label <- if (input$comp_periodo_base == "t_anterior") {
+          glue::glue("Flujo desde la {categoria_lab}")
+        } else {
+          glue::glue("Flujo hacia la {categoria_lab}")
+        }
+
+        highcharter::hchart(
+          armo_tabla_sankey(
+            preparo_base(df_p, periodo_base = input$comp_periodo_base),
+            categoria = input$comp_category),
+          "sankey", name = sentido_label
+        ) |>
+          hc_subtitle(text = glue::glue("Panel {anio} - trimestre {trim} y {trim_post}")) |>
+          hc_add_theme(hc_theme_estacion_r)
+      }
+
+      output$comp_header_a <- renderText({
+        paste("Panel A · Año", input$comp_anio_a)
+      })
+      output$comp_header_b <- renderText({
+        paste("Panel B · Año", input$comp_anio_b)
+      })
+      output$sankey_a <- renderHighchart({
+        arma_sankey_comparativo(input$comp_anio_a, "A")
+      })
+      output$sankey_b <- renderHighchart({
+        arma_sankey_comparativo(input$comp_anio_b, "B")
       })
 
       output$sankey <- renderHighchart({
