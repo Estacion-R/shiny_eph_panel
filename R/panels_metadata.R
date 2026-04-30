@@ -104,13 +104,37 @@ panel_definiciones <- bslib::nav_panel(
 
     h4("Intervención del INDEC (2007-2015)"),
     p(
-      "Entre enero de 2007 y diciembre de 2015 el INDEC fue intervenido. ",
-      "El propio organismo recomendó leer las series del período ",
-      tags$a("con reservas",
+      "Entre enero de 2007 y diciembre de 2015 el INDEC atravesó el período que el propio organismo definió como ",
+      tags$strong("emergencia estadística"),
+      ". En agosto de 2016, al retomarse la difusión regular de la EPH, el Instituto publicó un anexo metodológico explicando los problemas detectados en las series de ese período."
+    ),
+    p(
+      "La recomendación oficial del INDEC es categórica: las series 2007-2015 ",
+      tags$strong("se desestiman"),
+      " a los fines de comparación y para el análisis del mercado de trabajo (",
+      tags$a("Anexo Informe de Prensa, 23-08-2016",
              href = "https://www.indec.gob.ar/ftp/cuadros/sociedad/anexo_informe_eph_23_08_16.pdf",
              target = "_blank"),
-      " (decretos 181/15 y 55/16). En esta app la banda gris en los gráficos marca ese período. ",
-      "El checkbox ", em("'Excluir período de intervención INDEC'"), " permite filtrarlo cuando se necesita comparar sólo con datos validados oficialmente."
+      "). En esta app las series del período se incluyen para mantener continuidad histórica, pero la banda gris en los gráficos los marca y el checkbox ",
+      em("'Excluir período de intervención INDEC'"),
+      " permite removerlos del análisis."
+    ),
+    p(tags$strong("Las cuatro dimensiones de problemas identificadas por el INDEC:")),
+    tags$ul(
+      tags$li(tags$strong("Diseño de muestra y proyecciones de población:"),
+              " inconsistencias en la muestra implementada desde 3T 2013, problemas de cobertura geográfica (aglomerados con áreas periféricas excluidas pero reportadas como cobertura completa) y proyecciones desfasadas (en Partidos del GBA, una diferencia de más de 800.000 personas)."),
+      tags$li(tags$strong("Prácticas operativas y de capacitación:"),
+              " creciente no respuesta (23.4% en 2T 2007 a 30.8% en 4T 2015), incompletitudes en cuestionarios sin aclaración, falta de aplicación de bloques de preguntas específicos para condición de actividad, renovación de encuestadores en GBA sin capacitación."),
+      tags$li(tags$strong("Lineamientos conceptuales y metodológicos:"),
+              " diferencias entre bases recibidas y publicadas, instrucciones erróneas o sesgadas para la captación de la condición de actividad de grupos específicos (perceptores de planes sociales), abandono del Sistema de Codificación Informatizada (SiCI)."),
+      tags$li(tags$strong("Procedimientos informáticos:"),
+              " abandono del sistema integral de gestión, ejecución manual de procesos en PCs sin backup institucional, ausencia de documentación técnica sobre criterios de imputación de ingresos.")
+    ),
+    p(
+      em("Implicancia particular para esta app: "),
+      "el INDEC señala explícitamente que hubo ",
+      tags$strong("instrucciones erróneas o sesgadas para la captación de la condición de actividad"),
+      " en el período. Esto afecta directamente las variables ESTADO y CAT_OCUP que esta app usa, por eso recomendamos excluir el período cuando se necesita una lectura confiable de la dinámica del mercado laboral."
     ),
     br(),
 

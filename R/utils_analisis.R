@@ -163,15 +163,19 @@ alerta_intervencion_indec <- function(anios) {
     shiny::icon("triangle-exclamation"),
     shiny::HTML("&nbsp;Panel del período de "),
     shiny::tags$strong("intervención INDEC (2007-2015)"),
-    shiny::HTML(": el propio organismo recomienda leer estos datos "),
-    shiny::tags$strong("con reservas"),
-    ". ",
+    shiny::HTML(": el propio organismo "),
+    shiny::tags$strong("desestima"),
+    shiny::HTML(" estas series para el análisis del mercado de trabajo "),
+    shiny::HTML("(ver "),
+    shiny::tags$em("Definiciones"),
+    shiny::HTML(" o "),
     shiny::tags$a(
       "Anexo INDEC 2016 ↗",
       href = "https://www.indec.gob.ar/ftp/cuadros/sociedad/anexo_informe_eph_23_08_16.pdf",
       target = "_blank",
       style = "color:#405BFF; font-weight:600;"
-    )
+    ),
+    shiny::HTML(").")
   )
 }
 
@@ -358,7 +362,7 @@ arma_line_chart_areaspline <- function(df_data,
           " · <span style='color:#404040'>Período 2007-2015 excluido (intervención INDEC).</span>"
         } else if (!is.na(idx_int_ini) && !is.na(idx_int_fin)) {
           paste0(
-            " · <span style='color:#404040'>Series 2007-2015: período de intervención INDEC, leer con reservas ",
+            " · <span style='color:#404040'>Series 2007-2015: período de intervención INDEC. El propio Instituto desestima estos datos para el análisis del mercado laboral ",
             "(<a href='https://www.indec.gob.ar/ftp/cuadros/sociedad/anexo_informe_eph_23_08_16.pdf' ",
             "target='_blank' style='color:#405BFF'>anexo INDEC 2016</a>).</span>"
           )
