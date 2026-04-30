@@ -18,6 +18,10 @@ data_output/paneles_eph_Desocupado.csv
 data_output/paneles_eph_Inactivo.csv
 data_output/paneles_eph_Ocupado.csv
 
+# Backups del parquet del microdato. ~70 MB innecesarios en el bundle.
+data_raw/df_eph.parquet.bak
+data_raw/df_eph.parquet.bak2
+
 # Screenshots de revisiones UX con Playwright (no son parte de la app)
 .playwright-mcp/
 

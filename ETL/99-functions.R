@@ -224,9 +224,13 @@ armo_base_panel <- function(anio_0, trimestre_0, anio_1, trimestre_1,
 
   ### Filtra el microdato cacheado en memoria por 01-extract.R.
   ### El argumento df permite testear con bases alternativas sin tocar el global.
+  ### `dplyr::collect()` materializa cada subset filtrado a tibble porque
+  ### `eph::organize_panels()` espera data.frames (no Arrow Tables). Como
+  ### df_eph_full ahora se carga como Arrow Table para reducir RAM
+  ### (ver ETL/01-extract.R), el filter() es lazy hasta el collect.
   list_eph_panel <- list(
-    df |> filter(ANO4 == anio_0 & TRIMESTRE == trimestre_0),
-    df |> filter(ANO4 == anio_1 & TRIMESTRE == trimestre_1))
+    df |> filter(ANO4 == anio_0 & TRIMESTRE == trimestre_0) |> dplyr::collect(),
+    df |> filter(ANO4 == anio_1 & TRIMESTRE == trimestre_1) |> dplyr::collect())
 
   organize_panels(bases = list_eph_panel,
                   variables = variables,

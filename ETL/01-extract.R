@@ -14,11 +14,18 @@ vars_eph <- c("CODUSU", "NRO_HOGAR", "COMPONENTE", "ANO4", "TRIMESTRE",
               "CAT_OCUP", "PP07H", "PP07J", "PP07K",
               "PP05I", "PP05K")
 
-### Carga única del microdato en memoria + variables derivadas.
-### La lógica de las vars derivadas (formalidad clásica + ampliada) está
-### centralizada en agrega_vars_derivadas() (99-functions.R) para que el
-### workflow mensual de update también las use.
-df_eph_full <- arrow::read_parquet("data_raw/df_eph.parquet") |>
+### Carga única del microdato como Arrow Table (columnar comprimido).
+### Mantener el dataset como Arrow en memoria reduce el footprint de
+### ~570 MB (tibble en R) a ~50-80 MB. Los filtros y selecciones de
+### los módulos operan via dplyr lazy sobre Arrow y `armo_base_panel()`
+### hace collect() después de filtrar el subset chico que necesita
+### (2 trimestres, ~10k filas), evitando OOM en shinyapps.io free tier.
+###
+### La lógica de vars derivadas (formalidad clásica + ampliada) está
+### centralizada en agrega_vars_derivadas() (99-functions.R) y soporta
+### tanto tibbles como Arrow Tables porque usa dplyr verbs.
+df_eph_full <- arrow::read_parquet("data_raw/df_eph.parquet",
+                                   as_data_frame = FALSE) |>
   dplyr::select(dplyr::all_of(vars_eph)) |>
   agrega_vars_derivadas()
 
@@ -73,10 +80,13 @@ df_tasas_formalidad      <- cargar_tasas_csv("data_output/tasas_formalidad_histo
 df_tasas_formalidad_amp  <- cargar_tasas_csv("data_output/tasas_formalidad_ampliada_historico.csv")
 
 ### Rango de períodos disponibles (insumo para los selectInput dinámicos).
-### Se exponen como variables globales para usarse en 02-transform.R y app.R
+### Se exponen como variables globales para usarse en 02-transform.R y app.R.
+### collect() materializa el subset chico (~80 filas) a tibble porque más
+### abajo se accede vía $ANO4 que no funciona sobre Arrow Table.
 periodos_disponibles <- df_eph_full |>
   dplyr::distinct(ANO4, TRIMESTRE) |>
-  dplyr::arrange(ANO4, TRIMESTRE)
+  dplyr::arrange(ANO4, TRIMESTRE) |>
+  dplyr::collect()
 
 anios_disponibles <- sort(unique(periodos_disponibles$ANO4))
 anio_max_disponible <- max(anios_disponibles)
