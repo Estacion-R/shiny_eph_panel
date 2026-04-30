@@ -21,8 +21,8 @@ my_packages <- c(
   "arrow", "markdown",
   # visualización
   "highcharter", "gghighlight", "ragg", "gt",
-  # utilidades shiny
-  "waiter", "imola",
+  # utilidades shiny (imola removido: archivado en CRAN y no se usaba)
+  "waiter",
   # dominio EPH
   "eph"
 )

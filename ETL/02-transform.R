@@ -1,7 +1,6 @@
 ### Componentes UI compartidos y prep de datos del histórico.
-### Las librerías shiny/dplyr/imola/markdown ya vienen cargadas desde 00-libraries.R
-### + el bloque de imola/markdown.
-library(imola)
+### Las librerías shiny/dplyr ya vienen cargadas desde 00-libraries.R.
+### markdown se mantiene por includeMarkdown() de Shiny (uso futuro).
 library(markdown)
 
 
