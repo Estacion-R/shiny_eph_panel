@@ -46,8 +46,8 @@ landing_card <- function(input_id, icon_id, titulo, descripcion) {
 }
 
 panel_sobre_la_app <- nav_panel(
-  title = "Sobre la app",
-  icon = icon("circle-info"),
+  title = "Inicio",
+  icon = icon("house"),
   card(
     ### Hero: logo + propuesta de valor concreta para público amplio.
     div(

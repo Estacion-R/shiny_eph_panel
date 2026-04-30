@@ -148,6 +148,29 @@ panel_definiciones <- bslib::nav_panel(
     br(),
 
     h4("Limitaciones del panel EPH"),
+
+    h5("Significancia estadística y tamaño muestral", style = "margin-top: 0.75rem;"),
+    p(
+      "El esquema 2-2-2 da, en teoría, un panel balanceado equivalente al 50% de la muestra. En la práctica, la atrición (mudanzas, no respuesta, cambios de hogar) reduce ese número de manera no uniforme entre aglomerados y categorías. Cuando además se desagrega por categoría (ocupación, sexo, edad, aglomerado, dúo trimestral específico), el ",
+      tags$strong("n muestral por celda puede caer rápidamente"),
+      ", especialmente en categorías con baja prevalencia como Patrones o Trabajadores familiares sin remuneración."
+    ),
+    p(
+      tags$strong("El INDEC no publica metodología oficial para calcular errores estándar ni intervalos de confianza sobre indicadores de panel longitudinal."),
+      " Los errores muestrales que sí publica corresponden al análisis transversal (un trimestre puntual). Para el análisis de panel, no hay ponderadores oficiales ni recetas estandarizadas para cuantificar la incertidumbre, y aplicar las fórmulas transversales al panel balanceado da resultados sesgados (subestima el error)."
+    ),
+    p(
+      tags$strong("Recomendaciones prácticas:")
+    ),
+    tags$ul(
+      tags$li("Tomar las tasas como ", tags$strong("aproximaciones"), ", no como puntos exactos."),
+      tags$li("Priorizar la lectura de ", tags$strong("tendencias y diferencias relativas"), " entre períodos antes que valores absolutos en un único trimestre."),
+      tags$li("Mirar con cautela las celdas de la matriz de transición que muestran porcentajes muy altos o muy bajos: pueden reflejar n's chicos, no señal real (ej. 100% o 0% en una celda con muy pocos casos)."),
+      tags$li("Cuando se compare entre años o entre dúos trimestrales, considerar que diferencias de pocos puntos porcentuales pueden estar dentro del ruido muestral."),
+      tags$li("Evitar reportar estos números sin esta nota: usarlos como insumo de exploración y no como estimación oficial.")
+    ),
+
+    h5("Otras limitaciones", style = "margin-top: 1rem;"),
     tags$ul(
       tags$li(strong("Atrición: "), "no todas las personas presentes en t0 pueden ser re-entrevistadas en t1 (mudanzas, no respuesta). El panel real es < 50%."),
       tags$li(strong("Representatividad: "), "el subset balanceado del panel pierde algo de representatividad estricta del universo. Las inferencias deben tomarse como aproximadas."),
