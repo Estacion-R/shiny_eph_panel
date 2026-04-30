@@ -1,0 +1,777 @@
+               Encuesta Permanente de Hogares
+         Actualización del diseño de sus muestras
+                                    1974-2003
+
+
+
+
+Elaborado por Marta R. de Messere y Augusto E. Hoszowski
+INDEC
+Encuesta Permanente de Hogares
+Dpto. de Muestreo
+
+
+
+
+                                                           1
+1. El diseño de las muestras, su actualización y su relación con los censos de
+población ____________________________________________________________ 3
+ 1.1   El diseño de las muestras ______________________________________________ 3
+ 1.2   Ajuste de las estimaciones ______________________________________________ 3
+ 1.3   Actualización de las muestras___________________________________________ 4
+2. Características generales de los sucesivos diseños de las muestras de la EPH__ 4
+ 2.1   Ámbito geográfico ____________________________________________________ 4
+ 2.2   Diseño de las muestras ________________________________________________ 5
+ 2.3   Actualización y mantenimiento de los dominios geográficos__________________ 6
+3. Características específicas del diseño de las muestras basado en el Censo
+Nacional de Población de 1970___________________________________________ 6
+ 3.1   Marco muestral ______________________________________________________ 6
+ 3.2   Estratificación _______________________________________________________ 6
+ 3.3   Plan de muestreo según grupos de aglomerados ___________________________ 7
+ 3.4   Rotación de la muestra ________________________________________________ 7
+ 3.5   Mantenimiento de la muestra ___________________________________________ 8
+ 3.6   Total de aglomerados incluidos en la EPH basados en el CEN 1970 ___________ 8
+4. Primera actualización del diseño de las muestras de la EPH basada en el Censo
+Nacional de Población y Vivienda de 1980 _________________________________ 8
+ 4.1   Marco muestral ______________________________________________________ 8
+ 4.2   Estratificación _______________________________________________________ 8
+ 4.3   Plan de muestreo según grupos de aglomerados____________________________ 9
+ 4.4   Mantenimiento de la muestra __________________________________________ 10
+ 4.5   Implementación de las actualizaciones de los diseños muestrales_____________ 10
+ 4.6   Total de aglomerados luego de la actualización basada en el CEN 80 _________ 10
+5. Actualización del diseño de la EPH basada en el Censo Nacional de Población de
+1991 _______________________________________________________________ 11
+ 5.1   Marco muestral _____________________________________________________ 11
+ 5.2   Estratificación ______________________________________________________ 11
+ 5.3   Plan de muestreo según grupos de aglomerados___________________________ 13
+ 5.4   Total de aglomerados luego de la actualización basada en el CEN ‘91 ________ 13
+ 5.5   La actualización de los diseños _________________________________________ 13
+6. Actualización del diseño de la muestra del aglomerado Gran Buenos Aires __ 14
+
+
+
+
+                                                                                    2
+Introducción
+El presente documento tiene por objeto exponer algunos aspectos metodológicos del diseño de
+las muestras de la Encuesta Permanente de Hogares (EPH), su relación con los Censos
+Nacionales de Población y Vivienda, y las modalidades adoptadas a lo largo del tiempo para la
+adecuación y renovación del diseño.
+
+Se trata aquí el período 1975-2003, durante el cual la EPH se desarrolló en modalidad
+“puntual”, o sea dos mediciones anuales. En el año 2003 la EPH se reformula, cambiando
+entre otras cosas su frecuencia, esquema de rotación, etc. Para profundizar sobre estos y
+otros aspectos de la encuesta reformulada, el lector deberá consultar los documentos
+“Encuesta Permanente de Hogares: cambios metodológicos” y “La nueva Encuesta
+Permanente de Hogares de Argentina”, en la página web de INDEC, www.indec.mecon.gov.ar.
+
+
+1. El diseño de las muestras, su actualización y su relación con los
+   censos de población
+La EPH surge en la década de 1970, teniendo como marco de referencia el Censo Nacional de
+Población de 1970. Como la mayoría de las encuestas a hogares, la EPH se ha servido a lo
+largo de su historia de los censos de población para cumplir con tres grupos de objetivos desde
+el punto de vista estadístico: a) el diseño muestral de las encuestas, b) el ajuste de las
+estimaciones y c) actualización de las muestras.
+
+
+1.1 El diseño de las muestras
+
+Esta tarea incluye tres aspectos básicos:
+
+•   Delimitación del área geográfica a estudiar para cada uno de los dominios 1. La EPH
+    toma como base para el dominio geográfico a estudiar en cada uno de los aglomerado
+    urbanos la definición de “Aglomerado Censal”.
+
+•   Construcción de los marcos muestrales. El censo de población proporciona la materia
+    prima, esto es la cartografía y los datos básicos, para construir el marco muestral, o sea
+    los listados de radios censales a partir de los cuales se selecciona, en cada aglomerado, la
+    muestra de Unidades de Primera Etapa (radios censales). También a partir de esos datos
+    se adjudican las probabilidades de selección.
+
+•   Estratificación de los marcos muestrales. La información suministrada por el censo
+    (datos sobre la vivienda, el nivel de instrucción de las personas, etc.) permite estratificar
+    los marcos muestrales para mejorar así las estimaciones.
+
+
+1.2 Ajuste de las estimaciones
+
+Los Censos permiten a los servicios de demografía construir las proyecciones de población de
+los períodos intercensales, proyecciones que las Encuestas a Hogares toman como valores de
+referencia para las expansiones de sus muestras. Desde octubre de 1995 la EPH utiliza estas
+proyecciones demográficas en la elaboración de las estimaciones en cada uno de los
+aglomerados donde se releva la Encuesta.
+
+
+
+
+1
+  Se entiende por dominio cualquier subdivisión de la población acerca de la cual se puede dar
+información numérica de precisión conocida.
+
+
+                                                                                                 3
+1.3 Actualización de las muestras
+
+En ocasión de cada nuevo censo de población, la EPH procede a una actualización del diseño
+de sus muestras lo que supone una redefinición de los dominios geográficos a estudiar, y de
+las probabilidades a utilizar en la selección de las muestras.
+
+Esta actualización posterior a cada censo se complementa con un mantenimiento de las
+muestras en los períodos intercensales. Este mantenimiento consiste por lo general en una
+actualización de los listados de viviendas de las unidades de primera etapa seleccionadas, lo
+que permite captar los crecimientos del dominio bajo estudio.
+
+Otra tarea de mantenimiento, que se desarrolla más adelante, es la de incorporar a la muestra,
+o sea seleccionar unidades a encuestar en zonas geográficas que al momento del diseño de
+la muestra no fueron incluidas en el dominio bajo estudio por tener baja densidad de viviendas.
+Estas zonas pueden sufrir un proceso de crecimiento que haga necesario incluirlas más
+adelante en la muestra.
+
+La EPH, desde su inicio en 1974, y más allá de los rediseños y actualizaciones realizadas
+luego de cada censo, en 1980 y 1991, ha mantenido una serie de características estadísticas
+como conceptuales. Desde el punto de vista estadístico podemos mencionar: los aglomerados
+como dominios de estudio, los radios censales como unidades de primera etapa y el esquema
+de rotación .
+
+En el punto siguiente se reseñan estas características, y en los subsiguientes se señalan las
+particularidades introducidas en ocasión de cada rediseño asociado a los censos de población.
+
+
+2. Características generales de los sucesivos diseños de las muestras
+   de la EPH
+2.1 Ámbito geográfico
+
+La EPH se realiza en centros urbanos de más de 100.000 habitantes, en centros menores
+pero que son capitales de provincia y en la zona urbano-rural del Alto Valle de Río Negro2.
+Cada uno de ellos constituye un dominio de estudio.
+
+Es conveniente hacer algunas aclaraciones sobre los conceptos de localidad y aglomerado ya
+que se utilizarán con frecuencia en adelante. Según define el Censo Nacional de Población y
+Vivienda 1991, por Localidad, Resultados definitivos, Serie G Nro. 1, INDEC,1995, una
+localidad es una concentración espacial de edificios conectados entre sí por calles. La línea
+imaginaria que delimita este área se denomina envolvente.
+
+El Censo definió también el concepto de “localidad compuesta” o “aglomerado”. Se trata de
+aquellas localidades que atraviesan límites de provincias, departamentos o partidos. Los
+aglomerados de la EPH abarcan como mínimo a la localidad en el sentido censal. Dado que el
+marco de referencia son los censos de población, la EPH respeta su delimitación de localidad,
+pero introduce un criterio adicional para la definición del área a estudiar considerando, además
+del concepto geográfico de localidad, el concepto de mercado de trabajo:
+
+          En las encuestas de fuerza de trabajo dos localidades distintas, pero próximas y que
+          conforman en realidad un único mercado de trabajo, son tomadas como un único
+          aglomerado.
+
+
+Esto ocurre en los siguientes casos:
+
+
+
+2
+    El Alto Valle de Río Negro no se incorporó a la EPH continua que comenzó en 2003.
+
+
+                                                                                              4
+          Localidades de Mar del Plata y Batán: Aglomerado Mar del Plata-Batán
+
+          Localidades de Comodoro Rivadavia y Rada Tilly: Aglomerado Comodoro Rivadavia
+
+          Localidades de SS de Jujuy y Palpalá: Aglomerado SS de Jujuy – Palpalá
+
+          Localidades de Gran SM de Tucumán y Tafí Viejo: Aglomerado Gran SM de Tucumán-
+          Tafí Viejo
+
+
+2.2 Diseño de las muestras
+
+
+Marco muestral
+
+La República Argentina está dividida desde el punto de vista político administrativo en
+provincias y éstas en departamentos (en la provincia de Buenos Aires se denominan partidos).
+
+Con fines censales, estos departamentos se subdividen en unidades menores: fracciones y
+radios censales. Cada radio censal está constituido por un conjunto de aproximadamente 300
+viviendas, en tanto una fracción es un agrupamiento de radios censales. El listado de estos
+radios censales (los incluidos en el dominio bajo estudio) es el que constituye el llamado Marco
+muestral.
+
+
+Estratificación
+
+Con el objeto de mejorar la precisión de las estimaciones elaboradas por la Encuesta, se
+definen criterios para agrupar las unidades de primera etapa de selección (radios censales).
+Cada uno de estos grupos llamados estratos está caracterizado mediante variables
+sociodemográficas a nivel de las unidades primarias, cuya definición puede o no variar en cada
+censo.
+
+Plan de muestreo
+
+En general, el diseño muestral de la EPH consiste en muestras bietápicas estratificadas, es
+decir que las unidades primarias (radios censales) son agrupadas en estratos, para luego
+realizar una selección de las mismas con probabilidad proporcional a su tamaño, medido en
+cantidad de viviendas particulares.
+
+ En una segunda etapa se seleccionan las viviendas en forma aleatoria, dentro de las unidades
+primarias seleccionadas, a partir de un listado de viviendas elaborado en cada una de esas
+unidades. En el caso del Alto Valle de Río Negro se utilizó una muestra trietápica en la zona
+rural y una muestra bietápica estratificada en la zona urbana.
+
+Rotación de la muestra en la EPH puntual3
+
+Como en cualquier investigación de tipo permanente, en la EPH ha sido necesario utilizar un
+sistema de renovación del conjunto de unidades a encuestar (del panel de respondentes).
+
+Para lograr esto, las unidades primarias que integran la muestra se agrupan en cuatro "grupos
+de rotación", cada uno de los cuales es una submuestra de tamaño aproximadamente igual a
+una cuarta parte de la muestra total.
+
+La rotación se hace de manera que en cada onda, en las unidades primarias pertenecientes al
+grupo indicado por el esquema de rotación para esa onda, las viviendas seleccionadas
+anteriormente salen de la muestra para ser reemplazadas por nuevas viviendas seleccionadas
+
+3
+    Este capítulo hace referencia al esquema de rotación que se utilizó en el período 1975-2003
+
+
+                                                                                                  5
+dentro de las mismas unidades primarias.
+
+De esta forma, en cada onda permanece en la muestra aproximadamente el 75 % de las
+viviendas encuestadas en la onda anterior.
+
+El sistema elegido permite estimaciones eficientes del cambio entre dos mediciones, evitando
+la desventaja que significa el aumento de rechazos por encuestar siempre a los mismos
+hogares.
+
+
+2.3 Actualización y mantenimiento de los dominios geográficos
+
+Actualización de los dominios
+
+El hecho de haber definido los aglomerados de la forma descripta en 2.1, obliga a actualizar
+sus límites geográficos ya que el concepto de aglomerado implica una geografía cambiante,
+como lo expresa el Censo‘91: “A través del tiempo, a medida que la población de una localidad
+crece, la edificación se densifica y se expande. Es de esperar entonces que entre censo y
+censo la envolvente cambie de forma y abarque una superficie mayor, por tener que encerrar
+también a la nueva edificación periférica”
+La EPH realiza esta actualización de los límites luego de cada Censo de población, al
+renovarse los diseños muestrales, y en períodos intercensales a través del marco
+complementario de “crecimiento potencial” (véase el punto 4.1).
+
+
+Mantenimiento de los dominios
+
+La EPH realiza, por grupos de rotación, otras actualizaciones periódicas previas a cada salida
+a campo: de los listados de viviendas de las áreas (unidades primarias) seleccionadas y de las
+áreas de “crecimiento potencial”. Estos listados son los llamados “marcos secundarios de
+muestreo”. Estas actualizaciones permiten captar el crecimiento tanto dentro de las áreas
+seleccionadas como dentro de las áreas de crecimiento potencial.
+
+
+
+3. Características específicas del diseño de las muestras basado en el
+   Censo Nacional de Población de 1970
+
+Como se dijo anteriormente, la EPH comenzó a relevarse en 1974, siendo el Censo Nacional
+de Población y Vivienda de 1970 el que sirvió de base al primer diseño muestral. A
+continuación se describen las principales características de ese diseño.
+
+
+3.1 Marco muestral
+
+A partir de los "resúmenes de radio" del Censo de 1970 se pudo contar con información básica
+(cantidad de viviendas, hogares y población total clasificada por sexo) a nivel de radio. Se
+partió de la delimitación de localidad censal, verificando y completando la misma con recorridos
+en campo que permitieron establecer una línea "envolvente" del área a estudiar. Se
+incorporaron de ese modo todos los crecimientos edilicios producidos después del Censo,
+hasta el momento de armar el marco de muestreo.
+
+
+3.2 Estratificación
+
+Independientemente del tipo de muestreo utilizado, toda vez que fue, los marcos muestrales se
+estratificaron. El criterio de estratificación utilizado en la mayor parte de los aglomerados
+durante esa década fue el aspecto edilicio y urbanístico predominante. En Gran Buenos Aires
+
+
+                                                                                              6
+y Gran Rosario se utilizó como criterio de estratificación un indicador que permitió construir,
+durante esta década en que no se contaba con mejor información, dos estratos: Villa de
+emergencia y No Villa de emergencia. En el Gran Buenos Aires durante esta década estos
+estratos fueron considerados dominios de estudio para satisfacer necesidades coyunturales de
+información.
+
+
+3.3 Plan de muestreo según grupos de aglomerados
+
+A los efectos del diseño los aglomerados fueron ordenados en 5 grupos diferentes de acuerdo
+con la cantidad de viviendas que tenían al momento del Censo.
+
+
+
+Grupos de aglomerados en el diseño de 1974
+
+     Grupo I            Grupo II          Grupo III        Grupo IV             Grupo V
+                         Entre             Entre             Entre
+Más de 300.000          100.000 y         50.000 y         20.000 y        Menos de 20.000
+  habitantes            300.000           100.000           50.000           habitantes
+                       habitantes        habitantes       habitantes
+
+Gran Buenos Aires    Gran Rosario     Gran Tucumán y Salta               Comodoro Rivadavia
+                                      Tafí Viejo
+                     Gran Córdoba     Santa Fe y Santo Resistencia       S.S. de Jujuy
+                                      Tomé
+
+                     Gran La Plata    Gran San Juan      Paraná          Formosa
+
+                     Gran Mendoza                        Corrientes      Gran Catamarca
+
+                                                         Posadas         San Luis y El Chorrillo
+
+                                                         S. del Estero   Neuquén
+                                                         y La Banda
+                                                                         La Rioja
+
+                                                                         Río Gallegos
+
+
+
+En los aglomerados de los grupos I, II y III se trabajó con un muestreo probabilístico en dos
+etapas de selección y en los aglomerados de los grupos IV y V con un muestreo en una sola
+etapa.
+
+Comodoro Rivadavia, por la cantidad de viviendas, está incluido en el grupo V, pero debido a
+sus características topográficas fue tratado con un diseño a dos etapas.
+
+
+3.4 Rotación de la muestra
+
+Aunque las unidades de primera etapa (radios censales) quedan fijos una vez implementada la
+muestra, las viviendas seleccionadas dentro de estos radios no se encuestan indefinidamente,
+para no provocar un cansancio de los hogares que afectaría la calidad de las respuestas.
+Desde su primer diseño la EPH ha implementado un sistema de rotación de la muestra que
+consiste en agrupar las unidades de primera etapa (radios censales) en cuatro grupos de
+rotación. En ocasión de cada “onda”, las viviendas seleccionadas en las UPE de un grupo
+abandonan la muestra para ser reemplazadas por otras viviendas de las mismas UPE.
+
+
+
+                                                                                              7
+La EPH ha mantenido este esquema de rotación en los sucesivos rediseños.
+
+
+3.5 Mantenimiento de la muestra
+
+Se realizaron las tareas de mantenimiento consistentes en la actualización de los listados de
+viviendas de todas las unidades primarias seleccionadas.
+
+
+3.6 Total de aglomerados incluidos en la EPH basados en el CEN 1970
+
+Como puede verse en el cuadro de la página anterior , los aglomerados cubiertos por la EPH
+durante esta década fueron 22.
+
+
+4. Primera actualización del diseño de las muestras de la EPH basada
+   en el Censo Nacional de Población y Vivienda de 1980
+
+Después del Censo de 1980 se hizo la primera actualización del diseño de las muestras de la
+EPH. A continuación se señalan las principales novedades introducidas en ese rediseño.
+
+
+4.1 Marco muestral
+
+Por primera vez se cuenta con información en soporte magnético de viviendas particulares
+habitadas, tipos de vivienda, población por sexo, cantidad de jefes de hogar y sus
+características principales a nivel de radio censal. Toda esta información provino del
+Cuestionario Básico del Censo.
+
+Se crea el llamado “marco complementario de crecimiento potencial”, el cual incluye todos
+aquellos radios pertenecientes al aglomerado censal con baja densidad de viviendas
+particulares habitadas al momento del diseño, o radios que sin pertenecer al aglomerado
+censal están próximos al mismo para los cuales se presume que crecerán por planes de
+vivienda, asentamientos, etc.
+
+Estos radios que conforman el “marco complementario de crecimiento potencial“ tienen
+asignado un grupo de rotación, con el objetivo de que sean revisados en ocasión de la
+actualización del listado de viviendas del grupo de rotación al cual pertenecen. Si en dicha
+revisión se observa que el área de “crecimiento potencial” llega a un cierto tamaño, medido en
+viviendas, que permite una selección razonable de unidades primarias, se crea un nuevo
+estrato llamado “estrato crecimiento” que se incorpora a la muestra.
+
+De esta manera se va ampliando la cobertura geográfica de las estimaciones de la EPH para el
+aglomerado.
+
+
+4.2 Estratificación
+
+Como se mencionó anteriormente se dispuso por primera vez de la información censal en
+soporte magnético. Esto permitió mejorar la estratificación de las unidades de muestreo de
+primera etapa (radios censales).
+La estratificación de las unidades primarias se realizó teniendo en cuenta el porcentaje de
+jefes de hogar con educación primaria incompleta en dichas unidades.
+
+En los aglomerados de las provincias y en partidos del Conurbano Bonaerense, los estratos se
+definieron mediante los siguientes tramos de la variable “porcentaje por radio censal de jefes
+con educación primaria incompleta” (variable X):
+
+
+                                                                                                8
+Estratos en las provincias y Conurbano Bonaerense
+
+Estrato      Tramos de X
+                   %
+2.1           0 - 9,9
+2.2          10 – 19,9
+2.3          20 – 29,9
+2.4          30 – 39,9
+2.5          40 – 49,9
+2.6          50 y más
+
+
+Nota: X = Porcentaje de jefes con educación primaria incompleta en cada unidad primaria.
+
+
+En la Ciudad de Buenos Aires, que tiene características absolutamente distintas al resto del
+país, se estratificó las unidades primarias teniendo en cuenta el porcentaje de jefes con
+educación primaria incompleta, más el porcentaje de jefes con educación primaria completa .
+
+
+Estratos en la Ciudad de Buenos Aires
+
+Estrato       Tramos de Z
+                   %
+1.1           0   - 30
+1.2           30.1 - 45
+1.3           45.1 - 65
+1.4           65.1 - 80
+1.5           más de 80
+
+Nota: Z = Porcentaje de jefes con educación primaria incompleta + jefes con educación
+primaria completa en cada unidad primaria.
+
+
+El hecho de que los estratos tuviesen una clara interpretación socioeconómica permitió no sólo
+una ganancia en la precisión de las estimaciones (las tasas de desocupación varían claramente
+de estrato a estrato) sino que además fue de utilidad para la planificación de distintas
+investigaciones sociales (por ejemplo, la Investigación sobre la pobreza en la Argentina (IPA)
+realizada por el INDEC en 1988).
+
+
+
+4.3 Plan de muestreo según grupos de aglomerados
+
+A los efectos del diseño los aglomerados fueron ordenados en 5 grupos diferentes de acuerdo
+con la cantidad de viviendas que tenían al momento del Censo.
+
+
+
+
+                                                                                            9
+Grupos de aglomerados según el plan de muestreo
+
+     Grupo I            Grupo II          Grupo III           Grupo IV               Grupo V
+                         Entre             Entre               Entre
+Más de 300.000         100.000 y          50.000 y            25.000 y          Menos de 25.000
+  habitantes            300.000           100.000              50.000             habitantes
+                       habitantes        habitantes          habitantes
+
+Gran Buenos Aires    Gran Rosario      Salta              Com. Rivadavia       Santa Rosa -Toay(2)
+                                                          (1)
+                     Gran Córdoba      Santa Fe – Santo                        Formosa
+                     (1)               Tomé
+
+                     Gran La Plata     Gran San Juan      Gran Resistencia     Gran Catamarca
+
+                     Gran Mendoza      Bahía Blanca (3)   Paraná               San Luis - El Chorrillo
+                     (1)
+                     Gran Tucumán      Gran Resistencia Corrientes             Neuquén
+                     y Tafí Viejo(1)
+                                                          Posadas              La Rioja
+                                                          S. del Estero – La   Río Gallegos
+                                                          Banda
+                                                          S.S. de Jujuy –      Tierra del Fuego (4)
+                                                          Palpalá
+
+(1) No renovó su diseño por razones de orden administrativo provincial.
+(2) Se incorporó a partir de mayo 1983.
+(3) Se incorporó a partir de octubre 1985.
+(4) Se incorporó a partir de mayo 1987.
+
+
+En los aglomerado de los grupos I, II, III y IV se trabajó con un muestreo probabilístico en dos
+etapas de selección, y en los aglomerados del grupo V con un diseño en una etapa de
+selección.
+
+4.4 Mantenimiento de la muestra
+
+Como en la década anterior, se realizaron tareas de mantenimiento consistentes en la
+actualización de los listados de viviendas de las unidades primarias seleccionadas.
+De forma no sistemática se comienza a trabajar los marcos de “crecimiento potencial”.
+
+
+4.5 Implementación de las actualizaciones de los diseños muestrales
+
+Para la renovación del diseño de las muestras, es conveniente atenuar el impacto que podría
+producirse sobre la serie de indicadores principales, si se cambiaran todas las unidades
+primarias todas simultáneamente. Por lo tanto, la introducción de las unidades nuevas se
+efectúa gradualmente.
+En el caso de la EPH este proceso se implementa por grupo de rotación. Dado que existen
+cuatro grupos y se realizan dos ondas al año, la renovación total de un diseño demora dos
+años.
+
+
+4.6 Total de aglomerados luego de la actualización basada en el CEN 80
+
+Como se ve en el cuadro anterior, luego de las actualizaciones basadas en el Censo de 1980,
+
+
+
+                                                                                              10
+los aglomerados donde se realiza la EPH son 25.. Se incorporan en esta década los
+aglomerados Bahía Blanca, Santa Rosa -Toay y Usuhaia-Río Grande.
+
+
+
+5. Actualización del diseño de la EPH basada en el Censo Nacional de
+   Población de 1991
+Después del Censo de 1991 se hace la segunda actualización del diseño de las muestras de
+la EPH. A continuación se señalan las principales novedades introducidas en ese rediseño.
+
+
+5.1 Marco muestral
+
+La EPH trabajó con la información censal a nivel de radio y a nivel de manzana dentro del
+radio. Por primera vez, a partir del Censo Nacional de 1991, los muestristas tuvieron un
+acceso directo a las bases censales. Se contó con información sobre viviendas particulares
+habitadas, tipo de vivienda, servicios de la vivienda, población por sexo, cantidad de jefes de
+hogar y sus características principales, información provista por el cuestionario Básico.
+
+Tal como se hizo a partir del Censo de 1980, los rediseños efectuados luego del Censo de
+1991 incluyen el marco complementario de crecimiento potencial (véase el punto 4.5) que
+permite mantener actualizadas las estimaciones provenientes de la Encuesta.
+
+En el aglomerado SS de Jujuy-Palpalá, en el año 1995, utilizando este marco se efectuó un
+ajuste del diseño muestral basado en el Censo de 1980, seleccionando unidades primarias en
+el estrato “crecimiento”, a fin de tener representadas en la muestra zonas muy extensas que no
+existían al momento del diseño.
+
+5.2 Estratificación
+
+Luego de estudiar las siguientes variables:
+
+        Tipo de vivienda
+        Material predominante en el piso
+        Condición de ocupación de la vivienda
+        Provisión de agua
+        Existencia de baño
+        Nivel educativo del jefe del hogar
+
+resultaron seleccionadas las siguientes variables estratificadoras:
+
+        X =     Porcentaje por unidad primaria de jefes que nunca asistieron a establecimiento
+        educativo más el porcentaje de jefes que tienen nivel educativo “Primario incompleto”
+
+        Y = Porcentaje por       unidad primaria de jefes con nivel educativo “Universitario
+        completo”
+
+Una vez decididas las variables de estratificación, se determinó el número de estratos mediante
+técnicas de Clasificación Automática.
+Los estratos resultantes quedaron definidos por los siguientes tramos:
+
+
+
+
+                                                                                            11
+Estratificación basada en el CEN 91 en los Partidos del Conurbano y Aglomerados de las
+Provincias
+
+
+Estrato    Tramos de X         Tramos de Y
+                %                    %
+
+ 1         más de 15%        0    - 10,0
+ 2         0 - 15            0    - 10,0
+ 3         0 - 15            10,1 - 20,0
+ 4         0 - 15            20,1 - 30,0
+ 5         0 - 15            30,1 - 40,0
+ 6         0 - 15            más de 40
+
+
+
+
+Estratificación basada en el CEN 91 en la ciudad de Buenos Aires
+
+Se definieron también 6 estratos combinando las mismas variables de este otro modo:
+
+
+Estrato     Tramos de X         Tramos de Y
+                %                    %
+
+ 1        30% y más          0 - 10
+ 2        15 – 29,9          0 - 10
+ 3        10 – 14,.9         0 - 10
+ 4         0 - 9,9           0 - 10
+ 5         0 - 15            10.1 – 20 (1)
+ 6         0 - 15            más de 20% (2)
+
+
+
+(1) Se ordenó internamente en dos subestratos: radios con X <=5 y radios con X>5.
+(2 ) Se ordenó internamente en dos subestratos: radios con PRECA<=85 y radios con PRECA
+>85, siendo Z el porcentaje de viviendas precarias por radio.
+
+
+
+
+                                                                                      12
+5.3 Plan de muestreo según grupos de aglomerados
+
+A los efectos del diseño los aglomerados fueron ordenados en 5 grupos diferentes de acuerdo
+con la cantidad de viviendas que tenían al momento del Censo.
+
+
+
+
+       Grupo I          Grupo II           Grupo III                Grupo IV                Grupo V
+                     Entre 300.000       Entre 80.000 y           Entre 40.000 y           Menos de
+    Más de 500.000     y 500.000            300.000                   80.000                 40.000
+      habitantes      habitantes          habitantes               habitantes              habitantes
+
+
+Gran Buenos Aires    Gran Rosario      Gran Mendoza (1)      S. del Estero - La Banda   Concordia
+                     Gran Córdoba      Gran Tucumán –        Gran Resistencia           Com. Rivadavia
+                                       Tafí Viejo
+                                       Bahía Blanca          Corrientes                 Gran Catamarca
+                                       Mar del Plata –       Gran Paraná                San Luis - El
+                                       Batán                                            Chorrillo
+                                       Gran La Plata         Posadas                    Formosa
+                                       Santa Fe - S. Tomé    SS Jujuy – Palpalá         Santa Rosa Toay
+                                       Salta                 Neuquén – Plottier         La Rioja
+                                       Gran San Juan         Río Cuarto                 Río Gallegos
+                                                                                        Ushuaia-R Grande
+
+
+(1) Tiene un diseño de transición que no respeta este esquema.
+
+.
+
+
+En todos los grupos se trabajó con un muestreo probabílistico en dos etapas de selección. En
+cada grupo varía la cantidad de unidades de primera etapa y los tamaños de muestra.
+
+
+
+
+5.4 Total de aglomerados luego de la actualización basada en el CEN ‘91
+
+
+Como muestra el cuadro anterior, los aglomerados urbanos resultantes de esta tercer
+actualización post-censal son 28. Se agregaron en este rediseño los aglomerados Mar del
+Plata, Río Cuarto, Concordia.
+
+
+5.5 La actualización de los diseños
+
+La EPH estudió el grado de desactualización de los diseños al momento de contar con los
+datos aportados por el Censo y por las propias estimaciones de la EPH. De estos estudios
+surgió que, gracias a las tareas de mantenimiento realizadas por la EPH, los diseños no habían
+sufrido una desactualización considerable, salvo algunos pocos aglomerados.
+
+El grado de desactualización fue lo que determinó la prioridad para encarar el rediseño de las
+muestras, comenzándose por los aglomerados Mendoza y Tucumán. En Octubre de 1991 se
+incorporó el nuevo diseño de Mendoza, mientras que Tucumán se implementó en Mayo de
+1995. Hay que aclarar que para encarar el nuevo diseño de Mendoza se trabajó con datos
+
+
+
+                                                                                           13
+censales preliminares.
+
+
+6. Actualización del diseño de la muestra del aglomerado Gran Buenos
+   Aires
+
+Dada la importancia del aglomerado Gran Buenos Aires, se puntualizan algunos aspectos
+relativos al rediseño y actualización de su muestra
+
+De acuerdo con lo explicado anteriormente, la muestra nueva se incorporó gradualmente para
+no afectar las estimaciones con un cambio brusco de diseño. Se finalizó la incorporación del
+nuevo diseño en Mayo de 1998.
+
+Con el fin de cubrir el mismo ámbito geográfico que el aglomerado Gran Buenos Aires (véase
+punto 1) definido a partir del Censo de 1991, se incorporaron a la zona bajo estudio algunas
+áreas urbanas pertenecientes a los siguientes partidos:
+
+ Escobar, Pilar, San Vicente, Cañuelas, Gral. Rodríguez, Marcos Paz, Presidente Perón.
+
+La población del ámbito geográfico agregado representa el 3.3% de la población total del
+aglomerado actual. Corresponde a zonas pequeñas. De esta manera el ámbito geográfico
+actual del aglomerado GBA queda integrado de la siguiente forma:
+
+
+   Áreas comunes con los diseños de muestra anteriores:
+
+       Ciudad de Buenos Aires.
+
+       La totalidad de las zonas urbanas de los partidos de: General Sarmiento (ahora dividido
+       en J. C. Paz, Malvinas Argentinas y San Miguel), Morón (ahora dividido en Morón,
+       Hurlingham e Ituzaingó), Lomas de Zamora, Quilmes, Lanús, General San Martín, Tres
+       de Febrero, Avellaneda, San Isidro, Vicente López, La Matanza, Ate. Brown, Merlo,
+       Moreno, E. Echeverría (ahora dividido en E. Echeverría y Ezeiza), Tigre, Florencio
+       Varela, Berazategui, y San Fernando.
+
+
+   Áreas nuevas incorporadas en el último rediseño
+
+       Algunas zonas urbanas (las más próximas geográficamente al GBA anterior) de los
+       partidos de:
+
+            Escobar, Pilar, San Vicente, Cañuelas, Gral. Rodríguez, Marcos Paz y Presidente
+            Perón, este último creado por subdivisión del partido de San Vicente y que
+            incorpora e incorpora un sector de los partidos de E. Echeverría y de Florencio
+            Varela.
+
+
+
+
+                                                                                           14
+Para dar una idea de la incidencia de la población correspondiente a las áreas nuevas respecto
+del total del aglomerado, se elaboró el siguiente cuadro con cifras correspondiente a la onda de
+Mayo 1998.
+
+
+GBA actual y GBA anterior, Mayo de 1998, estimaciones de la EPH, y porcentaje
+de GBA anterior respecto a GBA actual
+
+
+Estimación de             GBA actual         GBA anterior         %
+
+Población total           12.171.141         11.774.007         96.7
+Hogares                    3.684.781          3.575.562         97.0
+Población hasta 9 años     1.993.056          1.897.247         95.2
+Población 10 a19 años      2.103.515          2.027.708         96.4
+Población 20 a 49 años     5.006.475          4.854.446         97.0
+
+
+
+
+Algunos resultados relativos a la ampliación del dominio geográfico de GBA
+
+
+
+Tasa de           Mayo 1998                   Agosto 1998                Octubre 1998
+                     GBA           GBA            GBA          GBA           GBA           GBA
+                    actual        anterior       actual       anterior      actual        anterior
+
+Actividad             45,4          45,6          45,1          45,1         45,3           45,4
+Desocupación          14,2          14,0          14,1          14,1         13,4           13,3
+Empleo                39,0          39,2          38,7          38,8         39,2           39,4
+
+
+
+
+                                                                                             15
+

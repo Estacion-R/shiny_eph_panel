@@ -11,3 +11,6 @@
 .new_periods.txt
 data_raw/df_eph.parquet.bak
 data_raw/df_eph.parquet.bak2
+
+# Screenshots de Playwright durante revisiones UX (no se commitean)
+.playwright-mcp/

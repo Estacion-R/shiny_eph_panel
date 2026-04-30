@@ -1,0 +1,104 @@
+                                   Documento técnico
+
+No respuesta de ingresos en la Encuesta Permanente de Hogares
+La problemática de la no respuesta de ingresos es un fenómeno habitual en cualquier
+encuesta de hogares. En la literatura internacional existen innumerables fuentes
+bibliográficas que reconocen esta cuestión. El fenómeno se debe, obviamente, a que en
+toda encuesta donde los individuos/hogares se seleccionan aleatoriamente y no por
+autoselección (no se ofrecen a sí mismos como candidatos a ser encuestados), no todos
+los seleccionados estarán dispuestos a responder la totalidad de las preguntas que se les
+realicen.
+
+Desde la implementación, en el año 2003, de la versión continua de la Encuesta
+Permanente de Hogares, y hasta el segundo trimestre de 2007, se trabajó fuertemente –y
+con resultados positivos- en la disminución de la no respuesta de ingresos, y en el
+mejoramiento global de la calidad de dicha información.
+
+Por el contrario, en el período 2007-2015, uno de los principales problemas que se
+detectaron en la Encuesta Permanente de Hogares fue justamente el creciente deterioro
+de la respuesta de los hogares sobre sus ingresos monetarios. La contracara de este
+proceso fue la suba del porcentaje de hogares y personas cuyos ingresos fueron
+imputados debido a la ausencia de datos. Este estado de situación, encontrado al
+retomar este equipo la responsabilidad sobre la EPH, ha sido informado públicamente en
+el “Anexo Informe de Prensa. Mercado de trabajo: principales indicadores. Segundo
+trimestre de 2016”1.
+
+Uno de los aspectos que contribuyeron durante aquel período al agravamiento de la no
+respuesta fue la falta de seguimiento y aplicación de controles, y la imputación de datos
+faltantes que encubría el estado de la no respuesta. Es útil observar el gráfico 1, donde
+se muestra claramente el crecimiento de la no respuesta de ingresos durante 2007-2015.
+
+
+
+
+           Fuente: EPH-INDEC.
+
+
+
+1
+ El mismo puede ser consultado en:
+http://www.indec.gob.ar/ftp/cuadros/sociedad/anexo_informe_eph_23_08_16.pdf
+A partir de este diagnóstico, el presente equipo procedió a:
+
+   -   Incorporar, en el primer Taller de coordinadores realizado por el equipo, una
+       recapacitación respecto a esta temática que incluyera la visualización de los
+       porcentajes de no respuesta, tanto para el total nacional como para cada uno de
+       los aglomerados, antes de la salida del 2do. Trimestre 2016 (primer trimestre a
+       cargo de este equipo).
+
+   -   Reanudar los controles y el envío de informes trimestrales referidos a la no
+       respuesta general y de ingresos.
+
+   -   Realizar viajes de asistencia técnica a los aglomerados, para realizar una
+       evaluación global del trabajo de campo y gabinete, teniendo como prioridad a los
+       aglomerados con mayores dificultades. Esto teniendo en cuenta que las causas
+       que producen la no respuesta de ingresos son variadas y es necesario
+       identificarlas para proporcionar a los equipos alternativas metodológicas
+       apropiadas para su disminución.
+
+   -   Realizar prácticas de recapacitación permanentes y adecuadas a la situación
+       particular de cada aglomerado.
+
+Desde el punto de vista del tratamiento estadístico se instrumentó una metodología de
+ajuste a partir de la aplicación de ponderadores específicos para las variables de ingreso.
+Esta metodología contempla la no respuesta, corrigiéndola según el aglomerado donde
+se presenta y, dentro de los aglomerados, según el estrato de la muestra.
+
+Estos ponderadores específicos se crean con el objetivo de mejorar la calidad de las
+estimaciones relativas a la variable ingreso. Parten del ponderador para la muestra
+completa (que incluye ya las correcciones por no respuesta general y el ajuste
+demográfico), son ajustados por la no respuesta específica de la variable de ingreso, y
+luego calibrados a ciertas subpoblaciones de interés para que mantengan la estructura de
+la muestra original.
+
+Este tratamiento a través de los ponderadores permite que las estimaciones sigan siendo
+representativas de la población en estudio, es decir, neutraliza el efecto de la no
+respuesta de ingresos.
+
+A partir de los esfuerzos desplegados por este equipo para abordar el problema discutido
+en el presente informe, se observa una reversión en la tendencia de la no respuesta.
+
+
+
+
+            Fuente: EPH-INDEC
+      Al 4to trimestre de 2016, la no respuesta de ingresos para el total de los 31
+aglomerados urbanos fue de 17,8%.
+
+        En síntesis, se destacan los esfuerzos y prácticas ya encaminadas desde 2016
+en cuanto al objetivo de reducir la no respuesta de ingresos. A partir de esto, se
+evidencia la reversión de la tendencia anterior en el nivel de dicha no respuesta.
+Asimismo, se destaca el uso de estrategias estadísticas de uso internacional, como es
+la práctica de reponderación, para la neutralización del efecto de la no respuesta. A
+partir de las prioridades fijadas de acuerdo a la situación de cada aglomerado, se
+seguirá trabajando en conjunto con cada una de las Direcciones Provinciales de
+Estadística, para continuar con el mejoramiento de la calidad de la información
+provista por la EPH.
+
+
+
+
+                                      Dirección Encuesta Permanente de Hogares
+                                                      Área Pobreza e Indigencia
+                                                Buenos Aires, 26 de mayo de 2017.
+

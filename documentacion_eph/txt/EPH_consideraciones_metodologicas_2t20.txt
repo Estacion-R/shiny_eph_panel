@@ -1,0 +1,627 @@
+Encuesta Permanente de Hogares
+Consideraciones metodológicas sobre el tratamiento
+de la información del segundo trimestre de 2020
+
+Noviembre de 2020
+
+
+
+
+  Ministerio de Economía          Instituto Nacional de
+                                  Estadística y Censos
+                                      República Argentina
+EPH. Consideraciones metodológicas sobre el tratamiento
+de la información del segundo trimestre de 2020
+
+Noviembre de 2020
+
+Instituto Nacional de Estadística y Censos (INDEC)
+
+
+Dirección: Marco Lavagna
+Dirección Técnica: Pedro Ignacio Lines
+Dirección Nacional de Difusión y Comunicación: María Silvina Viazzi
+Coordinación de Producción Gráfica y Editorial: Marcelo Costanzo
+
+
+
+Dirección Nacional de Estadísticas de Condiciones de Vida: Lic. Guillermo Luis Manzano
+Dirección de Encuesta Permanente de Hogares: Sandra Duclós
+
+
+
+
+Queda hecho el depósito que fija la ley nº 11.723
+
+Libro de edición argentina
+
+
+Buenos Aires, noviembre de 2020
+
+
+
+Publicaciones del INDEC
+
+Las publicaciones editadas por el Instituto Nacional de Estadística y Censos están disponibles en www.indec.gob.ar y en el
+Centro Estadístico de Servicios, ubicado en Av. Presidente Julio A. Roca 609 C1067ABB, Ciudad Autónoma de Buenos Aires,
+Argentina. También pueden solicitarse al teléfono +54 11 51031-4632 en el horario de atención al público de 9:30 a 16:00.
+Correo electrónico: ces@indec.gob.ar
+
+Calendario anual anticipado de informes: www.indec.gob.ar/indec/web/Calendario-Fecha-0
+
+
+
+
+                                    INDECArgentina
+Índice
+
+Introducción....................................................................................................................................... 4
+
+Metodología general de la EPH ........................................................................................................ 4
+
+Cambios en el operativo de relevamiento.......................................................................................... 5
+
+Tratamiento metodológico................................................................................................................. 7
+
+Procedimiento de estimación del segundo trimestre de 2020........................................................... 8
+
+           Ponderación de la muestra de la EPH....................................................................................8
+
+               Tratamiento para los aglomerados con muestra insuficiente en el grupo de
+               rotación que ingresa por primera vez..................................................................................9
+
+           Ajuste por probabilidad de respuesta (propensity score).....................................................11
+
+           Ajuste por calibración............................................................................................................12
+
+Nota sobre la publicación de resultados ........................................................................................ 13
+
+Bibliografía....................................................................................................................................... 14
+Introducción
+        El modo de relevamiento de la Encuesta Permanente de Hogares (EPH) ha sido his-
+        tóricamente presencial, pero debido a la pandemia de la COVID-19, el operativo de
+        campo de la encuesta durante el segundo trimestre de 2020 se realizó en el contexto
+        del decreto n° 297/2020, que establece el aislamiento social, preventivo y obligatorio.
+
+        Con el objetivo de no interrumpir el operativo continuo, garantizar la producción de
+        información estadística habitual de la EPH y cuidar la salud tanto de los encuestadores
+        como de los entrevistados, se pasó de la modalidad presencial a la telefónica para con-
+        tactar y realizar la entrevista a los hogares, entendiendo la relevancia que esto conlleva
+        frente a las circunstancias excepcionales.
+
+        Es importante destacar que para mantener la comparabilidad con trimestres anteriores
+        se optó por mantener los cuestionarios trabajados hasta el momento sin agregar ni
+        modificar ninguna pregunta. Además, si bien cambió el modo de relevamiento por la
+        encuesta telefónica, se mantuvo el esquema de rotación del diseño de la muestra, el
+        cual se aplicó en el trabajo de campo.
+
+        A lo largo de este período, la Dirección Nacional de Metodología Estadística del Insti-
+        tuto Nacional de Estadística y Censos (INDEC) y la Comisión Económica para América
+        Latina y el Caribe (CEPAL) asesoraron a la Dirección de Encuesta Permanente de Ho-
+        gares para resolver las nuevas cuestiones que se presentaron debido al contexto par-
+        ticular y, así, seguir produciendo estimaciones de calidad para las tasas e indicadores
+        habituales.
+
+
+
+Metodología general de la EPH
+        La EPH es un programa nacional de producción permanente de indicadores sociales
+        cuyo objetivo es conocer las características sociodemográficas y socioeconómicas de
+        la población. Se realiza en forma conjunta por el INDEC y las Direcciones Provinciales
+        de Estadística.
+
+        Es una encuesta que brinda información trimestral y se basa en una muestra probabi-
+        lística, estratificada, en dos etapas de selección. En la primera etapa, dentro de cada
+        aglomerado, se selecciona una cantidad de áreas, que son radios censales o agru-
+        pamientos de radios para asegurar un número mínimo de viviendas en las áreas (200
+        viviendas). El método por el que se seleccionan es el del muestreo estratificado con
+        probabilidad de selección proporcional a la cantidad de viviendas particulares del área.
+        En la segunda etapa, se listan todas las viviendas particulares de las áreas selecciona-
+        das, y se seleccionan las viviendas a encuestar mediante el muestreo sistemático de
+        segmentos de viviendas contiguas (dos o tres segmentos, según el aglomerado). Los
+        listados de viviendas se ordenan geográficamente previamente a la selección, lo que
+        constituye una estratificación geográfica implícita.
+
+        En cada aglomerado la muestra está distribuida en 4 grupos de rotación (paneles) que
+        funcionan como una submuestra de tamaño igual a una cuarta parte de la muestra total,
+        siguiendo su diseño. Además, están igualmente equilibrados a lo largo del trimestre.
+
+
+ 4                                                                                    INDEC
+                          Como todos los estudios de panel, la EPH está organizada de modo de mantener las
+                          mismas viviendas durante un período determinado.
+
+                          El esquema utilizado es el que se denomina 2-2-2, dado que su funcionamiento es el
+                          siguiente:
+
+                            • Las viviendas de un área ingresan a la muestra para ser encuestadas en dos trimes-
+                              tres consecutivos, en el mes y la semana asignados a esa área.
+
+                            • Se retiran por dos trimestres consecutivos.
+
+                            • Vuelven a la muestra para ser encuestadas en dos trimestres consecutivos en el
+                              mes y la semana asignados a esa área.
+
+                          Cada vivienda se encuesta en cuatro trimestres, luego de lo cual se reemplaza por otra
+                          vivienda de la misma área. Por lo tanto, se renueva periódicamente el conjunto de ho-
+                          gares a encuestar (panel de respondentes).1
+
+
+
+Cambios en el operativo de relevamiento
+                          De acuerdo con el esquema de rotación, en la muestra del segundo trimestre de este
+                          año hubo un grupo que participaba por primera vez (grupo 1) y tres grupos que ya ha-
+                          bían participado en períodos anteriores. Por lo tanto, en el 75% de la muestra se espe-
+                          raba contar con el número de teléfono de los hogares que ya habían sido encuestados,
+                          mientras que, en el 25% correspondiente al grupo 1, no se tenía ningún contacto previo
+                          con las viviendas.
+
+                          Por lo tanto, en el relevamiento del segundo trimestre de 2020 se presentaron las tres
+                          siguientes situaciones para cada aglomerado:
+
+                            • Viviendas con participación por segunda, tercera y cuarta vez de las que se dispo-
+                              nía de un número telefónico.
+
+                            • Viviendas con participación por segunda, tercera y cuarta vez de las que no se dis-
+                              ponía de un número telefónico.
+
+                            • Viviendas del grupo de rotación que ingresaban por primera vez al panel y para las
+                              que, por lo tanto, no se disponían de número de teléfono.
+
+                          Frente a estas situaciones se estableció el siguiente procedimiento de relevamiento:
+
+                            • En el caso de las viviendas con teléfono conocido, se contactó al hogar y se realizó
+                              la entrevista por teléfono.
+
+
+
+1
+ Para más información sobre el diseño de muestra de la EPH, ver el capítulo “Aspectos Metodológicos” del informe técnico
+del segundo trimestre de 2020, disponible en: https://www.indec.gob.ar/uploads/informesdeprensa/mercado_trabajo_eph_
+2trim20929E519161.pdf.
+
+
+    EPH. Consideraciones metodológicas sobre el tratamiento de la información del segundo trimestre de 2020         5
+     • En las viviendas para las que no se contaba con un teléfono, ya sea porque participa-
+       ban por primera vez en la encuesta o porque en sus participaciones anteriores no se
+       pudo obtener, los encuestadores buscaron los teléfonos por diversos mecanismos:
+
+         - Utilización de buscadores por la dirección a través de distintos medios (guías
+           telefónicas, buscadores online, etc.).
+
+         - En aquellas jurisdicciones en las cuales se flexibilizaron las condiciones de
+           aislamiento durante el trimestre, a partir de autorización explícita de la autoridad
+           competente, se salió a campo exclusivamente para hacer contacto con las
+           viviendas de las que no se contaban con números de teléfono, para recolectarlos
+           y luego realizar la encuesta vía telefónica, o para la recuperación (total o parcial)
+           en los casos en los que no se pudo obtener la entrevista telefónica.
+
+    Este procedimiento sirvió además para realizar una primera “sensibilización presencial”
+    que permitió una mejor participación de los hogares, a diferencia de aquellos en los que
+    no hubo ningún tipo de contacto previo.
+
+    La decisión de no realizar las entrevistas presenciales, aun cuando hubo un despla-
+    zamiento hasta la vivienda seleccionada, tuvo un doble propósito. Por un lado, pre-
+    servar la homogeneidad metodológica y operativa de todo el período, y minimizar
+    así las distorsiones que puedan derivarse de la coexistencia de dos estrategias de rele-
+    vamiento. Por otro lado, y no menos importante, mantener el distanciamiento social
+    evitando el contacto cercano entre personas entrevistadas y encuestadores, para
+    proteger la salud de ambos.
+
+    Como resultado de estas adecuaciones en el operativo de campo, de las 26.940 vi-
+    viendas seleccionadas para el segundo trimestre de 2020 se consiguió información de
+    contacto para 21.950 y, de ellas, en 11.841 sus habitantes respondieron la encuesta.
+
+    En el cuadro 1 se presenta una síntesis de la relación entre contar o no con informa-
+    ción previa de contacto y el logro de una respuesta.
+
+    Se observa que el 71,7% de las viviendas para las que se disponía de un número de
+    teléfono por una participación anterior respondieron la encuesta. Por su parte, el 75,2%
+    de las viviendas para las cuales no se contaba con esa información de trimestres ante-
+    riores, no respondieron. Por lo tanto, se puede inferir que existe una incidencia directa
+    en el logro de la encuesta si se cuenta con el número de teléfono de participaciones
+    previas.
+
+    Asimismo, se observa que se obtuvo respuesta para el 24,8% de quienes no se tenía
+    número de teléfono conocido por contactos previos, lo cual nos da una idea de la efec-
+    tividad de la búsqueda de información de contacto por otros medios.
+
+
+
+
+6                                                                                   INDEC
+Cuadro 1.              Porcentaje de viviendas que tenían o no número de teléfono conocido en una participación anterior,
+                       según si realizó la encuesta
+
+                                          Total                                          Número de teléfono conocido
+
+                                  Encuesta realizada                              No                                     Sí
+                                         No                                      75,2                                   28,3
+                                         Sí                                      24,8                                   71,7
+                                        Total                                   100,0                                  100,0
+                       Fuente: INDEC, Dirección de Encuesta Permanente de Hogares.
+
+
+                       En este sentido, se confirmó que contar con un diseño de panel fue beneficioso para
+                       amortiguar el descenso en los niveles de respuesta por dos razones. Por un lado, contar
+                       con una participación previa de aquellos hogares pertenecientes a los grupos de rota-
+                       ción mencionados introducía un elemento de conocimiento del hogar sobre el operativo
+                       en campo de la EPH, lo cual resultó en una mayor confianza del hogar al momento de la
+                       nueva entrevista. Por otro, recolectar los números de teléfono de los hogares de forma
+                       directa, disminuyó el problema de desactualización en la información de contacto.
+
+                       En las entrevistas exclusivamente telefónicas, para las que fue necesario obtener el
+                       dato de contacto a partir de información secundaria y se contaba solo con la direc-
+                       ción de las viviendas, se realizaba una primera pregunta de control para confirmar si
+                       la dirección del hogar se correspondía efectivamente con la dirección de la vivienda
+                       seleccionada. Este control fue necesario debido a una posible desactualización de la
+                       información obtenida. En los casos en que el hogar respondió negativamente, la entre-
+                       vista no se realizó.
+
+
+
+Tratamiento metodológico
+                       El relevamiento habitual de la EPH en este trimestre se ha visto afectado en dos as-
+                       pectos. El primero se relaciona con la cobertura de la muestra, ya que se redujo a las
+                       viviendas que tenían un número de teléfono conocido o cuyo número se pudo obtener
+                       mediante estrategias que no implicaban contacto personal. El segundo responde al
+                       cambio de la modalidad de la entrevista, habitualmente presencial y ahora exclusiva-
+                       mente telefónica. Ambos cambios impactan en la cantidad de hogares sin respuesta y
+                       ocasionan sesgos en las estimaciones.
+
+                       Para abordar ambos problemas se tomaron en cuenta las recomendaciones interna-
+                       cionales referidas a las encuestas a hogares en el período de aislamiento social y la
+                       experiencia de otros países.
+
+                       Se siguieron los siguientes pasos:
+
+                         • Se realizaron distintos ejercicios para estudiar el sesgo tomando en cuenta la com-
+                           paración con trimestres anteriores; la respuesta afirmativa al número de teléfono en
+                           un trimestre habitual; y la respuesta efectiva del segundo trimestre de 2020 en la
+                           participación anterior de dicho panel. De esta manera, se obtuvieron las principales
+                           variables explicativas de la no respuesta.
+
+
+
+ EPH. Consideraciones metodológicas sobre el tratamiento de la información del segundo trimestre de 2020                       7
+                      • Se utilizó el modelo de probabilidad de respuesta propensity score para el ajuste de
+                        las ponderaciones de diseño utilizando las variables detectadas en el punto anterior.
+
+                      • Finalmente, a la ponderación ajustada por el modelo de probabilidad de respuesta se
+                        le aplicó una calibración a cada aglomerado tomando como referencia las proyeccio-
+                        nes de población del trimestre, abiertas por sexo y tramos de edad.
+
+
+
+Procedimiento de estimación del segundo trimestre de 2020
+Figura 1.           Etapas del procedimiento de estimación del segundo trimestre de 2020
+
+
+            Ponderación               Ajuste por
+                                                                 Ajuste por                Estimaciones
+            habitual de la           probabilidad
+                                                                 calibración                   finales
+              muestra                de respuesta
+
+                    Fuente: INDEC, Dirección de Encuesta Permanente de Hogares.
+
+
+
+
+Ponderación de la muestra de la EPH
+
+                    Como en la mayoría de las encuestas probabilísticas, el cálculo de los factores de ex-
+                    pansión se realiza en las siguientes fases:
+
+                         I. Se expande por la inversa de la probabilidad con que fue seleccionada cada
+                         vivienda en la muestra. A este primer componente se lo llama “ ” (es la inversa
+                         de la fracción general de muestreo del diseño aplicado en el aglomerado). Dado
+                         que en cada aglomerado la muestra EPH tiene un diseño bietápico (dentro de cada
+                         aglomerado se seleccionan áreas y luego viviendas),      se obtiene del producto
+                         de las inversas de las probabilidades de selección de cada unidad en cada etapa.
+
+                         Así,                    , donde cada componente corresponde a la inversa de la
+                         probabilidad de selección del área i en el aglomerado a, y de cada vivienda en el
+                         área i del aglomerado a, respectivamente.
+
+                         II. Se aplica un corrector por área no relevada a nivel de estrato de corrección por
+                         no respuesta. Este corrector se construye a partir de la información de áreas se-
+                         leccionadas (o áreas teóricas de la muestra) y áreas efectivamente relevadas por
+                         aglomerado y estrato. De esta forma el corrector queda:
+
+                                         á        ó
+                                                           , en el estrato h del aglomerado a.
+                                        á
+
+                         Y para cada hogar e individuo de la muestra (según se trate de la base hogar o
+                         persona), se construye:
+
+
+
+
+  8                                                                                                INDEC
+                            III. Se aplica un corrector a nivel de estrato de corrección por no respuesta. Para
+                            construir este corrector se utiliza la información del Cuestionario Vivienda sobre las
+                            causas por las que no pudo realizarse la entrevista.
+
+                            Se clasifican las causas en dos grupos:
+
+                            • Viviendas encuestables: ausencia, rechazo, otras causas.
+
+                            • Viviendas no encuestables: deshabitada, demolida, en construcción, fin de sema-
+                              na, vivienda usada como establecimiento, variación en el listado.
+
+                            El primer grupo corresponde a una no respuesta real, es decir, indica direcciones
+                            donde existe un hogar que no pudo ser contactado. Utilizando esta información se
+                            construye un corrector       . Luego:
+
+
+
+
+                            en el estrato h del aglomerado a.
+
+                            IV. Se realiza un ajuste utilizando proyecciones demográficas de población a nivel
+                            de total de población del aglomerado. Para ello se construye:
+
+
+                                             ,
+
+                            donde:
+
+                                       proyección demográfica de población para el aglomerado a en el trimestre t.
+
+
+                                   , estimación de la población del aglomerado a en el trimestre t, a partir de
+                            la muestra.
+
+                            Finalmente, el factor final de diseño denominado Pondera resulta ser:
+
+
+
+
+Tratamiento para los aglomerados con muestra insuficiente en el grupo
+de rotación que ingresa por primera vez
+
+                      Como ya fue mencionado, se aplicaron distintos procedimientos para obtener un nú-
+                      mero de contacto, especialmente en el grupo 1 de rotación. Como resultado, se pre-
+                      sentaron distintas situaciones según las condiciones frente al el aislamiento social, pre-
+                      ventivo y obligatorio en cada aglomerado.
+
+                      En el cuadro 2 se presenta la distribución de la muestra por grupo de rotación para cada
+                      aglomerado y para el total de la muestra. Se resaltan los aglomerados para los cuales,
+                      en el grupo de rotación nuevo, se lograron pocos casos o ninguno que respondiera a
+                      la encuesta.
+
+
+EPH. Consideraciones metodológicas sobre el tratamiento de la información del segundo trimestre de 2020       9
+Cuadro 2.   Porcentajes de áreas relevadas por grupo de rotación, según aglomerados
+
+                           Aglomerados           Grupo 1     Grupo 2      Grupo 3     Grupo 4     Total
+                                                                            %
+            Gran Resistencia                       0,0         65,2        80,0        80,0       57,4
+            Ushuaia-Río Grande                    13,3         66,7        93,3       100,0       68,3
+            Ciudad Autónoma de Buenos Aires       24,4         66,7        86,4        97,8       68,7
+            San Nicolás-Villa Constitución         0,0         90,0       100,0       100,0       73,5
+            Mar del Plata-Batán                   23,8         76,2       100,0       100,0       75,0
+            Partidos del GBA                      35,8         77,1        96,2        92,4       75,3
+            Gran Tucumán-Tafí Viejo               28,6         85,7        95,2        95,2       76,2
+            Gran La Plata                         10,0       100,0        100,0        95,2       77,1
+            Comodoro Rivadavia-Rada Tilly         20,0         93,3       100,0       100,0       78,3
+            Neuquén-Plottier                      60,0         80,0        86,7        93,3       80,0
+            Gran Paraná                            0,0       100,0        100,0       100,0       80,3
+            Bahía Blanca-Cerri                    33,3         94,4       100,0       100,0       81,9
+            Concordia                              0,0       100,0        100,0       100,0       82,4
+            Rawson-Trelew                         40,0         95,0       100,0       100,0       84,6
+            Posadas                               66,7       100,0        100,0        93,3       90,0
+            San Luis-El Chorrillo                 66,7       100,0         93,3       100,0       90,0
+            Santa Rosa-Toay                       93,3         93,3        86,7        86,7       90,0
+            Viedma-Carmen de Patagones            76,5         94,4        88,9       100,0       90,1
+            La Rioja                             100,0         88,9        86,7        86,7       90,5
+            Santiago del Estero-La Banda          60,0       100,0        100,0       100,0       90,6
+            Río Gallegos                          66,7       100,0        100,0       100,0       91,5
+            Gran Córdoba                          75,0        95,8        100,0       100,0       92,7
+            Corrientes                            73,3       100,0        100,0       100,0       93,3
+            Río Cuarto                            80,0       100,0        100,0       100,0       94,9
+            Gran Santa Fe                         94,4       100,0        100,0       100,0       98,6
+            Salta                                100,0       100,0        100,0        95,2       98,8
+            Gran Mendoza                         100,0        96,8        100,0       100,0       98,9
+            Gran Rosario                          95,8       100,0        100,0       100,0       99,0
+            Formosa                              100,0       100,0        100,0       100,0      100,0
+            Jujuy-Palpalá                        100,0       100,0        100,0       100,0      100,0
+            Gran Catamarca                       100,0       100,0        100,0       100,0      100,0
+            Gran San Juan                        100,0       100,0        100,0       100,0      100,0
+            Total                                 54,0        89,9         96,3        96,8       84,4
+
+            Fuente: INDEC, Dirección de Encuesta Permanente de Hogares.
+
+
+            Tomando en cuenta que cada grupo de rotación es igualmente representativo de la
+            población, se resolvió trabajar en esos aglomerados con el 75% de la muestra con el
+            objetivo de evitar, así, la perturbación que pudieran ocasionar los pocos casos encon-
+            trados en el grupo nuevo.
+
+
+
+
+ 10                                                                                             INDEC
+Ajuste por probabilidad de respuesta (propensity score)
+
+                       Una vez obtenido el factor de expansión de diseño y con la finalidad de morigerar el
+                       sesgo, en cada aglomerado se aplicó un modelo de ajuste por no respuesta utilizando
+                       el método propensity score, que consiste en estimar la probabilidad que cada hogar
+                       tiene de responder a la encuesta a partir de una serie de variables explicativas. Se trata
+                       de un modelo tipo logit, el más usual para variables dependientes dicotómicas.
+
+                       Para la EPH, se contó con la información relevada en los hogares que habían participa-
+                       do anteriormente en la encuesta, lo que permitió estimar un patrón de probabilidad de
+                       respuesta. Las variables utilizadas se presentan en el cuadro 3.
+
+Cuadro 3.              Variables incluidas en el modelo de probabilidad de respuesta
+
+                                     Tipo de variable                                     Variables independientes (1)
+
+                                                                     Nivel educativo del jefe
+                                                                     Menores de 14 años
+                                                                     Mayores de 60 años
+                                       Categórica                    Tamaño del hogar
+                                                                     Régimen de tenencia
+                                                                     Código de estrato del diseño
+                                                                     Número de teléfono conocido en el hogar
+                                                                     Cantidad de varones
+                                                                     Cantidad de mujeres
+                                       Numérica                      Cantidad de ocupados
+                                                                     Cantidad de desocupados
+                                                                     Edad promedio del hogar
+
+                       (1) Algunas variables categóricas se ajustaron con respecto a los niveles de apertura presentados habi-
+                       tualmente.
+                       Fuente: INDEC, Dirección de Encuesta Permanente de Hogares.
+
+
+                       Si bien el modelo brinda coeficientes de probabilidad de respuesta para la muestra que
+                       se relevó en el segundo trimestre de 2020 y que tenía participación anterior, a efectos
+                       de suavizar la variación de los pesos se calcularon los promedios por quintiles de los
+                       coeficientes encontrados para cada aglomerado. Luego, estos coeficientes promedio
+                       de probabilidad de respuesta se aplicaron a cada uno de los hogares de ese quintil. Por
+                       lo tanto, no se utilizó un coeficiente de ajuste para cada hogar, sino cinco coeficientes
+                       distintos para cada aglomerado, y cada uno fue asignado al hogar correspondiente a
+                       ese quintil.
+
+                       Al 25% de la muestra que no tenía participación anterior (grupo 1 más los hogares que
+                       respondieron por primera vez de los otros grupos) se le aplicaron nuevamente los co-
+                       eficientes promedios de probabilidad, pero esta vez por estratos en cada aglomerado.
+                       Después, a esos coeficientes se los asignó a los hogares nuevos.
+
+
+
+
+ EPH. Consideraciones metodológicas sobre el tratamiento de la información del segundo trimestre de 2020                 11
+            El ponderador ajustado por probabilidad de respuesta será:
+
+                                                    , para los hogares con participación anterior
+
+            donde:
+
+                          : Es el factor final de diseño de la muestra relevada telefónicamente del
+            área i dentro de un aglomerado a.
+
+                   : Es la estimación de probabilidad de respuesta de la muestra relevada telefóni-
+            camente de un hogar k, de la vivienda j, del área i, dentro del quintil en un aglomerado a.
+
+                                                    , para los hogares sin participación anterior
+
+            donde:
+
+                          : Es el factor final de diseño de la muestra relevada telefónicamente del
+            área i dentro de un aglomerado a.
+
+                    : Es la estimación de probabilidad de respuesta de la muestra relevada telefóni-
+            camente de un hogar k, de la vivienda j, del área i, dentro del estrato h en un aglomerado a.
+
+
+
+Ajuste por calibración
+
+            Por último, se realizó un ajuste final por calibración mediante la utilización de las pro-
+            yecciones de población por sexo y tramos de edad para cada aglomerado que provee
+            la Dirección Nacional de Estadísticas Sociales y de Población del INDEC.
+
+Cuadro 4.   Distribución de edad según tramos
+
+                       Tramos de edad
+                         0 – 14 años
+                        15 – 29 años
+                         30 – 64 años
+                        65 años y más
+            Fuente: INDEC, Dirección de Encuesta Permanente de Hogares.
+
+
+            De esta forma, el ponderador final tiene la siguiente expresión:
+
+
+
+
+            donde:
+
+                   : es el ponderador ajustado por probabilidad de respuesta de un hogar k, de la
+            vivienda j, del área i dentro de un aglomerado a. Tanto para las viviendas que tenían
+            participación anterior como para las que no.
+
+                 : es el ajuste por calibración de un hogar k, de la vivienda j, del área i dentro de un
+            aglomerado a, utilizando proyecciones de población.
+
+
+ 12                                                                                          INDEC
+Nota sobre la publicación de resultados
+                      Con relación a las condiciones que debe reunir un aglomerado para que sus datos
+                      puedan ser difundidos, las recomendaciones técnicas de la Dirección Nacional de Me-
+                      todología Estadística del INDEC indican:
+
+                        • que deben poseer un 70% o más de áreas relevadas en cada uno de los estratos de la
+                          muestra para que no distorsione la estructura probabilística planteada para el diseño
+                          de la muestra; y
+
+                        • que deben tener un porcentaje de respuesta superior al 40% de las viviendas para
+                          alcanzar estimaciones confiables.
+
+                      En el segundo trimestre de 2020, los siguientes aglomerados no alcanzaron alguna o
+                      ambas de estas condiciones: Posadas; Gran Resistencia; Ciudad Autónoma de Buenos
+                      Aires; partidos del Gran Buenos Aires; Mar del Plata-Batán; Gran Tucumán-Tafí Viejo;
+                      Santa Rosa-Toay; Neuquén-Plottier; Ushuaia-Río Grande; Gran La Plata; Comodoro
+                      Rivadavia-Rada Tilly; Bahía Blanca-Cerri; Viedma-Carmen de Patagones; San Nico-
+                      lás-Villa Constitución; y Rawson-Trelew.
+
+                      No obstante, se consideró oportuno, dada la situación especial en la que se desarrolló
+                      el relevamiento del período consignado y el esfuerzo realizado en todas las Direcciones
+                      Provinciales de Estadística, que los datos fueran presentados con la advertencia de que
+                      no contaban con la calidad con la que habitualmente la EPH presenta sus resultados.
+
+
+
+
+EPH. Consideraciones metodológicas sobre el tratamiento de la información del segundo trimestre de 2020   13
+Bibliografía
+         CEPAL (2020). Recomendaciones para eliminar el sesgo de selección en las en-
+         cuestas de hogares en la coyuntura de la enfermedad por coronavirus (COVID-19).
+         Recuperado de: https://repositorio.cepal.org/bitstream/handle/11362/45552/S2000316_
+         es.pdf.
+
+         CEPAL (2020). Recomendaciones para la publicación de estadísticas oficiales a partir de
+         encuestas de hogares frente a la coyuntura de la enfermedad por coronavirus (COVID-19).
+         Recuperado de: https://repositorio.cepal.org/bitstream/handle/11362/45372/4/2000274_
+         es.pdf.
+
+         Deville, J. C. y Särndal, C. E. (1992). Calibration estimators in survey sampling. Journal
+         of the American Statistical Association, 87(418).
+
+         Gelman, A. y Little, T. (1997). Poststratification into many categories using hierarchical
+         logistic regression. Survey Methodology, 27(2).
+
+         INE - Chile. (2020). Encuesta Nacional de Empleo (ENE). Nota Técnica N° 5. Recuperado de:
+         https://ine.cl/docs/default-source/ocupacion-y-desocupacion/publicaciones-y-anuarios/
+         separatas/tem%C3%A1ticas/separata-t%C3%A9cnica-n-5-contingencia-covid-19.pdf.
+
+         INE - Uruguay (2020). Metodología de la ECH no presencial 2020. Recuperado de: https://
+         www.ine.gub.uy/documents/10181/67542/Metodolog%C3%ADa+de+la+ECH+no+prese
+         ncial+2020/42124b3c-10c3-435f-8061-3e5cac29b915.
+
+         Kim, J. K. y Riddles, M. K. (2012). Some theory for propensity-score-adjustment estima-
+         tors in survey sampling. Survey Methodology, 38(2).
+
+         Lensvelt-Mulders, G., Lugtig, P. y Hubregtse, M. (2009). Separating selection bias and
+         non-coverage in Internet panels using propensity matching. Survey Practice, 2(6).
+
+         Rosenbaum, P. R. y Rubin, D. B. (1983). The central role of the propensity score in ob-
+         servational studies for causal effects. Biometrika, 70(1).
+
+         Särndal, C. E. (2007). The calibration approach in survey theory and practice. Survey
+         Methodology, 33(2).
+
+         Särndal, C. E. y Lundström, S. (2006). Estimation in surveys with nonresponse. Wiley
+         Series in Survey Methodology.
+
+
+
+
+14                                                                                     INDEC
+

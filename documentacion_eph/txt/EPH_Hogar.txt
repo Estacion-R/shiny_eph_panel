@@ -1,0 +1,473 @@
+                                                           ENCUESTA PERMANENTE DE HOGARES
+INSTITUTO NACIONAL DE
+ESTADÍSTICA Y CENSOS                                           ESTRICTAMENTE CONFIDENCIAL - Ley 17.622
+
+                                                                        Aplicado a partir del 1er trimestre 2010
+
+                                                                                                                                                                                    HOGAR
+I. IDENTIFICACIÓN
+  Código           Nº en el       Semana                                          Vivienda   Hogar        Respon-
+                                                       Trimestre        Año
+  de área          listado          N°                                               Nº       Nº           dente
+
+
+
+
+                     Visitas                                  Entrevista realizada                   Modalidad de aplicación
+        Fecha                       Hora                                                 1                                                  1
+                                                             Si                                Personal Completa
+  1a ......./......./.......   .....................                                                                                                Encuestador ...........................
+                                                             No                          2
+  2a ......./......./.......   .....................                                           Personal y Telefónica                        2
+                                                             Salido                      3
+
+  3a ......./......./.......   .....................         Mal tomado                  4     Sólo Telefónica                              3       N° ..........................................
+
+
+II. CARACTERÍSTICAS HABITACIONALES DEL HOGAR (sólo para hogares que responden por primera vez
+    o mal tomado en la participación anterior)
+
+1. ¿Cuántos ambientes/ habitaciones tiene este                                                   7. ¿Este hogar es...
+   hogar para su uso exclusivo? (excluyendo cocina,
+      baño, pasillos, lavadero, garage)                                                          ... Propietario de la vivienda y el terreno?                                        1
+
+                                                                                                 ... Propietario de la vivienda solamente?                                           2
+
+                                                                                                 ... Inquilino/ arrendatario de la vivienda?                                         3
+2. De ésos, ¿cuántos usan habitualmente para
+                                                                                                 ... Ocupante por pago de impuestos/expensas?                                        4
+   dormir?
+                                                                                                 ... Ocupante en relación de dependencia?                                            5
+
+                                                                                                 ... Ocupante gratuito (con permiso)?                                                6
+
+3. ¿Utiliza alguno exclusivamente como lugar de                                                  ... Ocupante de hecho (sin permiso)?                                                7
+   trabajo? (para consultorio, estudio, taller, negocio,etc.)
+                                                                                                 ... Está en sucesión?                                                               8
+             Si            1                                  3.1 ¿Cuántos?
+                                                                                                 ... Otra situación? (especificar) ...........................
+             No            2
+                                                                                                     ............................................................................    9
+
+
+4. ¿Tiene además...
+                                              Si                   No                            8. ¿Para cocinar, utiliza principalmente ...
+     1... cuarto de cocina?                            1                2
+                                                                                                 ... Gas de red?                                                                     1
+     2... lavadero?                                    1                2     (a p. 7)
+                                                                                                 ... Gas de tubo/ garrafa?                                                           2
+     3... garage?                                      1                2
+                                                                                                 ... Kerosene/ leña/ carbón?                                                         3
+
+                                                                                                 ... Otro? (especificar) ..........................................
+5. De éstos ....... (nombre los “Si” de preg. 4)
+                                                                                                     ............................................................................    4
+   ¿usan alguno para dormir?
+             Si            1                                  5.1 ¿Cuántos?
+                                                                                                 9. ¿El baño es de...
+             No            2
+                                                                                                 ... Uso exclusivo del hogar?                                                        1
+
+ 6. ¿ Utiliza alguno de éstos...... (nombre los “Si”                                             ... Compartido con otro/s hogar/es                                                         (a
+    de preg. 4) exclusivamente como lugar de tra-                                                    de la misma vivienda?                                                           2    Blo-
+                                                                                                                                                                                          que
+    bajo? (para consultorio, estudio, taller, negocio, etc.)                                     ... Compartido con otra/s vivienda/s?                                               3     IV)
+
+             Si            1                                   6.1 ¿Cuántos?                     -No tiene baño (sólo para los que en Cuest.
+                                                                                                 de Viv. Bloque IV, pregunta 8 dijeron “NO”)                                         4
+             No            2
+
+Form. 002/10                                                                                                                                                                             HOGAR
+ III. EXCLUSIVAMENTE PARA HOGARES DE PENSIONISTAS Y SERVICIO DOMESTICO CON CAMA
+ (AUTOINFORMANTES) (para los que respondieron afirmativamente a preg. 3 de Bloque III de Cuestionario de Vivienda)
+
+ 1. ¿Su hogar tiene...                                                  2. ¿Envía la mayor parte de sus ingresos a otro
+                                            Si          No                 hogar?
+    1... habitación de uso exclusivo?             1           2                              Si              1
+                                                                                                                     (a Bloque IV)
+    2... baño de uso exclusivo?                   1           2                              No              2
+
+
+
+IV. CARACTERÍSTICAS DE LOS MIEMBROS DEL HOGAR
+
+ COMPO-                                                            FECHA
+                                  RELACIÓN DE SEXO                                          SITUACIÓN                  COBERTURA
+  NENTE          NOMBRE                                           DE NACI-       EDAD
+                                  PARENTESCO                                                CONYUGAL                     MÉDICA
+    N°                                                            MIENTO
+
+     01              02                      03          04           05          06              07                              08
+
+                                   (Anote en el        (Anote     ¿En qué       ¿Cuán-     ¿Actualmente          ¿Tiene algún tipo de
+                                   orden siguiente)    en         fecha         tos años   está......            cobertura médica por la
+                                                       cada       nació?        cumpli-                          que paga o le descuen-
+                                   Jefe/a              caso)                    dos        1... Unido/a?         tan?
+                                                                  (anote día,
+                                   Cónyuge/Pareja                 mes y año)    tiene?
+                                                                                           2... Casado/a?        1. Obra Social (incluye
+                                   Hijo/a/Hijastro/a                                                                PAMI)
+                                                                                           3... Separado/a o
+                                   Yerno/Nuera                                                  divorciado/a?
+                                                                                                                 2. Mutual / Prepaga /
+                                   Nieto/a                                                                          Servicio de Emergencia
+                                                                                           4... Viudo/a?
+                                   Madre/Padre
+                                                                                           5... Soltero/a?       3. Planes y Seguros Públicos
+                                   Suegro/a            1. varón
+                                   Hermano/a                                                                     4. No paga ni le descuentan
+                                                       2. mujer                                                     (no tiene ninguna)
+                                   Otros Familiares
+                                   No Familiares                                                                 9. N/S N/R
+
+                                                                                                                 (Circule el/los códigos
+                                                                                                                 correspondientes)
+
+
+
+
+                                    JEFE/A                                                                       1      2     3        4     9
+
+
+                                                                                                                 1      2     3        4     9
+
+
+                                                                                                                 1      2     3        4     9
+
+
+                                                                                                                 1      2     3        4     9
+
+
+                                                                                                                 1      2     3        4     9
+
+
+                                                                                                                 1      2     3        4     9
+
+
+                                                                                                                 1      2     3        4     9
+
+
+                                                                                                                 1      2     3        4     9
+
+
+                                                                                                                 1      2     3        4     9
+
+
+                                                                                                                 1      2     3        4     9
+
+
+                                                                                                                 1      2     3        4     9
+
+
+                                                                                                                 1      2     3        4     9
+
+
+
+
+Form. 002/10                                                                                                                               HOGAR
+                                      NIVEL EDUCATIVO                                                             MIGRACIONES
+
+
+    09                10             11                12                13            14                    15                      16
+
+ ¿Sabe         ¿Asiste o         Ese esta-    ¿Cuál es el nivel  ¿Finali-         ¿Cuál fue el     ¿Dónde nació?             ¿Dónde vivía hace
+ leer y        asistió a         blecimien-   más alto que cursa zó ese           último año                                 5 años?
+ escribir?     algún esta-       to es...     o cursó?           nivel?           aprobado?        (anote código y           (anote código y
+               blecimiento                    (anote código)                      (anote código)   nombre cuando             nombre cuando
+               educativo?                                                                          corresponda)              corresponda)
+               (colegio, es-                  1. Jardín/ Preesc.                  00. Ninguno
+               cuela, univer-                                                                      1. En esta localidad      1. En esta localidad
+                                              2. Primario                         01. Primero
+               sidad)
+                                                                                  02. Segundo      2. En otra localidad      2. En otra localidad
+               (anote código)                 3. EGB                                                  de esta provincia         de esta provincia
+                                                                                  03. Tercero
+                                              4. Secundario                                        3. En otra provincia      3. En otra provincia
+                                 1. Público                           1. Si       04. Cuarto
+ 1. Si         1. Si, asiste.                 5. Polimodal                                            (especificar)             (especificar)
+                                                                      (a p. 15)   05. Quinto
+                                              6. Terciario                                         4. En un país             4. En un país
+                                                                                  06. Sexto           limítrofe                 limítrofe
+                                              7. Universitario        2. No       07. Séptimo         (especificar Brasil,      (especificar Brasil,
+ 2. No         2. No asiste,     2. Privado                                                           Bolivia, Chile,           Bolivia, Chile,
+                  pero asistió                8. Posgrado Univ.                   08. Octavo
+                                                                                                      Paraguay, Uruguay)        Paraguay, Uruguay)
+                  (a p.12)                                                        09. Noveno
+                                                                                                   5. En otro país           5. En otro país
+                                              9. Educación Especial               98. Educación       (especificar)             (especificar)
+                                                 (discapacidad)                       especial                               6. No había nacido
+ 3.. Menor     3. Nunca asis-    9. N/S N/R
+ de 2 años        tió (a p.15)                                                    99. N/S N/R      9. N/S N/R                9. N/S N/R
+ (a p. 15)
+
+
+
+
+                         Pasar a cuestionarios individuales para las personas de 10 años y más
+Form. 002/10                                                                                                                                    HOGAR
+                                                ATENCIÓN: APLICAR LOS BLOQUES V, VI, VII Y VIII AL FINALIZ
+
+V. ESTRATEGIAS DEL HOGAR
+
+   Le voy a nombrar distintas formas para mantener un hogar y quisiera que me diga
+   todas las que ustedes utilizan
+
+
+   En los últimos 3 meses, las personas de este hogar han vivido …                                                  Si       No
+
+
+   1 ...       de lo que ganan en el trabajo?                                                                            1        2
+
+
+
+   2 … de alguna jubilación o pensión?                                                                                   1        2
+
+
+
+
+   3 … de indemnización por despido?                                                                                     1        2
+
+   4 … de seguro de desempleo?                                                                                           1        2
+
+   5 … de subsidio o ayuda social (en dinero) del gobierno, iglesias, etc.?                                              1        2
+
+   6 … con mercaderías, ropa, alimentos del gobierno, iglesias, escuelas, etc.?                                          1        2
+
+   7 … con mercaderías, ropa alimentos de familiares, vecinos u otras personas que no viven en este hogar?               1        2
+
+ Cobraron...
+   8 … algún alquiler (por una vivienda, terreno, oficina, etc.) de su propiedad?                                        1        2
+
+   9 … ganancias de algún negocio en el que no trabajan?                                                                 1        2
+
+  10 … intereses o rentas por plazos fijos/inversiones?                                                                  1        2
+
+  11 … una beca de estudio?                                                                                              1        2
+
+ 12 ...    cuotas de alimentos o ayuda en dinero de personas que no viven en el hogar?                                   1        2
+
+
+ Además, han tenido que ...
+  13 … gastar lo que tenían ahorrado?                                                                                    1        2
+
+  14 ...   pedir préstamos a familiares/amigos?                                                                          1        2
+
+  15 … pedir préstamos a bancos, financieras, etc.?                                                                      1        2
+
+  16       Compran en cuotas o al fiado con tarjeta de crédito o libreta?                                                1        2
+
+  17       Han tenido que vender alguna de sus pertenencias?                                                             1        2
+
+  18       Tuvieron otros ingresos en efectivo? (limosnas, juegos de azar, etc.)                                         1        2
+  19       Alguno de los niños (menores de 10 años) ayuda con algún dinero...
+                                                                                            ... trabajando?              1        2
+
+                                                                                            ... pidiendo?                1        2
+
+
+20. Durante el mes de.......... ¿algún miembro del hogar cobró la nueva asignación por hijos implementada     (Registre
+por el gobierno?                                                                                              monto en
+                                                                                                               item 18)
+                       (Si = 1   No = 2      NS/NR = - 9)
+
+
+ 20a. Nro de                20b. Cobró por          20c. Monto total    20d. Durante 2009 ¿tuvo otro plan social?
+ componente                 ¿cuántos hijos?         cobrado             (Plan Jefes, Familias, etc?)
+                             (NS/NR = - 9)          (NS/NR = - 9)       (Si = 1 No = 2      NS/NR = - 9)
+
+
+
+
+Form. 002/10                                                                                                                  HOGAR
+ZAR TODOS LOS CUESTIONARIOS INDIVIDUALES DEL HOGAR
+
+    VI. INGRESOS NO LABORALES
+
+
+     Para finalizar, en el mes de _________, ¿cuánto cobró por ....?
+     (indagar sólo los ítems 2 a 5, 8 a 12, 18 y 19a marcados con SI en Bloque estrategias del hogar)
+
+                       N°           Nombre                 N°          Nombre                  N°          Nombre                  N°         Nombre
+                                                                                                                                                                        No asignable a una
+       ¿Quién lo                                                                                                                                                       persona en particular
+        cobra?         .... ........................ .... ........................ .... ........................ .... ........................
+                                  monto                              monto                               monto                              monto                               monto
+
+    2…                  ................................   .................................   .................................   .................................   ..............................
+
+    2.1. Aguinaldo      ................................   .................................   .................................   .................................   ..............................
+    2.2. Retroactivo    ................................   .................................   .................................   .................................   ..............................
+    3…                  ................................   .................................   .................................   .................................   ..............................
+    4…                  ................................   .................................   .................................   .................................   ..............................
+    5…                  ................................   .................................   .................................   .................................   ..............................
+
+
+
+
+    8…                  ................................   .................................   .................................   .................................   ..............................
+    9…                  ................................   .................................   .................................   .................................   ..............................
+    10 …                ................................   .................................   .................................   .................................   ..............................
+    11…                 ................................   .................................   .................................   .................................   ..............................
+    12 …                ................................   .................................   .................................   .................................   ..............................
+
+
+
+
+    18 ...              ................................   .................................   .................................   .................................   ..............................
+    19a ...
+                        ................................   .................................   .................................   .................................
+
+
+
+
+   Form. 002/10                                                                                                                                                                              HOGAR
+VII. ORGANIZACIÓN DEL HOGAR
+
+
+  1. ¿Quién realiza la mayor parte                                       2. ¿Qué otras personas ayudan                                         3. ¿Hay en el hogar alguna
+     de las tareas de la casa?                                              en las tareas de la casa?                                             persona con discapacidad?
+
+     N°                          Nombre                                     N°                          Nombre                                    N°                          Nombre
+  ...............................................................        ...............................................................       ...............................................................
+  ...............................................................        ...............................................................       ...............................................................
+                                                                         ...............................................................       ...............................................................
+                                                                                                                                               ...............................................................
+  Servicio doméstico                                    96               Servicio doméstico                                    96
+                                                                                                                                               ...............................................................
+  Otra persona que no                                                    Otra persona que no                                                   ...............................................................
+  vive en el hogar                                      97               vive en el hogar                                      97
+
+                                                                         Ninguna                                               98              Ninguna                                               98
+
+
+
+
+VIII. TELÉFONO
+
+
+ -¿Tiene este hogar teléfono?
+   Si          1                                                    No       2                        No quiere darlo                      3                No respuesta                   4
+
+
+
+
+   Número .....................................
+
+  Observaciones: ................................................................................................................................................................
+   ........................................................................................................................................................................................
+   ........................................................................................................................................................................................
+   ........................................................................................................................................................................................
+   ........................................................................................................................................................................................
+   ........................................................................................................................................................................................
+   ........................................................................................................................................................................................
+
+
+
+
+Form. 002/10                                                                                                                                                                                          HOGAR
+  IX. CUADRO RESUMEN
+
+
+
+               PERSONAS QUE HABITAN EL HOGAR
+
+               PERSONAS MENORES DE 10 AÑOS
+
+               PERSONAS DE 10 AÑOS Y MAS
+
+                   - ENCUESTADAS
+
+
+                   - NO ENCUESTADAS
+
+
+
+
+Form. 002/10                                   HOGAR
+ X. RAZÓN POR LA CUAL NO SE REALIZÓ LA ENTREVISTA
+
+                                         No se pudo
+                                                                                Por causas
+ Ausencia                       7       contactar en            1
+                                                                           circunstanciales
+                                                                                                       2                        Viaje        3                 Vacaciones            4
+                                         tres visitas
+
+
+                                                                                                                    Se acordaron
+                                             Negativa                         Rechazo por
+ Rechazo                        8
+                                              rotunda
+                                                                1
+                                                                           portero eléctrico
+                                                                                                       2       entrevistas que no            3
+                                                                                                                  se concretaron
+
+
+
+                                                                                Alcoholismo                                                                   Inaccesible
+                                                                                                                       Problema de
+ Otras causas                   9                Duelo          1              discapacidad            2                                     3                (problemas             4
+                                                                                                                         seguridad
+                                                                           idioma extranjero                                                          climáticos u otros)
+
+
+
+
+  INFORMANTE: ...................................................................................................................................................................
+
+
+
+  OBSERVACIONES: ...........................................................................................................................................................
+
+   ..........................................................................................................................................................................................
+
+   ..........................................................................................................................................................................................
+
+   ..........................................................................................................................................................................................
+
+   ..........................................................................................................................................................................................
+
+   ..........................................................................................................................................................................................
+
+   ..........................................................................................................................................................................................
+
+   ..........................................................................................................................................................................................
+
+   ..........................................................................................................................................................................................
+
+   ..........................................................................................................................................................................................
+
+   ..........................................................................................................................................................................................
+
+   ..........................................................................................................................................................................................
+
+
+
+XI. CONTROL DE CAMPO DE LA RECUPERACIÓN DE AUSENCIAS, RECHAZOS Y OTRAS CAUSAS
+    (hogares)
+
+¿Salió a supervisión?
+
+  Si        1                                              No         2
+
+
+
+Supervisor ......................................... N° ............
+
+
+  Visitas                                        Modalidad de aplicación                                    El encuestador entregó...                           Mal Tomada
+            Fecha                Hora
+
+  1ra ..... / .... / ....       .........        Personal Completa                          1                Ausencia                                   7
+                                                                                                                                                                                         10
+  2da ..... / .... / ....       .........        Personal y Telefónica                      2                Rechazo                                    8
+
+  3ra ..... / .... / ....       .........        Sólo Telefónica                            3                Otras causas                               9
+
+
+
+
+                                                            INSTITUTO NACIONAL DE ESTADÍSTICA Y CENSOS
+Form. 002/10                                                                                                                                                                          HOGAR
+

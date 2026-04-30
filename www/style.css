@@ -69,6 +69,256 @@
   font-weight: 600;
 }
 
+/* nav_menu dentro de un sidebar (navset_pill_list) por default
+   renderiza un dropdown Bootstrap flotante (popup absoluto). En sidebar
+   lateral queremos comportamiento inline tipo accordion: al click el
+   submenú se expande verticalmente dentro de la columna del sidebar.
+
+   Truco: forzar position:static y full width al .dropdown-menu, sin
+   borde ni sombra (para que parezca parte del sidebar). */
+.nav-pills .dropdown-menu {
+  position: static !important;
+  float: none !important;
+  width: 100% !important;
+  min-width: 100% !important;
+  border: none !important;
+  box-shadow: none !important;
+  background-color: transparent !important;
+  padding: 0 0 0 0.75rem !important;
+  margin: 0 !important;
+}
+.nav-pills .dropdown-menu .dropdown-item {
+  padding: 0.4rem 0.75rem;
+  border-radius: 0.375rem;
+  color: #191919 !important;
+  white-space: normal;
+}
+.nav-pills .dropdown-menu .dropdown-item:hover,
+.nav-pills .dropdown-menu .dropdown-item:focus {
+  color: #1839F4 !important;
+  background-color: rgba(64, 91, 255, 0.04);
+}
+.nav-pills .dropdown-menu .dropdown-item.active {
+  color: #405BFF !important;
+  background-color: rgba(64, 91, 255, 0.08);
+  font-weight: 700;
+}
+/* Caret a la derecha del título del nav_menu */
+.nav-pills .dropdown-toggle::after {
+  float: right;
+  margin-top: 0.55rem;
+}
+
+/* Landing "Sobre la app": hero + tarjetas a los 3 ejes + texto info.
+   Diseñado para público amplio: la primera pantalla muestra qué se
+   puede hacer, no la metodología técnica. */
+.landing-hero {
+  text-align: center;
+  padding: 1.5rem 1rem 1rem;
+  border-bottom: 1px solid rgba(25, 25, 25, 0.06);
+  margin-bottom: 2rem;
+}
+.landing-hero-logo {
+  max-width: 280px;
+  width: 100%;
+  height: auto;
+  margin-bottom: 1.25rem;
+}
+.landing-hero-title {
+  font-family: 'Array', 'Ubuntu', sans-serif;
+  font-weight: 700;
+  font-size: 1.7rem;
+  color: #191919;
+  margin: 0 auto 0.75rem;
+  max-width: 740px;
+  line-height: 1.2;
+}
+.landing-hero-subtitle {
+  font-size: 1.05rem;
+  color: #555;
+  max-width: 700px;
+  margin: 0 auto;
+  line-height: 1.55;
+}
+
+.landing-cards-row {
+  margin: 1rem 0 2.5rem;
+}
+.landing-cards-heading {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #191919;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+.landing-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+@media (max-width: 900px) {
+  .landing-cards-grid {
+    grid-template-columns: 1fr;
+  }
+}
+/* actionLink renderiza como <a>; lo desestilamos y le damos look de tarjeta. */
+.landing-card,
+.landing-card:hover,
+.landing-card:focus {
+  display: block;
+  background-color: #FFFFFF;
+  border: 1px solid rgba(64, 91, 255, 0.18);
+  border-radius: 12px;
+  padding: 1.5rem 1.25rem;
+  text-decoration: none !important;
+  color: #191919 !important;
+  transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+  cursor: pointer;
+  text-align: left;
+}
+.landing-card:hover {
+  border-color: #405BFF;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(64, 91, 255, 0.12);
+}
+.landing-card-icon {
+  font-size: 1.6rem;
+  color: #405BFF;
+  margin-bottom: 0.6rem;
+  display: block;
+}
+.landing-card-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin: 0 0 0.4rem 0;
+  color: #191919;
+}
+.landing-card-desc {
+  font-size: 0.9rem;
+  color: #555;
+  margin: 0;
+  line-height: 1.45;
+}
+
+.landing-info {
+  padding-top: 1rem;
+  border-top: 1px solid rgba(25, 25, 25, 0.06);
+}
+.landing-info-heading {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #191919;
+  margin-bottom: 0.75rem;
+}
+.landing-info h4 {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #191919;
+  margin-top: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+.landing-info p {
+  line-height: 1.6;
+  color: #333;
+}
+.landing-info-cta {
+  margin-top: 1.5rem;
+  padding: 0.85rem 1rem;
+  background-color: rgba(64, 91, 255, 0.06);
+  border-left: 3px solid #405BFF;
+  border-radius: 4px;
+  font-size: 0.95rem;
+}
+
+/* Card que envuelve el toggle "Definición de informalidad" para que
+   no quede flotando sobre el navset_card_tab. Padding compacto y
+   borde sutil para que se distinga del fondo sin competir con los
+   filtros NLQ del módulo. */
+.definicion-card {
+  margin-bottom: 12px;
+  border-color: rgba(64, 91, 255, 0.18) !important;
+}
+.definicion-card .card-body {
+  padding: 0.5rem 1rem !important;
+}
+.definicion-toggle {
+  margin: 0 !important;
+  padding: 4px 0 !important;
+  background-color: transparent !important;
+  font-size: 1rem !important;
+}
+
+/* Value boxes Salida/Entrada: estilo neutro con borde azul sutil para
+   no competir con la Persistencia (que va en azul primario relleno).
+   Esto invierte el patrón anterior donde Salida/Entrada llamaban más
+   la atención que el dato estructural. */
+.value-box-bordered .card,
+.value-box-bordered.card {
+  background-color: #FFFFFF !important;
+  border: 1px solid rgba(64, 91, 255, 0.18) !important;
+  color: #191919 !important;
+}
+.value-box-bordered .value-box-showcase {
+  background-color: rgba(64, 91, 255, 0.06) !important;
+  color: #405BFF !important;
+}
+
+/* Footer del sidebar: créditos, fuente, feedback. Tipografía y peso
+   reducidos para que sea complementario, no compita con la nav. */
+.sidebar-footer {
+  margin-top: 2rem;
+  padding: 1rem 0.5rem 0;
+  border-top: 1px solid rgba(25, 25, 25, 0.08);
+  font-size: 0.78rem;
+  line-height: 1.45;
+  color: #555;
+}
+.sidebar-footer p {
+  margin: 0 0 0.6rem 0;
+}
+.sidebar-footer-label {
+  font-weight: 600;
+  color: #191919;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: 0.7rem;
+}
+.sidebar-footer-link {
+  color: #405BFF !important;
+  text-decoration: none;
+  word-break: break-all;
+}
+.sidebar-footer-link:hover {
+  color: #1839F4 !important;
+  text-decoration: underline;
+}
+.sidebar-footer-meta {
+  font-size: 0.72rem;
+  color: #888;
+  margin-top: 0.4rem !important;
+}
+
+/* Alerta del período de intervención INDEC (Foto y Comparar). Aparece
+   debajo del filter_query cuando el panel seleccionado cae en 2007-2015.
+   Diseño deliberadamente discreto: gris suave, no rojo, para informar
+   sin alarmar. */
+.alert-intervencion-indec {
+  background-color: rgba(150, 150, 150, 0.12);
+  border-left: 3px solid #888;
+  padding: 10px 16px;
+  border-radius: 4px;
+  font-size: 0.9em;
+  margin: 12px 0 16px 0;
+  color: #404040;
+  line-height: 1.5;
+}
+.alert-intervencion-indec .fa,
+.alert-intervencion-indec svg {
+  color: #888;
+}
+
 #grid-page-wrapper {
   justify-content: center;
   align-items: center;

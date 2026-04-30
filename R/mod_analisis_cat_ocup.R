@@ -98,15 +98,18 @@ mod_cat_ocup_ui <- function(id) {
       title = "Foto",
       icon = icon("camera-retro"),
       fluidRow(filtros_foto),
+      uiOutput(ns("alert_int_foto")),
 
       ### Tarjetas con tasas destacadas + delta vs año anterior
-      ### (issues #16 + #21).
+      ### (issues #16 + #21). Jerarquía: Persistencia primary (azul),
+      ### Salida/Entrada con borde neutro.
       layout_columns(
         col_widths = c(4, 4, 4),
         value_box(
           title = "Persistencia",
           value = textOutput(ns("tasa_persistencia")),
           showcase = bs_icon("arrow-repeat"),
+          theme = "primary",
           p("siguen en su categoría"),
           p(textOutput(ns("delta_persistencia")),
             style = "font-size: 0.8em; opacity: 0.85; margin-top: 4px;")
@@ -115,7 +118,7 @@ mod_cat_ocup_ui <- function(id) {
           title = "Salida",
           value = textOutput(ns("tasa_salida")),
           showcase = bs_icon("box-arrow-right"),
-          theme = "secondary",
+          class = "value-box-bordered",
           p("cambiaron a otra categoría"),
           p(textOutput(ns("delta_salida")),
             style = "font-size: 0.8em; opacity: 0.85; margin-top: 4px;")
@@ -124,7 +127,7 @@ mod_cat_ocup_ui <- function(id) {
           title = "Entrada",
           value = textOutput(ns("tasa_entrada")),
           showcase = bs_icon("box-arrow-in-left"),
-          theme = "secondary",
+          class = "value-box-bordered",
           p("vinieron de otra categoría"),
           p(textOutput(ns("delta_entrada")),
             style = "font-size: 0.8em; opacity: 0.85; margin-top: 4px;")
@@ -163,6 +166,18 @@ mod_cat_ocup_ui <- function(id) {
       )
     ),
     bslib::nav_panel(
+      title = "Comparar",
+      icon = icon("layer-group"),
+      card(
+        class = "text-center",
+        br(), br(),
+        h2("Próximamente", class = "hero-title"),
+        p("La comparación entre dos años para el mismo dúo trimestral va a estar disponible para Categoría ocupacional en la próxima iteración."),
+        p(em("Por ahora podés usarla en Condición de actividad.")),
+        br(), br()
+      )
+    ),
+    bslib::nav_panel(
       title = "Tasas",
       icon = icon("chart-line"),
       filter_query(
@@ -192,6 +207,12 @@ mod_cat_ocup_ui <- function(id) {
         ),
         suffix_text = ""
       ),
+      div(
+        style = "text-align: center; margin: 4px 0 12px 0;",
+        checkboxInput(ns("excluir_int_tasas"),
+                      label = "Excluir período de intervención INDEC (2007-2015)",
+                      value = FALSE)
+      ),
       card(
         full_screen = TRUE,
         min_height = "520px",
@@ -203,6 +224,12 @@ mod_cat_ocup_ui <- function(id) {
       title = "Película",
       icon = icon("video"),
       filtros_pelicula,
+      div(
+        style = "text-align: center; margin: 4px 0 12px 0;",
+        checkboxInput(ns("excluir_int_pelicula"),
+                      label = "Excluir período de intervención INDEC (2007-2015)",
+                      value = FALSE)
+      ),
       card(
         full_screen = TRUE,
         min_height = "520px",
@@ -217,6 +244,11 @@ mod_cat_ocup_ui <- function(id) {
 
 mod_cat_ocup_server <- function(id) {
   moduleServer(id, function(input, output, session) {
+
+    ### Alerta del período de intervención INDEC (Foto).
+    output$alert_int_foto <- renderUI({
+      alerta_intervencion_indec(input$anio_ant)
+    })
 
     ### Etiquetas humanas para textos del UI (singular / plural / variable).
     etiqueta_singular <- function(cat) {
@@ -399,6 +431,7 @@ mod_cat_ocup_server <- function(id) {
           levels_periodo = levels(df_tasas_cat_ocup$periodo),
           mostrar_pandemia = input$tasas_duo == "todos",
           tick_interval = if (input$tasas_duo == "todos") 4 else 1,
+          excluir_intervencion = isTRUE(input$excluir_int_tasas),
           caption_text = paste0(
             "Tasas de movilidad por panel para los ",
             etiqueta_plural(input$tasas_category),
@@ -464,6 +497,7 @@ mod_cat_ocup_server <- function(id) {
           levels_periodo = levels(df_cat_ocup$periodo),
           mostrar_pandemia = input$duo == "todos",
           tick_interval = if (input$duo == "todos") 4 else 1,
+          excluir_intervencion = isTRUE(input$excluir_int_pelicula),
           caption_text = "Elaboración propia en base a la EPH-INDEC. Arrastrá horizontalmente para hacer zoom · Click en una serie para mostrarla u ocultarla."
         )
       })

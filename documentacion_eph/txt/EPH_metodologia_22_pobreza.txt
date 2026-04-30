@@ -1,0 +1,1219 @@
+                                                             ISSN 2545-7179
+
+
+
+
+            Sociedad
+Sociedad
+d
+                                                             Sociedad
+
+
+
+             Sociedad
+  La medición de la
+  La medición
+  pobreza  y la de la
+                indigencia
+  pobreza  y la indigencia
+    Sociedad
+  en la Argentina
+
+ ad
+  en la Argentina
+      Sociedad
+  Buenos Aires, Noviembre 2016
+
+  Buenos Aires, diciembre de 2016
+                                                              Metodología
+                                                              INDEC
+                                                             Nº 22
+                                                         Metodología
+                                                         INDEC
+
+                                                         Nº 22
+
+
+
+
+                                    Instituto Nacional
+                                        de Estadística
+                                             y Censos
+La medición de la pobreza y la indigencia en la Argentina
+Metodología INDEC Nº 22
+Noviembre 2016
+
+Instituto Nacional de Estadística y Censos (INDEC)
+
+Esta publicación ha sido realizada por las direcciones de Encuesta Permanente de Hogares e Índices de Precios de
+Consumo, encabezadas por la Lic. Cynthia Pok y la Mag. Alejandra Clemente. Participaron en su elaboración: Sandra
+Duclos, Agustina Haimovich y Daniel Rodriguez de la dirección de Encuesta Permanente de Hogares, y Marcela Almei-
+da, Diego Kozlowski y María Josefina Rim, de la dirección de Índices de Precios de Consumo.
+
+
+              ISSN 2545-7179
+
+              Instituto Nacional de Estadística y Censos - I.N.D.E.C.
+                 La medición de la pobreza y la indigencia en la Argentina. - 1a ed . - Ciudad
+              Autónoma de Buenos Aires : Instituto Nacional de Estadística y Censos - INDEC,
+              2016.
+                Libro digital, PDF - (Metodología INDEC ; 22)
+
+                Archivo Digital: descarga
+                ISBN 978-950-896-487-8
+
+                1. Metodología. 2. Estadísticas. 3. Sociedad     .
+                CDD 310.4
+
+
+
+
+© 2016 INDEC
+Queda hecho el depósito que fija la Ley Nº 11723
+Libro de edición argentina
+
+
+
+                  PERMITIDA LA REPRODUCCIÓN PARCIAL CON MENCIÓN DE LA FUENTE
+
+
+
+Responsable de la edición: Lic. Jorge Todesca
+Director Técnico: Mag. Fernando Cerro
+Directora de la publicación: Mag. Silvina Viazzi
+Buenos Aires, Noviembre de 2016.
+
+Para consultar o adquirir las publicaciones editadas por el INDEC puede dirigirse personalmente al Centro Es-
+tadístico de Servicios, ubicado en Av. Julio A. Roca 609 -PB- , C1067ABB, Ciudad Autónoma de Buenos Aires,
+Argentina. O bien comunicarse a los teléfonos: (54-11) 4349-9646/52/62. Horario de atención de 9:30 a 16:00.
+
+Medios electrónicos de consulta: ces@indec.mecon.gov.ar, @INDECArgentina, http://www.indec.gob.ar
+Índice
+...................................................................................................................................................................... Página
+
+1. Introducción................................................................................................................................................... 4
+
+2. Concepto de pobreza e indigencia.............................................................................................................. 5
+
+      2.1 Metodología general............................................................................................................................... 5
+
+      2.2 Avances adoptados en la reanudación de la medición de la pobreza y la indigencia
+            (2º trimestre de 2016).............................................................................................................................. 6
+
+3. Línea de Indigencia...................................................................................................................................... 7
+
+      3.1 Canasta Básica Alimentaria y su actualización...................................................................................... 7
+
+      3.2 Líneas de indigencia regionales............................................................................................................ 10
+
+4. Línea de Pobreza....................................................................................................................................... 11
+
+      4.1 Canasta Básica Total y actualización en los hábitos de consumo....................................................... 11
+
+5. Efectos de los avances adoptados............................................................................................................ 15
+
+      5.1 Valor de la CBA y la CBT...................................................................................................................... 15
+
+      5.2 Incidencia de la pobreza y la indigencia............................................................................................... 16
+
+6. Síntesis de la estrategia de medición adoptada...................................................................................... 20
+
+7. Anexo............................................................................................................................................................ 21
+
+      7.1 Tabla de equivalencias.......................................................................................................................... 21
+
+      7.2 Composición de las CBA de cada región............................................................................................. 22
+
+      7.3 Composición del gasto por quintiles.................................................................................................... 24
+1. Introducción
+A partir del año 2016, el Instituto Nacional de Estadística y Censos (INDEC) ha reanudado la elaboración y
+difusión de los indicadores de Pobreza e Indigencia. La decisión fue sustentada en la necesidad de recuperar
+para la Argentina la provisión de resultados para dar cumplimiento a los principios de buenas prácticas que
+guían a las oficinas de estadística.
+
+Los primeros resultados de esta nueva etapa -presentados mediante el enfoque de Línea de Pobreza (LP) y
+Línea de Indigencia (LI)- fueron difundidos a través de los informes de prensa “Incidencia de la pobreza y de la
+indigencia” del 28 de septiembre del corriente año1 y “Valorización mensual de la canasta básica alimentaria y
+de la canasta básica total” - Gran Buenos Aires, del 22 de septiembre de 20162. Ambos desarrollos se vinculan
+metodológicamente y las respectivas publicaciones contienen las aclaraciones técnicas básicas en la materia.
+
+En este informe se desarrollan más ampliamente esos conceptos, referenciándolos en particular a los princi-
+pales cambios que se derivan del uso de las Encuestas de Gastos de los Hogares y las implicancias de la uti-
+lización de esas herramientas a través del tiempo. Dichas encuestas constituyen un insumo fundamental para
+la determinación de las canastas necesarias para la cuantificación de la pobreza y la indigencia. El objetivo
+del presente documento es profundizar en los aspectos conceptuales y metodológicos, así como dar cuenta
+de tales modificaciones.
+
+
+
+
+1
+ El informe, que se genera desde la Dirección de la Encuesta Permanente de Hogares, puede ser consultado en:
+http://www.indec.gob.ar/uploads/informesdeprensa/eph_pobreza_01_16.pdf
+2
+ El informe, que produce la Dirección de Índices de Precios de Consumo, puede ser consultado en:
+http://www.indec.gob.ar/uploads/informesdeprensa/canastas_09_16.pdf
+
+
+4                                         INDEC - La medición de la pobreza y la indigencia en la Argentina. Diciembre de 2016
+2. Concepto de pobreza e indigencia
+
+2.1 Metodología general
+Las nociones de pobreza e indigencia empleadas por el INDEC para el cálculo de incidencia se correspon-
+den con el método de medición indirecta, denominado también “línea”. El concepto de “Línea de Indigencia”
+(LI) procura establecer si los hogares cuentan con ingresos suficientes para cubrir una canasta de alimentos
+capaz de satisfacer un umbral mínimo de necesidades energéticas y proteicas, denominada Canasta Básica
+Alimentaria (CBA). De esta manera, los hogares que no superan ese umbral o línea son considerados indigen-
+tes. Los componentes de la CBA se valorizan con los precios relevados por el Índice de Precios al Consumidor
+(IPC) para cada período de medición.
+
+Asimismo, la “Línea de Pobreza” (LP) extiende el umbral para incluir no sólo los consumos alimentarios míni-
+mos sino también otros consumos básicos no alimentarios. La suma de ambos conforma la Canasta Básica
+Total (CBT), la cual es también contrastada con los ingresos de los hogares relevados por la Encuesta Perma-
+nente de Hogares (EPH).
+
+Para calcular la línea de pobreza, por lo tanto, es necesario contar con el valor de la CBA y ampliarlo con la
+inclusión de bienes y servicios no alimentarios (vestimenta, transporte, educación, salud, etcétera) con el fin
+de obtener el valor de la Canasta Básica Total (CBT). Mientras que la canasta alimentaria es una canasta nor-
+mativa, la canasta básica total se construye en base a la evidencia empírica que refleja los hábitos de consumo
+alimentario y no alimentario de la población de referencia.
+
+Para ampliar o expandir el valor de la CBA se utiliza el “coeficiente de Engel” (CdE), definido como la relación
+entre los gastos alimentarios y los gastos totales observados en la población de referencia.
+
+
+                                                          Gasto Alimentario
+                                 Coeficiente de Engel =
+                                                             Gasto Total
+
+Fijada una estructura de consumo mediante una encuesta de gastos, en cada período el CdE se actualiza por
+el cambio en el precio relativo de los alimentos respecto de los demás bienes y servicios. De esta forma se
+actualizan los montos de gasto alimentario y total del período base, considerando la misma relación de canti-
+dades de consumo. Para esto se toman los precios relevados por el Índice de Precios al Consumidor, tomando
+en cuenta la estructura de gastos específica de la población de referencia. Para expandir el valor de la CBA,
+se multiplica su valor por la inversa del coeficiente de Engel (ICE).
+
+                                                CBT = CBA * ICE
+
+Dado que las necesidades nutricionales difieren entre la población, se construye una unidad de referencia,
+el “adulto equivalente”, correspondiente a un hombre adulto de actividad moderada, para establecer luego
+las relaciones en las necesidades energéticas según edad y sexo de las personas. A partir de estas equiva-
+lencias se construyen las líneas para cada hogar según su tamaño y composición. En tanto que las líneas se
+construyen por hogar, el valor de las canastas que estas suponen debe ser contrastado con el ingreso total
+familiar del hogar, lo que permite clasificarlos en hogares indigentes, pobres no indigentes, pobres (incluye las
+dos anteriores) y no pobres, extendiéndose esa caracterización a cada una de las personas que los integran.
+
+
+
+
+INDEC                                                                                                          5
+2.2 Avances adoptados en la reanudación de la medición de
+     la pobreza y la indigencia (2º trimestre de 2016)
+La necesidad de recuperar la provisión de resultados sobre pobreza e indigencia ha requerido cumplimentar
+aspectos técnicos que posibilitaran dicha recuperación. Por un lado, se cumplieron distintas etapas de reconstitu-
+ción, validación y ajuste de los programas que proveen los insumos básicos para la determinación de esos importan-
+tes indicadores: el Índice de Precios al Consumidor (para la determinación de las canastas) y la Encuesta Permanente
+de Hogares (para la determinación de los ingresos, la estructura de los hogares y el conjunto de variables analíticas
+para explicar y contextualizar la pobreza y la indigencia).
+
+Por otra parte, se introdujeron cambios que estaban pendientes de aplicación, tales como la actualización de
+las canastas en uso, las cuales debían ajustarse a los resultados de la Encuesta Nacional de Gastos de los
+Hogares de 2004/05. Dichos resultados estuvieron disponibles -en su versión preliminar- a fines de 2006, por
+lo cual su introducción debió haberse efectuado en 2007. Asimismo, se adoptaron otros aspectos derivados
+de avances metodológicos desarrollados con antelación y también pendientes de incorporación en ese año.
+Es el caso de los ajustes en la tabla de equivalencias del adulto equivalente y la incorporación del concepto
+de “densidad nutricional”.
+
+Por último, se incorporaron avances que no surgen de planteos metodológicos novedosos sino que no se
+contaba con la información adecuada para el objetivo. Es el caso de la utilización de la propia estructura de
+consumo de cada región para la determinación de las canastas regionales, que en el pasado se basaban ex-
+clusivamente en la estructura de consumo del aglomerado GBA, considerando las diferencias de precios re-
+gionales a partir de un coeficiente que ajustaba la Paridad del Poder de Compra de los Consumidores (PPCC).
+Los cambios mencionados se detallarán en los puntos siguientes.
+
+Los respectivos equipos continúan con las tareas regulares de innovación metodológica que ya se estaban de-
+sarrollando en el INDEC hasta 2007, planteándose la continuidad de las mismas para futuras incorporaciones a
+la medición. Las líneas más significativas de investigación relativas a los temas de pobreza e indigencia, son las
+concernientes a la redefinición metodológica de los criterios de determinación de las canastas y las relativas a la
+incorporación de otro tipo de indicadores referidos a estos fenómenos.
+
+El primer caso incluye el desarrollo de canastas que permitan una mayor discriminación de las necesidades, tales
+como la distinción de propietarios y no propietarios (considerados los costos de alquiler); la mayor ponderación del
+ítem educación en hogares con niños/as; el de salud en los de adultos mayores; la economía de escala al interior
+del hogar, etcétera.
+
+La segunda línea refiere al tratamiento de la perspectiva actualmente denominada “pobreza multidimensional”,
+sobre la cual se cuenta en el INDEC con distintos desarrollos, particularmente los elaborados por los equipos de
+Estadísticas Poblacionales con quienes los equipos de la Encuesta Permanente de Hogares mantienen un pro-
+grama conjunto de desarrollo de estrategias de investigación y abordaje de la pobreza en variadas dimensiones.
+
+
+
+
+6                                   INDEC - La medición de la pobreza y la indigencia en la Argentina. Diciembre de 2016
+3. Línea de Indigencia
+
+3.1 Canasta Básica Alimentaria y su actualización
+La Canasta Básica Alimentaria (CBA) se define como el conjunto de alimentos que satisfacen ciertos requerimien-
+tos nutricionales, y cuya estructura refleja el patrón de consumo de alimentos de la población de referencia.
+
+La población de referencia se identifica como aquel grupo de hogares cuyos consumos en alimentos cubren las
+necesidades alimentarias del hogar. Para realizar este análisis es preciso contar con información detallada de
+consumo de los hogares que satisfacen esos requerimientos, proveniente de una encuesta de ingresos y gastos.
+
+Como se dijo anteriormente, el concepto de “línea de indigencia” (LI) procura establecer si los hogares cuen-
+tan con ingresos suficientes para cubrir una canasta de alimentos capaz de satisfacer un umbral mínimo de
+necesidades energéticas y proteicas. De esta manera, los hogares que no superan ese umbral o línea son
+considerados indigentes.
+
+La elaboración de la CBA requiere3:
+
+•      determinar el requerimiento energético y las recomendaciones de nutrientes para las diferentes unidades
+       de consumo o grupos etarios;
+
+•      determinar la estructura de consumo de alimentos de la población de referencia para cubrir esas necesi-
+       dades nutricionales;
+
+•      seleccionar los productos que compondrán la CBA y sus cantidades;
+
+•      realizar el análisis nutricional y los ajustes necesarios a fin de optimizar el criterio normativo de la CBA;
+
+•      determinar el valor monetario de la CBA.
+
+Las Encuestas de Gastos e Ingresos de los Hogares tienen como objetivo principal obtener información acer-
+ca de los gastos y los ingresos de los hogares y sus características sociodemográficas. Entre otros fines,
+proporcionan dicha información de modo que pueda ser utilizada “[…] para el cálculo de las ponderaciones
+del Índice de Precios al Consumidor, para la actualización de las estructuras de las canastas de bienes y ser-
+vicios -utilizadas en la estimación de las líneas de pobreza e indigencia-, para las estimaciones de las Cuentas
+Nacionales, así como para el diseño de políticas públicas”4.
+
+La Canasta Básica Alimentaria que se utilizó desde 1988 tuvo sus orígenes en la Encuesta de Ingresos y Gas-
+tos realizada durante los años 1985/86 en el Gran Buenos Aires. Dicha canasta se basaba en un requerimiento
+energético de 2.700 kcal para la unidad de referencia o adulto equivalente (varón de 30 a 59 años, con activi-
+dad moderada) y estaba compuesta por 50 productos.
+
+
+
+
+3
+ INDEC; CEPAL (2003). Actualización de la metodología oficial de cálculo de las Líneas de Pobreza. En: MECOVI, Taller 12: Buenos Aires, 3 al
+5 de noviembre de 2003.
+4
+    INDEC (2006) “Encuesta Nacional de Gastos de los Hogares 2004/2005”, 26 de diciembre de 2006.
+
+
+INDEC                                                                                                                                     7
+En 1998 se conformó el Consejo Consultivo para el Estudio de la Pobreza, integrado por representantes de
+INDEC, del Ministerio de Economía, de la Secretaría de Desarrollo Social y otros especialistas en la temática,
+donde se propusieron diversas modificaciones basadas en la Encuesta de Gastos de los Hogares (ENGHo)
+1996/97. Posteriormente el INDEC se hizo cargo de dar continuidad a dichos desarrollos metodológicos5.
+
+A partir de estos trabajos, en 2003 se determinó una nueva Canasta Básica Alimentaria con base en la ENGHo
+1996/97, que fue presentada en varios talleres conformados por nutricionistas y otros expertos en la materia.
+Sin embargo, el proceso de actualización metodológica en el cual se enmarcaban dichas actividades se inte-
+rrumpió, como se ha dicho, por la crisis institucional atravesada por el INDEC en los años posteriores (2007-
+2015). Estos desarrollos fueron retomados a principios de 2016, aplicándose en parte en la actual metodología.
+
+Esta consiste en la utilización de las últimas canastas elaboradas disponibles, con base en la ENGHo 1996/97,
+validadas con la ENGHo 2004/05. Dichas canastas surgen de considerar, por un lado, los cambios en los há-
+bitos de consumo alimentario de la población del GBA (al reemplazar la ENGHo utilizada como base). Por otro
+lado, la ENGHo 1996/97 fue la primera que tuvo cobertura nacional, lo cual permitió determinar e incorporar a
+esta metodología las diferencias de consumo alimentario a nivel regional. Asimismo, se incorporó el concepto
+de densidad nutricional6 a la vez que se tuvo en cuenta una mayor diversidad en los componentes de la canas-
+ta. Finalmente, se debe señalar que la diferencia en kilocalorías es poco significativa con respecto a la canasta
+anterior (2.750 kcal respecto de las 2.700 kcal de la metodología anterior).
+
+Dado que los requerimientos nutricionales son diferentes según la edad y el sexo de las personas, es nece-
+sario hacer una adecuación que refleje las características de cada individuo en relación a esas variables, para
+lo cual se toma como unidad de referencia al varón adulto, de 30 a 60 años, con actividad moderada. A esta
+unidad de referencia se la denomina “adulto equivalente” y se le asigna un valor igual a uno (ver “Tabla de
+Equivalencias” en Anexo).
+
+El cuadro 1 muestra las principales diferencias entre ambas canastas a nivel de grupos.
+
+
+
+
+5
+ INDEC; CEPAL (2003). Actualización de la metodología oficial de cálculo de las Líneas de Pobreza. En: MECOVI, Taller 12: Buenos Aires, 3 al
+5 de noviembre de 2003.
+6
+ El concepto de densidad nutricional se refiere a una medida de calidad de la dieta que expresa la relación entre el contenido de cada nutriente
+y la energía. De esta manera, una vez cubierta la necesidad energética también se asegura la necesidad de nutrientes.
+
+
+
+8                                           INDEC - La medición de la pobreza y la indigencia en la Argentina. Diciembre de 2016
+Cuadro 1. Diferencias en la composición de la canasta básica de alimentos del adulto equivalente para
+         el Gran Buenos Aires7
+
+
+                                                                 ENGHo                         ENGHo
+            Concepto                                                                                                      Diferencia
+                                                                1985/86(1)                    1996/97(2)
+
+
+Aceites y grasas                                                  1.200 g                        1.260 g                        60 g
+Azúcares y dulces                                                 1.680 g                        1.560 g                      -120 g
+Bebidas y jugos                                                   8.220 cm3                      5.070 cm3                 -3.150 cm3
+Carnes                                                            6.270 g                        6.600 g                       330 g
+Cereales y derivados                                              4.290 g                        4.860 g                       570 g
+Condimentos                                                          330 g                         300 g                       -30 g
+Frutas                                                            4.020 g                        4.950 g                       930 g
+Hortalizas                                                        3.930 g                        5.730 g                    1.800 g
+Huevos                                                               630 g                         600 g                       -30 g
+Lácteos                                                           8.220 g                      10.170 g                     1.950 g
+Legumbres                                                            240 g                         240 g                          0 g
+Pan                                                               6.060 g                        6.750 g                       690 g
+Tubérculos                                                        7.740 g                        7.020 g                      -720 g
+(1) INDEC [1988]. Canasta básica de alimentos: Gran Buenos Aires. (Documentos de Trabajo. IPA, n3). Proyecto de Investigación sobre Pobreza
+en Argentina.
+INDEC [1989?]. Característica de una línea de pobreza para Argentina, 1985. (Documentos de Trabajo. IPA, n8). Proyecto de Investigación sobre
+Pobreza en Argentina.
+(2) INDEC; CEPAL (2003). Actualización de la metodología oficial de cálculo de las Líneas de Pobreza. En: MECOVI, Taller 12: Buenos Aires, 3
+al 5 de noviembre de 2003.
+
+
+
+Al considerar las diferencias a nivel de producto, la CBA con base en la ENGHo 1996/97 agrega una mayor
+diversidad en la canasta respecto de la versión con base en la ENGHo 1985/86, a la vez que se eliminan ele-
+mentos de menor peso en el consumo de los hogares.
+
+Para la valorización mensual de la CBA, a partir de 2016 se valorizan sus componentes mediante la utilización
+de los precios medios relevados por el Índice de Precios al Consumidor (IPC). El procedimiento utilizado an-
+teriormente consistía en actualizar el valor de la canasta aplicando la variación promedio de los precios para
+los ítems correspondientes. Dada la forma en que se construyen los promedios de precios y de relativos de
+precios en el IPC, los resultados arrojados por ambos métodos difieren, aunque como se verá más adelante,
+la discrepancia es leve.
+
+
+
+
+7
+ Las diferencias mencionadas aquí corresponden exclusivamente al Gran Buenos Aires, debido a que la Canasta Básica Alimentaria anterior
+correspondía sólo a esta región.
+
+INDEC                                                                                                                                      9
+3.2 Líneas de indigencia regionales
+La actualización en la metodología incorpora un avance en lo que se refiere a la determinación de las líneas
+de indigencia para cada región. La metodología precedente se basaba en el presupuesto normativo del Gran
+Buenos Aires, ajustado por las diferencias de precios entre esta y las demás regiones. Para la valorización de
+los componentes de las CBA regionales se introduce el uso de los precios medios del aglomerado Gran Bue-
+nos Aires, ajustados para las regiones con los coeficientes de Paridad de Poder de Compra del Consumidor
+(PPCC)8.
+
+El avance introducido en esta oportunidad es que, a diferencia del procedimiento anterior, la metodología actual
+considera los patrones de consumo de cada región (ver “Composición de las CBA de cada región” en Anexo). Las
+líneas de las regiones se diseñaron de forma tal que fueran comparables entre sí; ello significa, básicamente, que
+reflejan las pautas de consumo de hogares con niveles de ingresos equiparables en términos de poder adquisitivo.
+
+
+
+
+8
+    Ver INDEC (2002) “Paridades de Poder de Compra del Consumidor”. Dirección de Índices de Precios de Consumo -INDEC. Febrero, 2002.
+
+
+10                                                                 INDEC - La medición de la pobreza y la indigencia en la Argentina.
+4. Línea de Pobreza
+4.1 Canasta Básica Total y actualización en los hábitos de consumo
+La Canasta Básica Total (CBT), se obtiene mediante la ampliación de la CBA considerando los bienes y servicios
+no alimentarios (vestimenta, transporte, educación, salud, etcétera) consumidos por la población de referencia.
+
+La población de referencia se identifica como aquel grupo de hogares cuyos consumos en alimentos cubren
+las necesidades alimentarias del hogar. Para realizar este análisis es preciso contar con información detallada
+de consumo de los hogares proveniente de una encuesta de ingresos y gastos.
+
+Para ampliar o expandir el valor de la CBA se utiliza el “coeficiente de Engel” (CdE), definido como la relación
+entre los gastos alimentarios y los gastos totales observados en la población de referencia.
+
+                                                            Gasto Alimentario
+                                   Coeficiente de Engel =
+                                                               Gasto Total
+
+En cada período, el CdE se actualiza por el cambio en el precio relativo de los alimentos respecto de los de-
+más bienes y servicios. De esta forma se actualizan los montos de gasto alimentario y total del período base,
+considerando la misma relación de cantidades de consumo. Para esto se toman los precios relevados por el
+Índice de Precios al Consumidor, tomando en cuenta la estructura de gastos específica de la población de
+referencia. Para expandir el valor de la CBA, se multiplica su valor por la inversa del coeficiente de Engel (ICE).
+
+                                               CBT = CBA * ICE
+
+En consecuencia, mientras que la canasta alimentaria es una canasta normativa, la canasta básica total se
+construye en base a la evidencia empírica que refleja los hábitos de consumo alimentario y no alimentario de la
+población de referencia.
+
+La “Línea de Pobreza” (LP) extiende el umbral para incluir no sólo los consumos alimentarios mínimos sino tam-
+bién otros consumos básicos no alimentarios, la cual es también contrastada con los ingresos de los hogares
+relevados por la Encuesta Permanente de Hogares (EPH).
+
+Es un hecho conocido que los hábitos de consumo de la población argentina tienden a cambiar con el trans-
+curso del tiempo. La población de referencia no queda exenta de este fenómeno y, por lo tanto, se requieren
+actualizaciones metodológicas cada cierto tiempo a fin de lograr una mejor adecuación entre la medición de la
+pobreza y los hábitos de consumo de la población. El procedimiento habitualmente seguido para la actualiza-
+ción mensual del CdE no logra reflejar estos cambios en los patrones de consumo, dado que lo que hace es
+mantener, a través del tiempo, la relación del consumo alimentario y no alimentario observada en el momento de
+la encuesta de gasto de los hogares. Es necesario, por lo tanto, un cambio de base del CdE, para poder reflejar
+dichas diferencias.
+
+A partir de 2016, se decidió actualizar la base utilizada para el CdE tomando los resultados de la ENGHo de
+2004/05. No se consideraron los resultados de la ENGHo de 2012/13 debido a que la misma contiene serias de-
+ficiencias, entre ellas, una alta tasa de no respuesta y la falta de documentación adecuada que permita evaluar,
+entre otros aspectos, los procedimientos de imputación de los gastos de los hogares. La tasa de no respuesta
+de la ENGHo 2012/13 es demasiado alta en comparación con la encuesta de 2004/05. Menos de 27% de los
+hogares de la muestra en la Ciudad Autónoma de Buenos Aires informó datos (en comparación con el 53% en
+2004/05), mientras que informaron datos aproximadamente 40% de los hogares de la muestra en el Gran Buenos
+
+INDEC - Noviembre de 2016                                                                                       11
+Aires (comparado con el 69% de 2004/05). La calidad de los datos de la ENGHo 2012/13 no pudo ser evaluada
+dado que no existen registros pormenorizados de los métodos utilizados para recoger y compilar la información9.
+
+A continuación se presentan los cambios en la estructura de consumo de la población de referencia, entre las
+ENGHo 1985/86, 1996/97 y 2004/05.
+
+
+Cuadro 2. Evolución de la estructura de consumo de la población de referencia. En porcentaje del gasto
+          total. ENGHo
+
+
+                                                                    ENGHo                         ENGHo                     ENGHo
+               Concepto
+                                                                   1985/86(1)                    1996/97(2)                2004/05(2)
+
+
+Total                                                                100,0                        100,0                    100,0
+Alimentos y bebidas                                                   48,1                          42,2                     38,4
+Indumentaria y calzado                                                  9,0                          7,3                      8,6
+Vivienda                                                                9,0                         13,5                     11,2
+Equipamiento y funcionamiento del hogar                                 6,2                          4,8                      5,9
+Atención médica y gastos para la salud                                  6,9                          7,1                      6,0
+Transporte y comunicaciones                                             8,1                         11,6                     13,6
+Esparcimiento y cultura                                                 5,0                          5,5                      6,6
+Educación                                                               2,2                          2,9                      3,3
+Bienes y servicios varios                                               5,5                          5,2                      6,4
+( ) Corresponde a la región del Gran Buenos Aires.
+ 1
+
+(2) Población urbana a nivel nacional
+
+Gráfico 1. Evolución de la estructura de consumo de la población de referencia. En porcentaje del gasto
+           total. ENGHo 1985/86(1), 1996/97(2) y 2004/05(2)
+
+                             Alimentos
+                             y bebidas
+                               Vivienda
+
+                            Transporte
+                     y comunicaciones
+                          Indumentaria
+                              y calzado
+                      Atención médica
+                 y gastos para la salud
+                                 Bienes
+                      y servicios varios
+                         Esparcimiento
+                               y cultura
+                        Equipamiento y
+              funcionamiento del hogar
+
+                             Educación
+
+                                           0          10              20               30             40              50
+                                                                           Participación
+
+                                                           ENGHo        1985/6        1996/7    2004/5
+(1) Corresponde a la región del Gran Buenos Aires.
+(2) Población urbana a nivel nacional
+
+9
+     Ver INDEC (2016) “Índice de Precios al Consumidor. Gran Buenos Aires. Versión preliminar. Metodología INDEC Nº 19”.
+
+12                                             INDEC - La medición de la pobreza y la indigencia en la Argentina. Diciembre de 2016
+Las Encuestas de Gastos de los Hogares de 1985, 1996 y 2004 muestran un importante cambio en los há-
+bitos de consumo de la población de referencia, que consiste en una sistemática reducción en el peso
+relativo del gasto alimentario, a la vez que algunos rubros como Transporte y comunicaciones o Vivienda
+tienden a incrementar su participación (ver cuadro 2 y gráfico 1). La caída del gasto alimentario implica un CdE
+cada vez menor (y el consecuente incremento de su inversa), y por lo tanto una mayor distancia entre la Línea
+de Indigencia y la Línea de Pobreza.
+
+Cabe señalar que la población de referencia seleccionada en cada ENGHo fue variando tanto en su ubicación
+en la escala de ingresos como en el área geográfica considerada. En la ENGHo 1985/86 se ubicó entre los
+percentiles 21 y 40 (segundo quintil) de la distribución de los ingresos per cápita de los hogares del Gran Bue-
+nos Aires. A partir de la ENGHo 1996/97, la cobertura geográfica de la encuesta incorpora la población urbana
+del resto de las regiones. En esta última, la población de referencia es nacional urbana y se ubica entre los
+percentiles 23 y 42 de la distribución de los ingresos netos de alquiler. En la ENGHo 2004/05, la población de
+referencia también es nacional urbana y se ubica entre los percentiles 29 y 48 de la distribución de los ingresos
+netos de alquiler.
+
+En el gráfico 2 se presenta la relación entre el gasto alimentario y no alimentario según quintiles de ingreso per
+cápita familiar, para las tres ENGHo consideradas (para más detalle, consultar Anexo).
+
+Gráfico 2. Evolución de la relación del consumo alimentario y no alimentario por quintil de ingreso. En
+           porcentaje del gasto total. ENGHo(1)
+
+                   100
+
+
+
+                   75
+   Participación
+
+
+
+
+                   50
+
+
+
+                   25
+
+
+
+                    0
+                         Primer              Segundo                  Tercer                Cuarto             Quinto
+                                                                     Quintil
+
+                                  Gastos en alimentos y bebidas             1985/6        1996/7      2004/5
+
+                                          Gastos no alimentarios            1985/6        1996/7      2004/5
+
+
+(1) Los valores de la ENGHo 1985/86 corresponden al periodo de la encuesta febrero a junio de 1986.
+
+
+
+
+INDEC                                                                                                                   13
+Cuadro 3. Hogares según estructura de consumo y quintil de ingresos per cápita familiar. Comparación
+          con población de referencia. En porcentaje del gasto total
+
+                                                             Quintiles de ingreso per cápita                                   Población
+                                                                                                               Población
+ ENGHo                     Rubro                                                                                                   de
+                                                                                                                 total
+                                                      1           2           3           4           5                        referencia
+
+                  Alimentos y bebidas              54,1        47,2         41,6        36,5        27,8          37,7             48,1
+1985/86(1)
+                  Gasto no alimentario             45,9        52,8         58,4        63,5        72,2          62,3             51,9
+
+                  Alimentos y bebidas              50,4        42,7         38,0        33,0        25,7          34,0             42,2
+1996/97(2)
+                  Gasto no alimentario             49,6        57,3         62,0        67,0        74,3          66,0             57,8
+
+                  Alimentos y bebidas              45,2        39,7         36,0        32,7        26,6          33,1             38,4
+2004/05(2)
+                  Gasto no alimentario             54,8        60,3         64,0        67,0        73,4          66,9             61,6
+(1) Los valores de la ENGH 1985/86 por quintil corresponden al periodo de la encuesta febrero a junio de 1986, para la región del Gran Buenos
+Aires. Para la población de referencia, corresponden al período completo de la ventana de observación.
+(2)Población urbana a nivel nacional.
+
+
+
+Como se observa en el gráfico 2 y el cuadro 3, la disminución en la participación del gasto alimentario en la pobla-
+ción de referencia no es producto de que esta haya variado en la escala de ingresos, sino que dicho comportamien-
+to se reproduce para todos los quintiles de ingreso excepto para el quinto, donde el comportamiento se invierte.
+Asimismo, se observa que la participación del gasto alimentario tiende a caer a medida que el ingreso per cápita
+de los hogares aumenta. Los datos presentados también muestran que la población de referencia, en ambas en-
+cuestas de gasto, se ubica entre los quintiles 2 y 3 de ingreso per cápita familiar.
+
+A los cambios respecto de la encuesta de gasto utilizada para el cálculo de la inversa del coeficiente de Engel, se
+adiciona una modificación respecto de la especificidad de las pautas de consumo regionales. Anteriormente, la
+CBA y la CBT se basaban exclusivamente en los hábitos de consumo del Gran Buenos Aires. Al igual que con la
+CBA, esta actualización incorpora un avance al considerar las diferencias observadas en las pautas de consumo
+regionales en el componente no alimentario, elaborando un coeficiente (ICE) específico para cada región. En el
+cuadro 4 se presentan los principales resultados.
+
+Cuadro 4. Inversa del Coeficiente de Engel por región
+
+
+                                                                                               ENGHo
+                                              Región
+                                                                                               2004/05
+
+
+                                            GBA                                                2,64
+                                            Pampeana                                           2,59
+                                            Noroeste                                           2,42
+                                            Noreste                                            2,44
+                                            Cuyo                                               2,77
+                                            Patagónica                                         2,95
+
+
+
+
+14                                         INDEC - La medición de la pobreza y la indigencia en la Argentina. Diciembre de 2016
+5. Efectos de los avances adoptados
+A continuación se presentan los valores de canastas, pobreza e indigencia que surgen de aplicar los cambios
+introducidos, tomando como referencia el año 2006. Se utiliza ese período debido a que es el único posterior
+a la ENGHo 2004/05 del que se dispone de precios para valorizar las canastas. Asimismo, se restringe la
+presentación a ese año dado que -como ya se ha detallado en este mismo trabajo, conforme a la emergencia
+estadística- el INDEC ha dispuesto que las series publicadas con posterioridad al primer trimestre de 2007 y
+hasta el cuarto trimestre de 2015 deben ser consideradas con reservas. Cabe señalar que, si bien a fines del
+2006 el INDEC ya había avanzado en los desarrollos necesarios para implementar la actualización metodo-
+lógica, dicho proceso se vio interrumpido por la crisis institucional atravesada por el organismo en los años
+posteriores, durante los cuales no se incorporaron los cambios de las pautas de consumo observados en la
+ENGHo 2004/05 ni los avances metodológicos requeridos.
+
+
+
+5.1 Valor de la CBA y la CBT
+Adoptada la actualización metodológica, se muestran en el cuadro 5 algunos de los principales resultados.
+
+Las diferencias resultantes de la actualización de la CBA implican para el período enero-diciembre de 2006 el 9,9%
+de incremento, en promedio, en el monto que se considera necesario para no caer en la indigencia. Con fines com-
+parativos, una valorización realizada para el período 2003-2006 arroja una diferencia de 8% en el costo total de la
+canasta, en promedio.
+
+Por su parte, la nueva base de la Inversa del Coeficiente de Engel implica una diferencia promedio de 21% para el
+período de enero-diciembre de 2006. Dada la forma en que se calcula, la Canasta Básica Total incorpora ambas
+discrepancias, por lo que la diferencia en promedio, para el mismo período, es de 32%.
+
+Cuadro 5. Resultados según metodología adoptada. Canasta Básica Alimentaria, Inversa del Coeficiente
+          de Engel y Canasta Básica Total. GBA
+
+   Período                           CBA                                   ICE                            CBT
+    2006
+                       Anterior(1)          Nuevo(2)         Anterior(1)         Nuevo(2)   Anterior(1)         Nuevo(2)
+
+Enero                  125,81               138,25              2,17              2,63      273,01              363,55
+Febrero                127,19               139,61              2,16              2,61      274,73              364,71
+Marzo                  129,44               141,06              2,15              2,61      278,30              368,51
+Abril                  128,49               140,39              2,16              2,62      277,54              368,24
+Mayo                   126,57               138,71              2,18              2,64      275,92              366,56
+Junio                  126,62               138,96              2,19              2,64      277,30              367,48
+Julio                  126,36               138,37              2,20              2,65      277,99              367,05
+Agosto                 126,68               138,98              2,20              2,65      278,70              368,51
+Septiembre             126,78               139,31              2,20              2,67      278,92              371,38
+Octubre                127,88               141,71              2,20              2,65      281,34              375,90
+Noviembre              130,50               145,02              2,18              2,64      284,49              382,27
+Diciembre              134,14               149,13              2,17              2,61      291,08              389,28
+(1) Realizado en base a la ENGHo 1985/86
+(2) Realizado en base a la ENGHo 1996/97, validada con la ENGHo 2004/05.
+
+En síntesis, las modificaciones introducidas al presente consisten en: a) cambios metodológicos; b) cambios
+observados en la realidad. En el siguiente punto se presenta la incidencia de estos cambios sobre los resultados
+de pobreza e indigencia.
+
+INDEC                                                                                                                      15
+5.2 Incidencia de la pobreza y la indigencia
+En este apartado se expone un ejercicio que apunta a presentar en forma separada cada uno de los efectos que
+tienen los cambios introducidos. Para ello, se procedió a recalcular la incidencia de la pobreza y la indigencia para
+el año 2006 de forma trimestral, a fin de que puedan compararse con los datos recientemente publicados10.
+
+En el caso de la Línea de Indigencia (LI) se presenta:
+
+•    Efecto generado por la modificación en el método de valorización:
+
+     En el cuadro 6 se compara la incidencia de la indigencia resultante de la metodología anterior -con CBA
+     basada en ENGHo 1985/86 y valorizada mediante la variación promedio de los precios (LIa) para los
+     ítems correspondientes- con aquella resultante de aplicar una LI estimada para este ejercicio (li*), que
+     surge de valorizar la misma CBA -basada en la ENGHo 1985/86- mediante la utilización de los precios
+     medios relevados por el IPC.
+
+•    Cálculo de los porcentajes de indigencia que surgen de considerar el conjunto de las modificacio-
+     nes introducidas a partir de 2016:
+
+     a) Utilizar las CBA regionales basadas en la ENGHo 1996/97 (LIn);
+
+     b) valorizar la CBA aplicando los precios medios relevados por el IPC.
+
+     En el gráfico 3 se comparan los porcentajes resultantes de esta actualización metodológica con los corres-
+     pondientes a la metodología anterior.
+
+En el caso de la línea de pobreza (LP), se presenta:
+
+•    Efecto producido por los cambios en las pautas de consumo de la población:
+
+     A tal fin, se construyó una línea de pobreza estimada para este ejercicio (lp**) que surge de actualizar el
+     CdE utilizando la ENGHo 2004/05, pero manteniendo el procedimiento anterior basado en valorizar la CBT
+     correspondiente a la estructura de consumo del GBA, ajustando luego dicho valor con los coeficientes de
+     PPCC regionales. En el gráfico 4 se comparan la incidencia de la pobreza correspondiente a la LP de la
+     metodología anterior (LPa) -estructura de consumo del GBA resultante de la ENGHo 1985/86- con la
+     resultante de aplicar la estructura de consumo de GBA correspondiente a la ENGHo 2004/05 (lp**).
+
+•    Efecto de la actualización metodológica (líneas de pobreza regionales):
+
+     Para ello, se comparan en el gráfico 5 los porcentajes que surgen de la lp** -estructura de consumo del
+     GBA resultante de la ENGHo 2004/05-, con las que surgen de la nueva LP aplicada a partir de 2016, es
+     decir, la que resulta de aplicar las relaciones entre los gastos alimentarios y no alimentarios (CdE)
+     para cada una de las regiones, con base en la misma ENGHo 2004/05 (LPn).
+
+La Tabla 1 expone en forma breve los criterios considerados para la construcción de las respectivas líneas.
+
+
+
+10
+   “… en el marco de la emergencia estadística, en esta ocasión –por única vez- la información se presenta en forma trimestral…”. Informe de Prensa
+“Incidencia de la pobreza y de la indigencia”, Segundo trimestre de 2016, Dirección Encuesta Permanente de Hogares, INDEC, 28 de septiembre 2016.
+
+
+16                                           INDEC - La medición de la pobreza y la indigencia en la Argentina. Diciembre de 2016
+Tabla 1. Criterios de construcción de las líneas de indigencia y de pobreza
+
+
+                       Pautas de Consumo consideradas
+Líneas                                                                                      Valorización
+                       Fuente             Ámbito geográfico
+
+LIa (anterior)        ENGHo               Gran Buenos Aires       Se aplica la variación de precios del GBA, ajustada
+                      1985/86                                     por PPCC para LI regionales
+
+li*                   ENGHo               Gran Buenos Aires       Se aplican los precios medios del GBA, ajustada por
+                      1985/86                                     PPCC para LI regionales
+
+LIn (nueva)           ENGHo               Todas las regiones      Se aplican los precios medios del GBA, ajustada por
+                      1996/97             (población urbana)      PPCC para LI regionales
+
+
+LPa (anterior)        ENGHo               Gran Buenos Aires       Se ajusta la inversa del coeficiente de Engel (ICE) del
+                      1985/86                                     GBA aplicando los coeficientes de PPCC regionales
+
+lp**                  ENGHo               Gran Buenos Aires       Se ajusta la ICE del GBA aplicando los coeficientes
+                      2004/05                                     de PPCC regionales
+
+LPn (nueva)           ENGHo               Todas las regiones      Se consideran las ICE específicas de cada una de las
+                      2004/05             (población urbana)      regiones
+
+
+
+Cuadro 6. Efecto de la modificación en el método de valorización de la LI. En porcentaje de personas
+          bajo la Línea de Indigencia. Año 2006
+
+
+                                                                    Incidencia de la Indigencia 2006
+       Valorización de la LI
+                                                   1° trimestre      2° trimestre       3° trimestre       4° trimestre
+
+                                                                                    %
+ LIa (Variación mensual de precios)( )      1
+                                                      11,7              10,7               8,9                 8,4
+ li* (Precios medios mensuales)( )    1
+                                                      11,9              10,9               9,5                 8,6
+ Diferencias                                           0,2               0,2               0,6                 0,2
+
+(1)Realizado en base a la ENGHo 1985/86
+
+
+Como se observa en el cuadro, las diferencias son mínimas, siendo en promedio de 0,3 p.p.
+
+
+
+
+INDEC                                                                                                                     17
+                                                 1° Trim. 2006          2° Trim. 2006          3° Trim. 2006         4° Trim. 2006
+
+
+
+
+Gráfico 3. Efecto conjunto de las modificaciones en la LI. En porcentaje de personas bajo la Línea de
+           Indigencia. Año 2006
+                                50
+
+
+
+                                40
+
+
+
+                                30
+             Porcentaje
+
+
+
+
+                                                                                                                                              LIa
+                                                                                                                                              LIn
+                                20
+                                                           13,4                12,1              11,2             10,1
+                                                                                                                          LIa
+                                10                         11,7
+                                                                               10,7
+                                                                                                 8,9               8,4
+                                                                                                                          LIn
+                                       0
+                                                            1º                     2º             3º                4º
+                                                                                   Trimestres 2006
+
+La incidencia del cambio metodológico conjunto en la definición y forma de valorización de la LI es de 1,7 p.p. en el
+primer trimestre, 1,4 p.p. en el segundo, 2,3 p.p. en el tercero y 1,7 p.p. en el cuarto. Ello implica un promedio de 1,8
+p.p. para el año 2006.
+                                                                                                                                     LIa
+
+Gráfico 4. Efecto del cambio en las pautas de consumo de la población. En porcentaje de personas bajo
+           la Línea de Pobreza. Año 2006                                         LIn
+                                                13,4%
+                                           50                          12,1%                 11,2%
+                                                                                                                   10,1%
+                                                           43,5
+                                                11,7%                 10,7% 42,0
+                                                                                             8,9%                  8,4%
+                                                                                                                   39,6
+                                           40                                                     37,7
+
+                                           1° Trim. 2006          2° Trim. 2006          3° Trim. 2006         4° Trim. 2006
+
+                                           30              32,0
+                          Porcentaje
+
+
+
+
+                                                                                  30,8                                                     LPa
+                                                                                                  26,5             27,2
+                                                                                                                                           Lp**
+                                           20
+
+
+
+                                           10
+
+
+
+                                            0
+                                                             1º                    2º               3º               4º
+                                                                                   Trimestres 2006
+
+El impacto de considerar el cambio que experimentaron los hábitos de consumo de la población entre 1985/86 y
+2004/05 explica que la proporción de personas pobres durante 2006 sea, en promedio, 11,6 p.p. más elevada respec-
+to de la medición basada en la ENGHo 1985/86. Ello surge de una diferencia de 11,5 p.p. en el primer trimestre, 11,2
+p.p. en el segundo, 11,2 p.p. en el tercero y 12,4 p.p. en el cuarto.
+
+
+18                                                                INDEC - La medición de la pobreza y la indigencia en la Argentina. Diciembre de 2016
+                                                12,1%              11,2%
+                                                                                     10,1%
+
+                                                10,7%
+                                                                   8,9%              8,4%
+
+Gráfico 5. Efecto de la actualización metodológica. En porcentaje de personas bajo la Línea de Pobreza.
+           Año 2006 1° Trim. 2006      2° Trim. 2006  3° Trim. 2006  4° Trim. 2006
+
+
+
+
+                         50
+                                 44,5           43,1
+                                                                              41,2
+                                 43,5                          38,8
+                         40
+                                                42,0
+                                                                              39,6
+                                                               37,7
+
+                         30
+            Porcentaje
+
+
+
+
+                                                                                                        lp**
+                                                                                                        LPn
+                         20
+
+
+
+                         10
+
+
+
+                          0
+                                   1º             2º             3º             4º
+                                                  Trimestres 2006
+
+La incidencia del cambio metodológico por el cual se computan canastas e ICE regionales es de 1 p.p. en el primer
+trimestre, 1,1 p.p. en el segundo, 1,1 p.p. en el tercero y 1,6 p.p. en el cuarto. Ello arroja un promedio de 1,2 p.p. para
+el año 2006.
+
+
+
+
+INDEC                                                                                                                   19
+6. Síntesis de la estrategia de medición adoptada
+A. Cambios metodológicos
+
+•    CBA ajustada normativamente según densidad nutricional.
+
+•    Nueva tabla de equivalencias de acuerdo a la actualización de las pautas kilocalóricas.
+
+•    Incorporación de CBA regionales de acuerdo a sus propias estructuras de consumo.
+
+•    Valorización de la CBA a través de los precios medios relevados.
+
+•    Utilización de la Inversa del Coeficiente de Engel correspondiente a cada región, para la determinación de
+     las CBT regionales.
+
+Estos cambios reflejados en el gráfico 5 implican, en promedio, 1,2 puntos porcentuales de diferencia en la incidencia
+de la pobreza en el año 2006.
+
+B. Cambios observados en los hábitos de consumo de la población
+
+•    Adopción de las pautas de consumo observadas a través de la ENGHo 1996/97 y 2004/05, en reemplazo
+     de las pautas de consumo reflejadas en la ENGHo 1985/86.
+
+Estos cambios presentados en el gráfico 4 implican, en promedio, 11,6 puntos porcentuales de diferencia en la inci-
+dencia de la pobreza en el año 2006.
+
+Como se ha mencionado a lo largo del documento, las modificaciones implementadas a partir de 2016 apuntan a
+introducir avances en la metodología oficial de cálculo de las líneas de pobreza.
+
+En primer lugar, responden a la necesidad de tener en cuenta los cambios experimentados en los hábitos de con-
+sumo de la población, a fin de realizar mediciones que contemplen la situación social vigente. Como ha podido
+observarse, este es un aspecto por demás relevante en tanto incide considerablemente en los resultados obtenidos.
+
+En segundo lugar, el cambio metodológico central se basa en considerar líneas de indigencia y de pobreza para cada
+región atendiendo a los patrones de consumo de cada una de ellas. Tal diferencia es fundamental en tanto resulta la
+primera vez que se calculan líneas específicamente para todas las regiones.
+
+Con respecto a la línea de indigencia, se introdujeron, asimismo, ajustes normativos tendientes a incrementar el apor-
+te de nutrientes.
+
+Por lo tanto, los criterios enumerados hasta aquí resultan esenciales para lograr mayor precisión en los resultados de
+la pobreza y la indigencia, y dar cuenta de la realidad social de nuestro país.
+
+
+
+
+20                                  INDEC - La medición de la pobreza y la indigencia en la Argentina. Diciembre de 2016
+7. Anexo
+7.1 Tabla de equivalencias
+necesidades energéticas y unidades consumidoras según edad y sexo
+
+                                                 Necesidad            Unidades
+  Sexo                       Edad
+                                               energética (kcal)    consumidoras
+
+                           6-9 meses                  776               0,28
+                           9-12 meses                 952               0,35
+                           1 año                    1.030               0,37
+                           2 años                   1.277               0,46
+                           3 años                   1.409               0,51
+  Ambos                    4 años                   1.518               0,55
+                           5 años                   1.643               0,60
+                           6 años                   1.760               0,64
+                           7 años                   1.813               0,66
+                           8 años                   1.865               0,68
+                           9 años                   1.910               0,69
+
+                           10 años                  2.192               0,79
+                           11 años                  2.255               0,82
+                           12 años                  2.347               0,85
+  Varones                  13 años                  2.472               0,90
+                           14 años                  2.650               0,96
+                           15 años                  2.760               1,00
+                           16 años                  2.828               1,03
+                           17 años                  2.881               1,04
+
+                           10 años                  1.918               0,70
+                           11 años                  1.986               0,72
+                           12 años                  2.051               0,74
+                           13 años                  2.089               0,76
+  Mujeres
+                           14 años                  2.100               0,76
+                           15 años                  2.116               0,77
+                           16 años                  2.111               0,77
+                           17 años                  2.124               0,77
+
+                           18-29                    2.826               1,02
+                           30-45                    2.758               1,00
+  Varones                  46-60                    2.750               1,00
+                           61-75                    2.288               0,83
+                           Más de 75                2.050               0,74
+
+                           18-29                    2.106               0,76
+                           30-45                    2.111               0,77
+  Mujeres                  46-60                    2.090               0,76
+                           61-75                    1.860               0,67
+                           Más de 75                1.750               0,63
+
+INDEC                                                                              21
+7.2 Composición de las CBA de cada región
+(g o ml por mes por unidad de consumo o adulto equivalente)
+
+                             Gran Buenos
+        Producto                              Pampeana        Noroeste       Noreste          Cuyo       Patagonia
+                                Aires
+
+Pan Francés                    6.750            7.020           7.350          7.020          7.620        6.720
+Galletitas dulces                210              180              90            120            120          180
+Galletitas de agua               420              390             360            180            210          180
+Harina de trigo                1.080            1.350           2.190          2.070          1.650        2.850
+Harina de maíz                   210              180             210            150            150          150
+Arroz                          1.200            1.080           1.050          1.500            870          810
+Fideos secos                   1.740            1.680           1.050          1.050          1.680          810
+Asado                          1.230            1.500           1.050          1.380          1.410        1.200
+Carnaza común                    510              450             630            630               -         690
+Hueso con carne                  390              450           1.050            870            630             -
+Paleta                           780                 -               -              -           330          270
+Carne picada                     900              810             480            660          1.200        1.500
+Nalga                            630            1.020           1.260          1.290            660          630
+Hígado                           270              270             270            270            270          180
+Pechito de cerdo                    -                -             60               -              -         240
+Pollo                          1.650            1.890           1.800          1.230          1.650        1.800
+Carne de pescado                 180              330             120            210            330          210
+Mortadela                           -              60                -            60               -          30
+Paleta cocida                     30               30                -            30             60           30
+Salchichón                          -                -               -              -           120             -
+Salame                            30                 -               -              -              -            -
+Aceite de girasol              1.200            1.020           1.050          1.140            990        1.020
+Margarina para cocinar              -              90                -            60            150           90
+Leche fluida                   9.270            8.100           6.900          4.560          5.070        4.050
+Leche en polvo entera               -             330             390            750            570          750
+Queso crema                       80               50              60             40             70           70
+Queso cuartirolo                 170              110             120             80            140          140
+Queso de rallar                   80               50              60             30             60           60
+Manteca                           60               60              60               -              -          90
+Yogur                            570              570             510            360            480          510
+Dulce de leche                   110               70              70             30             40           30
+Huevo                            600              480             390            480            540          450
+
+                                                                                                          (continúa)
+
+22                              INDEC - La medición de la pobreza y la indigencia en la Argentina. Diciembre de 2016
+(conclusión)
+
+
+
+                     Gran Buenos
+       Producto                    Pampeana   Noroeste   Noreste   Cuyo    Patagonia
+                        Aires
+
+Manzana               1.380         1.830       997      1.147     1.433    1.890
+Mandarina             1.140         1.320      1.230     1.230     1.320    1.590
+Naranja               1.350         1.290      1.710     1.650     1.260    1.470
+Banana                  810          960       1.410     1.470     1.164    1.170
+Pera                    270          480        137        137      159         -
+Batata                  510          270           -          -     240         -
+Papa                  6.510         6.870      6.870     6.930     6.870    7.230
+Acelga                  750          750        360        300      660      570
+Cebolla               1.380         1.320      1.530     1.980     1.080    2.100
+Choclo                     -            -       300           -        -        -
+Lechuga                 660          660        420        540      660      660
+Tomate perita         1.440         2.070      2.160     1.680     2.010    1.350
+Zanahoria               540          810        840        750      780      780
+Zapallo                 720          870       1.050       810      990      840
+Tomate envasado         240          210        180        240      180      240
+Arvejas en lata         120          240        120        150      120      180
+Lentejas secas          120             -       120        150      120        60
+Azúcar                1.230         1.290      1.290     1.350     1.380    1.380
+Dulce de batata         110           70           -          -        -       30
+Mermelada               110           70         70         30       40        30
+Sal fina                120          150        120        150      150      180
+Mayonesa                 60           60         60         90       90        90
+Vinagre                  60           90         60         30       60        60
+Caldo concentrado        60           30         30         30       30        30
+Gaseosas                750          630       1.500       930      600     1.110
+Jugos Concentrados    1.500          960        900        870      870      810
+Soda                  1.200         2.100      2.400     1.500     2.550     900
+Cerveza                 510          630        300        600      300      600
+Vino                    570          660        510        600     1.020     600
+Café                     30           30         30         30       60        30
+Yerba                   510          600        360        750      360      450
+Té en saquitos             -          30         30         30       30        30
+
+
+
+INDEC                                                                               23
+7.3 Composición del gasto por quintiles
+Cuadro 1. Hogares según estructura de consumo y quintil de ingresos per cápita familiar. Comparación
+          con población de referencia. En porcentaje. ENGHo 1985/86. Febrero-junio 1985(1)
+
+
+                                                              Quintiles de ingreso per cápita familiar                           Población
+                                                                                                                    Población
+                Rubro                                                                                                                de
+                                                                                                                      total
+                                                             1           2           3           4           5                   referencia
+
+Total                                                     100,0      100,0       100,0        100,0      100,0        100,0       100,0
+Alimentos y bebidas                                        57,1        51,0        47,0         40,3       30,3        40,8         48,1
+Indumentaria y calzado                                       7,6        7,7         8,2          9,3        9,3          8,7         9,0
+Vivienda                                                     6,6        7,0         7,0          7,8        8,0          7,5         9,0
+Equipamiento y funcionamiento del hogar                      5,5        5,9         6,2          7,6        9,3          7,6         6,2
+Atención médica y gastos para la salud                       4,3        7,7         6,6          6,3        7,0          6,6         6,9
+Transporte y comunicaciones                                  8,2        7,8        11,7         11,9       13,6        11,6          8,1
+Esparcimiento y cultura                                      2,4        3,9         5,8          8,5       14,1          8,9         5,0
+Educación                                                    3,0        3,2         3,3          2,4        3,7          3,2         2,2
+Bienes y servicios varios                                    5,3        5,8         4,3          5,8        4,9          5,2         5,5
+( ) Los valores de la ENGHo 1985/86 por quintil corresponden al período de la encuesta febrero a junio de 1985, para la región del Gran Buenos
+1
+
+Aires. Para la población de referencia, corresponden al período completo de la ventana de observación.
+
+
+
+Cuadro 2. Hogares según estructura de consumo y quintil de ingresos per cápita familiar. Comparación
+          con población de referencia. En porcentaje. ENGHo 1985/86. Febrero-junio 1986(1)
+
+
+                                                              Quintiles de ingreso per cápita familiar                           Población
+                                                                                                                    Población
+                Rubro                                                                                                                de
+                                                                                                                      total
+                                                             1           2           3           4           5                   referencia
+
+
+Total                                                     100,0      100,0       100,0        100,0      100,0        100,0       100,0
+Alimentos y bebidas                                        54,1        47,2        41,6         36,5       27,8        37,7         48,1
+Indumentaria y calzado                                       7,5        7,7         8,4          9,3        9,0          8,6         9,0
+Vivienda                                                     7,5        9,2         9,9          8,5       10,5          9,2         9,0
+Equipamiento y funcionamiento del hogar                      6,7        6,1         7,4          8,2        9,3          8,1         6,2
+Atención médica y gastos para la salud                       5,1        7,1         7,0          8,1        8,4          7,7         6,9
+Transporte y comunicaciones                                  7,4        9,2         8,9         13,2       12,7        11,3          8,1
+Esparcimiento y cultura                                      4,3        5,9         7,3          8,1       13,6          9,1         5,0
+Educación                                                    2,8        2,2         2,9          3,4        2,8          2,8         2,2
+Bienes y servicios varios                                    4,7        5,3         6,6          4,8        5,7          5,5         5,5
+(1) Los valores de la ENGHo 1985/86 por quintil corresponden al período de la encuesta febrero a junio de 1986, para la región del Gran Buenos
+Aires. Para la población de referencia, corresponden al período completo de la ventana de observación.
+
+
+24                                          INDEC - La medición de la pobreza y la indigencia en la Argentina. Diciembre de 2016
+Cuadro 3. Hogares según estructura de consumo y quintil de ingresos per cápita familiar. Comparación
+          con población de referencia. En porcentaje. ENGHo 1996/97
+
+
+                                            Quintiles de ingreso per cápita familiar                   Población
+                                                                                           Población
+            Rubro                                                                                          de
+                                                                                             total
+                                            1        2          3         4            5               referencia
+
+Total                                     100,0   100,0     100,0      100,0     100,0      100,0      100,0
+Alimentos y bebidas                        50,4    42,7       38,0      33,0      25,7       34,0        42,2
+Indumentaria y calzado                      7,2      7,4       7,5        7,1      7,1         7,2        7,3
+Vivienda                                   11,9    12,4       12,5      13,1      12,9       12,7        13,5
+Equipamiento y funcionamiento del hogar     4,7      4,9       5,3        6,2      8,9         6,8        4,8
+Atención médica y gastos para la salud      5,1      7,6       8,1        9,5      9,4         8,6        7,1
+Transporte y comunicaciones                 9,2    11,5       13,6      14,8      15,7       14,0        11,6
+Esparcimiento y cultura                     4,2      5,4       6,4        7,5     10,9         8,0        5,5
+Educación                                   2,0      2,8       3,4        3,6      4,6         3,7        2,9
+Bienes y servicios varios                   5,3      5,3       5,3        5,2      4,7         5,0        5,2
+
+
+
+Cuadro 4. Hogares según estructura de consumo y quintil de ingresos per cápita familiar. Comparación
+          con población de referencia. En porcentaje. ENGHo 2004/05
+
+                                            Quintiles de ingreso per cápita familiar                   Población
+                                                                                           Población
+            Rubro                                                                                          de
+                                                                                             total
+                                            1        2          3         4            5               referencia
+
+Total                                     100,0   100,0     100,0      100,0     100,0      100,0      100,0
+Alimentos y bebidas                        45,2    39,7       36,0      32,7      26,6       33,1        38,4
+Indumentaria y calzado                      8,9      8,7       8,0        8,1      7,9         8,2        8,6
+Vivienda                                   10,9    11,1       10,8      10,3      10,5       10,6        11,2
+Equipamiento y funcionamiento del hogar     5,6      5,6       6,4        6,7      8,6         7,1        5,9
+Atención médica y gastos para la salud      4,6      6,3       7,7        7,8      8,6         7,6        6,0
+Transporte y comunicaciones                10,4    13,0       14,5      16,7      17,9       15,7        13,6
+Esparcimiento y cultura                     5,3      6,0       7,3        8,1     10,6         8,3        6,6
+Educación                                   2,4      3,0       3,1        3,4      3,5         3,2        3,3
+Bienes y servicios varios                   6,9      6,6       6,1        6,1      5,8         6,1        6,4
+
+
+
+
+INDEC                                                                                                           25
+

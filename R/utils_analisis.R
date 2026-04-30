@@ -19,10 +19,31 @@ arma_matriz_transicion <- function(df_panel, var, etiquetas) {
                           var = var,
                           etiquetas = etiquetas)
 
+  ### Mapeo de códigos internos a etiquetas legibles para usuario final.
+  ### Necesario para que la matriz no muestre "Trab_familiar" o "Patron".
+  ### Comparte mapeo base con sankey_label_legible() (sin sufijo (t0)/(t1)).
+  legible <- c(
+    "Ocupado"       = "Ocupados",
+    "Desocupado"    = "Desocupados",
+    "Inactivo"      = "Inactivos",
+    "Trab_familiar" = "Trab. familiares",
+    "Patron"        = "Patrones",
+    "Cuenta_propia" = "Cuenta propia",
+    "Asalariado"    = "Asalariados",
+    "TFSR"          = "Trab. familiares",
+    "Formal"        = "Formales",
+    "Informal"      = "Informales"
+  )
+  remap <- function(x) {
+    out <- unname(legible[x])
+    out[is.na(out)] <- x[is.na(out)]
+    out
+  }
+
   df_prep |>
     dplyr::transmute(
-      from = stringr::str_replace(ESTADO, "_tant$", ""),
-      to   = stringr::str_replace(ESTADO_t1, "_tpost$", ""),
+      from = remap(stringr::str_replace(ESTADO, "_tant$", "")),
+      to   = remap(stringr::str_replace(ESTADO_t1, "_tpost$", "")),
       porc = porc_base
     ) |>
     tidyr::pivot_wider(names_from = to, values_from = porc, values_fill = 0)
@@ -123,6 +144,38 @@ sankey_label_legible <- function(codigos) {
 }
 
 
+### Banner reactivo de aviso cuando el panel seleccionado cae dentro
+### del período de intervención INDEC (ene-2007 a dic-2015). Se muestra
+### debajo del filter_query en Foto y Comparar para alertar sobre la
+### calidad de los datos sin estorbar el análisis.
+###
+### @param anios vector numérico con los años de los paneles activos.
+###   En Foto pasar 1 año (el del panel). En Comparar pasar 2 años.
+### @return div HTML con el aviso, o NULL si ningún año cae en el período.
+alerta_intervencion_indec <- function(anios) {
+  anios <- suppressWarnings(as.numeric(anios))
+  anios <- anios[!is.na(anios)]
+  if (length(anios) == 0) return(NULL)
+  if (!any(anios >= 2007 & anios <= 2015)) return(NULL)
+
+  shiny::div(
+    class = "alert-intervencion-indec",
+    shiny::icon("triangle-exclamation"),
+    shiny::HTML("&nbsp;Panel del período de "),
+    shiny::tags$strong("intervención INDEC (2007-2015)"),
+    shiny::HTML(": el propio organismo recomienda leer estos datos "),
+    shiny::tags$strong("con reservas"),
+    ". ",
+    shiny::tags$a(
+      "Anexo INDEC 2016 ↗",
+      href = "https://www.indec.gob.ar/ftp/cuadros/sociedad/anexo_informe_eph_23_08_16.pdf",
+      target = "_blank",
+      style = "color:#405BFF; font-weight:600;"
+    )
+  )
+}
+
+
 ### Formatea un delta en puntos porcentuales con flecha y signo (issue #21).
 ### Ejemplos: 1.2 → "↑ +1.2 pp" / -0.5 → "↓ -0.5 pp" / 0 → "= 0.0 pp".
 formato_delta <- function(delta) {
@@ -152,21 +205,51 @@ arma_line_chart_areaspline <- function(df_data,
                                        levels_periodo,
                                        mostrar_pandemia = TRUE,
                                        tick_interval = 4,
-                                       caption_text) {
-  ### PlotBand pandemia COVID-19 (2020-T1-T2 a 2020-T3-T4).
-  idx_pand_ini <- match("2020_t1-t2", levels_periodo) - 1
-  idx_pand_fin <- match("2020_t3-t4", levels_periodo) - 1
+                                       caption_text,
+                                       excluir_intervencion = FALSE) {
+  ### Excluir período de intervención INDEC (2007-2015) si el usuario
+  ### lo pidió. Datos validados oficialmente quedan: 2003-2006 + 2016-actual.
+  if (isTRUE(excluir_intervencion)) {
+    df_data <- df_data |>
+      dplyr::filter(!stringr::str_starts(as.character(periodo),
+                                         "200[7-9]|201[0-5]"))
+  }
+
+  ### Highchart con xAxis categórico usa los `unique()` ordenados de los
+  ### datos visibles, no los `levels()` del factor. Si filtramos por
+  ### dúo trimestral, los períodos exactos como "2007_t1-t2" pueden no
+  ### existir en los datos visibles → los plotBands quedan fuera del eje.
+  ### Solución: calcular índices sobre los períodos visibles, con
+  ### fallback al primer/último trimestre del año si el exacto no está.
+  periodos_visibles <- df_data |>
+    dplyr::pull(periodo) |>
+    unique() |>
+    as.character() |>
+    sort()
+
+  buscar_idx <- function(periodo_exacto, anio_fallback, lado = "ini") {
+    idx <- match(periodo_exacto, periodos_visibles)
+    if (!is.na(idx)) return(idx - 1L)
+    matches <- grep(paste0("^", anio_fallback, "_"), periodos_visibles)
+    if (length(matches) == 0) return(NA_integer_)
+    if (lado == "ini") matches[1] - 1L else matches[length(matches)] - 1L
+  }
+
+  ### PlotBand pandemia COVID-19 (2020).
+  idx_pand_ini <- buscar_idx("2020_t1-t2", "2020", "ini")
+  idx_pand_fin <- buscar_idx("2020_t3-t4", "2020", "fin")
 
   ### PlotBand período de intervención INDEC (issue #20).
   ### El INDEC fue intervenido entre ene-2007 y dic-2015 (decretos 181/15
   ### y 55/16). La advertencia oficial dice que las series de ese período
   ### "deben ser consideradas con reservas". Marcamos con banda gris.
-  idx_int_ini <- match("2007_t1-t2", levels_periodo) - 1
-  idx_int_fin <- match("2015_t4-t1", levels_periodo) - 1
+  idx_int_ini <- buscar_idx("2007_t1-t2", "2007", "ini")
+  idx_int_fin <- buscar_idx("2015_t4-t1", "2015", "fin")
 
   plot_bands <- list()
 
-  if (!is.na(idx_int_ini) && !is.na(idx_int_fin)) {
+  if (!isTRUE(excluir_intervencion) &&
+      !is.na(idx_int_ini) && !is.na(idx_int_fin)) {
     plot_bands <- c(plot_bands, list(list(
       from = idx_int_ini,
       to = idx_int_fin,
@@ -229,25 +312,21 @@ arma_line_chart_areaspline <- function(df_data,
       title = list(text = "% del total"),
       labels = list(format = "{value}%"),
       gridLineDashStyle = "Dot",
-      ### Eje Y adaptativo a media ±1.5 SD (issue #27). Si la dispersión
-      ### es baja (datos casi constantes), garantizamos rango mínimo de
-      ### ±2 pp para que la variación sea legible. Clamp a 0-100 para
-      ### no pasarse de los límites naturales del porcentaje.
+      ### Eje Y anclado al min/max real de la serie con padding del 15%
+      ### del rango (mínimo 1 pp). Esto evita que el punto más bajo o
+      ### más alto quede pegado al borde. Clamp a 0-100 para respetar
+      ### los límites naturales del porcentaje.
       min = local({
-        stats <- df_data |>
-          dplyr::filter(!is.na(weight)) |>
-          dplyr::summarise(media = mean(weight, na.rm = TRUE),
-                           desv  = stats::sd(weight, na.rm = TRUE))
-        rango <- max(2, 1.5 * (if (is.na(stats$desv)) 0 else stats$desv))
-        max(0, stats$media - rango)
+        rng <- range(df_data$weight, na.rm = TRUE)
+        if (any(is.infinite(rng))) return(0)
+        pad <- max(1, (rng[2] - rng[1]) * 0.15)
+        max(0, rng[1] - pad)
       }),
       max = local({
-        stats <- df_data |>
-          dplyr::filter(!is.na(weight)) |>
-          dplyr::summarise(media = mean(weight, na.rm = TRUE),
-                           desv  = stats::sd(weight, na.rm = TRUE))
-        rango <- max(2, 1.5 * (if (is.na(stats$desv)) 0 else stats$desv))
-        min(100, stats$media + rango)
+        rng <- range(df_data$weight, na.rm = TRUE)
+        if (any(is.infinite(rng))) return(100)
+        pad <- max(1, (rng[2] - rng[1]) * 0.15)
+        min(100, rng[2] + pad)
       })
     ) |>
     highcharter::hc_tooltip(
@@ -269,7 +348,9 @@ arma_line_chart_areaspline <- function(df_data,
         caption_text,
         ### Nota metodológica de intervención INDEC (issue #20). Solo si
         ### el período cubierto incluye 2007-2015.
-        if (!is.na(idx_int_ini) && !is.na(idx_int_fin)) {
+        if (isTRUE(excluir_intervencion)) {
+          " · <span style='color:#404040'>Período 2007-2015 excluido (intervención INDEC).</span>"
+        } else if (!is.na(idx_int_ini) && !is.na(idx_int_fin)) {
           paste0(
             " · <span style='color:#404040'>Series 2007-2015: período de intervención INDEC, leer con reservas ",
             "(<a href='https://www.indec.gob.ar/ftp/cuadros/sociedad/anexo_informe_eph_23_08_16.pdf' ",

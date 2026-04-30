@@ -1,0 +1,198 @@
+                          REPÚBLICA ARGENTINA
+                MINISTERIO DE ECONOMÍA Y PRODUCCIÓN
+                  SECRETARÍA DE POLÍTICA ECONÓMICA
+
+            INSTITUTO NACIONAL DE ESTADÍSTICA Y CENSOS
+
+                                                                                        Buenos Aires, 15 de diciembre de 2003
+
+
+
+    ENCUESTA PERMANENTE DE HOGARES (EPH)
+                  ///// / / / / / // CAMBIOS METODOLÓGICOS
+                  Objetivos
+                     de la Encuesta Permanente de Hogares (EPH)
+
+
+
+                        ///// / / / / / /
+                     La EPH es un programa nacional de producción permanente de indicadores sociales
+                     cuyo objetivo es conocer las características socioeconómicas de la población. Es realiza-
+                     da en forma conjunta por el Instituto Nacional de Estadística y Censos (INDEC) y las
+                     Direcciones Provinciales de Estadística (DPE).
+
+
+
+
+                  Modificaciones en la EPH 2003
+                     Luego de un largo proceso de investigación, a partir de enero de 2003 se ha puesto en
+                     marcha la nueva EPH1.
+                     Los principales cambios son:
+                       • Cuestionarios rediseñados para reflejar más adecuadamente el mercado laboral.
+                       • Muestra diseñada para la captación continua de la información.
+                       • Mayor frecuencia de presentación de los resultados.
+                     Para evaluar los cambios se realizaron un conjunto de pruebas articuladas en un diseño
+                     de experimento (orientado a estudiar separadamente la incidencia de los distintos facto-
+                     res de cambio, fundamentalmente cuestionario y relevamiento continuo)2. En una pri-
+                     mera etapa se evaluó el efecto cuestionario y el efecto del relevamiento continuo por
+
+
+1
+                     separado. En una segunda etapa, el efecto combinado.
+
+                  1 Cuestionario rediseñado
+                     Frente a los cambios operados en el mercado de trabajo se rediseñaron los cuestionarios para
+                     reflejar sus nuevas características y mejorar la captación de las que se venían midiendo.
+                     La estrategia de indagación del cuestionario individual tradicional se caracterizó por tener
+                     preguntas breves que debían ser leídas textualmente, y que requerían una intensa capaci-
+                     tación de los encuestadores a fin de orientar los sondeos necesarios para su correcta
+                     aplicación.
+
+
+
+
+                                /// / / /
+    1
+        Para mayor información, ver el documento “La nueva Encuesta Permanente de Hogares de Argentina. 2003” en http://
+        www.indec.mecon.gov.ar (ingrese por la Búsqueda temática al capítulo trabajo e ingresos, submenú Empleo y desempleo, renglón
+        Metodología)
+    2
+        El ‘‘diseño de experimentos’’ es una herramienta estadística clásica cuyo objetivo es averiguar si unos determinados factores influyen en
+        la variable de interés y, si existe influencia de algún factor, cuantificarla.
+
+                                                                          1/3
+                                                                                      /// / / /
+      En cambio, el cuestionario individual reformulado se caracteriza por incorporar las pre-
+      guntas auxiliares, garantizando una mayor homogeneidad de los resultados.
+      La mejora en la medición se basó, por ejemplo, en: recuperar formas ocultas de ocupa-
+      ción (trabajo femenino, trabajo irregular, changas, actividades no reconocidas habitual-
+      mente como trabajo por la población) y formas ocultas de desempleo (captando moda-
+      lidades formales e informales de búsqueda de ocupación).
+      También se profundizó la captación de modalidades especiales promovidas (planes de
+      empleo, pasantías, etc.), condiciones de trabajo (lugar de trabajo, jornada, turnos, etc.),
+      situación de cobertura social, etc.
+
+      Efecto del rediseño del cuestionario sobre las tasas básicas
+      Para medir este efecto se realizó una prueba puntual en octubre 2000, la Prueba Expe-
+      rimental Temática (PET), con el cuestionario nuevo, en todos los aglomerados cubier-
+      tos por la EPH.
+      Los resultados obtenidos y su comparación con la EPH habitual se presentan en la
+      siguiente tabla:
+
+                          Efecto del rediseño del cuestionario
+                      Tasas básicas del mercado de trabajo en la onda octubre 2000 (con el cues-
+                      tionario anterior) y en la Prueba Experimental Temática (con el cuestionario
+                      nuevo). Total de aglomerados
+
+                                                           Cuestionario    Cuestionario
+                                     Tasas básicas           anterior        nuevo
+                                  Actividad                    42,7            45,4
+                                  Empleo                       36,5            38,6
+                                  Desocupación                 14,7            15,1
+                                  Subocupación horaria         14,6            20,3
+
+
+
+
+2   2 Captación continua de la información
+
+      Tradicionalmente la EPH se relevaba dos veces al año, en los meses de mayo y octubre.
+      Si bien valiosa, esta información reflejaba la situación en esos puntos y no daba cuenta
+      de la variación durante el resto del año.
+      En la nueva modalidad la muestra está distribuida a lo largo de cada uno de los cuatro
+      trimestres del año. Se pasa a una encuesta continua que se releva semana a semana y
+      que permite dar estimaciones trimestrales, semestrales y anuales.
+
+      Efecto del relevamiento continuo sobre las tasas básicas
+      Para estudiar este efecto se realizó a partir del tercer timestre de 2000 una prueba con
+      modalidad continua de relevamiento, la Prueba Experimental de Relevamiento Con-
+      tinuo (PERC), con el cuestionario tradicional.
+      Las tasas básicas obtenidas en dicho relevamiento y su comparación con la onda de
+      octubre 2000 se presentan a continuación:
+
+
+
+
+                                            2/3
+                                                                    Efecto del relevamiento continuo
+                                                                Tasas básicas del mercado de trabajo en la onda octubre 2000 (relevamiento
+                                                                puntual) y en el cuarto trimestre de 2000 (PERC). Total de aglomerados
+
+                                                                                                              Relevamiento        Relevamiento
+                                                                                  Tasas básicas                  puntual            continuo
+                                                                               Actividad                           42,7                43,4
+                                                                               Empleo                              36,5                36,5
+                                                                               Desocupación                        14,7                15,8
+                                                                               Subocupación horaria                14,6                14,7
+
+
+
+
+                          3          3 Cuestionario rediseñado y captación continua de la información
+                                          A partir del segundo trimestre de 2002 se realizó la prueba que combinó el relevamiento
+                                          continuo con el cuestionario nuevo.
+
+                                          Efecto combinado sobre las tasas básicas
+                                          Se presenta a continuación la comparación de resultados entre esta prueba y la EPH de
+                                          mayo 2002
+                                                                    Efecto combinado
+                                                                Tasas básicas del mercado de trabajo en la onda mayo 2002 (con cuestiona-
+                                                                rio anterior) y en el segundo trimestre de 2002 (Prueba de Relevamiento Con-
+                                                                tinuo, con cuestionario nuevo). Total de aglomerados
+
+                                                                                                              Relevamiento        Relevamiento
+                                                                                                               puntual con        continuo con
+                                                                                  Tasas básicas
+                                                                                                              cuestionario        cuestionario
+                                                                                                                 anterior            nuevo
+
+                                                                               Actividad                           41,8                 48,6
+                                                                               Empleo                              32,8                36,9
+                                                                               Desocupación                        21,5                 24,0
+                                                                               Subocupación horaria                18,6                 19,9
+
+
+
+
+                                          Cálculo de las tasas básicas
+///// / /
+
+
+
+
+                                          Tasa de actividad: calculada como porcentaje entre la población económicamente ac-
+                                          tiva y la población total.
+            CAMBIOS
+      METODOLÓGICOS
+
+
+
+
+                                          Tasa de empleo: calculada como porcentaje entre la población ocupada y la población
+                                          total.
+                                          Tasa de desocupación: calculada como porcentaje entre la población desocupada y la
+                                          población económicamente activa.
+                                          Tasa de subocupación horaria: calculada como porcentaje entre la población
+                                          subocupada y la población económicamente activa.
+ ENCUESTA PERMANENTE DE
+
+
+
+
+                                                    /// / / /
+                                                                                                               Instituto Nacional de Estadística y Censos
+                                                                                                                                          Buenos Aires, 2003
+                          Las publicaciones editadas por el Instituto Nacional de Estadística y Censos se encuentran a la venta en INDEC, Centro Estadísti-
+ HOGARES (EPH)
+
+
+
+
+                                                          co de Servicios, Julio A. Roca 615, Ciudad Autónoma de Buenos Aires P.B., C.P. 1067, Argentina.
+                                      Por cualquier consulta puede dirigirse personalmente al Centro Estadístico de Servicios, o bien comunicarse a los tel.:
+                                                         4349-9650/52/54/62, al fax: 4349-9621, o a través de correo electrónico: ces@indec.mecon.gov.ar.
+                                                                                                                              INTERNET: www.indec.gov.ar
+                                                                                                                          Horario de atención: 9:30 a 16:00 hs.
+
+                                                                                           3/3
+

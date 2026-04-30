@@ -1,0 +1,200 @@
+Listado de
+documentos
+metodológicos
+Este documento fue confeccionado por el Área de Biblioteca del INDEC con el fin de compilar los
+distintos tipos de documentos que contienen aspectos metodológicos referidos a la produccción
+estadística del INDEC. El listado incluye una selección de metodologías, documentos metodoló-
+gicos y documentos de trabajo que pueden ser de utilidad para quienes consultan información
+estadística.
+Para mayor información y asesoramiento bibliográfico, puede enviar un mail desde el formulario
+de contacto de nuestro sitio web.
+
+
+
+
+Serie Metodologías INDEC
+A través de esta serie se difunden los métodos y procedimientos utilizados en la produc-
+ción de información estadística.
+
+Diseño muestral y factores de expansión en encuestas a viviendas, hogares y población: el caso de la Encuesta Nacional
+de Factores de Riesgo 2009 (2010, n. 16)
+Ponderación de la muestra y tratamiento de valores faltantes en las variables de ingreso en la EPH. (2010, n. 15)
+Índice de Precios al Consumidor (IPC) Gran Buenos Aires Base 1999=100 (2001, n. 13).
+Índice del Costo de la Construcción en el Gran Buenos Aires, base 1993. (1996, n. 9)
+Sistema de Índices de Precios Mayoristas, base 1993 (1996, n.8).
+
+
+
+Documentos metodológicos
+Presentan las principales características técnicas de de cada relevamiento o investigación,
+lo que permite su comprensión y análisis
+
+Economía
+Censo Nacional Económico 2004/2005
+Documentación de procesos y Análisis de resultados del CNE 2004/2005
+
+
+Comercio
+Centro de compras
+Encuesta de centros de compras. Construcción de los índices de venta y precios implícitos (base 1997)
+Supermercados
+Encuesta de Supermercados. Construcción de los Índices de Ventas y del Índice de Precios Implícito.
+Encuesta de supermercados. Síntesis metodológica (octubre 1998).
+Comercio exterior
+Complejos exportadores
+Complejos exportadores. Metodología.
+Intercambio Comercial Argentino
+Intercambio Comercial Argentino. Notas metodológicas de las estadísticas de comercio exterior.
+Precios y cantidades del comercio exterior
+Metodología utilizada en la elaboración de los Índices de Precios y Cantidades del comercio exterior, base 1993=100
+
+
+Construcción
+Actividad de la Construcción (ISAC)
+Indicador sintético de la actividad de la construcción (ISAC): Introducción metodológica.
+Indicador Sintético de la Actividad de la Construcción: Ajuste estacional y de la tendencia. Notas metodológicas.
+Características generales de la serie Permisos de Edificación.
+Permisos para construcciones privadas
+
+
+Cuentas internacionales
+Balance de pagos
+Balance de pagos. Metodología de estimación.
+Posición de Inversión Internacional
+Metodología de estimación de la Posición de Inversión Internacional
+
+
+Cuentas nacionales
+Estimador Mensual de Actividad Económica
+Estimador Mensual de Actividad Económica: fuentes de información y métodos de estimación (octubre 2002, s. n.).
+Generación del ingreso
+La Cuenta de Generación del Ingreso (CGI) y el insumo de mano de obra. Notas metodológicas.
+Generación del ingreso e insumo de mano de obra. Fuentes, métodos y estimaciones. Años 1993-2005 (octubre 2006).
+Cuenta de Generación del Ingreso. Anexo A. Metodología utilizada para el ajuste de las series de ocupación e ingreso según esti-
+maciones de la Encuesta Permanente de Hogares Continua (octubre 2006).
+Cuenta de Generación del Ingreso. Anexo B. Correcciones de ingresos a la Encuesta Permanente de Hogares
+Matriz Insumo Producto 1997
+Matriz de Insumo Producto. Descripción de las matrices
+Matriz de Insumo Producto. Secuencia en la construcción de la MIPAr97
+Matriz de Insumo Producto. Fuentes y métodos de las estimaciones
+
+
+Empresas
+Grandes empresas
+Encuesta Nacional a Grandes Empresas. Metodología.
+
+
+Índices de precios
+Costo de la Construcción (ICC)(1)
+Índice del Costo de la Construcción, base 1993=100: síntesis metodológica.
+Precios al Consumidor (IPC-GBA)(1)
+IPC-GBA, base abril 2008=100: actualización metodológica. Implementación de índices encadenados.
+IPC-GBA base abril 2008=100: actualización metodológica (documento original de octubre 2008, actualizado en agosto 2009).
+Paridades del poder de compra del consumidor por regiones a dos dígitos (IPC), febrero 2002.
+Precios al Consumidor (IPCNu)
+(ver Serie Documentos de Trabajo)
+
+
+
+
+(1) Véase ademas la Serie Metodologías INDEC
+Precios mayoristas (SIPM)
+Sistema de índices de precios mayoristas (SIPM). Síntesis metodológica, base 1993=100.
+Estructura de ponderaciones del Sistema de Índices de Precios Mayoristas (SIPM), base 1993=100.
+Precios y cantidades del comercio exterior
+Metodología utilizada en la elaboración de los Índices de Precios y Cantidades del comercio exterior, base 1993=100
+
+
+Industria manufacturera
+Capacidad instalada
+Utilización de la capacidad instalada en la industria. Nueva Base 2004. (diciembre 2006).
+Utilización de la capacidad instalada en la industria: Síntesis metodológica.
+Estimador Mensual Industrial
+Anexo metodológico: Estimador mensual industrial (EMI): Nueva base 2004 (diciembre 2006).
+Aspectos metodológicos del Estimador Mensual Industrial base 1997.
+Estimador Mensual Industrial. Ajuste estacional y de la tendencia.
+Encuesta Industrial Mensual
+Metodología de estimación del Índice de Horas Trabajadas en la Industria.
+Encuesta Industrial Anual
+Características de la Encuesta Industrial Anual.
+Encuesta Industrial Anual. Productos industriales argentinos 1997: introducción, criterios metodológicos y caracterización general.
+
+
+Salarios
+Índice de salarios
+Índice de salarios, base abril 2012=100. Actualización metodológica (julio 2012).
+Índice de salarios y del Coeficiente de variación salarial, base IV trimestre 2001=100 (s/n)
+
+
+Sector agropecuario
+Censo Agropecuario
+Aspectos metodológicos del Censo Nacional Agropecuario (CNA) 2002.
+
+
+Servicios
+Servicios públicos
+Indicador Sintético de Servicios Públicos. Ajuste estacional y de la tendencia. Notas metodológicas.
+
+
+Turismo
+Ocupación hotelera
+Metodología de la Encuesta de Ocupación Hotelera (EOH).
+Turismo internacional
+Metodología de las Encuestas de Turismo Internacional 2004, 2005 y 2006 (ETI)
+
+
+Población
+
+Censo Nacional de Población, Hogares y Viviendas 2010
+Documento metodológico preliminar
+Metodología censal de cuestionario ampliado y reducido: mayor calidad de la información y menor costo para el Estado.
+
+
+Censo Nacional de Población, Hogares y Viviendas 2001
+Censo 2001. Introducción
+Aspectos metodológicos del Censo 2001
+Encuesta Complementaria de Migraciones Internacionales (ECMI). Informe Metodológico
+Sociedad
+
+Condiciones de vida
+Gastos de los hogares
+Aspectos metodológicos de la Encuesta Nacional de Gastos de los Hogares 2012/2013
+Encuesta Nacional de Gastos de los Hogares 1996/1997: Resumen metodológico y Anexo
+Encuesta Nacional de Gastos de los Hogares 1996/1997: Taller sobre la medición de los gastos e ingresos familiares en un siste-
+ma de encuestas a hogares
+Canasta Básica Alimentaria y Canasta Básica Total
+Canasta Básica Alimentaria y Canasta Básica Total: historia, forma de cálculo e interpretación.
+Pobreza
+Acerca del método utilizado para la medición de la pobreza en Argentina
+
+
+Trabajo e ingresos
+Empleo y desempleo
+Encuesta Permanente de Hogares. Cambios metodológicos.
+La nueva Encuesta Permanente de Hogares de Argentina. 2003.
+Determinación de la condición de actividad de la población de 10 años y más. 			
+EPH. Cambio de las estimaciones de población en base a las proyecciones definitivas del Censo 2001
+Encuesta Permanente de Hogares: Cambio de las estimaciones de población en base a las proyecciones definitivas del Censo
+2001, anexo – coeficientes año 2003.
+Encuesta Permanente de Hogares. Actualización del diseño de sus muestras 1974-2003
+
+
+
+Serie Documentos de Trabajo
+La Serie Documentos de Trabajos incluye investigaciones actuales o anticipos que poste-
+riormente serán publicados como libros o documentos.
+Cuentas Nacionales
+Nº 23 Documento de trabajo metodológico de las Cuentas Nacionales de la República Argentina. Año base 2004
+Precios
+Nº 22 Índice de Precios al Consumidor Nacional urbano (IPCNu), base IV trimestre 2013
+
+
+
+Documentos de referencia
+¿Qué es el Turismo?
+Turismo. Conceptos y definiciones
+Algunas precisiones acerca de la mejor manera de utilizar los índices de precios mayoristas (abril 1997).
+¿Cómo usar un índice de precios?
+¿Cómo se mide el desempleo?
+Usos de la denominación Gran Buenos Aires en los relevamientos del INDEC
+

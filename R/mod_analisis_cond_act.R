@@ -99,15 +99,20 @@ mod_cond_act_ui <- function(id) {
       title = "Foto",
       icon = icon("camera-retro"),
       fluidRow(filtros_foto),
+      uiOutput(ns("alert_int_foto")),
 
       ### Tarjetas con tasas destacadas + delta vs año anterior
       ### (issues #16 + #21).
+      ### Jerarquía visual: Persistencia es el dato principal (es el "100%
+      ### que se mantiene"), va en azul primario. Salida/Entrada son los
+      ### dos contracampos, en estilo neutro con borde para no competir.
       layout_columns(
         col_widths = c(4, 4, 4),
         value_box(
           title = "Persistencia",
           value = textOutput(ns("tasa_persistencia")),
           showcase = bs_icon("arrow-repeat"),
+          theme = "primary",
           p("siguen en su categoría"),
           p(textOutput(ns("delta_persistencia")),
             style = "font-size: 0.8em; opacity: 0.85; margin-top: 4px;")
@@ -116,7 +121,7 @@ mod_cond_act_ui <- function(id) {
           title = "Salida",
           value = textOutput(ns("tasa_salida")),
           showcase = bs_icon("box-arrow-right"),
-          theme = "secondary",
+          class = "value-box-bordered",
           p("cambiaron a otra categoría"),
           p(textOutput(ns("delta_salida")),
             style = "font-size: 0.8em; opacity: 0.85; margin-top: 4px;")
@@ -125,7 +130,7 @@ mod_cond_act_ui <- function(id) {
           title = "Entrada",
           value = textOutput(ns("tasa_entrada")),
           showcase = bs_icon("box-arrow-in-left"),
-          theme = "secondary",
+          class = "value-box-bordered",
           p("vinieron de otra categoría"),
           p(textOutput(ns("delta_entrada")),
             style = "font-size: 0.8em; opacity: 0.85; margin-top: 4px;")
@@ -213,6 +218,8 @@ mod_cond_act_ui <- function(id) {
         suffix_text = ""
       ),
 
+      uiOutput(ns("alert_int_comparar")),
+
       layout_columns(
         col_widths = c(6, 6),
         card(
@@ -241,7 +248,18 @@ mod_cond_act_ui <- function(id) {
       filter_query(
         prefix_text = "",
         filter_preposition(
-          "Mostrar la evolución de las tasas para los",
+          "Mostrar la",
+          selectInput(inputId = ns("tasas_tipo"),
+                      label = "Tipo de tasa",
+                      choices = c("Persistencia" = "Persistencia",
+                                  "Salida" = "Salida",
+                                  "Entrada" = "Entrada"),
+                      selected = "Persistencia",
+                      multiple = TRUE),
+          "para los"
+        ),
+        filter_preposition(
+          "",
           selectInput(inputId = ns("tasas_category"),
                       label = "Categoría",
                       choices = c("Ocupados" = "Ocupado",
@@ -264,6 +282,12 @@ mod_cond_act_ui <- function(id) {
         ),
         suffix_text = ""
       ),
+      div(
+        style = "text-align: center; margin: 4px 0 12px 0;",
+        checkboxInput(ns("excluir_int_tasas"),
+                      label = "Excluir período de intervención INDEC (2007-2015)",
+                      value = FALSE)
+      ),
       card(
         full_screen = TRUE,
         min_height = "520px",
@@ -275,6 +299,12 @@ mod_cond_act_ui <- function(id) {
       title = "Película",
       icon = icon("video"),
       filtros_pelicula,
+      div(
+        style = "text-align: center; margin: 4px 0 12px 0;",
+        checkboxInput(ns("excluir_int_pelicula"),
+                      label = "Excluir período de intervención INDEC (2007-2015)",
+                      value = FALSE)
+      ),
       div(
         style = "text-align: center; margin-bottom: 16px;",
         actionButton(ns("btn_pop"), "¿Cómo se interpreta el dato?") |>
@@ -477,6 +507,10 @@ mod_cond_act_server <- function(id) {
           nrow(df_tasas_cond_act) > 0,
           "Histórico de tasas todavía no fue computado. Correr ETL/08-build_tasas_historico.R."
         ))
+        shiny::validate(shiny::need(
+          length(input$tasas_tipo) > 0,
+          "Seleccioná al menos un tipo de tasa."
+        ))
 
         df_data <- df_tasas_cond_act |>
           filter(categoria == input$tasas_category) |>
@@ -490,6 +524,7 @@ mod_cond_act_server <- function(id) {
                              salida = "Salida",
                              entrada = "Entrada"),
                  id = paste0(categoria, "_", to)) |>
+          filter(to %in% input$tasas_tipo) |>
           mutate(isExtremo = (weight == max(weight, na.rm = TRUE)) |
                               (weight == min(weight, na.rm = TRUE)),
                  .by = to)
@@ -499,6 +534,7 @@ mod_cond_act_server <- function(id) {
           levels_periodo = levels(df_tasas_cond_act$periodo),
           mostrar_pandemia = input$tasas_duo == "todos",
           tick_interval = if (input$tasas_duo == "todos") 4 else 1,
+          excluir_intervencion = isTRUE(input$excluir_int_tasas),
           caption_text = paste0(
             "Tasas de movilidad por panel para los ",
             switch(input$tasas_category,
@@ -508,6 +544,14 @@ mod_cond_act_server <- function(id) {
             ". Elaboración propia en base a EPH-INDEC."
           )
         )
+      })
+
+      ### Alertas de período de intervención INDEC (Foto + Comparar).
+      output$alert_int_foto <- renderUI({
+        alerta_intervencion_indec(input$anio_ant)
+      })
+      output$alert_int_comparar <- renderUI({
+        alerta_intervencion_indec(c(input$comp_anio_a, input$comp_anio_b))
       })
 
       output$comp_header_a <- renderText({
@@ -573,6 +617,7 @@ mod_cond_act_server <- function(id) {
           levels_periodo = levels(df_cond_act$periodo),
           mostrar_pandemia = input$duo == "todos",
           tick_interval = if (input$duo == "todos") 4 else 1,
+          excluir_intervencion = isTRUE(input$excluir_int_pelicula),
           caption_text = "Elaboración propia en base a la EPH-INDEC. Arrastrá horizontalmente para hacer zoom · Click en una serie para mostrarla u ocultarla."
         )
       })

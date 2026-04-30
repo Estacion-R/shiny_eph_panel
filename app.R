@@ -14,12 +14,11 @@ source("R/utils_analisis.R")
 source("R/mod_analisis_cond_act.R")
 source("R/mod_analisis_cat_ocup.R")
 source("R/mod_analisis_formalidad.R")
-
-library(shinyalert)
+source("R/panels_metadata.R")
 
 waiting_screen <- tagList(
   spin_flower(),
-  h4("Bancame un toque...")
+  h4("Cargando datos...")
 )
 
 options(shiny.useragg = TRUE)
@@ -31,61 +30,116 @@ thematic_shiny(font = "auto")
 ### +Info. Se inyectan como nav_panel dentro del navset_pill_list lateral.
 ### --------------------------------------------------------------------------
 
+### Tarjetas clicables que llevan al usuario directo a cada eje de análisis.
+### Renderizadas como actionLink para que el server pueda observar el click
+### y redireccionar via bslib::nav_select() (ver server).
+landing_card <- function(input_id, icon_id, titulo, descripcion) {
+  actionLink(
+    inputId = input_id,
+    label = tagList(
+      icon(icon_id, class = "landing-card-icon"),
+      tags$h4(titulo, class = "landing-card-title"),
+      tags$p(descripcion, class = "landing-card-desc")
+    ),
+    class = "landing-card"
+  )
+}
+
 panel_sobre_la_app <- nav_panel(
   title = "Sobre la app",
   icon = icon("circle-info"),
   card(
-    br(),
-    ### Logo principal grande (issue #23). Reemplaza el shinyalert SUMATE
-    ### que aparecía al cargar.
+    ### Hero: logo + propuesta de valor concreta para público amplio.
     div(
-      style = "text-align: center; padding: 2rem 0 1rem;",
+      class = "landing-hero",
       tags$a(
         href = "https://linktr.ee/estacion_r",
-        tags$img(src = "logos/logo_completo_estacion_r.svg",
-                 style = "max-width: 320px; width: 100%; height: auto;",
+        tags$img(src = "logos/logo_estacion_r_ancho.png",
+                 class = "landing-hero-logo",
                  alt = "Estación R")
+      ),
+      tags$h2(
+        "Mercado de trabajo argentino, en clave de panel.",
+        class = "landing-hero-title"
+      ),
+      tags$p(
+        class = "landing-hero-subtitle",
+        "Seguimos a las mismas personas trimestre a trimestre con datos de la ",
+        tags$strong("EPH-INDEC"),
+        " y mostramos cómo cambia su situación laboral en el tiempo."
       )
     ),
-    br(),
-    tags$blockquote(
-      "En la presente aplicación se va a poder estudiar el comportamiento del mercado de trabajo bajo la estrategia de análisis de panel. Para esto, hablemos un poco de la E-P-H"
+
+    ### Tarjetas de los 3 ejes de análisis. Click navega al panel.
+    div(
+      class = "landing-cards-row",
+      tags$h3("Empezá a explorar", class = "landing-cards-heading"),
+      div(
+        class = "landing-cards-grid",
+        landing_card(
+          input_id = "go_cond_act",
+          icon_id = "people-arrows",
+          titulo = "Condición de actividad",
+          descripcion = "Flujos entre ocupados, desocupados e inactivos."
+        ),
+        landing_card(
+          input_id = "go_cat_ocup",
+          icon_id = "user-tie",
+          titulo = "Categoría ocupacional",
+          descripcion = "Movilidad entre patrones, cuenta propia, asalariados y trabajadores familiares."
+        ),
+        landing_card(
+          input_id = "go_formalidad",
+          icon_id = "id-card",
+          titulo = "Formal · Informal",
+          descripcion = "Transiciones entre empleo formal e informal, definición clásica y ampliada (OIT 2023)."
+        )
+      )
     ),
-    h1("La E-P-H", class = "hero-title"),
-    p(
-      strong(em("La Encuesta Permanente de Hogares")),
-      "es una de las fuentes de información sociodemográfica más importante del",
-      a("Sistema Estadístico Nacional (SEN)",
-        href = "https://www.indec.gob.ar/indec/web/Institucional-Indec-SistemaEstadistico"),
-      "Argentino. Si bien este operativo es más conocido por la Tasa de Desocupación",
-      a("[1], ", href = "#footnote-1"),
-      "el abanico de indicadores que se pueden obtener para caracterizar las condiciones de vida de la población es muy amplio."
-    ),
-    p(
-      "Dos estrategias de análisis son plausible de abordar al momento de querer caracterizar a una población determinada. La primera es el",
-      strong("Análisis Transversal,"),
-      "entendido como una forma de leer los datos en clave de 'foto'. Esta es el abordaje para el cual fue diseñada la encuesta, aunque no el único."
-    ),
-    p(
-      "Una segunda manera de interpretar la información es mediante el",
-      strong("Anáisis Longitudinal"),
-      "en el cual la lectura es en clave de 'película'. Esto es, para una misma población, observo su evolución respecto al indicador seleccionado. Para ejemplificar, bajo este análisis puedo saber si la población ocupada que entrevisté en el primer trimestre del 2023 se encuentra en la misma situación o la ha modificado (pasó a la desocupación o inactividad) en el trimestre siguiente"
-    ),
-    br(),
-    h4("Análisis longitudinal de la EPH."),
-    p(
-      "Esta forma de interpretar los datos se debe gracias al",
-      strong("esquema de rotación "),
-      "bajo el cual fue diseñada la muestra, conocido como '2-2-2'. Este esquema implica que una vivienda es seleccionada para ser entrevistada 4 veces. En una primera instancia participa del operativo durante los primeros",
-      strong("dos "),
-      "trimestres de forma consecutiva, descansa los",
-      strong("dos "),
-      "trimestres siguientes y vuelve a participar por",
-      strong("dos "),
-      "trimestres más, para finalmente salir de la muestra y no volver a ser seleccionada. Al usar un esquema como el descripto, la muestra plausible de ser utilizada para el análisis de panel (longitudinal) es (teóricamente) del 50% para trimestres consecutivos (ejemplo, trimestre 1 y 2 del 2022) y para un mismo trimestre de años consecutivo (trimestre 1 del año 2022 y 2023)"
-    ),
-    p(id = "footnote-1",
-      "1 Porcentaje entre la población desocupada y la población económicamente activa.")
+
+    ### Sección informativa: qué es la EPH. Plegada bajo un title h3 para
+    ### que el contenido técnico no domine la primera impresión.
+    div(
+      class = "landing-info",
+      tags$h3("¿Qué es la EPH?", class = "landing-info-heading"),
+      p(
+        "La ",
+        tags$strong(em("Encuesta Permanente de Hogares")),
+        " (EPH) es la principal fuente de datos sobre mercado laboral del ",
+        a("Sistema Estadístico Nacional (SEN)",
+          href = "https://www.indec.gob.ar/indec/web/Institucional-Indec-SistemaEstadistico",
+          target = "_blank"),
+        " argentino. Aunque se la conoce sobre todo por la tasa de desocupación, permite caracterizar muchas otras dimensiones de las condiciones de vida."
+      ),
+      tags$h4("Foto vs. película"),
+      p(
+        "El abordaje habitual es ",
+        tags$strong("transversal"),
+        " (foto): describe a la población en un momento puntual, un trimestre. Pero la EPH también permite un análisis ",
+        tags$strong("longitudinal"),
+        " (película): seguir a las mismas personas en dos momentos consecutivos y medir cambios individuales. Si en el T1 alguien estaba ocupado, ¿sigue ocupado en el T2 o cambió de situación? Esa pregunta es la que esta app responde."
+      ),
+      tags$h4("¿Cómo es posible? El esquema 2-2-2"),
+      p(
+        "La muestra está diseñada con un esquema de rotación ",
+        tags$strong("2-2-2"),
+        ": cada vivienda es entrevistada ",
+        tags$strong("dos"),
+        " trimestres consecutivos, descansa ",
+        tags$strong("dos"),
+        " trimestres y vuelve a entrevistarse otros ",
+        tags$strong("dos"),
+        " trimestres antes de salir de la muestra. Este diseño permite construir paneles longitudinales con (teóricamente) el 50% de las personas en trimestres consecutivos y en el mismo trimestre de años consecutivos."
+      ),
+      p(
+        class = "landing-info-cta",
+        "Para detalles metodológicos, ver el ",
+        tags$strong("Glosario"),
+        " y las ",
+        tags$strong("Definiciones"),
+        " en el menú Metadata."
+      )
+    )
   )
 )
 
@@ -141,49 +195,82 @@ ui <- page_fillable(
     widths = c(2, 10),
     well = FALSE,
 
-    ### Branding + título de la app dentro del sidebar
+    ### Branding + título de la app dentro del sidebar.
+    ### Usa el PNG de la guía de identidad (ver nota en panel_sobre_la_app).
     nav_item(
       div(
         class = "sidebar-brand",
         tags$a(
           href = "https://linktr.ee/estacion_r",
-          tags$img(src = "logos/logo_completo_estacion_r.svg",
-                   height = 50, alt = "Estación R",
-                   style = "margin-bottom: 1rem;")
+          tags$img(src = "logos/logo_estacion_r_ancho.png",
+                   alt = "Estación R",
+                   style = "max-width: 100%; height: auto; margin-bottom: 1rem;")
         )
       )
     ),
 
-    panel_sobre_la_app,
+    ### Issue #31: agrupar Sobre la app + Glosario + Definiciones bajo
+    ### un nav_menu "Metadata" para tener documentación consultable sin
+    ### salir de la app.
+    nav_menu(
+      title = "Metadata",
+      icon = icon("book"),
+      panel_sobre_la_app,
+      panel_glosario,
+      panel_definiciones
+    ),
 
-    ### Header de sección "Análisis"
-    nav_item(
-      tags$div(
-        class = "sidebar-section-label",
-        style = "margin-top: 1rem; font-size: 0.85rem; color: #666; text-transform: uppercase; letter-spacing: 0.05em;",
-        "Análisis de panel"
+    ### Análisis de panel: agrupados bajo un nav_menu colapsable.
+    nav_menu(
+      title = "Análisis de panel",
+      icon = icon("layer-group"),
+      nav_panel(
+        title = "Condición de actividad",
+        icon = icon("people-arrows"),
+        mod_cond_act_ui("cond_act")
+      ),
+      nav_panel(
+        title = "Categoría ocupacional",
+        icon = icon("user-tie"),
+        mod_cat_ocup_ui("cat_ocup")
+      ),
+      nav_panel(
+        title = "Formal / Informal",
+        icon = icon("id-card"),
+        mod_formalidad_ui("formalidad")
       )
     ),
 
-    nav_panel(
-      title = "Condición de actividad",
-      icon = icon("people-arrows"),
-      mod_cond_act_ui("cond_act")
-    ),
+    panel_info,
 
-    nav_panel(
-      title = "Categoría ocupacional",
-      icon = icon("user-tie"),
-      mod_cat_ocup_ui("cat_ocup")
-    ),
-
-    nav_panel(
-      title = "Formal / Informal",
-      icon = icon("id-card"),
-      mod_formalidad_ui("formalidad")
-    ),
-
-    panel_info
+    ### Footer con créditos, fuente y feedback. Como nav_item al pie del
+    ### sidebar para que esté siempre visible sin estorbar la navegación.
+    nav_item(
+      div(
+        class = "sidebar-footer",
+        tags$p(
+          tags$span(class = "sidebar-footer-label", "Datos:"),
+          tags$br(),
+          "EPH-INDEC · hasta 2025 T4"
+        ),
+        tags$p(
+          tags$span(class = "sidebar-footer-label", "Feedback:"),
+          tags$br(),
+          tags$a(
+            "pablotiscornia@estacion-r.com",
+            href = "mailto:pablotiscornia@estacion-r.com?subject=Panel%20EPH",
+            class = "sidebar-footer-link"
+          )
+        ),
+        tags$p(
+          class = "sidebar-footer-meta",
+          "Hecho con R + Shiny por ",
+          tags$a("Estación R", href = "https://estacion-r.com",
+                 target = "_blank", class = "sidebar-footer-link"),
+          " · App en desarrollo"
+        )
+      )
+    )
   )
 )
 
@@ -194,29 +281,43 @@ ui <- page_fillable(
 
 server <- function(input, output, session) {
 
-  ### Alert de bienvenida al cargar la app.
-  shinyalert(
-    title = "Buenas!",
-    text = "Esta aplicación está en desarrollo. Si algo no está funcionando, se puede mejorar o incluso tenés una idea para agregar, podés escribirme a pablotiscornia@estacion-r.com",
-    size = "s",
-    closeOnEsc = TRUE,
-    closeOnClickOutside = FALSE,
-    html = FALSE,
-    type = "info",
-    showConfirmButton = TRUE,
-    showCancelButton = FALSE,
-    confirmButtonText = "JOYA",
-    confirmButtonCol = "#405BFF",
-    timer = 0,
-    imageUrl = "logos/isotipo_estacion_r.svg",
-    imageWidth = 80,
-    imageHeight = 80,
-    animation = TRUE
-  )
-
   mod_cond_act_server("cond_act")
   mod_cat_ocup_server("cat_ocup")
   mod_formalidad_server("formalidad")
+
+  ### Navegación desde las tarjetas del landing. Cada actionLink dispara
+  ### bslib::nav_select() para cambiar la pestaña activa del navset_pill_list
+  ### lateral. ignoreInit evita que se dispare al cargar la app.
+  observeEvent(input$go_cond_act, ignoreInit = TRUE, {
+    bslib::nav_select(id = "main_nav", selected = "Condición de actividad")
+  })
+  observeEvent(input$go_cat_ocup, ignoreInit = TRUE, {
+    bslib::nav_select(id = "main_nav", selected = "Categoría ocupacional")
+  })
+  observeEvent(input$go_formalidad, ignoreInit = TRUE, {
+    bslib::nav_select(id = "main_nav", selected = "Formal / Informal")
+  })
+
+  ### Tabla del Glosario (issue #31). Se renderiza una sola vez,
+  ### contenido estático.
+  output$metadata_glosario_table <- gt::render_gt({
+    gt::gt(glosario_vars) |>
+      gt::tab_options(
+        table.font.names = "Ubuntu, sans-serif",
+        table.font.size = "0.9em",
+        column_labels.font.weight = "600",
+        column_labels.background.color = "#F7F7F7"
+      ) |>
+      gt::cols_width(
+        Variable ~ gt::px(110),
+        Etiqueta ~ gt::px(180),
+        Descripción ~ gt::px(360)
+      ) |>
+      gt::tab_style(
+        style = gt::cell_text(font = "Ubuntu Mono, monospace", weight = "600"),
+        locations = gt::cells_body(columns = Variable)
+      )
+  })
 }
 
 

@@ -1,0 +1,2247 @@
+Encuesta
+Permanente
+de Hogares
+
+
+
+
+Clasificador Nacional de
+Ocupaciones1
+
+CNO - Versión 2001
+
+
+1Esta es una versión reducida elaborada en base al Clasificador Nacional de Ocupaciones-PROMAEO-.
+El Clasificador Nacional de Ocupaciones (CNO-2001) es un instrumento que ordena en forma sistemática
+las ocupaciones del total de la población activa.
+
+Estructura:
+Su estructura presenta cuatro dimensiones analíticas:
+
+
+      1° y 2° dígito      Carácter Ocupacional
+      3° dígito           Jerarquía Ocupacional
+      4° dígito           Tecnología Ocupacional
+      5° dígito           Calificación Ocupacional
+
+Categoría Ocupacional
+
+El carácter ocupacional, constituye la dimensión que permite la clasificación de las ocupaciones a partir
+del tipo de objeto o producto generado por el proceso de trabajo específico. En ese sentido, las
+ocupaciones son clasificadas a partir de su resultado específico, independientemente de la rama a la cual
+pertenece el establecimiento.
+Se detalla a continuación el listado de Carácter Ocupacional cuyos componentes son el primer y segundo
+dígitos:
+
+00    Funcionarios del poder ejecutivo nacional, provincial, municipal y/o departamental.
+01    Funcionarios del poder legislativo nacional, provincial, municipal y/o departamental.
+02    Funcionarios del poder judicial, federal, nacional, provincial, municipal y/o departamental.
+03    Directivos de organismos, empresas e instituciones estatales.
+04    Directivos de instituciones sociales.
+05    Directivos de pequeñas y microempresas.
+06    Directivos de medianas empresas privadas productoras de bienes y servicios.
+07    Directivos de grandes empresas privadas productoras de bienes y servicios.
+
+10    Ocupaciones de la gestión administrativa, planificación y control de gestión.
+11    Ocupaciones de la gestión jurídico-legal.
+
+20    Ocupaciones de la gestión presupuestaria, contable y financiera.
+
+30    Ocupaciones de la comercialización directa.
+31    Ocupaciones del corretaje comercial, venta domiciliaria, viajantes y promotores.
+32    Ocupaciones de la comercialización indirecta.
+33    Ocupaciones de la comercialización ambulante y callejera.
+34    Ocupaciones del transporte.
+35    Ocupaciones de las telecomunicaciones
+36    Ocupaciones del almacenaje de insumos, materias primas, mercaderías e instrumentos.
+40    Ocupaciones de la salud y sanidad.
+41    Ocupaciones de la educación.
+42    Ocupaciones de la investigación.
+43    Ocupaciones de la asesoria y la consultaría.
+44    Ocupaciones de la prevención de siniestros (naturales, humanos, productivos)
+      y atención del medio ambiente y ecología.
+45    Ocupaciones de la comunicación de masas.
+46    Ocupaciones de los servicios sociales, comunales, políticos, gremiales y religiosos.
+47    Ocupaciones de los servicios de vigilancia y seguridad civil.
+48    Ocupaciones de servicios policiales.
+49    Ocupaciones de las FF.AA. Gendarmería y Prefectura.
+
+50    Ocupaciones del arte.
+51    Ocupaciones del deporte.
+52    Ocupaciones de servicios de recreación.
+53    Ocupaciones de servicios gastronómicos.
+54    Ocupaciones de los servicios de alojamiento y turismo.
+55    Ocupaciones de los servicios domésticos.
+
+                                                                                            INDEC 2
+56    Ocupaciones de servicios de limpieza no domésticos.
+57    Ocupaciones del cuidado y la atención de personas.
+58    Ocupaciones de los servicios sociales varios.
+
+60    Ocupaciones de la producción agrícola.
+61    Ocupaciones de la producción ganadera.
+62    Ocupaciones de la producción forestal.
+63    Ocupaciones de la producción apícola, avícolas y de otras especies menores.
+64    Ocupaciones de la producción pesquera.
+65    Ocupaciones de la caza.
+
+70    Ocupaciones de la producción extractiva.
+71    Ocupaciones de la producción de energía, agua y gas.
+72    Ocupaciones de la construcción edilicia, de obras de infraestructura y de redes de
+      distribución de energía, agua potable, gas, telefonía y petróleo.
+
+80    Ocupaciones de la producción industrial y artesanal.
+81    Ocupaciones de la producción de software.
+82    Ocupaciones de la reparación de bienes de consumo.
+
+
+90    Ocupaciones de la instalación y mantenimiento de maquinaria, equipos y sistemas
+      de la producción de bienes.
+91    Ocupaciones del desarrollo tecnológico productivo.
+92    Ocupaciones de la instalación y mantenimiento de maquinaria, equipos y sistemas
+      de la prestación de servicios.
+
+
+Jerarquía ocupacional
+
+Permite distinguir la existencia de las formas jerárquico-organizativas de los procesos de trabajo. Esta
+dimensión reconoce cuatro categorías: dirección, cuenta propia, jefatura y ejecución directa. Su localización
+en el clasificador es en el tercer dígito. Presenta los siguientes valores:
+
+
+      Jerarquía                        Dígito            Valor
+      Dirección                        3ª dígito           0
+      Cuenta propia                    3ª dígito           1
+      Jefes                            3ª dígito           2
+      Trabajadores asalariados         3ª dígito           3
+
+
+Tecnología ocupacional
+
+La tecnología ocupacional se establece a partir de la existencia de formas técnico organizativas del
+trabajo. Esta dimensión permite identificar de manera adecuada el uso de algunas de las formas
+tecnológicas características de los diferentes modos en que se desarrolla la producción de bienes o
+servicios. Se localiza en el cuarto dígito del CNO-2001.
+
+Las categorías y valores para esta dimensión son las siguientes:
+
+      Tecnología                       Dígito            Valor
+      Sin operación de maquina         4ª                 1
+
+      Operación de maquinaria y        4ª                  2
+      equipos electromecánicos
+
+      Operación de sistemas y          4ª                  3
+      equipos informatizados
+
+
+                                                                                              INDEC 3
+Calificación ocupacional
+
+Permite medir la complejidad del proceso de trabajo desarrollado en el marco de cada ocupación. Se trata
+de una característica objetiva del proceso de trabajo que determina los requerimientos de
+conocimientos y habilidades de las personas que desempeñan las ocupaciones.
+Esta dimensión esta expresada en el quinto dígito. La misma reconoce cuatro niveles:
+
+
+      Calificación Ocupacional         Dígito        Valor
+      Profesionales                    5ª              1
+      Técnicos                         5ª              2
+      Operativo                        5ª              3
+      No calificado                    5ª              4
+
+A modo de ejemplo se presentan los siguientes casos:
+
+      Directivos de pequeñas y microempresas
+      (patrones de 1 a 5 personas)
+
+      05.0.0.1     Calificación profesional
+      05.0.0.2     Calificación técnica
+
+      Cuenta propia de la producción de software
+
+      81.1.3.1     Calificación profesional
+      81.1.3.2     Calificación técnica
+      81.1.3.3     Calificación operativa
+
+      Trabajadores sin operación de maquinarias de la gestión
+      administrativa, de planificación y control de gestión
+
+      10.3.1.1     Calificación profesional
+      10.3.1.2     Calificación técnica
+      10.3.1.3     Calificación operativa
+      10.3.1.4     No calificados
+
+      Operadores de maquinaria y/o equipos electromecánicos
+      de la producción industrial y artesanal
+
+      80.3.2.1     Calificación profesional
+      80.3.2.2     Calificación técnica
+      80.3.2.3     Calificación operativa
+      80.3.2.4     No calificados
+
+      Operadores de sistemas y/o equipos informatizados de
+      ocupaciones del desarrollo tecnológico productivo
+
+      91.3.3.1     Calificación profesional
+      91.3.3.2     Calificación técnica
+      91.3.3.3     Calificación operativa
+      91.3.3.4     No calificados
+
+
+
+
+                                                                                       INDEC 4
+                                       0.   OCUPACIONES DE DIRECCIÓN
+
+00         FUNCIONARIOS DEL PODER                     03         DIRECTIVOS DE ORGANISMOS,
+           EJECUTIVO NACIONAL,                                   EMPRESAS E INSTITUCIONES
+           PROVINCIAL, MUNICIPAL                                 ESTATALES
+           Y/O DEPARTAMENTAL
+                                                      03.0       Directivos    de      organismos,
+00.0       Funcionarios del poder ejecutivo                      empresas e instituciones estatales
+           nacional, provincial, municipal y/o
+           departamental                              03.0.0     Directivos    de      organismos,
+                                                                 empresas e instituciones estatales
+00.0.0     Funcionarios del poder ejecutivo
+           nacional, provincial, municipal y/o        03.0.0.1   Calificación profesional
+           departamental
+                                                      04         DIRECTIVOS DE INSTITUCIONES
+00.0.0.1    Calificación profesional                             SOCIALES (comunales, políticas,
+                                                                 gremiales, religiosas, derechos
+01         FUNCIONARIOS DEL PODER                                humanos, medio ambiente y otras
+            LEGISLATIVO NACIONAL,                                instituciones de bien público)
+            PROVINCIAL,
+            MUNICIPAL Y/O                             04.0       Directivos de instituciones sociales
+            DEPARTAMENTAL                                        (comunales, políticas, gremiales,
+                                                                 religiosas,    derechos humanos,
+01.0       Funcionarios del poder legislativo                    medio       ambiente     y     otras
+           nacional, provincial, municipal y/o                   instituciones de bien público)
+           departamental
+                                                      04.0.0     Directivos de instituciones sociales
+01.0.0     Funcionarios del poder legislativo                    (comunales, políticas, gremiales,
+           nacional, provincial, municipal y/o                   religiosas, derechos humanos,
+           departamental                                         medio      ambiente      y     otras
+                                                                 instituciones de bien público)
+01.0.0.1   Calificación profesional
+                                                      04.0.0.1   Calificación profesional
+02         FUNCIONARIOS   DEL    PODER
+           JUDICIAL FEDERAL/ NACIONAL/                05         DIRECTIVOS DE PEQUEÑAS Y
+           PROVINCIAL/  MUNICIPAL   Y/O                          MICROEMPRESAS (patrones de 1 a
+           DEPARTAMENTAL                                         5 personas)
+
+02.0       Funcionarios del poder judicial            05.0       Directivos  de    pequeñas     y
+           federal,   nacional,   provincial,                    microempresas (patrones de 1 a 5
+           municipal y/o departamental                           personas)
+
+02.0.0     Funcionarios del poder judicial            05.0.0     Directivos  de    pequeñas     y
+           federal,   nacional,   provincial,                    microempresas (patrones de 1 a 5
+           municipal y/o departamental                           personas)
+
+02.0.0.1   Calificación profesional                   05.0.0.1   Calificación profesional
+
+                                                      05.0.0.2   Calificación técnica
+
+
+
+
+                                                                                            INDEC 5
+06       DIRECTIVOS DE MEDIANAS           07       DIRECTIVOS DE GRANDES
+         EMPRESAS PRIVADAS                         EMPRESAS PRIVADAS
+         PRODUCTORAS DE BIENES                     PRODUCTORAS DE BIENES Y/O
+         Y/O SERVICIOS                             SERVICIOS (establecimientos
+         (establecimientos                         de más de 41 personas)
+         de 6 a 40 personas)
+                                          07.0     Directivos de grandes empresas
+06.0     Directivos de medianas                    privadas productoras de bienes
+         empresas privadas                         y/o servicios (establecimientos
+         productoras de bienes                     de más de 41 personas)
+         y/o servicios
+         (establecimientos                07.0.0   Directivos de grandes empresas
+         de 6 a 40 personas)                       privadas productoras de bienes
+                                                   y/o servicios (establecimientos
+06.0.0   Directivos de medianas                    de más de 41 personas)
+          empresas privadas productoras
+          de bienes y/o servicios         07.0.0.1 Calificación profesional
+         (establecimientos de
+         6 a 40 personas)
+
+06.0.0.1 Calificación profesional
+
+
+
+
+                                                                              INDEC 6
+       1. OCUPACIONES DE GESTIÓN ADMINISTRATIVA, DE PLANIFICACIÓN Y
+                   CONTROL DE GESTIÓN, JURÍDICO-LEGAL
+
+10       OCUPACIONES DE LA                        y control de gestión
+         GESTIÓN ADMINISTRATIVA,
+         PLANIFICACIÓN Y CONTROL         10.3.1   Trabajadores sin operación
+         DE GESTIÓN                               de maquinarias de la gestión
+                                                  administrativa, de
+10.1     Cuenta propia de la gestión              planificación
+         administrativa, planificación            y control de gestión
+         y control de gestión
+                                         10.3.1.1 Calificación profesional
+10.1.1   Cuenta propia sin operación
+         de maquinarias de la gestión    10.3.1.2 Calificación técnica
+         administrativa, planificación
+         y control de gestión            10.3.1.3 Calificación operativa
+
+10.1.1.1 Calificación profesional        10.3.1.4 No calificados
+
+10.1.1.2 Calificación técnica            10.3.2 Operadores de maquinaria
+                                                y/o     equipos
+10.1.1.3 Calificación operativa                 electromecánicos de las
+                                                ocupaciones de la
+10.1.2   Cuenta propia con operación            administración, planificación y
+         de maquinarias y equipos               control de gestión
+         electromecánicos de la
+         gestión administrativa,         10.3.2.1 Calificación profesional
+         planificación y
+         control de gestión              10.3.2.2 Calificación técnica
+
+10.1.2.1 Calificación profesional        10.3.2.3 Calificación operativa
+
+10.1.2.2 Calificación técnica            10.3.2.4 No calificados
+
+10.1.2.3 Calificación operativa          10.3.3   Operadores de sistemas y/o
+                                                  equipos informatizados de
+10.1.3 Cuenta propia con operación                las ocupaciones de la
+       de sistemas y/o equipos                    administración,
+       informatizados de la gestión               planificación y
+       administrativa, planificación              control de gestión
+       y control de gestión
+                                         10.3.3.1 Calificación profesional
+10.1.3.1 Calificación profesional
+                                         10.3.3.2 Calificación técnica
+10.1.3.2 Calificación técnica
+                                         10.3.3.3 Calificación operativa
+10.1.3.3 Calificación operativa
+                                         10.3.3.4 No calificados
+10.2.0   Jefes de gestión
+          administrativa,
+         de planificación y control de
+         gestión
+
+10.2.0.1 Calificación profesional
+
+10.2.0.2 Calificación técnica
+
+10.2.0.3 Calificación operativa
+
+
+10.3     Trabajadores de gestión
+         administrativa, de
+         planificación
+
+
+
+
+                                                                             INDEC 7
+11        OCUPACIONES DE LA GESTIÓN            11.3     Trabajadores de la gestión jurídico
+          JURÍDICO-LEGAL                                legal
+
+11.1     Cuenta propia de la gestión           11.3.1.1 Calificación profesional
+         jurídico-legal
+                                               11.3.1.2 Calificación técnica
+11.1.1   Cuenta propia sin operación de
+         maquinarias de la gestión             11.3.1.3 Calificación operativa
+         jurídico-legal
+                                               11.3.1.4 No calificados
+11.1.1.1 Calificación profesional
+                                               11.3.1   Trabajadores sin operación de
+11.1.1.2 Calificación técnica                           maquinarias de la gestión jurídico-
+                                                        legal
+11.1.1.3 Calificación operativa
+                                               11.3.1.1 Calificación profesional
+11.1.2   Cuenta propia con operación de
+         maquinarias y equipos                 11.3.1.2 Calificación técnica
+         electromecánicos de la gestión
+         jurídico-legal                        11.3.1.3 Calificación operativa
+
+11.1.2.1 Calificación profesional              11.3.1.4 No calificados
+
+11.1.2.2 Calificación técnica                  11.3.2   Operadores    de    maquinaria y
+                                                        equipos electromecánicos de las
+11.1.2.3 Calificación operativa                         ocupaciones jurídico-legales
+
+11.1.3   Cuenta propia con operación de        11.3.2.1 Calificación profesional
+         sistemas y/o equipos informatizados
+         de la gestión jurídico-legal          11.3.2.2 Calificación técnica
+
+11.1.3.1 Calificación profesional              11.3.2.3 Calificación operativa
+
+11.1.3.2 Calificación técnica                  11.3.2.4 No calificados
+
+11.1.3.3 Calificación operativa                11.3.3   Operadores de sistemas y/o equipos
+                                                        informatizados de las ocupaciones
+11.2.0   Jefes de la gestión jurídico-legal             jurídico-legales
+
+11.2.0.1 Calificación profesional              11.3.3.1 Calificación profesional
+
+11.2.0.2 Calificación técnica                  11.3.3.2 Calificación técnica
+
+11.2.0.3 Calificación operativa                11.3.3.3 Calificación operativa
+
+                                               11.3.3.4 No calificados
+
+
+
+
+                                                                                   INDEC 8
+ 2. OCUPACIONES DE GESTIÓN PRESUPUESTARIA, CONTABLE Y FINANCIERA
+20       OCUPACIONES DE LA GESTIÓN               20.2.0.2 Calificación técnica
+         PRESUPUESTARIA, CONTABLE Y
+         FINANCIERA                              20.2.0.3 Calificación operativa
+
+20.1     Cuenta propia de la gestión             20.2     Trabajadores de gestión
+         presupuestaria, contable y                       presupuestaria, contable y
+         financiera                                       financiera
+
+20.1.1   Cuenta propia sin operación de          20.3.1   Trabajadores sin operación de
+         maquinarias de a gestión                         maquinarias de la gestión
+         presupuestaria, contable y financiera            presupuestaria, contable y financiera
+
+20.1.1.1 Calificación profesional                20.3.1.1 Calificación profesional
+
+20.1.1.2 Calificación técnica                    20.3.1.2 Calificación técnica
+
+20.1.1.3 Calificación operativa                  20.3.1.3 Calificación operativa
+
+20.1.2   Cuenta propia con operación de          20.3.1.4 No calificados
+         maquinarias y equipos
+         electromecánicos de la gestión          20.3.2   Operadores de maquinaria y/o
+         presupuestaria, contable y financiera            equipos electromecánicos de la
+                                                          gestión presupuestaria, contable y
+20.1.2.1 Calificación profesional                         financiera
+
+20.1.2.2 Calificación técnica                    20.3.2.1 Calificación profesional
+
+20.1.2.3 Calificación operativa                  20.3.2.2 Calificación técnica
+
+20.1.3   Cuenta propia con operación de          20.3.2.3 Calificación operativa
+         Sistemas y/o equipos informatizados
+         de la gestión presupuestaria,           20.3.2.4 No calificados
+         contable y financiera
+                                                 20.3.3   Operadores de sistemas y/o equipos
+20.1.3.1 Calificación profesional                         informatizados de la gestión
+                                                          presupuestaria, contable y
+20.1.3.2 Calificación técnica                             financiera
+
+20.1.3.3 Calificación operativa                  20.3.3.1 Calificación profesional
+
+20.2.0   Jefes de gestión presupuestaria,        20.3.3.2 Calificación técnica
+         contable y financiera
+                                                 20.3.3.3 Calificación operativa
+20.2.0.1 Calificación profesional
+                                                 20.3.3.4 No calificados
+
+
+
+
+                                                                                       INDEC 9
+     3. OCUPACIONES DE COMERCIALIZACIÓN, TRANSPORTE, ALMACENAJE Y
+                         TELECOMUNICACIONES
+
+30       VENDEDORES DE LA
+         COMERCIALIZACIÓN DIRECTA                30.3.1    Vendedores y trabajadores sin
+         (tradicionales y telefónicos)                     operación de maquinarias de la
+                                                           comercialización directa
+30.1     Cuenta propia de la comercialización              (tradicionales y telefónicos)
+         directa (tradicionales y telefónicos)
+                                                 30.3.1.1 Calificación profesional
+30.1.1   Cuenta propia sin operación de
+         maquinarias de la comercialización      30.3.1.2 Calificación técnica
+         directa (tradicionales y telefónicos)
+                                                 30.3.1.3 Calificación operativa
+30.1.1.1 Calificación profesional
+                                                 30.3.1.4 No calificados
+30.1.1.2 Calificación técnica
+                                                 30.3.2    Operadores de maquinaria y/o
+30.1.1.3 Calificación operativa                            equipos electromecánicos de la
+                                                           comercialización directa
+30.1.2   Cuenta propia con operación de                    (tradicionales y telefónicos)
+          maquinarias y/o equipos
+          electromecánicos de la                 30.3.2.1 Calificación profesional
+          comercialización directa
+         (tradicionales y telefónicos)           30.3.2.2 Calificación técnica
+
+30.1.2.1 Calificación profesional                30.3.2.3 Calificación operativa
+
+30.1.2.2 Calificación técnica                    30.3.2.4 No calificados
+
+30.1.2.3 Calificación operativa                  30.3.3.   Operadores de sistemas y/o equipos
+                                                           informatizados de la
+30.1.3   Cuenta propia con operación de                    comercialización directa
+         sistemas y/o equipos informatizado                (tradicionales y telefónicos)
+         de la comercialización directa
+         (tradicionales y telefónicos)           30.3.3.1 Calificación profesional
+
+30.1.3.1 Calificación profesional                30.3.3.2 Calificación técnica
+
+30.1.3.2 Calificación técnica                    30.3.3.3 Calificación operativa
+
+30.1.3.3 Calificación operativa                  30.3.3.4 No calificados
+
+30.2.0   Jefes de la comercialización directa    31        VIAJANTES, CORREDORES
+         (tradicionales y telefónicos)                     COMERCIALES Y VENDEDORES
+                                                           DOMICILIARIOS
+30.2.0.1 Calificación profesional
+                                                 31.1      Cuenta propia viajantes, corredores
+30.2.0.2 Calificación técnica                              comerciales y vendedores
+                                                           domiciliarios y promotores
+30.2.0.3 Calificación operativa
+                                                 31.1.1    Cuenta propia sin operación de
+30.3     Vendedores y trabajadores de                      maquinarias viajantes, corredores
+         comercialización directa                          comerciales y vendedores
+         (tradicionales y telefónicos)                     domiciliarios y promotores
+
+
+
+
+                                                                                     INDEC 10
+31.1.1.1 Calificación profesional              31.3.2.1 Calificación profesional
+
+31.1.1.2 Calificación técnica                  31.3.2.2 Calificación técnica
+
+31.1.1.3 Calificación operativa                31.3.2.3 Calificación operativa
+
+31.1.2   Cuenta propia con operación de        31.3.3   Trabajadores      viajantes      con
+         maquinarias y/o equipos                        operación de sistemas y/o equipos
+         electromecánicos viajantes,                    informatizados,           corredores
+         corredores comerciales vendedores              comerciales      y       vendedores
+         domiciliarios                                  domiciliarios
+
+31.1.2.1 Calificación profesional              31.3.3.1 Calificación profesional
+
+31.1.2.2 Calificación técnica                  31.3.3.2 Calificación técnica
+
+31.1.2.3 Calificación operativa                31.3.3.3 Calificación operativa
+
+31.1.3   Cuenta propia viajantes con           32        OTRAS OCUPACIONES DE LA
+         operación de sistemas y/o equipos               COMERCIALIZACIÓN INDIRECTA
+         informatizados, corredores                     (demostradores, repositores y cadetes)
+         comerciales y vendedores
+         domiciliarios                         32.1      Cuenta propia de otras
+                                                         ocupaciones de la comercialización
+31.1.3.1 Calificación profesional                        indirecta
+
+31.1.3.2 Calificación técnica                  32.1.1   Cuenta propia sin operación de
+                                                        maquinarias de otras ocupaciones
+31.1.3.3 Calificación operativa                         de la comercialización indirecta
+
+31.2.0   Jefes de viajantes, corredores        32.1.1.1 Calificación profesional
+         comerciales y vendedores
+         domiciliarios                         32.1.1.2 Calificación técnica
+
+31.2.0.1 Calificación profesional              32.1.1.3 Calificación operativa
+
+31.2.0.2 Calificación técnica                  32.1.2   Cuenta propia con operación de
+                                                        maquinarias y/o equipos
+31.2.0.3 Calificación operativa                         electromecánicos de otras
+                                                        ocupaciones de la comercialización
+31.3     Trabajadores viajantes, corredores             indirecta
+         comerciales y vendedores
+         domiciliarios                         32.1.2.1 Calificación profesional
+
+31.3.1   Trabajadores sin operación de         32.1.2.2 Calificación técnica
+         maquinarias viajantes, corredores
+         comerciales y vendedores              32.1.2.3 Calificación operativa
+         domiciliarios
+                                               32.1.3   Cuenta propia con operación de
+31.3.1.1 Calificación profesional                       sistemas y/o equipos informatizados
+                                                        de otras ocupaciones de la
+31.3.1.2 Calificación técnica                           comercialización indirecta
+
+31.3.1.3 Calificación operativa                32.1.3.1 Calificación profesional
+
+31.3.1.4 No calificados                        32.1.3.2 Calificación técnica
+
+31.3.2   Trabajadores con operación de         32.1.3.3 Calificación operativa
+         maquinarias      y/o       equipos
+         electromecánicos         viajantes,
+         corredores      comerciales       y
+         vendedores domiciliarios
+
+
+
+
+                                                                                    INDEC 11
+32.2.0    Jefes de otras ocupaciones de la
+          comercialización                     33.1.1.4 No calificados
+
+32.2.0.1 Calificación profesional              33.1.2   Cuenta propia con operación de
+                                                        maquinarias y/o equipos
+32.2.0.2 Calificación técnica                           electromecánicos, vendedores
+                                                        ambulantes y callejeros
+32.2.0.3 Calificación operativa
+                                               33.1.2.1 Calificación profesional
+32.2     Trabajadores de otras ocupaciones
+         de la comercialización                33.1.2.2 Calificación técnica
+
+32.3.1 Trabajadores sin operación de           33.1.2.3 Calificación operativa
+       maquinarias de otras ocupaciones de
+       la comercialización                     33.1.2.4 No calificados
+
+32.3.1.1 Calificación profesional              33.1.3   Cuenta propia con operación de
+                                                        sistemas        y/o        equipos
+32.3.1.2 Calificación técnica                           informatizados,
+                                                        vendedores ambulantes y callejeros
+32.3.1.3 Calificación operativa
+                                               33.1.3.1 Calificación profesional
+32.3.1.4 No calificados
+                                               33.1.3.2 Calificación técnica
+32.3.2    Trabajadores con operación de
+          maquinarias y/o equipos              33.1.3.3 Calificación operativa
+          electromecánicos de otras
+          ocupaciones de la comercialización   33.1.3.4 No calificados
+          Indirecta
+                                               33.2.0   Jefes de los vendedores ambulantes
+32.3.2.1 Calificación profesional                       y callejeros
+
+32.3.2.2 Calificación técnica                  33.2.0.1 Calificación profesional
+
+32.3.2.3 Calificación operativa                33.2.0.2 Calificación técnica
+
+32.3.3    Trabajadores con operación de        33.2.0.3 Calificación operativa
+          sistemas y/o equipos
+          informatizados de otras              33.3      Trabajadores, vendedores
+          ocupaciones de la comercialización             ambulantes y callejeros
+          indirecta
+                                               33.3.1     Trabajadores sin operación de
+32.3.3.1 Calificación profesional                          maquinarias, vendedores
+                                                           ambulantes y callejeros
+32.3.3.2 Calificación técnica
+                                               33.3.1.1 Calificación profesional
+32.3.3.3 Calificación operativa
+                                               33.3.1.2 Calificación técnica
+33         VENDEDORES AMBULANTES
+           Y CALLEJEROS                        33.3.1.3 Calificación operativa
+
+33.1       Cuenta propia vendedores            33.3.1.4 No calificados
+           ambulantes y callejeros
+                                               34       OCUPACIONES DEL TRANSPORTE
+33.1.1    Cuenta propia sin operación de
+          maquinarias, vendedores              34.1      Cuenta propia del transporte
+          ambulantes y callejeros
+
+33.1.1.1 Calificación profesional
+
+33.1.1.2 Calificación técnica
+
+33.1.1.3 Calificación operativa
+
+
+
+
+                                                                                    INDEC 12
+34.1.1   Cuenta propia sin operación de        34.3.3.1 Calificación profesional
+         maquinarias del transporte
+                                               34.3.3.2 Calificación técnica
+34.1.1.1 Calificación profesional
+                                               34.3.3.3 Calificación operativa
+34.1.1.3 Calificación operativa
+                                               34.3.3.4 No calificados
+34.1.1.4 No calificados
+                                               35       OCUPACIONES DE LAS
+34.1.2   Cuenta propia con operación de                 TELECOMUNICACIONES
+         maquinaria y/o equipos
+         electromecánicos del transporte       35.1      Cuenta propia de las
+                                                         telecomunicaciones
+34.1.2.1 Calificación profesional
+                                               35.1.1    Cuenta propia sin operación de
+34.1.2.3 Calificación operativa                          maquinarias          de        las
+                                                         telecomunicaciones
+34.1.2.4 No calificados
+                                               35.1.1.1 Calificación profesional
+34.1.3   Cuenta propia con operación de
+         sistemas        y/o         equipos   35.1.1.2 Calificación técnica
+         informatizados del transporte
+                                               35.1.1.3 Calificación operativa
+34.1.3.1 Calificación profesional
+                                               35.1.2    Cuenta propia con operación de
+34.1.3.3 Calificación operativa                          maquinarias y/o equipos
+                                                         electromecánicos de las
+34.1.3.4 No calificados                                  telecomunicaciones
+
+34.2.0   Jefes de servicios de transporte      35.1.2.1 Calificación profesional
+
+34.2.0.1 Calificación profesional              35.1.2.2 Calificación técnica
+
+34.2.0.2 Calificación técnica                  35.1.2.3 Calificación operativa
+
+34.2.0.3 Calificación operativa                35.1.3    Cuenta propia con operación de
+                                                         sistemas        y/o       equipos
+34.3     Trabajadores del transporte                     informatizados       de        las
+                                                         telecomunicaciones
+34.3.1   Trabajadores sin operación de
+         maquinarias del transporte            35.1.3.1 Calificación profesional
+
+34.3.1.1 Calificación profesional              35.1.3.2 Calificación técnica
+
+34.3.1.2 Calificación técnica                  35.1.3.3 Calificación operativa
+
+34.3.1.3 Calificación operativa                35.2.0    Jefes de las telecomunicaciones
+
+34.3.1.4 No calificados                        35.2.0.1 Calificación profesional
+
+34.3.2   Conductores y operadores de           35.2.0.2 Calificación técnica
+         maquinaria       y/o       equipos
+         electromecánicos del transporte       35.2.0.3 Calificación operativa
+
+34.3.2.1 Calificación profesional              35.3      Trabajadores de las
+                                                         telecomunicaciones
+34.3.2.2 Calificación técnica
+                                               35.3.1   Trabajadores sin operación de
+34.3.2.3 Calificación operativa                         maquinarias          de            las
+                                                        telecomunicaciones
+34.3.2.4 No calificados
+
+34.3.3   Operadores de sistemas y/o
+         equipos informatizados o paneles
+         de control del transporte
+
+
+
+                                                                                   INDEC 13
+35.3.1.1 Calificación profesional             36.1.3   Cuenta propia con operación de
+                                                       sistemas y/o equipos informatizados
+35.3.1.2 Calificación técnica                          del almacenaje
+
+35.3.1.3 Calificación operativa               36.1.3.1 Calificación profesional
+
+35.3.1.4 No calificados                       36.1.3.2 Calificación técnica
+
+35.3.2   Operadores de maquinarias y/o        36.1.3.3 Calificación operativa
+         equipos electromecánicos de las
+         telecomunicaciones                   36.1.3.4 No calificados
+
+35.3.2.1 Calificación profesional             36.2.0   Jefes del almacenaje
+
+35.3.2.2 Calificación técnica                 36.2.0.1 Calificación profesional
+
+35.3.2.3 Calificación operativa               36.2.0.2 Calificación técnica
+
+35.3.2.4 No calificados                       36.2.0.3 Calificación operativa
+
+35.3.3   Operadores de equipos y/o sistemas   36.3     Trabajadores del almacenaje
+         Informatizados                  de
+         telecomunicaciones                   36.3.1   Trabajadores sin operación de
+                                                       maquinarias del almacenaje
+35.3.3.1 Calificación profesional
+                                              36.3.1.1 Calificación profesional
+35.3.3.2 Calificación técnica
+                                              36.3.1.2 Calificación técnica
+35.3.3.3 Calificación operativa
+                                              36.3.1.3 Calificación operativa
+35.3.3.4 No calificados
+                                              36.3.1.4 No calificados
+36       OCUPACIONES DEL ALMACENAJE
+         DE INSUMOS, MATERIAS PRIMAS,         36.3.2   Operadores de maquinaria y/o
+         MERCADERÍAS E INSTRUMENTOS                    equipos    electromecánicos     del
+                                                       almacenaje
+36.1     Cuenta propia del almacenaje
+                                              36.3.2.1 Calificación profesional
+36.1.1   Cuenta propia sin operación de
+         maquinarias del almacenaje           36.3.2.2 Calificación técnica
+
+36.1.1.1 Calificación profesional             36.3.2.3 Calificación operativa
+
+36.1.1.2 Calificación técnica                 36.3.2.4 No calificados
+
+36.1.1.3 Calificación operativa               36.3.3   Operadores de sistemas y/o
+                                                       equipos     informatizados      del
+36.1.1.4 No calificados                                almacenaje
+
+36.1.2   Cuenta propia con operación de       36.3.3.1 Calificación profesional
+         maquinarias       y/o      equipos
+         electromecánicos del almacenaje      36.3.3.2 Calificación técnica
+
+36.1.2.1 Calificación profesional             36.3.3.3 Calificación operativa
+
+36.1.2.2 Calificación técnica                 36.3.3.4 No calificados
+
+36.1.2.3 Calificación operativa
+
+36.1.2.4 No calificados
+
+
+
+
+                                                                                  INDEC 14
+                 4. OCUPACIONES DE SERVICIOS SOCIALES BÁSICOS
+
+40       OCUPACIONES DE LA SALUD Y             40.3.2   Operadores de maquinarias y/o
+         SANIDAD                                        equipos electromecánicos de la
+                                                        salud y sanidad
+40.1     Cuenta propia de la salud y sanidad
+                                               40.3.2.1 Calificación profesional
+40.1.1   Cuenta propia sin operación de
+         maquinarias de la salud y sanidad     40.3.2.2 Calificación técnica
+
+40.1.1.1 Calificación profesional              40.3.2.3 Calificación operativa
+
+40.1.1.2 Calificación técnica                  40.3.2.4 No calificados
+
+40.1.1.3 Calificación operativa                40.3.3   Operadores de sistemas y/o equipos
+                                                        informatizados de la salud y sanidad
+40.1.2   Cuenta propia con operación de
+         maquinarias y/o equipos               40.3.3.1 Calificación profesional
+         electromecánicos de la salud y
+         sanidad                               40.3.3.2 Calificación técnica
+
+40.1.2.1 Calificación profesional              40.3.3.3 Calificación operativa
+
+40.1.2.2 Calificación técnica                  40.3.3.4 No calificados
+
+40.1.2.3 Calificación operativa                41       OCUPACIONES DE LA EDUCACIÓN
+
+40.1.3   Cuenta propia con operación de        41.1     Cuenta propia de la educación
+         sistemas y/o equipos informatizados
+          de la salud y sanidad                41.1.1   Cuenta propia sin operación de
+                                                        maquinaria de la educación
+40.1.3.1 Calificación profesional
+                                               41.1.1.1 Calificación profesional
+40.1.3.2 Calificación técnica
+                                               41.1.1.2 Calificación técnica
+40.1.3.3 Calificación operativa
+                                               41.1.1.3 Calificación operativa
+40.2.0   Jefes de la salud y sanidad
+                                               41.1.2   Cuenta propia con operación de
+40.2.0.1 Calificación profesional                       maquinarias y/o equipos
+                                                        electromecánicos de la educación
+40.2.0.2 Calificación técnica
+                                               41.1.2.1 Calificación profesional
+40.2.0.3 Calificación operativa
+                                               41.1.2.2 Calificación técnica
+40.3     Trabajadores de la salud y sanidad
+                                               41.1.2.3 Calificación operativa
+40.3.1   Trabajadores sin operación de
+         maquinarias de la salud y sanidad     41.1.3   Cuenta propia con operación de
+                                                        sistemas        y/o         equipos
+40.3.1.1 Calificación profesional                       informatizados de la educación
+
+40.3.1.2 Calificación técnica                  41.1.3.1 Calificación profesional
+
+40.3.1.3 Calificación operativa                41.1.3.2 Calificación técnica
+
+40.3.1.4 No calificados                        41.1.3.3 Calificación operativa
+
+
+
+
+                                                                                   INDEC 15
+41.2.0   Jefes de la educación
+                                                    42.1.2   Cuenta propia con operación de
+41.2.0.1 Calificación profesional                            maquinarias      y/o        equipos
+                                                             electromecánicos       de         la
+41.2.0.2 Calificación técnica                                investigación     científica       y
+                                                             tecnológica
+41.2.0.3 Calificación operativa
+                                                    42.1.2.1 Calificación profesional
+41.3     Trabajadores de la educación
+                                                    42.1.2.2 Calificación técnica
+41.3.1   Trabajadores sin operación de
+         maquinarias de la educación                42.1.2.3 Calificación operativa
+
+41.3.1.1 Calificación profesional                   42.1.3   Cuenta propia con operación de
+                                                             sistemas y/o equipos informatizados
+41.3.1.2 Calificación técnica                                de la investigación científica y
+                                                             tecnológica
+41.3.1.3 Calificación operativa
+                                                    42.1.3.1 Calificación profesional
+41.3.1.4 No calificados
+                                                    42.1.3.2 Calificación técnica
+41.3.2   Operadores de maquinaria y/o
+         equipos electromecánicos de la             42.1.3.3 Calificación operativa
+         educación
+                                                    42.2.0    Jefes de la investigación científica y
+41.3.2.1 Calificación profesional                             tecnológica
+
+41.3.2.2 Calificación técnica                       42.2.0.1 Calificación profesional
+
+41.3.2.3 Calificación operativa                     42.2.0.2 Calificación técnica
+
+41.3.2.4 No calificados                             42.2.0.3 Calificación operativa
+
+41.3.3   Operadores de sistemas y/o equipos
+         informatizados de la educación             42.3     Trabajadores de la investigación
+                                                             científica y tecnológica
+41.3.3.1 Calificación profesional
+                                                    42.3.1   Trabajadores sin operación de
+41.3.3.2 Calificación técnica                                maquinarias de la investigación
+                                                             científica y tecnológica
+41.3.3.3 Calificación operativa
+                                                    42.3.1.1 Calificación profesional
+41.3.3.4 No calificados
+                                                    42.3.1.2 Calificación técnica
+42       OCUPACIONES                 DE        LA
+         INVESTIGACIÓN            CIENTÍFICA    Y   42.3.1.3 Calificación operativa
+         TECNOLÓGICA
+                                                    42.3.1.4 No calificados
+42.1     Cuenta propia de la investigación
+         científica y tecnológica                   42.3.2   Operadores de maquinaria y/o
+                                                             equipos electromecánicos de la
+42.1.1   Cuenta propia sin operación de                      investigación    científica  y
+         maquinarias de la investigación                     tecnológica
+         científica y tecnológica
+                                                    42.3.2.1 Calificación profesional
+42.1.1.1 Calificación profesional
+                                                    42.3.2.2 Calificación técnica
+42.1.1.2 Calificación técnica
+                                                    42.3.2.3 Calificación operativa
+42.1.1.3 Calificación operativa
+                                                    42.3.2.4 No calificados
+
+
+
+
+                                                                                         INDEC 16
+42.3.3   Operadores de sistemas y/o equipos             maquinarias      de      la   asesoría   y
+         informatizados de la investigación             consultoría
+         científica y tecnológica
+                                               43.3.1.1 Calificación profesional
+42.3.3.1 Calificación profesional
+                                               43.3.1.2 Calificación técnica
+42.3.3.2 Calificación técnica
+                                               43.3.1.3 Calificación operativa
+42.3.3.3 Calificación operativa
+                                               43.3.2   Operadores de maquinarias y/o
+42.3.3.4 No calificados                                 equipos electromecánicos de la
+                                                        asesoría y consultoría
+43       OCUPACIONES DE LA ASESORÍA Y
+         CONSULTORÍA                           43.3.2.1 Calificación profesional
+
+43.1     Cuenta propia de la asesoría y        43.3.2.2 Calificación técnica
+         consultoría
+                                               43.3.2.3 Calificación operativa
+43.1.1   Cuenta propia sin operación de
+         maquinarias de la asesoría y          43.3.2.4 No calificados
+         consultoría
+                                               43.3.3   Operadores de sistemas y/o equipos
+43.1.1.1 Calificación profesional                       Informatizados de la asesoría y
+                                                        consultoría
+43.1.1.2 Calificación técnica
+                                               43.3.3.1 Calificación profesional
+43.1.1.3 Calificación operativa
+                                               43.3.3.2 Calificación técnica
+43.1.2   Cuenta propia con operación de
+          maquinarias y/o equipos              43.3.3.3 Calificación operativa
+          electromecánicos de la asesoría y
+         consultoría                           43.3.3.4 No calificados
+
+43.1.2.1 Calificación profesional              44       OCUPACIONES           DE        LA
+                                                        PREVENCIÓN      DE     SINIESTROS
+43.1.2.2 Calificación técnica                           (naturales, humanos, productivos) Y
+                                                        ATENCIÓN DEL MEDIO AMBIENTE Y
+43.1.2.3 Calificación operativa                         ECOLOGÍA
+
+43.1.3   Cuenta propia con operación de        44.1     Cuenta propia de la prevención de
+         Sistemas y/o equipos informatizados            siniestros   (naturales,  humanos,
+         de la asesoría y consultoría                   productivos) y atención del medio
+                                                        ambiente y ecología
+43.1.3.1 Calificación profesional
+                                               44.1.1   Cuenta propia sin operación de
+43.1.3.2 Calificación técnica                           maquinarias de la prevención de
+                                                        siniestros   (naturales,  humanos,
+43.1.3.3 Calificación operativa                         productivos) y atención del medio
+                                                        ambiente y ecología
+43.2.0   Jefes de la asesoría y consultoría
+                                               44.1.1.1 Calificación profesional
+43.2.0.1 Calificación profesional
+                                               44.1.1.2 Calificación técnica
+43.2.0.2 Calificación técnica
+                                               44.1.1.3 Calificación operativa
+43.2.0.3 Calificación operativa
+                                               44.1.2   Cuenta propia con operación de
+43.3     Trabajadores de la asesoría y                  maquinarias y/o equipos
+         consultoría                                    electromecánicos de la prevención
+                                                        de siniestros (naturales, humanos,
+43.3.1   Trabajadores sin operación de                  productivos) y atención del medio
+                                                        ambiente y ecología
+
+
+                                                                                        INDEC 17
+44.1.2.1 Calificación profesional               44.3.2.3 Calificación operativa
+
+44.1.2.2 Calificación técnica                   44.3.2.4 No calificados
+
+44.1.2.3 Calificación operativa                 44.3.3   Operadores de sistemas y/o
+                                                         equipos    informatizados   de    la
+44.1.3   Cuenta propia con operación de                  prevención de siniestros (naturales,
+         sistemas y/o equipos                            humanos, productivos) y atención del
+         informatizados de la prevención                 medio ambiente y ecología
+         de siniestros (naturales, humanos,
+         productivos) y atención del medio      44.3.3.1 Calificación profesional
+         ambiente y ecología
+                                                44.3.3.2 Calificación técnica
+44.1.3.1 Calificación profesional
+                                                44.3.3.3 Calificación operativa
+44.1.3.2 Calificación técnica
+                                                44.3.3.4 No calificados
+44.1.3.3 Calificación operativa
+                                                45       OCUPACIONES DE LA
+44.2.0   Jefes de la prevención de siniestros            COMUNICACIÓN DE MASAS (TV,
+         (naturales, humanos, productivos) y             radio, TV cable)
+         atención del medio ambiente y
+         ecología                               45.1     Cuenta propia de la comunicación de
+                                                         masas (TV, radio, TV cable)
+44.2.0.1 Calificación profesional
+                                                45.1.1   Cuenta propia sin operación de
+44.2.0.2 Calificación técnica                            maquinarias de la comunicación de
+                                                         masas (TV, radio, TV cable)
+44.2.0.3 Calificación operativa
+                                                45.1.1.1 Calificación profesional
+44.3     Trabajadores de la prevención de
+         siniestros   (naturales,    humanos,   45.1.1.2 Calificación técnica
+         productivos) y atención del medio
+         ambiente y ecología                    45.1.1.3 Calificación operativa
+
+44.3.1   Trabajadores sin operación de          45.1.2   Cuenta propia con operación de
+         maquinarias de la prevención de                 maquinarias        y/o         equipos
+         siniestros   (naturales,    humanos,            electromecánicos de la comunicación
+         productivos) y atención del medio               de masas (TV, radio, TV cable)
+         ambiente y ecología
+                                                45.1.2.1 Calificación profesional
+44.3.1.1 Calificación profesional
+                                                45.1.2.2 Calificación técnica
+44.3.1.2 Calificación técnica
+                                                45.1.2.3 Calificación operativa
+44.3.1.3 Calificación operativa
+                                                45.1.3   Cuenta propia con operación de
+44.3.1.4 No calificados                                  sistemas y/o equipos
+                                                         informatizados de la comunicación
+44.3.2   Operadores de maquinarias y/o                   de masas (TV, radio, TV cable)
+         equipos electromecánicos de la
+         prevención de siniestros (naturales,   45.1.3.1 Calificación profesional
+         humanos, productivos) y atención del
+         medio ambiente y ecología              45.1.3.2 Calificación técnica
+
+44.3.2.1 Calificación profesional               45.1.3.3 Calificación operativa
+
+44.3.2.2 Calificación técnica                   45.2.0   Jefes de la comunicación de masas
+                                                         (TV, radio, TV cable)
+
+
+                                                                                    INDEC 18
+45.2.0.1 Calificación profesional                   46.1.1.3 Calificación operativa
+
+45.2.0.2 Calificación técnica                       46.1.2   Cuenta propia con operación de
+                                                             maquinarias y/o equipos
+45.2.0.3 Calificación operativa                              electromecánicos de los servicios
+                                                             sociales, comunales, políticos,
+45.3      Trabajadores de la comunicación de                 gremiales y religiosos
+           masas (TV, radio, TV cable)
+                                                    46.1.2.1 Calificación profesional
+45.3.1    Trabajadores sin operación de
+          maquinarias de la comunicación de         46.1.2.2 Calificación técnica
+          masas (TV, radio, TV cable)
+                                                    46.1.2.3 Calificación operativa
+45.3.1.1 Calificación profesional
+                                                    46.1.3   Cuenta propia con operación de
+45.3.1.2 Calificación técnica                                sistemas y/o equipos informatizados
+                                                             de los servicios sociales, comunales,
+45.3.1.3 Calificación operativa                              políticos, gremiales y religiosos
+
+45.3.1.4 No calificados                             46.1.3.1 Calificación profesional
+
+45.3.2    Operadores de maquinaria y/o equipos      46.1.3.2 Calificación técnica
+          electromecánicos de la comunicación
+          de masas (TV, radio, TV cable)            46.1.3.3 Calificación operativa
+
+45.3.2.1 Calificación profesional                   46.2.0   Jefes de los servicios sociales,
+                                                             comunales, políticos, gremiales y
+45.3.2.2 Calificación técnica                                 religiosos
+
+45.3.2.3 Calificación operativa                     46.2.0.1 Calificación profesional
+
+45.3.2.4 No calificados                             46.2.0.2 Calificación técnica
+
+45.3.3    Operadores de sistemas y/o equipos        46.2.0.3 Calificación operativa
+          informatizados de la comunicación de
+          masas                                     46.3     Trabajadores de los servicios
+                                                             sociales, comunales, políticos,
+45.3.3.1 Calificación profesional                            gremiales y religiosos
+
+45.3.3.2 Calificación técnica                       46.3.1   Trabajadores sin operación de
+                                                              maquinarias de los servicios sociales,
+45.3.3.3 Calificación operativa                              comunales, políticos, gremiales y
+                                                             religiosos
+45.3.3.4 No calificados
+                                                    46.3.1.1 Calificación profesional
+46       OCUPACIONES DE LOS SERVICIOS
+         SOCIALES, COMUNALES, POLÍTICOS,            46.3.1.2 Calificación técnica
+         GREMIALES Y RELIGIOSOS
+                                                    46.3.1.3 Calificación operativa
+46.1     Cuenta propia de los servicios sociales,
+         comunales, políticos, gremiales y          46.3.1.4 No calificados
+         religiosos
+                                                    46.3.2   Operadores de maquinarias y/o
+46.1.1 Cuenta propia sin operación de                        equipos electromecánicos de los
+       maquinarias de los servicios sociales,                servicios     sociales,      comunales,
+       comunales, políticos, gremiales y                     políticos, gremiales y religiosos
+       religiosos
+                                                    46.3.2.1 Calificación profesional
+46.1.1.1 Calificación profesional
+                                                    46.3.2.2 Calificación técnica
+46.1.1.2 Calificación técnica
+                                                    46.3.2.3 Calificación operativa
+
+
+                                                                                        INDEC 19
+46.3.2.4 No calificados
+                                                  47.2.0.2 Calificación técnica
+46.3.3   Operadores de sistemas y/o equipos
+         informatizados     de  los servicios     47.2.0.3 Calificación operativa
+         sociales,     comunales,   políticos,
+         gremiales y religiosos                   47.3 Trabajadores de los servicios           de
+                                                       vigilancia y seguridad civil
+46.3.3.1 Calificación profesional
+                                                  47.3.1   Trabajadores     sin   operación    de
+46.3.3.2 Calificación técnica                              maquinarias de los servicios        de
+                                                           vigilancia y seguridad civil
+46.3.3.3 Calificación operativa
+                                                  47.3.1.1 Calificación profesional
+46.3.3.4 No calificados
+                                                  47.3.1.2 Calificación técnica
+47       OCUPACIONES DE LOS SERVICIOS
+         DE VIGILANCIA Y SEGURIDAD CIVIL          47.3.1.3 Calificación operativa
+                                                  47.3.1.4 No calificados
+47.1     Cuenta propia de los servicios de
+         vigilancia y seguridad civil             47.3.2   Operadores de maquinaria y/o equipos
+                                                           electromecánicos de lo servicios de
+47.1.1   Cuenta propia sin operación de                    vigilancia y seguridad civil
+         maquinarias de los servicios de
+         vigilancia y seguridad civil             47.3.2.1 Calificación profesional
+
+47.1.1.1 Calificación profesional                 47.3.2.2 Calificación técnica
+
+47.1.1.2 Calificación técnica                     47.3.2.3 Calificación operativa
+
+47.1.1.3 Calificación operativa                   47.3.2.4 No calificados
+
+47.1.2    Cuenta propia con operación de          47.3.3   operadores de sistemas y/o equipos
+          maquinarias y/o equipos                          informáticos de los servicios de
+          electromecánicos de los servicios de             vigilancia y seguridad civil
+          vigilancia y seguridad civil
+                                                  47.3.3.1 Calificación profesional
+47.1.2.1 Calificación profesional
+                                                  47.3.3.2 Calificación técnica
+47.1.2.2 Calificación técnica
+                                                  47.3.3.3 Calificación operativa
+47.1.2.3 Calificación operativa
+                                                  47.3.3.4 No calificados
+47.1.3    Cuenta propia con operación de
+          sistemas y/o equipos informatizados     48       OCUPACIONES DE LS SERVICIOS
+          de los servicios de vigilancia y                 POLICIALES (federales y provinciales)
+          seguridad civil
+                                                  48.3     Trabajadores de los servicios
+47.1.3.1 Calificación profesional                          policiales
+
+47.1.3.2 Calificación técnica                     48.3.1   Trabajadores    sin   operación      de
+                                                           maquinarias de los servicios policiales
+47.1.3.3 Calificación operativa
+                                                  48.3.1.1 Calificación profesional
+47.2.0   Jefes de los servicios de vigilancia y
+         seguridad civil                          48.3.1.2 Calificación técnica
+
+47.2.0.1 Calificación profesional                 48.3.1.3 Calificación operativa
+
+                                                  48.3.1.4 No calificados
+
+
+                                                                                      INDEC 20
+                                                49.3.1.1 Calificación profesional
+48.3.2   Operadores de maquinaria y/o equipos
+         electromecánicos de los servicios de   49.3.1.2 Calificación técnica
+         policía
+                                                49.3.1.3 Calificación operativa
+48.3.2.1 Calificación profesional
+                                                49.3.1.4 No calificados
+48.3.2.2 Calificación técnica
+                                                49.3.2   Operadores de maquinarias        y/o
+48.3.2.3 Calificación operativa                          equipos electromecánicos de      las
+                                                         FFAA, Gendarmería y Prefectura
+48.3.2.4 No calificados
+                                                49.3.2.1 Calificación profesional
+48.3.3   Operadores de sistemas y/o equipos
+         informáticos de los servicios de       49.3.2.2 Calificación técnica
+         policía
+                                                49.3.2.3 Calificación operativa
+48.3.3.1 Calificación profesional
+                                                49.3.2.4 No calificados
+48.3.3.2 Calificación técnica
+                                                49.3.3   Operadores de sistemas y/o equipos
+48.3.3.3 Calificación operativa                          informatizados    de     las FFAA,
+                                                         Gendarmería y Prefectura
+48.3.3.4 No calificados
+                                                49.3.3.1 Calificación profesional
+49       FFAA, GENDARMERÍA Y PREFECTURA
+                                                49.3.3.2 Calificación técnica
+49.3     Trabajadores de las FFAA,
+         Gendarmería y Prefectura               49.3.3.3 Calificación operativa
+49.3.1   Trabajadores   sin    operación   de   49.3.3.4 No calificados
+         maquinarias     de     las     FFAA,
+         Gendarmería y Prefectura
+
+
+
+
+                                                                                    INDEC 21
+                            5. OCUPACIONES DE SERVICIOS VARIOS
+                                                50.3.2.1 Calificación profesional
+50       OCUPACIONES DEL ARTE
+                                                50.3.2.2 Calificación técnica
+50.1     Cuenta propia del arte
+                                                50.3.2.3 Calificación operativa
+50.1.1   Cuenta propia sin operación de
+         maquinarias del arte                   50.3.2.4 No calificados
+
+50.1.1.1 Calificación profesional               50.3.3   Operadores de sistemas y/o equipos
+                                                         informatizados del arte
+50.1.1.2 Calificación técnica
+                                                50.3.3.1 Calificación profesional
+50.1.1.3 Calificación operativa
+                                                50.3.3.2 Calificación técnica
+50.1.2   Cuenta propia con operación de
+         maquinarias y/o equipos                50.3.3.3 Calificación operativa
+         electromecánicos del arte
+                                                50.3.3.4 No calificados
+50.1.2.1 Calificación profesional
+                                                51       OCUPACIONES DEL DEPORTE
+50.1.2.2 Calificación técnica
+                                                51.1     Cuenta propia del deporte
+50.1.2.3 Calificación operativa
+                                                51.1.1   Cuenta propia sin operación de
+50.1.3   Cuenta propia con operación de                  maquinarias del deporte
+         sistemas y/o equipos informatizados
+         del arte                               51.1.1.1 Calificación profesional
+
+50.1.3.1 Calificación profesional               51.1.1.2 Calificación técnica
+
+50.1.3.2 Calificación técnica                   51.1.1.3 Calificación operativa
+
+50.1.3.3 Calificación operativa                 51.1.2   Cuenta propia con operación de
+                                                         maquinarias y/o equipos
+50.2.0   Jefes del arte                                  electromecánicos del deporte
+
+50.2.0.1 Calificación profesional               51.1.2.1 Calificación profesional
+
+50.2.0.2 Calificación técnica                   51.1.2.2 Calificación técnica
+
+50.2.0.3 Calificación operativa                 51.1.2.3 Calificación operativa
+
+50.3     Trabajadores del arte                  51.1.3    Cuenta propia con operación de
+                                                          sistemas y/o equipos informatizados
+50.3.1   Trabajadores sin operación de                    del deporte
+         maquinarias del arte
+                                                51.1.3.1 Calificación profesional
+50.3.1.1 Calificación profesional
+                                                51.1.3.2 Calificación técnica
+50.3.1.2 Calificación técnica
+                                                51.1.3.3 Calificación operativa
+50.3.1.3 Calificación operativa
+                                                51.2.0   Jefes del deporte
+50.3.1.4 No calificados
+                                                51.2.0.1Calificación profesional
+50.3.2   Operadores de maquinaria y/o equipos
+         electromecánicos del arte
+
+
+
+
+                                                                                    INDEC 22
+                                                  52.1.2.2 Calificación técnica
+51.2.0.2 Calificación técnica
+                                                  52.1.2.3 Calificación operativa
+51.2.0.3 Calificación operativa
+                                                  52.1.3   Cuenta propia con operación de
+51.3     Trabajadores del deporte                          sistemas y/o equipos informatizados
+                                                           de la recreación
+51.3.1   Trabajadores    sin   operación     de
+         maquinarias del deporte                  52.1.3.1 Calificación profesional
+
+51.3.1.1 Calificación profesional                 52.1.3.2 Calificación técnica
+
+51.3.1.2 Calificación técnica                     52.1.3.3 Calificación operativa
+
+51.3.1.3 Calificación operativa                   52.2.0   Jefes de la recreación
+
+51.3.1.4 No calificados                           52.2.0.1 Calificación profesional
+
+51.3.2   Operadores de maquinaria y/o equipos     52.2.0.2 Calificación técnica
+         electromecánicos del deporte
+                                                  52.2.0.3 Calificación operativa
+51.3.2.1 Calificación profesional
+                                                  52.3     Trabajadores de la recreación
+51.3.2.2 Calificación técnica
+                                                  52.3.1   Trabajadores    sin    operación   de
+51.3.2.3 Calificación operativa                            maquinarias de la recreación
+
+51.3.2.4 No calificados                           52.3.1.1 Calificación profesional
+
+51.3.3   Operadores de sistemas y/o equipos       52.3.1.2 Calificación técnica
+         informatizados del deporte
+                                                  52.3.1.3 Calificación operativa
+51.3.3.1 Calificación profesional
+                                                  52.3.1.4 No calificados
+51.3.3.2 Calificación técnica
+                                                  52.3.2   Operadores de maquinaria y/o equipos
+51.3.3.3 Calificación operativa                            electromecánicos de la recreación
+
+51.3.3.4 No calificados                           52.3.2.1 Calificación profesional
+
+52       OCUPACIONES DE SERVICIOS DE              52.3.2.2 Calificación técnica
+         RECREACIÓN
+                                                  52.3.2.3 Calificación operativa
+52.1     Cuenta propia de la recreación
+                                                  52.3.2.4 No calificados
+52.1.1   Cuenta propia sin operación de
+         maquinarias de la recreación             52.3.3   Operadores de sistemas y/o equipos
+                                                           informatizados de la recreación
+52.1.1.1 Calificación profesional
+                                                  52.3.3.1 Calificación profesional
+52.1.1.2 Calificación técnica
+                                                  52.3.3.2 Calificación técnica
+52.1.1.3 Calificación operativa
+                                                  52.3.3.3 Calificación operativa
+52.1.2   Cuenta propia con operación de
+         maquinarias y/o equipos                  52.3.3.4 No calificados
+         electromecánicos de la recreación
+
+52.1.2.1 Calificación profesional
+
+
+
+
+                                                                                      INDEC 23
+53       OCUPACIONES DE SERVICIOS              53.3.2   Operadores de maquinarias           y/o
+         GASTRONÓMICOS                                  equipos      electromecánicos       de
+                                                        servicios gastronómicos
+53.1     Cuenta propia de servicios
+         gastronómicos                         53.3.2.1 Calificación profesional
+
+53.1.1   Cuenta propia sin operación de        53.3.2.2 Calificación técnica
+         maquinarias de servicios
+         gastronómicos                         53.3.2.3 Calificación operativa
+
+53.1.1.1 Calificación profesional              53.3.2.4 No calificados
+
+53.1.1.2 Calificación técnica                  53.3.3   Operadores de sistemas y/o equipos
+                                                        informatizados     de     servicios
+53.1.1.3 Calificación operativa                         gastronómicos
+
+53.1.2   Cuenta propia con operación de        53.3.3.1 Calificación profesional
+         maquinarias y/o equipos
+         electromecánicos de servicios         53.3.3.2 Calificación técnica
+         gastronómicos
+                                               53.3.3.3 Calificación operativa
+53.1.2.1 Calificación profesional
+                                               53.3.3.4 No calificados
+53.1.2.2 Calificación técnica
+                                               54       OCUPACIONES DE LOS SERVICIOS
+53.1.2.3 Calificación operativa                         DE ALOJAMIENTO Y TURISMO
+
+53.1.3   Cuenta propia con operación de        54.1     Cuenta propia de los servicios de
+         sistemas y/o equipos informatizados            alojamiento y turismo
+         de servicios gastronómicos
+                                               54.1.1   Cuenta propia sin operación de
+53.1.3.1 Calificación profesional                       maquinarias de los servicios de
+                                                        alojamiento y turismo
+53.1.3.2 Calificación técnica
+                                               54.1.1.1 Calificación profesional
+53.1.3.3 Calificación operativa
+                                               54.1.1.2 Calificación técnica
+53.2.0   Jefes de servicios gastronómicos
+                                               54.1.1.3 Calificación operativa
+53.2.0.1 Calificación profesional
+                                               54.1.2   Cuenta propia con operación de
+53.2.0.2 Calificación técnica                           maquinarias y/o equipos
+                                                        electromecánicos de los servicios de
+53.2.0.3 Calificación operativa                         alojamiento y turismo
+
+53.3     Trabajadores de servicios             54.1.2.1 Calificación profesional
+          gastronómicos
+                                               54.1.2.2 Calificación técnica
+53.3.1   Trabajadores sin operación de
+         maquinarias de servicios              54.1.2.3 Calificación operativa
+         gastronómicos
+                                               54.1.3   Cuenta propia con operación de
+53.3.1.1 Calificación profesional                       sistemas y/o equipos informatizados
+                                                        de los servicios de alojamiento y
+53.3.1.2 Calificación técnica                           turismo
+
+53.3.1.3 Calificación operativa                54.1.3.1 Calificación profesional
+
+53.3.1.4 No calificados                        54.1.3.2 Calificación técnica
+
+
+
+
+                                                                                   INDEC 24
+                                                 56       OCUPACIONES DE SERVICIOS DE
+54.1.3.3 Calificación operativa                           LIMPIEZA (NO DOMÉSTICOS)
+
+54.2.0   Jefes de alojamiento y turismo          56.1     Cuenta propia de los servicios de
+                                                          limpieza no doméstica
+54.2.0.1 Calificación profesional
+                                                 56.1.1    Cuenta propia sin operación de
+54.2.0.2 Calificación técnica                              maquinarias de los servicios de
+                                                           limpieza no doméstica
+54.2.0.3 Calificación operativa
+                                                 56.1.1.3 Calificación operativa
+54.3     Trabajadores de alojamiento y turismo
+                                                 56.1.2    Cuenta propia con operación de
+54.3.1   Trabajadores sin operación de                     maquinarias y/o equipos
+         maquinarias de alojamiento y turismo              electromecánicos de los servicios de
+                                                           limpieza no doméstica
+54.3.1.1 Calificación profesional
+                                                 56.1.2.3 Calificación operativa
+54.3.1.2 Calificación técnica
+                                                 56.1.3    Cuenta propia con operación de
+54.3.1.3 Calificación operativa                            sistemas y/o equipos informatizados
+                                                           de los servicios de limpieza no
+54.3.1.4 No calificados                                    doméstica
+
+54.3.2   Operadores de maquinaria y/o equipos    56.1.3.3 Calificación operativa
+         electromecánicos de alojamiento y
+         turismo                                 56.2.0    Jefes de los servicios de limpieza no
+                                                           doméstica
+54.3.2.1 Calificación profesional
+                                                 56.2.0.2 Calificación técnica
+54.3.2.2 Calificación técnica
+                                                 56.2.0.3 Calificación operativa
+54.3.2.3 Calificación operativa
+                                                 56.3.1    Trabajadores de servicios de limpieza
+54.3.2.4 No calificados                                    no doméstica
+
+54.3.3   Operadores de sistemas y/o equipos      56.3.1.3 Calificación operativa
+         informatizados de alojamiento y
+         turismo                                 56.3.1.4 No calificados
+
+54.3.3.1 Calificación profesional                56.3.2    Operadores de maquinaria y/o equipos
+                                                           electromecánicos de la limpieza no
+54.3.3.2 Calificación técnica                              doméstica
+
+54.3.3.3 Calificación operativa                  56.3.2.3 Calificación operativa
+
+54.3.3.4 No calificados                          56.3.2.4 No calificados
+
+55       OCUPACIONES DE LOS SERVICIOS            56.3.3    Operadores de sistemas y/o equipos
+         DOMÉSTICOS                                        informatizados de la limpieza no
+                                                           doméstica
+55.2.0   Jefes de los servicios domésticos
+                                                 56.3.3.3 Calificación operativa
+55.2.0.3 Calificación operativa
+                                                 56.3.3.4 No calificados
+55.3.1   Trabajadores del servicio doméstico
+                                                 57        OCUPACIONES DEL CUIDADO Y LA
+55.3.1.3 Calificación operativa                            ATENCIÓN DE PERSONAS
+
+55.3.1.4 No calificados
+
+
+
+
+                                                                                    INDEC 25
+                                                    57.3.2   Operadores de maquinaria y/o equipos
+57.1     Cuenta propia del cuidado y la atención             electromecánicos del cuidado y la
+         de las personas                                     atención de las personas
+
+57.1.1    Cuenta propia sin operación de            57.3.2.1 Calificación profesional
+          maquinarias del cuidado y la atención
+          de las personas                           57.3.2.2 Calificación técnica
+
+57.1.1.1 Calificación profesional                   57.3.2.3 Calificación operativa
+
+57.1.1.2 Calificación técnica                       57.3.2.4 No calificados
+
+57.1.1.3 Calificación operativa                     57.3.3   Operadores de sistemas y/o equipos
+                                                             informatizados del cuidado y la
+57.1.2    Cuenta propia con operación de                     atención de las personas
+          maquinarias yo equipos
+          electromecánicos del cuidado y la         57.3.3.1 Calificación profesional
+          atención de las personas
+                                                    57.3.3.2 Calificación técnica
+57.1.2.1 Calificación profesional
+                                                    57.3.3.3 Calificación operativa
+57.1.2.2 Calificación técnica
+                                                    57.3.3.4 No calificados
+57.1.2.3 Calificación operativa
+                                                    58       OTRAS OCUPACIONES DE LOS
+57.1.3    Cuenta propia con operación de                     SERVICIOS SOCIALES VARIOS
+          sistemas y/o equipos informatizados
+          del cuidado y la atención de las          58.1     Cuenta propia de otras ocupaciones de
+          personas                                           los servicios sociales varios
+
+57.1.3.1 Calificación profesional                   58.1.1 Cuenta propia sin operación de
+                                                           maquinarias de otras ocupaciones de
+57.1.3.2 Calificación técnica                              los servicios sociales varios
+
+57.1.3.3 Calificación operativa                     58.1.1.1 Calificación profesional
+
+57.2.0    Jefes de los servicios del cuidado y la   58.1.1.2 Calificación técnica
+          atención de las personas
+                                                    58.1.1.3 Calificación operativa
+57.2.0.1 Calificación profesional
+                                                    58.1.2    Cuenta propia con operación de
+57.2.0.2 Calificación técnica                                 maquinarias y/o equipos
+                                                              electromecánicos de otras
+57.2.0.3 Calificación operativa                               ocupaciones de los servicios sociales
+                                                              varios
+57.3      Trabajadores del cuidado y la atención
+          de las personas                           58.1.2.1 Calificación profesional
+
+57.3.1    Trabajadores    sin  operación     de     58.1.2.2 Calificación técnica
+          maquinarias del cuidado y la atención
+          de las personas                           58.1.2.3 Calificación operativa
+
+57.3.1.1 Calificación profesional                   58.1.3    Cuenta propia con operación de
+                                                              sistemas y/o equipos informatizados
+57.3.1.2 Calificación técnica                                 de otras ocupaciones de los servicios
+                                                              sociales varios
+57.3.1.3 Calificación operativa
+                                                    58.1.3.1 Calificación profesional
+57.3.1.4 No calificados
+                                                    58.1.3.2 Calificación técnica
+
+
+
+
+                                                                                        INDEC 26
+58.1.3.3 Calificación operativa                   58.3.2   Operadores de maquinaria y/o equipos
+                                                           electromecánicos       de       otras
+58.2.0   Jefes de otras ocupaciones de los                 ocupaciones de los servicios sociales
+         servicios sociales varios                         varios
+
+58.2.0.1 Calificación profesional                 58.3.2.1 Calificación profesional
+
+58.2.0.2 Calificación técnica                     58.3.2.2 Calificación técnica
+
+58.2.0.3 Calificación operativa                   58.3.2.3 Calificación operativa
+
+58.3     Trabajadores de otros servicios          58.3.2.4 No calificados
+
+58.3.1   Trabajadores   sin    operación     de   58.3.3   Operadores de sistemas y/o equipos
+         maquinarias de otros servicios                    informatizados de otras ocupaciones
+                                                           de los servicios sociales varios
+58.3.1.1 Calificación profesional
+                                                  58.3.3.1 Calificación profesional
+58.3.1.2 Calificación técnica
+                                                  58.3.3.2 Calificación técnica
+58.3.1.3 Calificación operativa
+                                                  58.3.3.3 Calificación operativa
+58.3.1.4 No calificados
+                                                  58.3.3.4 No calificados
+
+
+
+
+                                                                                      INDEC 27
+         6. OCUPACIONES AGRÍCOLAS, GANADERAS, FORESTALES, DE LA CAZA Y DE LA PESCA
+
+60        OCUPACIONES DE LA PRODUCCIÓN            60.3.1.4 No calificados
+          AGRÍCOLA
+                                                  60.3.2 Operadores de maquinaria y/o equipos
+60.1      Cuenta propia de la producción                 electromecánicos de la producción
+          agrícola                                       agrícola
+
+60.1.1    Cuenta propia sin operación de          60.3.2.1 Calificación profesional
+          maquinarias de la producción agrícola
+                                                  60.3.2.2 Calificación técnica
+60.1.1.1 Calificación profesional
+                                                  60.3.2.3 Calificación operativa
+60.1.1.2 Calificación técnica
+                                                  60.3.2.4 No calificados
+60.1.1.3 Calificación operativa
+                                                  60.3.3   Operadores de sistemas y/o equipos
+60.1.2    Cuenta propia con operación de                   informatizados de la producción
+           maquinaria y/o equipos                          agrícola
+           electromecánicos de la producción
+                    agrícola                      60.3.3.1 Calificación profesional
+
+60.1.2.1 Calificación profesional                 60.3.3.2 Calificación técnica
+
+60.1.2.2 Calificación técnica                     60.3.3.3 Calificación operativa
+
+60.1.2.3 Calificación operativa                   60.3.3.4 No calificados
+
+60.1.3    Cuenta propia con operación de          61       OCUPACIONES DE LA PRODUCCIÓN
+          sistemas y/o equipos informatizados               GANADERA
+          de la producción agrícola
+                                                  61.1     Cuenta propia de la producción
+60.1.3.1 Calificación profesional                          ganadera
+
+60.1.3.2 Calificación técnica                     61.1.1    Cuenta propia sin operación de
+                                                            maquinarias de la producción
+60.1.3.3 Calificación operativa                             ganadera
+
+60.2.0    Jefes de la producción agrícola         61.1.1.1 Calificación profesional
+
+60.2.0.1 Calificación profesional                 61.1.1.2 Calificación técnica
+
+60.2.0.2 Calificación técnica                     61.1.1.3 Calificación operativa
+
+60.2.0.3 Calificación operativa                   61.1.2    Cuenta propia con operación de
+                                                            maquinaria y/o equipos
+60.3 Trabajadores de la producción                          electromecánicos de la producción
+        agrícola                                            ganadera
+
+60.3.1 Trabajadores sin operación de              61.1.2.1 Calificación profesional
+       maquinarias de la producción agrícola
+                                                  61.1.2.2 Calificación técnica
+60.3.1.1 Calificación profesional
+                                                  61.1.2.3 Calificación operativa
+60.3.1.2 Calificación técnica
+                                                  61.1.3    Cuenta propia con operación de
+60.3.1.3 Calificación operativa                              sistemas y/o equipos informatizados
+                                                                  de la producción ganadera
+
+
+
+
+                                                                                      INDEC 28
+61.1.3.1 Calificación profesional               62.1.1   Cuenta propia sin operación de
+                                                         maquinarias de la producción forestal
+61.1.3.2 Calificación técnica
+                                                62.1.1.1 Calificación profesional
+61.1.3.3 Calificación operativa
+                                                62.1.1.2 Calificación técnica
+61.2.0 Jefes de la producción ganadera
+                                                62.1.1.3 Calificación operativa
+61.2.0.1 Calificación profesional
+                                                62.1.2   Cuenta propia con operación de
+61.2.0.2 Calificación técnica                                   maquinarias y/o equipos
+                                                          electromecánicos de la producción
+61.2.0.3 Calificación operativa                                         forestal
+
+61.3     Trabajadores de la producción          62.1.2.1 Calificación profesional
+         Ganadera
+                                                62.1.2.2 Calificación técnica
+61.3.1   Trabajadores sin operación de
+         maquinarias de la producción           62.1.2.3 Calificación operativa
+         ganadera
+                                                62.1.3   Cuenta propia con operación de
+61.3.1.1 Calificación profesional                        sistemas y/o equipos informatizados
+                                                         de la producción forestal
+61.3.1.2 Calificación técnica
+                                                62.1.3.1 Calificación profesional
+61.3.1.3 Calificación operativa
+                                                62.1.3.2 Calificación técnica
+61.3.1.4 No calificados
+                                                62.1.3.3 Calificación operativa
+61.3.2   Operadores de maquinaria y/o equipos
+         electromecánicos de la producción      62.2.0   Jefes de la producción forestal
+         ganadera
+                                                62.2.0.1 Calificación profesional
+61.3.2.1 Calificación profesional
+                                                62.2.0.2 Calificación técnica
+61.3.2.2 Calificación técnica
+                                                62.2.0.3 Calificación operativa
+61.3.2.3 Calificación operativa
+                                                62.3 Trabajadores de la producción
+61.3.2.4 No calificados                                  forestal
+
+61.3.3 Operadores de sistemas y/o equipos       62.3.1    Trabajadores sin operación de
+        informatizados de la producción                    maquinarias de la producción
+        ganadera                                           forestal
+
+61.3.3.1 Calificación profesional               62.3.1.1 Calificación profesional
+
+61.3.3.2 Calificación técnica                   62.3.1.2 Calificación técnica
+
+61.3.3.3 Calificación operativa                 62.3.1.3 Calificación operativa
+
+61.3.3.4 No calificados                         62.3.1.4 No calificados
+
+ 62 OCUPACIONES DE LA PRODUCCIÓN                62.3.2   Operadores de maquinaria y/o equipos
+       FORESTAL                                          electromecánicos de la producción
+                                                         forestal
+62.1     Cuenta propia de la producción
+         Forestal                               62.3.2.1 Calificación profesional
+
+                                                62.3.2.2 Calificación técnica
+
+                                                62.3.2.3 Calificación operativa
+
+                                                                                    INDEC 29
+                                                   63.2.0.2 Calificación técnica
+62.3.2.4 No calificados
+                                                   63.2.0.3 Calificación operativa
+62.3.3   Operadores de sistemas y/o equipos
+         informatizados de la producción           63.3     Trabajadores de la producción apícola
+         forestal                                            – avícola y de otras especies menores
+
+62.3.3.1 Calificación profesional                  63.3.1    Trabajadores sin operación de
+                                                              maquinarias de la producción apícola
+62.3.3.2 Calificación técnica                                – avícola y de otras especies menores
+
+62.3.3.3 Calificación operativa                    63.3.1.1 Calificación profesional
+
+62.3.3.4 No calificados                            63.3.1.2 Calificación técnica
+
+63     OCUPACIONES APÍCOLA - AVÍCOLA Y             63.3.1.3 Calificación operativa
+        DE OTRAS ESPECIES MENORES
+                                                   63.3.1.4 No calificados
+63.1     Cuenta propia de la producción
+         apícola – avícola y de otras especies     63.3.2    Operadores de maquinaria y/o equipos
+         menores                                             electromecánicos de a producción
+                                                              apícola – avícola y de tras especies
+63.1.1   Cuenta propia sin operación de                       menores
+         maquinarias de la producción apícola
+         – avícola y de otras especies menores     63.3.2.1 Calificación profesional
+
+63.1.1.1 Calificación profesional                  63.3.2.2 Calificación técnica
+
+63.1.1.2 Calificación técnica                      63.3.2.3 Calificación operativa
+
+63.1.1.3 Calificación operativa                    63.3.2.4 No calificados
+
+63.1.2   Cuenta propia con operación de            63.3.3 Operadores de sistemas, equipos y/o
+         maquinarias y/o equipos de la                     paneles     informatizados    de    la
+         producción apícola – avícola y de                 producción de apicultura, avicultura y
+         otras especies menores                            de otras especies menores
+
+63.1.2.1 Calificación profesional                  63.3.3.1 Calificación profesional
+
+63.1.2.2 Calificación técnica                      63.3.3.2 Calificación técnica
+
+63.1.2.3 Calificación operativa                    63.3.3.3 Calificación operativa
+
+63.1.3   Cuenta propia con operación de            63.3.3.4 No calificados
+         sistemas y/o equipos informatizados
+         de la producción apícola – avícola y de    64      OCUPACIONES DE LA PRODUCCIÓN
+         otras especies menores                              PESQUERA
+
+63.1.3.1 Calificación profesional                  64.1     Cuenta propia de la producción
+                                                            pesquera
+63.1.3.2 Calificación técnica
+                                                   64.1.1    Cuenta propia sin operación de
+63.1.3.3 Calificación operativa                              maquinarias de la producción
+                                                             pesquera
+63.2.0   Jefes de la producción apícola –
+         avícola y de otras especies menores       64.1.1.1 Calificación profesional
+
+63.2.0.1 Calificación profesional                  64.1.1.2 Calificación técnica
+
+                                                   64.1.1.3 Calificación operativa
+
+
+
+
+                                                                                       INDEC 30
+64.1.2   Cuenta propia con operación de         64.3.3.1 Calificación profesional
+         maquinarias      y/o      equipos
+         electromecánicos de la producción      64.3.3.2 Calificación técnica
+         pesquera
+                                                64.3.3.3 Calificación operativa
+64.1.2.1 Calificación profesional
+                                                64.3.3.4 No calificados
+64.1.2.2 Calificación técnica
+                                                65 OCUPACIONES DE LA CAZA
+64.1.2.3 Calificación operativa
+                                                65.1     Cuenta propia de la caza
+64.1.3   Cuenta propia con operación de
+         sistemas y/o equipos informatizados    65.1.1 Cuenta propia sin operación
+         de la producción pesquera                     de maquinarias de la caza
+
+64.1.3.1 Calificación profesional               65.1.1.1 Calificación profesional
+
+64.1.3.2 Calificación técnica                   65.1.1.2 Calificación técnica
+
+64.1.3.3 Calificación operativa                 65.1.1.3 Calificación operativa
+
+64.2.0   Jefes de la producción pesquera        65.1.2   Cuenta propia con operación de
+                                                         maquinarias y/o equipos electrónicos
+64.2.0.1 Calificación profesional                        de la caza
+
+64.2.0.2 Calificación técnica                   65.1.2.1 Calificación profesional
+
+64.2.0.3 Calificación operativa                 65.1.2.2 Calificación técnica
+
+64.2     Trabajadores de la producción          65.1.2.3 Calificación operativa
+         pesquera
+                                                65.1.3    Cuenta propia con operación de
+64.3.1   Trabajadores sin operación de                    sistemas y/o equipos informatizados
+         maquinarias de la producción                     de la caza
+         pesquera
+                                                65.1.3.1 Calificación profesional
+64.3.1.1 Calificación profesional
+                                                65.1.3.2 Calificación técnica
+64.3.1.2 Calificación técnica
+                                                65.1.3.3 Calificación operativa
+64.3.1.3 Calificación operativa
+                                                65.2.0   Jefes de la caza
+64.3.1.4 No calificados
+                                                65.2.0.1 Calificación profesional
+64.3.2   Operadores de maquinaria y/o equipos
+         electromecánicos de la producción      65.2.0.2 Calificación técnica
+         pesquera
+                                                65.2.0.3 Calificación operativa
+64.3.2.1 Calificación profesional
+                                                65.3     Trabajadores de la caza
+64.3.2.2 Calificación técnica
+                                                65.3.1   Trabajadores sin operación de
+64.3.2.3 Calificación operativa                          maquinarias de la caza
+
+64.3.2.4 No calificados                         65.3.1.1 Calificación profesional
+
+64.3.3 Operadores de sistemas y/o equipos       65.3.1.2 Calificación técnica
+        informatizados de la producción
+        pesquera                                65.3.1.3 Calificación operativa
+
+
+
+
+                                                                                    INDEC 31
+65.3.1.4 No calificados                       65.3.3   Operadores de sistemas y/o equipos
+                                                       informatizados de la caza
+65.3.2 Operadores de maquinaria y/o equipos
+       electromecánicos de la caza            65.3.3.1 Calificación profesional
+
+65.3.2.1 Calificación profesional             65.3.3.2 Calificación técnica
+
+65.3.2.2 Calificación técnica                 65.3.3.3 Calificación operativa
+
+65.3.2.3 Calificación operativa               65.3.3.4 No calificados
+
+65.3.2.4 No calificados
+
+
+
+
+                                                                                  INDEC 32
+7. OCUPACIONES DE LA PRODUCCIÓN EXTRACTIVA, ENERGÉTICA, DE CONSTRUCCIÓN E
+INFRAESTRUCTURA
+
+
+70       OCUPACIONES DE LA PRODUCCIÓN           70.3.1.3 Calificación operativa
+         EXTRACTIVA
+                                                70.3.1.4 No calificados
+70.1     Cuenta propia de la producción
+         extractiva                             70.3.2 Operadores de maquinaria y/o equipos
+                                                       electromecánicos de la producción
+70.1.1 Cuenta propia sin operación de                   extractiva
+       maquinarias de la producción
+       extractiva                               70.3.2.1 Calificación profesional
+
+70.1.1.1 Calificación profesional               70.3.2.2 Calificación técnica
+
+70.1.1.2 Calificación técnica                   70.3.2.3 Calificación operativa
+
+70.1.1.3 Calificación operativa                 70.3.2.4 No calificados
+
+70.1.2    Cuenta propia con operación de        70.3.3 Operadores de sistemas y/o equipos
+          maquinarias y/o equipos                      informatizados de la producción
+          electromecánicos de la producción            extractiva
+          extractiva
+                                                70.3.3.1 Calificación profesional
+70.1.2.1 Calificación profesional
+                                                70.3.3.2 Calificación técnica
+70.1.2.2 Calificación técnica
+                                                70.3.3.3 Calificación operativa
+70.1.2.3 Calificación operativa
+                                                70.3.3.4 No calificados
+70.1.3    Cuenta propia con operación de
+          sistemas y/o equipos informatizados   71       OCUPACIONES DE LA PRODUCCIÓN
+          de la producción extractiva                    DE ENERGÍA, AGUA Y GAS
+
+70.1.3.1 Calificación profesional               71.1     Cuenta propia de la producción de
+                                                         energía, agua y gas
+70.1.3.2 Calificación técnica
+                                                71.1.1   Cuenta propia sin operación de
+70.1.3.3 Calificación operativa                          maquinarias de la producción de
+                                                         energía, agua y gas
+70.2.0    Jefes de la producción extractiva
+                                                71.1.1.1 Calificación profesional
+70.2.0.1 Calificación profesional
+                                                71.1.1.2 Calificación técnica
+70.2.0.2 Calificación técnica
+                                                71.1.1.3 Calificación operativa
+70.2.0.3 Calificación operativa
+                                                71.1.2   Cuenta propia con operación de
+70.3     Trabajadores de la producción                   maquinarias y/o equipos
+         extractiva                                      electromecánicos de la producción de
+                                                         energía, agua y gas
+70.3.1 Trabajadores sin operación de
+       maquinarias de la producción             71.1.2.1 Calificación profesional
+       extractiva
+                                                71.1.2.2 Calificación técnica
+70.3.1.1 Calificación profesional
+                                                71.1.2.3 Calificación operativa
+70.3.1.2 Calificación técnica
+
+
+
+
+                                                                                    INDEC 33
+71.1.3   Cuenta propia con operación de         72     OCUPACIONES DE LA CONSTRUCCIÓN
+         sistemas y/o equipos informatizados           EDILICIA Y DE OBRAS DE
+         de la producción de energía, agua y            INFAESTRUCTURA Y DE REDES DE
+         gas                                            DISTRIBUCIÓN DE ENERGÍA, AGUA
+                                                         POTABLE, GAS Y TEEFONÍA
+71.1.3.1 Calificación profesional
+                                                72.1    Cuenta propia de la construcción
+71.1.3.2 Calificación técnica                          edilicia y de obras de infraestructura y
+                                                         de redes de distribución de energía,
+71.1.3.3 Calificación operativa                          agua potable, gas y telefonía
+
+71.2.0   Jefes de la producción de energía,     72.1.1   Cuenta propia sin operación de
+         agua y gas                                      maquinarias de la construcción
+                                                         edilicia y de obras de infraestructura y
+71.2.0.1 Calificación profesional                        de redes de distribución de energía,
+                                                         agua potable, gas y telefonía
+71.2.0.2 Calificación técnica
+                                                72.1.1.1 Calificación profesional
+71.2.0.3 Calificación operativa
+                                                72.1.1.2 Calificación técnica
+71.3     Trabajadores de la producción de
+         energía, agua y gas                    72.1.1.3 Calificación operativa
+
+71.3.1 Trabajadores sin operación               72.1.2   Cuenta propia con operación de
+       de maquinarias de la producción                   maquinarias          y/o        equipos
+       de energía, agua y gas                            electromecánicos de la construcción
+                                                         edilicia y de obras de infraestructura y
+71.3.1.1 Calificación profesional                        de redes de distribución de energía,
+                                                         agua potable, gas y telefonía
+71.3.1.2 Calificación técnica
+                                                72.1.2.1 Calificación profesional
+71.3.1.3 Calificación operativa
+                                                72.1.2.2 Calificación técnica
+71.3.1.4 No calificados
+                                                72.1.2.3 Calificación operativa
+71.3.2   Operadores de maquinarias y/o
+         equipos electromecánicos de            72.1.3   Cuenta propia con operación de
+         la producción de energía, agua y gas            sistemas y/o equipos informatizados
+                                                         de la construcción edilicia y de obras
+71.3.2.1 Calificación profesional                        de infraestructura y de redes de
+                                                         distribución de energía, agua potable,
+71.3.2.2 Calificación técnica                            gas y telefonía
+
+71.3.2.3 Calificación operativa                 72.1.3.1 Calificación profesional
+
+71.3.2.4 No calificados                         72.1.3.2 Calificación técnica
+
+71.3.3   Operadores de sistemas y/o             72.1.3.3 Calificación operativa
+         equipos informatizados de
+         la producción de energía, agua y gas   72.2.0 Jefes de la construcción edilicia y
+                                                        de obras de infraestructura y de redes
+71.3.3.1 Calificación profesional                       de distribución de energía, agua
+                                                        potable, gas y telefonía
+71.3.3.2 Calificación técnica
+
+71.3.3.3 Calificación operativa
+
+71.3.3.4 No calificados
+
+
+
+
+                                                                                    INDEC 34
+72.2.0.1 Calificación profesional                   72.3.2   Operadores de maquinaria y/o equipos
+                                                             electromecánicos de la construcción
+72.2.0.2 Calificación técnica                                edilicia y de obras de infraestructura y
+                                                             de redes de distribución de energía,
+72.2.0.3 Calificación operativa                              agua potable, gas y telefonía
+
+72.3     Trabajadores de la construcción            72.3.2.1 Calificación profesional
+         edilicia y de obras de infraestructura y
+         de redes de distribución de energía,       72.3.2.2 Calificación técnica
+         agua potable, gas y telefonía
+                                                    72.3.2.3 Calificación operativa
+72.3.1 Trabajadores sin operación de
+        maquinarias de la construcción              72.3.2.4 No calificados
+        edilicia y de obras de infraestructura y
+        de redes de distribución de energía,        72.3.3   Operadores de sistemas y/o equipos
+        agua potable, gas y telefonía                        informatizados de la construcción
+                                                              edilicia y de obras de infraestructura y
+72.3.1.1 Calificación profesional                            de redes de distribución de energía,
+                                                             agua potable, gas y telefonía
+72.3.1.2 Calificación técnica
+                                                    72.3.3.1 Calificación profesional
+72.3.1.3 Calificación operativa
+                                                    72.3.3.2 Calificación técnica
+72.3.1.4 No calificados
+                                                    72.3.3.3 Calificación operativa
+
+                                                    72.3.3.4 No calificados
+
+
+
+
+                                                                                        INDEC 35
+8. OCUPACIONES DE LA PRODUCCIÓN INDUSTRIAL, ARTESANAL Y DE REPARACIÓN DE BIENES DE
+CONSUMO
+
+
+80       OCUPACIONES DE LA                         80.3.1.2 Calificación técnica
+         PRODUCCIÓN INDUSTRIAL
+         Y ARTESANAL                               80.3.1.3 Calificación operativa
+
+80.1     Cuenta propia de la producción            80.3.1.4 No calificados
+         artesanal
+                                                   80.3.2   Operadores de maquinaria y/o equipos
+80.1.1   Cuenta propia sin operación de                     electromecánicos de la producción
+         maquinarias de la producción                        industrial y artesanal
+         artesanal
+                                                   80.3.2.1 Calificación profesional
+80.1.1.3 Calificación profesional
+                                                   80.3.2.2 Calificación técnica
+80.1.1.2 Calificación técnica
+                                                   80.3.2.3 Calificación operativa
+80.1.1.3 Calificación operativa
+                                                   80.3.2.4 No calificados
+80.1.2   Cuenta propia con operación de
+         maquinaria y/o equipos                    80.3.3    Operadores de sistemas y/o equipos
+          electromecánicos de la Producción                  informatizados de la producción
+         industrial y artesanal                              industrial y artesanal
+
+80.1.2.1 Calificación profesional                  80.3.3.1 Calificación profesional
+
+80.1.2.2 Calificación técnica                      80.3.3.2 Calificación técnica
+
+80.1.2.3 Calificación operativa                    80.3.3.3 Calificación operativa
+
+80.1.3   Cuenta propia con operación de            80.3.3.4 No calificados
+         sistemas y/o equipos informatizados
+         de la Producción industrial y artesanal   81       OCUPACIONES DE LA PRODUCCIÓN
+                                                            DE SOFTWARE
+80.1.3.1 Calificación profesional
+                                                   81.1.3 Cuenta propia de la producción de
+80.1.3.2 Calificación técnica                             software
+
+80.1.3.3 Calificación operativa                    81.1.3.1 Calificación profesional
+
+80.2.0   Jefes de la producción industrial y       81.1.3.2 Calificación técnica
+         artesanal
+                                                   81.1.3.3 Calificación operativa
+80.2.0.1 Calificación profesional
+                                                   81.2.0   Jefes de la producción de software
+80.2.0.2 Calificación técnica
+                                                   81.2.0.1 Calificación profesional
+80.2.0.3 Calificación operativa
+                                                   81.2.0.2 Calificación técnica
+80.3     Trabajadores de la producción
+          industrial y artesanal                   81.2.0.3 Calificación operativa
+
+80.3.1    Trabajadores sin operación de            81.3.3    Operadores de sistemas y/o equipos
+          maquinarias de la producción                       informatizados de la producción de
+          industrial y artesanal                             software
+
+80.3.1.1 Calificación profesional                  81.3.3.1 Calificación profesional
+
+
+
+                                                                                       INDEC 36
+81.3.3.2 Calificación técnica                   82.2.0.1 Calificación profesional
+
+81.3.3.3 Calificación operativa                 82.2.0.2 Calificación técnica
+
+81.3.3.4 No calificados                         82.2.0.3 Calificación operativa
+
+82       OCUPACIONES DE LA REPARACIÓN           82.3     Trabajadores de la reparación de bienes
+         DE BIENES DE CONSUMO                            de consumo
+
+82.1     Cuenta propia de la reparación de      82.3.1 Trabajadores sin operación de
+         bienes de consumo                             maquinarias de la reparación de bienes
+                                                       de consumo
+82.1.1 Cuenta propia sin operación de
+       maquinarias de la reparación de bienes   82.3.1.1 Calificación profesional
+       de consumo
+                                                82.3.1.2 Calificación técnica
+82.1.1.1 Calificación profesional
+                                                82.3.1.3 Calificación operativa
+82.1.1.2 Calificación técnica
+                                                82.3.1.4 No calificados
+82.1.1.3 Calificación operativa
+                                                82.3.2    Operadores de maquinaria y/o equipos
+82.1.2    Cuenta propia con operación                     electromecánicos de la reparación de
+          de maquinaria y/o equipos                               bienes de consumo
+          electromecánicos de la reparación
+          de bienes de consumo                  82.3.2.1 Calificación profesional
+
+82.1.2.1 Calificación profesional               82.3.2.2 Calificación técnica
+
+82.1.2.2 Calificación técnica                   82.3.2.3 Calificación operativa
+
+82.1.2.3 Calificación operativa                 82.3.2.4 No calificados
+
+82.1.3    Cuenta propia con operación de        82.3.3    Operadores de sistemas y/o equipos
+          sistemas y/o equipos informatizados             informatizados de la reparación de
+          de la reparación de bienes de                   bienes de consumo
+          consumo
+                                                82.3.3.1 Calificación profesional
+82.1.3.1 Calificación profesional
+                                                82.3.3.2 Calificación técnica
+82.1.3.2 Calificación técnica
+                                                82.3.3.3 Calificación operativa
+82.1.3.3 Calificación operativa
+                                                82.3.3.4 No calificados
+82.2.0    Jefes de la reparación de bienes de
+          consumo
+
+
+
+
+                                                                                    INDEC 37
+9. OCUPACIONES AUXILIARES DE LA PRODUCCIÓN DE BIENES Y DE LA PRESTACIÓN DE
+SERVICIOS
+
+
+90       OCUPACIONES DE LA INSTALACIÓN Y        90.2.0.3 Calificación operativa
+         MANTENIMIENTO DE MAQUINARIA Y
+         EQUIPOS DE LA PRODUCCIÓN DE            90.3      Trabajadores de la instalación y
+         BIENES                                           mantenimiento de maquinarias y
+                                                          equipos de la producción de bienes
+90.1     Cuenta propia de la instalación y
+         mantenimiento de maquinarias y         90.3.1    Trabajadores sin operación de
+         equipos de la producción de bienes               maquinarias de la instalación y
+                                                          mantenimiento de maquinarias y
+90.1.1   Cuenta propia sin operación de                   equipos de la producción de bienes
+         maquinarias de la instalación y
+         mantenimiento de maquinarias y         90.3.1.1 Calificación profesional
+         equipos de la producción de bienes
+                                                90.3.1.2 Calificación técnica
+90.1.1.1 Calificación profesional
+                                                90.3.1.3 Calificación operativa
+90.1.1.2 Calificación técnica
+                                                90.3.1.4 No calificados
+90.1.1.3 Calificación operativa
+                                                90.3.2    Operadores de maquinarias y/o
+90.1.2   Cuenta propia con operación de                   equipos electromecánicos de la
+         maquinaria y/o equipos                           instalación y mantenimiento de
+         electromecánicos de la instalación y             maquinarias y equipos de la
+         mantenimiento de maquinarias y                   producción de bienes
+         equipos de la producción de bienes
+                                                90.3.2.1 Calificación profesional
+90.1.2.1 Calificación profesional
+                                                90.3.2.2 Calificación técnica
+90.1.2.2 Calificación técnica
+                                                90.3.2.3 Calificación operativa
+90.1.2.3 Calificación operativa
+                                                90.3.2.4 No calificados
+90.1.3   Cuenta propia con operación de
+         sistemas y/o equipos informatizados    90.3.3    Operadores de sistemas y/o equipos
+         de la instalación y mantenimiento de             informatizados de la instalación y
+         maquinarias y equipos de la                      mantenimiento de maquinarias y
+         producción de bienes                             equipos de la producción de bienes
+
+90.1.3.1 Calificación profesional               90.3.3.1 Calificación profesional
+
+90.1.3.2 Calificación técnica                   90.3.3.2 Calificación técnica
+
+90.1.3.3 Calificación operativa                 90.3.3.3 Calificación operativa
+
+90.2.0   Jefes de la instalación y              90.3.3.4 No calificados
+         mantenimiento de maquinarias y
+         equipos de la producción de bienes     91        OCUPACIONES DEL DESARROLLO
+                                                          TECNOLÓGICO PRODUCTIVO
+90.2.0.1 Calificación profesional
+                                                91.1     Cuenta propia del desarrollo
+90.2.0.2 Calificación técnica                            tecnológico productivo
+
+                                                91.1.1    Cuenta propia sin operación de
+                                                          maquinarias del desarrollo
+                                                          tecnológico productivo
+
+
+                                                                                    INDEC 38
+91.1.1.1 Calificación profesional                91.3.2.4 No calificados
+
+91.1.1.2 Calificación técnica                    91.3.3   Operadores de sistemas y/o equipos
+                                                          informatizados de ocupaciones del
+91.1.1.3 Calificación operativa                           desarrollo tecnológico productivo
+
+91.1.2   Cuenta propia con operación de          91.3.3.1 Calificación profesional
+         maquinarias y equipos del desarrollo
+         tecnológico productivo                  91.3.3.2 Calificación técnica
+
+91.1.2.1 Calificación profesional                91.3.3.3 Calificación operativa
+
+91.1.2.2 Calificación técnica                    91.3.3.4 No calificados
+
+91.1.2.3 Calificación operativa                  92       OCUPACIONES DE LA INSTALACIÓN Y
+                                                           MANTENIMIENTO DE MAQUINARIA Y
+91.1.3   Cuenta propia con operación de                   EQUIPOS DE LA PRESTACIÓN DE
+         sistemas y/o equipos informatizados              SERVICIOS
+         del desarrollo tecnológico productivo
+                                                 92.1     Cuenta propia de la instalación y
+91.1.3.1 Calificación profesional                         mantenimiento de maquinaria y
+                                                          equipos de la prestación de servicios
+91.1.3.2 Calificación técnica
+                                                 92.1.1 Cuenta propia sin operación de
+91.1.3.3 Calificación operativa                         maquinarias de la instalación y
+                                                        mantenimiento de maquinaria y
+91.2.0   Jefes del desarrollo tecnológico               equipos de la prestación de servicios
+         productivo
+                                                 92.1.1.1 Calificación profesional
+91.2.0.1 Calificación profesional
+                                                 92.1.1.2 Calificación técnica
+91.2.0.2 Calificación técnica
+                                                 92.1.1.3 Calificación operativa
+91.2.0.3 Calificación operativa
+                                                 92.1.2   Cuenta propia con operación de
+91.3     Trabajadores del desarrollo                      maquinarias y/o equipos
+         tecnológico productivo                           electromecánicos de la instalación y
+                                                          mantenimiento de maquinaria y
+91.3.1   Trabajadores sin operación de                    equipos de la prestación de servicios
+          maquinarias del desarrollo
+          tecnológico productivo                 92.1.2.1 Calificación profesional
+
+91.3.1.1 Calificación profesional                92.1.2.2 Calificación técnica
+
+91.3.1.2 Calificación técnica                    92.1.2.3 Calificación operativa
+
+91.3.1.3 Calificación operativa                  92.1.3   Cuenta propia con operación de
+                                                          sistemas y/o equipos informatizados
+91.3.1.4 No calificados                                   de la instalación y mantenimiento de
+                                                          maquinaria y equipos de la
+91.3.2   Operadores de maquinaria y/o equipos             prestación de servicios
+         electromecánicos de ocupaciones del
+         desarrollo tecnológico productivo       92.1.3.1 Calificación profesional
+
+91.3.2.1 Calificación profesional                92.1.3.2 Calificación técnica
+
+91.3.2.2 Calificación técnica                    92.1.3.3 Calificación operativa
+
+91.3.2.3 Calificación operativa
+
+
+                                                                                     INDEC 39
+92.2.0   Jefes     de la  instalación y      92.3.2  Operadores de maquinaria y/o
+         mantenimiento de maquinaria y               equipos
+         equipos de la prestación de                  electromecánicos de la instalación y
+         servicios                                     mantenimiento de maquinaria y
+                                                       equipos de la prestación de
+92.2.0.1 Calificación profesional            servicios
+
+92.2.0.2 Calificación técnica                92.3.2.1 Calificación profesional
+
+92.2.0.3 Calificación operativa              92.3.2.2 Calificación técnica
+
+92.3      Trabajadores de la instalación y   92.3.2.3 Calificación operativa
+          mantenimiento de maquinaria y
+          equipos de la prestación           92.3.2.4 No calificados
+          de servicios
+                                             92.3.3   Operadores de sistemas y/o equipos
+92.3.1   Trabajadores sin operación de                informatizados de la instalación y
+         maquinarias de la instalación y              mantenimiento de maquinaria y
+         mantenimiento de maquinaria y                 equipos de la prestación de
+         equipos de la prestación                     servicios
+         de servicios
+                                             92.3.3.1 Calificación profesional
+92.3.1.1 Calificación profesional
+                                             92.3.3.2 Calificación técnica
+92.3.1.2 Calificación técnica
+                                             92.3.3.3 Calificación operativa
+92.3.1.3 Calificación operativa
+                                             92.3.3.4 No calificados
+92.3.1.4 No calificados
+
+
+
+
+                                                                                 INDEC 40
+
