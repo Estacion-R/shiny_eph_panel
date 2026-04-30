@@ -137,6 +137,24 @@ mod_cond_act_ui <- function(id) {
         )
       ),
 
+      ### Value box de población con popover info al lado del título.
+      ### La nota larga se colapsa en un info-circle clickeable para
+      ### no robar ancho al Sankey/Matriz (issue #34).
+      value_box(
+        title = tagList(
+          textOutput(ns("pob"), inline = TRUE),
+          bslib::popover(
+            bsicons::bs_icon("info-circle",
+                             style = "color: rgba(255,255,255,0.85); cursor: help; margin-left: 8px; font-size: 0.85em;"),
+            "Pasá el mouse sobre el Sankey o la matriz para ver porcentajes precisos. Las tarjetas de arriba se calculan respecto a la categoría seleccionada en el filtro.",
+            placement = "right"
+          )
+        ),
+        value = textOutput(ns("pob_n")),
+        showcase = bs_icon("activity"),
+        p(textOutput(ns("periodo")))
+      ),
+
       ### Sankey + matriz de transición (issue #16 · opción A).
       ### Proporción 5/7: matriz lado derecho con más espacio para que la
       ### tabla NxN se vea completa sin scroll horizontal (issue #19).
@@ -151,24 +169,95 @@ mod_cond_act_ui <- function(id) {
           card_header("Matriz de transición"),
           gt::gt_output(ns("matriz_transicion"))
         )
-      ),
-
-      ### Value box compacto con la población base (lo que era el principal).
-      layout_columns(
-        col_widths = c(4, 8),
-        value_box(
-          title = textOutput(ns("pob")),
-          value = textOutput(ns("pob_n")),
-          showcase = bs_icon("activity"),
-          p(textOutput(ns("periodo")))
-        ),
-        card(
-          card_body(
-            p(em("Nota:"), "Pasá el mouse sobre el Sankey o la matriz para ver porcentajes precisos. Las tarjetas de arriba se calculan respecto a la categoría seleccionada en el filtro.")
-          )
-        )
       )
     ),
+    bslib::nav_panel(
+      title = "Película",
+      icon = icon("video"),
+      filtros_pelicula,
+      div(
+        style = "text-align: center; margin: 4px 0 12px 0;",
+        checkboxInput(ns("excluir_int_pelicula"),
+                      label = "Excluir período de intervención INDEC (2007-2015)",
+                      value = FALSE)
+      ),
+      div(
+        style = "text-align: center; margin-bottom: 16px;",
+        actionButton(ns("btn_pop"), "¿Cómo se interpreta el dato?") |>
+          popover(
+            title = "Ejemplo de lectura",
+            p("Si las opciones fijadas son:",
+              br(),
+              strong("Desde:"), "Desocupado",
+              br(),
+              strong("Hacia:"), "Ocupación",
+              br(),
+              "Y el panel en el eje x es", strong("2023_t1-t2"),
+              ", la interpretación sería:",
+              br(), br(),
+              em("Entre la población que se encontraba desocupada en el trimestre 1 del año 2023, el 44% pasó a la Ocupación para el trimestre 2 del mismo año"))
+          )
+      ),
+      card(
+        full_screen = TRUE,
+        min_height = "520px",
+        highchartOutput(ns("line"), height = "100%")
+      )
+    ),
+
+    bslib::nav_panel(
+      title = "Tasas",
+      icon = icon("chart-line"),
+      filter_query(
+        prefix_text = "",
+        filter_preposition(
+          "Mostrar la",
+          selectInput(inputId = ns("tasas_tipo"),
+                      label = "Tipo de tasa",
+                      choices = c("Persistencia" = "Persistencia",
+                                  "Salida" = "Salida",
+                                  "Entrada" = "Entrada"),
+                      selected = "Persistencia",
+                      multiple = TRUE),
+          "para los"
+        ),
+        filter_preposition(
+          "",
+          selectInput(inputId = ns("tasas_category"),
+                      label = "Categoría",
+                      choices = c("Ocupados" = "Ocupado",
+                                  "Desocupados" = "Desocupado",
+                                  "Inactivos" = "Inactivo"),
+                      selected = "Ocupado"),
+          ""
+        ),
+        filter_preposition(
+          "en los trimestres",
+          selectInput(inputId = ns("tasas_duo"),
+                      label = "Trimestres",
+                      choices = c("Todos los trimestres" = "todos",
+                                  "1-2" = "t1-t2",
+                                  "2-3" = "t2-t3",
+                                  "3-4" = "t3-t4",
+                                  "4-1" = "t4-t1"),
+                      selected = "todos"),
+          ""
+        ),
+        suffix_text = ""
+      ),
+      div(
+        style = "text-align: center; margin: 4px 0 12px 0;",
+        checkboxInput(ns("excluir_int_tasas"),
+                      label = "Excluir período de intervención INDEC (2007-2015)",
+                      value = FALSE)
+      ),
+      card(
+        full_screen = TRUE,
+        min_height = "520px",
+        highchartOutput(ns("tasas_chart"), height = "100%")
+      )
+    ),
+
     bslib::nav_panel(
       title = "Comparar",
       icon = icon("layer-group"),
@@ -236,96 +325,20 @@ mod_cond_act_ui <- function(id) {
         )
       ),
 
+      ### Nota explicativa colapsada en popover sobre info-circle
+      ### (issue #34). Anclada al pie del tab Comparar.
       div(
-        style = "padding: 0 1rem 1rem;",
-        p(em("Nota:"), "Usá la comparación para mirar el mismo dúo trimestral en dos años distintos (ej: pre vs post pandemia) y entender cómo cambió la dinámica de movilidad.")
-      )
-    ),
-
-    bslib::nav_panel(
-      title = "Tasas",
-      icon = icon("chart-line"),
-      filter_query(
-        prefix_text = "",
-        filter_preposition(
-          "Mostrar la",
-          selectInput(inputId = ns("tasas_tipo"),
-                      label = "Tipo de tasa",
-                      choices = c("Persistencia" = "Persistencia",
-                                  "Salida" = "Salida",
-                                  "Entrada" = "Entrada"),
-                      selected = "Persistencia",
-                      multiple = TRUE),
-          "para los"
-        ),
-        filter_preposition(
-          "",
-          selectInput(inputId = ns("tasas_category"),
-                      label = "Categoría",
-                      choices = c("Ocupados" = "Ocupado",
-                                  "Desocupados" = "Desocupado",
-                                  "Inactivos" = "Inactivo"),
-                      selected = "Ocupado"),
-          ""
-        ),
-        filter_preposition(
-          "en los trimestres",
-          selectInput(inputId = ns("tasas_duo"),
-                      label = "Trimestres",
-                      choices = c("Todos los trimestres" = "todos",
-                                  "1-2" = "t1-t2",
-                                  "2-3" = "t2-t3",
-                                  "3-4" = "t3-t4",
-                                  "4-1" = "t4-t1"),
-                      selected = "todos"),
-          ""
-        ),
-        suffix_text = ""
-      ),
-      div(
-        style = "text-align: center; margin: 4px 0 12px 0;",
-        checkboxInput(ns("excluir_int_tasas"),
-                      label = "Excluir período de intervención INDEC (2007-2015)",
-                      value = FALSE)
-      ),
-      card(
-        full_screen = TRUE,
-        min_height = "520px",
-        highchartOutput(ns("tasas_chart"), height = "100%")
-      )
-    ),
-
-    bslib::nav_panel(
-      title = "Película",
-      icon = icon("video"),
-      filtros_pelicula,
-      div(
-        style = "text-align: center; margin: 4px 0 12px 0;",
-        checkboxInput(ns("excluir_int_pelicula"),
-                      label = "Excluir período de intervención INDEC (2007-2015)",
-                      value = FALSE)
-      ),
-      div(
-        style = "text-align: center; margin-bottom: 16px;",
-        actionButton(ns("btn_pop"), "¿Cómo se interpreta el dato?") |>
-          popover(
-            title = "Ejemplo de lectura",
-            p("Si las opciones fijadas son:",
-              br(),
-              strong("Desde:"), "Desocupado",
-              br(),
-              strong("Hacia:"), "Ocupación",
-              br(),
-              "Y el panel en el eje x es", strong("2023_t1-t2"),
-              ", la interpretación sería:",
-              br(), br(),
-              em("Entre la población que se encontraba desocupada en el trimestre 1 del año 2023, el 44% pasó a la Ocupación para el trimestre 2 del mismo año"))
-          )
-      ),
-      card(
-        full_screen = TRUE,
-        min_height = "520px",
-        highchartOutput(ns("line"), height = "100%")
+        style = "text-align: center; padding: 0.5rem 0;",
+        bslib::popover(
+          tags$span(
+            bsicons::bs_icon("info-circle",
+                             style = "color: #405BFF; cursor: help; margin-right: 6px;"),
+            tags$small(style = "color: #405BFF; cursor: help;",
+                       "¿Cómo se interpreta esta comparación?")
+          ),
+          "Usá la comparación para mirar el mismo dúo trimestral en dos años distintos (ej: pre vs post pandemia) y entender cómo cambió la dinámica de movilidad.",
+          placement = "top"
+        )
       )
     )
   )

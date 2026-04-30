@@ -158,6 +158,23 @@ mod_formalidad_ui <- function(id) {
           )
         ),
 
+        ### Value box de población con popover info al lado del título.
+        ### Nota larga colapsada en info-circle (issue #34).
+        value_box(
+          title = tagList(
+            textOutput(ns("pob"), inline = TRUE),
+            bslib::popover(
+              bsicons::bs_icon("info-circle",
+                               style = "color: rgba(255,255,255,0.85); cursor: help; margin-left: 8px; font-size: 0.85em;"),
+              "Las tarjetas se calculan respecto a la categoría seleccionada y a la definición elegida (clásica o ampliada).",
+              placement = "right"
+            )
+          ),
+          value = textOutput(ns("pob_n")),
+          showcase = bs_icon("person-vcard"),
+          p(textOutput(ns("periodo")))
+        ),
+
         ### Sankey + matriz de transición (issue #16 · opción A).
         ### Proporción 5/7: matriz lado derecho con más espacio para que la
         ### tabla NxN se vea completa sin scroll horizontal (issue #19).
@@ -172,33 +189,22 @@ mod_formalidad_ui <- function(id) {
             card_header("Matriz de transición"),
             gt::gt_output(ns("matriz_transicion"))
           )
-        ),
-
-        layout_columns(
-          col_widths = c(4, 8),
-          value_box(
-            title = textOutput(ns("pob")),
-            value = textOutput(ns("pob_n")),
-            showcase = bs_icon("person-vcard"),
-            p(textOutput(ns("periodo")))
-          ),
-          card(
-            card_body(
-              p(em("Nota:"), "Las tarjetas se calculan respecto a la categoría seleccionada y a la definición elegida (clásica o ampliada).")
-            )
-          )
         )
       ),
       bslib::nav_panel(
-        title = "Comparar",
-        icon = icon("layer-group"),
+        title = "Película",
+        icon = icon("video"),
+        filtros_pelicula,
+        div(
+          style = "text-align: center; margin: 4px 0 12px 0;",
+          checkboxInput(ns("excluir_int_pelicula"),
+                        label = "Excluir período de intervención INDEC (2007-2015)",
+                        value = FALSE)
+        ),
         card(
-          class = "text-center",
-          br(), br(),
-          h2("Próximamente", class = "hero-title"),
-          p("La comparación entre dos años para el mismo dúo trimestral va a estar disponible para Formal/Informal en la próxima iteración."),
-          p(em("Por ahora podés usarla en Condición de actividad.")),
-          br(), br()
+          full_screen = TRUE,
+          min_height = "520px",
+          highchartOutput(ns("line"), height = "100%")
         )
       ),
       bslib::nav_panel(
@@ -243,19 +249,15 @@ mod_formalidad_ui <- function(id) {
       ),
 
       bslib::nav_panel(
-        title = "Película",
-        icon = icon("video"),
-        filtros_pelicula,
-        div(
-          style = "text-align: center; margin: 4px 0 12px 0;",
-          checkboxInput(ns("excluir_int_pelicula"),
-                        label = "Excluir período de intervención INDEC (2007-2015)",
-                        value = FALSE)
-        ),
+        title = "Comparar",
+        icon = icon("layer-group"),
         card(
-          full_screen = TRUE,
-          min_height = "520px",
-          highchartOutput(ns("line"), height = "100%")
+          class = "text-center",
+          br(), br(),
+          h2("Próximamente", class = "hero-title"),
+          p("La comparación entre dos años para el mismo dúo trimestral va a estar disponible para Formal/Informal en la próxima iteración."),
+          p(em("Por ahora podés usarla en Condición de actividad.")),
+          br(), br()
         )
       )
     )

@@ -209,10 +209,16 @@ arma_line_chart_areaspline <- function(df_data,
                                        excluir_intervencion = FALSE) {
   ### Excluir período de intervención INDEC (2007-2015) si el usuario
   ### lo pidió. Datos validados oficialmente quedan: 2003-2006 + 2016-actual.
+  ### Después del filtro hay que RECALCULAR isExtremo (los extremos del
+  ### subset filtrado pueden ser otros) y los min/max del eje Y se
+  ### recalculan automáticamente más abajo sobre el df_data filtrado.
   if (isTRUE(excluir_intervencion)) {
     df_data <- df_data |>
       dplyr::filter(!stringr::str_starts(as.character(periodo),
-                                         "200[7-9]|201[0-5]"))
+                                         "200[7-9]|201[0-5]")) |>
+      dplyr::mutate(isExtremo = (weight == max(weight, na.rm = TRUE)) |
+                                (weight == min(weight, na.rm = TRUE)),
+                    .by = to)
   }
 
   ### Highchart con xAxis categórico usa los `unique()` ordenados de los

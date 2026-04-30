@@ -53,7 +53,7 @@ panel_sobre_la_app <- nav_panel(
     div(
       class = "landing-hero",
       tags$a(
-        href = "https://linktr.ee/estacion_r",
+        href = "https://estacion-r.com/",
         tags$img(src = "logos/logo_estacion_r_ancho.png",
                  class = "landing-hero-logo",
                  alt = "Estación R")
@@ -201,7 +201,7 @@ ui <- page_fillable(
       div(
         class = "sidebar-brand",
         tags$a(
-          href = "https://linktr.ee/estacion_r",
+          href = "https://estacion-r.com/",
           tags$img(src = "logos/logo_estacion_r_ancho.png",
                    alt = "Estación R",
                    style = "max-width: 100%; height: auto; margin-bottom: 1rem;")
