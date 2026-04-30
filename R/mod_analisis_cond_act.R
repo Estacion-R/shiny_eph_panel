@@ -101,13 +101,15 @@ mod_cond_act_ui <- function(id) {
       fluidRow(filtros_foto),
       uiOutput(ns("alert_int_foto")),
 
-      ### Tarjetas con tasas destacadas + delta vs año anterior
-      ### (issues #16 + #21).
-      ### Jerarquía visual: Persistencia es el dato principal (es el "100%
-      ### que se mantiene"), va en azul primario. Salida/Entrada son los
-      ### dos contracampos, en estilo neutro con borde para no competir.
+      ### Cuatro tarjetas destacadas: 3 tasas + población base (issues
+      ### #16 + #21 + #34). Jerarquía visual: Persistencia es el dato
+      ### principal (el "100% que se mantiene"), va en azul primario;
+      ### Salida/Entrada/Población son contracampos, con borde neutro
+      ### para no competir. La nota larga sobre interpretación se
+      ### colapsa en un info-circle clickeable al lado del título de
+      ### Población para no robar ancho al Sankey/Matriz.
       layout_columns(
-        col_widths = c(4, 4, 4),
+        col_widths = c(3, 3, 3, 3),
         value_box(
           title = "Persistencia",
           value = textOutput(ns("tasa_persistencia")),
@@ -134,25 +136,22 @@ mod_cond_act_ui <- function(id) {
           p("vinieron de otra categoría"),
           p(textOutput(ns("delta_entrada")),
             style = "font-size: 0.8em; opacity: 0.85; margin-top: 4px;")
-        )
-      ),
-
-      ### Value box de población con popover info al lado del título.
-      ### La nota larga se colapsa en un info-circle clickeable para
-      ### no robar ancho al Sankey/Matriz (issue #34).
-      value_box(
-        title = tagList(
-          textOutput(ns("pob"), inline = TRUE),
-          bslib::popover(
-            bsicons::bs_icon("info-circle",
-                             style = "color: rgba(255,255,255,0.85); cursor: help; margin-left: 8px; font-size: 0.85em;"),
-            "Pasá el mouse sobre el Sankey o la matriz para ver porcentajes precisos. Las tarjetas de arriba se calculan respecto a la categoría seleccionada en el filtro.",
-            placement = "right"
-          )
         ),
-        value = textOutput(ns("pob_n")),
-        showcase = bs_icon("activity"),
-        p(textOutput(ns("periodo")))
+        value_box(
+          title = tagList(
+            textOutput(ns("pob"), inline = TRUE),
+            bslib::popover(
+              bsicons::bs_icon("info-circle",
+                               style = "color: #405BFF; cursor: help; margin-left: 8px; font-size: 0.85em;"),
+              "Pasá el mouse sobre el Sankey o la matriz para ver porcentajes precisos. Las tarjetas de arriba se calculan respecto a la categoría seleccionada en el filtro.",
+              placement = "left"
+            )
+          ),
+          value = textOutput(ns("pob_n")),
+          showcase = bs_icon("activity"),
+          class = "value-box-bordered",
+          p(textOutput(ns("periodo")))
+        )
       ),
 
       ### Sankey + matriz de transición (issue #16 · opción A).

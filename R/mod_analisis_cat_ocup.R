@@ -100,11 +100,11 @@ mod_cat_ocup_ui <- function(id) {
       fluidRow(filtros_foto),
       uiOutput(ns("alert_int_foto")),
 
-      ### Tarjetas con tasas destacadas + delta vs año anterior
-      ### (issues #16 + #21). Jerarquía: Persistencia primary (azul),
-      ### Salida/Entrada con borde neutro.
+      ### Cuatro tarjetas destacadas: 3 tasas + población base. Jerarquía:
+      ### Persistencia primary (azul), Salida/Entrada/Población con borde
+      ### neutro (issues #16 + #21 + #34).
       layout_columns(
-        col_widths = c(4, 4, 4),
+        col_widths = c(3, 3, 3, 3),
         value_box(
           title = "Persistencia",
           value = textOutput(ns("tasa_persistencia")),
@@ -131,24 +131,22 @@ mod_cat_ocup_ui <- function(id) {
           p("vinieron de otra categoría"),
           p(textOutput(ns("delta_entrada")),
             style = "font-size: 0.8em; opacity: 0.85; margin-top: 4px;")
-        )
-      ),
-
-      ### Value box de población con popover info al lado del título.
-      ### Nota larga colapsada en info-circle (issue #34).
-      value_box(
-        title = tagList(
-          textOutput(ns("pob"), inline = TRUE),
-          bslib::popover(
-            bsicons::bs_icon("info-circle",
-                             style = "color: rgba(255,255,255,0.85); cursor: help; margin-left: 8px; font-size: 0.85em;"),
-            "Las tarjetas se calculan respecto a la categoría seleccionada en el filtro. La matriz muestra todas las transiciones del panel.",
-            placement = "right"
-          )
         ),
-        value = textOutput(ns("pob_n")),
-        showcase = bs_icon("person-badge"),
-        p(textOutput(ns("periodo")))
+        value_box(
+          title = tagList(
+            textOutput(ns("pob"), inline = TRUE),
+            bslib::popover(
+              bsicons::bs_icon("info-circle",
+                               style = "color: #405BFF; cursor: help; margin-left: 8px; font-size: 0.85em;"),
+              "Las tarjetas se calculan respecto a la categoría seleccionada en el filtro. La matriz muestra todas las transiciones del panel.",
+              placement = "left"
+            )
+          ),
+          value = textOutput(ns("pob_n")),
+          showcase = bs_icon("person-badge"),
+          class = "value-box-bordered",
+          p(textOutput(ns("periodo")))
+        )
       ),
 
       ### Sankey + matriz de transición (issue #16 · opción A).

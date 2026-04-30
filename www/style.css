@@ -255,6 +255,56 @@
   font-size: 1rem !important;
 }
 
+/* Botón flotante (FAB) abajo a la derecha para alternar tipo de dúo
+   trimestral (consecutivos vs interanuales). Posición fija sobre el
+   contenido. Forma pill expandible: ícono + texto. */
+.fab-duo {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 1040;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: #405BFF;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 999px;
+  padding: 0.7rem 1.1rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  font-family: 'Ubuntu', sans-serif;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(64, 91, 255, 0.35);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+}
+.fab-duo:hover {
+  background-color: #1839F4;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(64, 91, 255, 0.45);
+}
+.fab-duo:focus-visible {
+  outline: 2px solid #EAFF38;
+  outline-offset: 3px;
+}
+.fab-duo svg {
+  width: 1.1rem;
+  height: 1.1rem;
+}
+.fab-duo-label {
+  display: inline;
+}
+/* En pantallas chicas el FAB se reduce a sólo el ícono para no estorbar */
+@media (max-width: 600px) {
+  .fab-duo {
+    padding: 0.85rem;
+    border-radius: 50%;
+  }
+  .fab-duo-label {
+    display: none;
+  }
+}
+
 /* Value boxes Salida/Entrada: estilo neutro con borde azul sutil para
    no competir con la Persistencia (que va en azul primario relleno).
    Esto invierte el patrón anterior donde Salida/Entrada llamaban más

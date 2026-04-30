@@ -236,6 +236,11 @@ ui <- page_fillable(
         title = "Formal / Informal",
         icon = icon("id-card"),
         mod_formalidad_ui("formalidad")
+      ),
+      panel_proximamente(
+        titulo = "Calidad de la muestra",
+        icono_id = "magnifying-glass-chart",
+        descripcion = "Diagnóstico del panel real vs el ideal teórico (50% de la muestra). Va a mostrar el n efectivo en cada dúo trimestral, la atrición por aglomerado y categoría, y la cobertura del subset balanceado. Apunta a hacer transparente la calidad de los indicadores que mostramos en los otros tres análisis."
       )
     ),
 
@@ -298,6 +303,37 @@ ui <- page_fillable(
         )
       )
     )
+  ),
+
+  ### Botón flotante (FAB) abajo a la derecha. Roadmap: alternar entre
+  ### dúos trimestrales consecutivos (T1-T2, T2-T3, etc., mismo año) y
+  ### dúos interanuales (T1 año X vs T1 año X+1). Por ahora va como
+  ### placeholder que abre un popover explicando la idea.
+  bslib::popover(
+    tags$button(
+      class = "fab-duo",
+      type = "button",
+      `aria-label` = "Alternar tipo de dúo",
+      bsicons::bs_icon("calendar-week"),
+      tags$span(class = "fab-duo-label", "Tipo de dúo")
+    ),
+    title = tagList(
+      bsicons::bs_icon("clock-history",
+                       style = "color: #405BFF; margin-right: 6px;"),
+      "Próximamente"
+    ),
+    tags$p(
+      "Esta opción va a permitir alternar el tipo de dúo trimestral del análisis:"
+    ),
+    tags$ul(
+      tags$li(tags$strong("Consecutivos"), " (lo que hay hoy): T1-T2, T2-T3, T3-T4, T4-T1 dentro del mismo año o entre años contiguos."),
+      tags$li(tags$strong("Interanuales"), " (próximamente): T1 año X vs T1 año X+1, para neutralizar la estacionalidad y leer cambios anuales en la misma persona.")
+    ),
+    tags$p(
+      tags$em("Útil cuando se quiere separar el efecto estacional del cambio estructural."),
+      style = "font-size: 0.9em; color: #555;"
+    ),
+    placement = "top"
   )
 )
 
