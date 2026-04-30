@@ -70,14 +70,19 @@
 }
 
 /* nav_menu dentro de un sidebar (navset_pill_list) por default
-   renderiza un dropdown Bootstrap flotante (popup absoluto). En sidebar
-   lateral queremos comportamiento inline tipo accordion: al click el
-   submenú se expande verticalmente dentro de la columna del sidebar.
+   renderiza un dropdown Bootstrap flotante (popup absoluto posicionado
+   con Popper.js). En sidebar lateral queremos comportamiento inline
+   tipo accordion: al click el submenú se expande verticalmente y empuja
+   los items siguientes hacia abajo.
 
-   Truco: forzar position:static y full width al .dropdown-menu, sin
-   borde ni sombra (para que parezca parte del sidebar). */
-.nav-pills .dropdown-menu {
+   Hay que anular position, transform Y inset de Popper, todos con
+   atributos `data-bs-popper` y selector .show para garantizar override. */
+.nav-pills .dropdown-menu,
+.nav-pills .dropdown-menu.show,
+.nav-pills .dropdown-menu[data-bs-popper] {
   position: static !important;
+  transform: none !important;
+  inset: auto !important;
   float: none !important;
   width: 100% !important;
   min-width: 100% !important;

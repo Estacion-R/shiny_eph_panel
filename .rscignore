@@ -17,3 +17,13 @@ ETL/03-update_data.R
 data_output/paneles_eph_Desocupado.csv
 data_output/paneles_eph_Inactivo.csv
 data_output/paneles_eph_Ocupado.csv
+
+# Screenshots de revisiones UX con Playwright (no son parte de la app)
+.playwright-mcp/
+
+# Corpus de documentación EPH (PDFs + textos extraídos). No se usa en
+# runtime de la app, agregaría ~50 MB al bundle innecesariamente.
+documentacion_eph/
+
+# Backlog (markdown, no parte de la app)
+BACKLOG.md

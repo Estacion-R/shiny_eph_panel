@@ -30,7 +30,7 @@ glosario_vars <- tibble::tribble(
 panel_glosario <- bslib::nav_panel(
   title = "Glosario",
   icon = icon("book-open"),
-  card(
+  bslib::card(
     h2("Glosario de variables EPH", class = "hero-title"),
     p(
       "Resumen de las variables del microdato de la EPH-INDEC utilizadas en esta aplicación. ",
@@ -51,7 +51,7 @@ panel_glosario <- bslib::nav_panel(
 panel_definiciones <- bslib::nav_panel(
   title = "Definiciones",
   icon = icon("list-ul"),
-  card(
+  bslib::card(
     h2("Definiciones metodológicas", class = "hero-title"),
     p("Conceptos clave para interpretar los indicadores de esta aplicación."),
     br(),

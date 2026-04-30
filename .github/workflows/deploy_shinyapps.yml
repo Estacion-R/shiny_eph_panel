@@ -9,12 +9,14 @@ on:
     paths:
       - 'app.R'
       - 'ETL/**'
+      - 'R/**'
       - 'www/**'
       - 'data_raw/**'
       - 'data_output/**'
       - 'init.R'
       - 'run.R'
       - '.rscignore'
+      - '.github/workflows/deploy_shinyapps.yml'
   workflow_dispatch:
 
 # Evita que dos deploys corran en paralelo (cancela el anterior si llega push nuevo)
@@ -35,6 +37,10 @@ jobs:
         uses: r-lib/actions/setup-r@v2
         with:
           use-public-rspm: true
+          # Pin a 4.5 hasta que shinyapps.io soporte R 4.6 (release abr-2026).
+          # Sin este pin, setup-r toma la última disponible (4.6) y el deploy
+          # falla con "Unsupported R version 4.6.0 for operating system jammy".
+          r-version: '4.5.3'
 
       - name: Instalar dependencias del sistema
         run: |
