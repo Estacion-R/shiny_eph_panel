@@ -54,6 +54,7 @@ panel_sobre_la_app <- nav_panel(
       class = "landing-hero",
       tags$a(
         href = "https://estacion-r.com/",
+        target = "_blank",
         tags$img(src = "logos/logo_estacion_r_ancho.png",
                  class = "landing-hero-logo",
                  alt = "Estación R")
@@ -159,15 +160,18 @@ panel_proximamente <- function(titulo, icono_id, descripcion) {
   )
 }
 
-panel_info <- nav_menu(
-  title = "+Info",
-  icon = icon("circle-question"),
-  nav_item(a("Documento metodológico: La nueva EPH",
-             href = "https://www.indec.gob.ar/ftp/cuadros/sociedad/metodologia_eph_continua.pdf",
-             target = "_blank")),
-  nav_item(a("Paquete {eph}",
-             href = "https://docs.ropensci.org/eph/",
-             target = "_blank"))
+### Items de "+Info" que ahora viven dentro del nav_menu "Metadata"
+### (los links externos se exponen como nav_item para que el dropdown
+### del menú los muestre como entradas con icono).
+nav_item_doc_indec <- nav_item(
+  a(icon("file-pdf"), " Documento metodológico INDEC",
+    href = "https://www.indec.gob.ar/ftp/cuadros/sociedad/metodologia_eph_continua.pdf",
+    target = "_blank")
+)
+nav_item_paquete_eph <- nav_item(
+  a(icon("r-project"), " Paquete {eph}",
+    href = "https://docs.ropensci.org/eph/",
+    target = "_blank")
 )
 
 
@@ -196,12 +200,13 @@ ui <- page_fillable(
     well = FALSE,
 
     ### Branding + título de la app dentro del sidebar.
-    ### Usa el PNG de la guía de identidad (ver nota en panel_sobre_la_app).
+    ### Link al sitio de Estación R en nueva pestaña.
     nav_item(
       div(
         class = "sidebar-brand",
         tags$a(
           href = "https://estacion-r.com/",
+          target = "_blank",
           tags$img(src = "logos/logo_estacion_r_ancho.png",
                    alt = "Estación R",
                    style = "max-width: 100%; height: auto; margin-bottom: 1rem;")
@@ -209,16 +214,9 @@ ui <- page_fillable(
       )
     ),
 
-    ### Issue #31: agrupar Sobre la app + Glosario + Definiciones bajo
-    ### un nav_menu "Metadata" para tener documentación consultable sin
-    ### salir de la app.
-    nav_menu(
-      title = "Metadata",
-      icon = icon("book"),
-      panel_sobre_la_app,
-      panel_glosario,
-      panel_definiciones
-    ),
+    ### "Sobre la app" como landing: primer nav_panel del sidebar, fuera
+    ### de cualquier nav_menu, para que sea la pestaña activa al cargar.
+    panel_sobre_la_app,
 
     ### Análisis de panel: agrupados bajo un nav_menu colapsable.
     nav_menu(
@@ -241,7 +239,36 @@ ui <- page_fillable(
       )
     ),
 
-    panel_info,
+    ### Análisis transversal (no panel): la "foto" del mercado de trabajo
+    ### en un trimestre puntual, sin seguir a las mismas personas en el
+    ### tiempo. Roadmap: tasas básicas (actividad/empleo/desocupación),
+    ### distribución por categoría ocupacional, calidad del empleo. Por
+    ### ahora va como placeholder.
+    nav_menu(
+      title = "Análisis transversal",
+      icon = icon("camera"),
+      panel_proximamente(
+        titulo = "Indicadores básicos",
+        icono_id = "chart-column",
+        descripcion = "Tasas de actividad, empleo, desocupación y subocupación para un trimestre puntual."
+      ),
+      panel_proximamente(
+        titulo = "Calidad del empleo",
+        icono_id = "briefcase",
+        descripcion = "Distribución del empleo por categoría ocupacional y formalidad en el corte transversal."
+      )
+    ),
+
+    ### Metadata: documentación consultable sin salir de la app
+    ### (Glosario + Definiciones) y links externos (issue #31).
+    nav_menu(
+      title = "Metadata",
+      icon = icon("book"),
+      panel_glosario,
+      panel_definiciones,
+      nav_item_doc_indec,
+      nav_item_paquete_eph
+    ),
 
     ### Footer con créditos, fuente y feedback. Como nav_item al pie del
     ### sidebar para que esté siempre visible sin estorbar la navegación.
