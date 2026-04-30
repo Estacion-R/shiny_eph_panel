@@ -1,15 +1,35 @@
 # init.R
 #
-# Example R code to install packages if not already installed
+# Lista de paquetes que la app necesita en runtime. Se instalan en la VM
+# del workflow de GH Actions ANTES de que rsconnect haga el snapshot,
+# para que `renv::dependencies()` los detecte y los incluya en el
+# manifest del bundle subido a shinyapps.io.
 #
-my_packages = c("dplyr", "eph", "shiny", "highcharter", "arrow", "glue", 
-                "bslib", "bsicons", "gghighlight", "waiter")
+# Si falta uno acá, el deploy termina en "success" pero la app arranca
+# con "Error in loadNamespace(x) : there is no package called 'X'" y
+# devuelve HTTP 500.
+#
+# Mantener esta lista sincronizada con: ETL/00-libraries.R (library()) +
+# cualquier `pkg::fn()` referenciado en R/.
 
-install_if_missing = function(p) {
+my_packages <- c(
+  # core shiny + theming
+  "shiny", "bslib", "bsicons", "brand.yml", "thematic",
+  # tidyverse
+  "dplyr", "tidyr", "purrr", "stringr", "tibble", "glue",
+  # io / formatos
+  "arrow", "markdown",
+  # visualización
+  "highcharter", "gghighlight", "ragg", "gt",
+  # utilidades shiny
+  "waiter", "imola",
+  # dominio EPH
+  "eph"
+)
+
+install_if_missing <- function(p) {
   if (p %in% rownames(installed.packages()) == FALSE) {
     install.packages(p)
   }
 }
 invisible(sapply(my_packages, install_if_missing))
-
-invisible(install.packages("eph"))
