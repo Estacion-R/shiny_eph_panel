@@ -338,7 +338,6 @@ mod_formalidad_server <- function(id) {
         df_panel <- armo_base_panel(
           anio_0 = anio_ant, trimestre_0 = trim_ant,
           anio_1 = anio_post, trimestre_1 = trim_post,
-          df = df_eph_full,
           variables = vars_panel_eph
         )
 
@@ -364,7 +363,6 @@ mod_formalidad_server <- function(id) {
         armo_base_panel(
           anio_0 = anio_ant, trimestre_0 = trim_ant,
           anio_1 = anio_post, trimestre_1 = trim_post,
-          df = df_eph_full,
           variables = vars_panel_eph
         )
       })
@@ -405,7 +403,6 @@ mod_formalidad_server <- function(id) {
         df_prev <- armo_base_panel(
           anio_0 = anio_prev, trimestre_0 = trim_ant,
           anio_1 = anio_post_prev, trimestre_1 = trim_post,
-          df = df_eph_full,
           variables = vars_panel_eph
         )
         ### Para definición ampliada en años pre-2023, NA en formalidad_ampliada.

@@ -1,33 +1,28 @@
 
 source("ETL/00-libraries.R")
 
-### Variables del microdato que usa la app.
-### Las 9 originales soportan el análisis de Condición de actividad.
-### CAT_OCUP, PP07H/J/K se sumaron para los análisis de Categoría ocupacional
-### y Formal/Informal clásica (Fases 3-4 del epic #6).
-### PP05I y PP05K se sumaron en #15: aportes jubilatorios propios y emisión
-### de facturas, necesarios para la definición ampliada de informalidad
-### (cuenta propia y patrones, EPH 2023+). Estas dos vars no existen en
-### trimestres pre-2023; quedan NA para esos períodos.
-vars_eph <- c("CODUSU", "NRO_HOGAR", "COMPONENTE", "ANO4", "TRIMESTRE",
-              "CH04", "CH06", "ESTADO", "PONDERA",
-              "CAT_OCUP", "PP07H", "PP07J", "PP07K",
-              "PP05I", "PP05K")
-
-### Carga única del microdato como Arrow Table (columnar comprimido).
-### Mantener el dataset como Arrow en memoria reduce el footprint de
-### ~570 MB (tibble en R) a ~50-80 MB. Los filtros y selecciones de
-### los módulos operan via dplyr lazy sobre Arrow y `armo_base_panel()`
-### hace collect() después de filtrar el subset chico que necesita
-### (2 trimestres, ~10k filas), evitando OOM en shinyapps.io free tier.
+### --- Estrategia de carga de datos para runtime ----------------------------
 ###
-### La lógica de vars derivadas (formalidad clásica + ampliada) está
-### centralizada en agrega_vars_derivadas() (99-functions.R) y soporta
-### tanto tibbles como Arrow Tables porque usa dplyr verbs.
-df_eph_full <- arrow::read_parquet("data_raw/df_eph.parquet",
-                                   as_data_frame = FALSE) |>
-  dplyr::select(dplyr::all_of(vars_eph)) |>
-  agrega_vars_derivadas()
+### Antes (hasta 2026-04-30): cargábamos df_eph_full (microdato 740k filas)
+### como Arrow Table y armo_base_panel() filtraba + organize_panels() en
+### cada cálculo. Esto sumaba ~570 MB de RAM (tibble) y rompía el plan
+### free de shinyapps.io con OOM.
+###
+### Ahora: pre-computamos los paneles armados (output de armo_base_panel)
+### para todos los dúos válidos en ETL/09-build_paneles_runtime.R y los
+### guardamos en data_output/panel_runtime.parquet (~21 MB en disco). En
+### runtime sólo cargamos ese parquet como Arrow Table y armo_base_panel
+### filtra por (anio_0, trim_0) → collect(). Footprint mucho menor y la
+### lógica de los módulos no cambia.
+
+### Panel runtime pre-computado: superset de variables que necesitan los
+### 3 análisis (cond_act, cat_ocup, formalidad). Cols clave: anio_0,
+### trim_0 para filtrar el dúo + las cols del panel armado (CODUSU,
+### ESTADO, ESTADO_t1, CAT_OCUP, CAT_OCUP_t1, formalidad, formalidad_t1,
+### formalidad_ampliada, formalidad_ampliada_t1, PONDERA, PONDERA_t1, ...).
+### Ver ETL/09-build_paneles_runtime.R para el script generador.
+df_panel_runtime <- arrow::read_parquet("data_output/panel_runtime.parquet",
+                                        as_data_frame = FALSE)
 
 ### Histórico pre-computado por data_generator.R
 df_cond_act <- arrow::read_csv_arrow("data_output/panel_cond_act_historico.csv")
@@ -80,13 +75,23 @@ df_tasas_formalidad      <- cargar_tasas_csv("data_output/tasas_formalidad_histo
 df_tasas_formalidad_amp  <- cargar_tasas_csv("data_output/tasas_formalidad_ampliada_historico.csv")
 
 ### Rango de períodos disponibles (insumo para los selectInput dinámicos).
-### Se exponen como variables globales para usarse en 02-transform.R y app.R.
-### collect() materializa el subset chico (~80 filas) a tibble porque más
-### abajo se accede vía $ANO4 que no funciona sobre Arrow Table.
-periodos_disponibles <- df_eph_full |>
-  dplyr::distinct(ANO4, TRIMESTRE) |>
-  dplyr::arrange(ANO4, TRIMESTRE) |>
-  dplyr::collect()
+### Se deriva del panel_runtime: cualquier (anio_0, trim_0) es un trimestre
+### que existe como inicio de algún dúo, y los t1 también existen como t0
+### de otro dúo (excepto el último). Hacemos union de ambos pares para
+### cubrir todos los trimestres del microdato sin tener que cargarlo.
+periodos_disponibles_t0 <- df_panel_runtime |>
+  dplyr::distinct(anio_0, trim_0) |>
+  dplyr::collect() |>
+  dplyr::rename(ANO4 = anio_0, TRIMESTRE = trim_0)
+periodos_disponibles_t1 <- df_panel_runtime |>
+  dplyr::distinct(ANO4_t1, TRIMESTRE_t1) |>
+  dplyr::collect() |>
+  dplyr::rename(ANO4 = ANO4_t1, TRIMESTRE = TRIMESTRE_t1)
+periodos_disponibles <- dplyr::bind_rows(periodos_disponibles_t0,
+                                         periodos_disponibles_t1) |>
+  dplyr::distinct() |>
+  dplyr::arrange(ANO4, TRIMESTRE)
+rm(periodos_disponibles_t0, periodos_disponibles_t1)
 
 anios_disponibles <- sort(unique(periodos_disponibles$ANO4))
 anio_max_disponible <- max(anios_disponibles)

@@ -218,16 +218,33 @@ duos_disponibles_por_anio <- function(anio, periodos_disponibles) {
 ### aparecen en ambos trimestres consecutivos. Por default panteliza ESTADO
 ### + PONDERA (Condición de actividad). El parámetro `variables` permite
 ### incluir más columnas para análisis adicionales (CAT_OCUP, formalidad, etc.).
-armo_base_panel <- function(anio_0, trimestre_0, anio_1, trimestre_1,
-                            df = df_eph_full,
-                            variables = c("ESTADO", "PONDERA")){
+armo_base_panel <- function(anio_0, trimestre_0, anio_1 = NULL, trimestre_1 = NULL,
+                            df = NULL,
+                            variables = NULL){
 
-  ### Filtra el microdato cacheado en memoria por 01-extract.R.
-  ### El argumento df permite testear con bases alternativas sin tocar el global.
-  ### `dplyr::collect()` materializa cada subset filtrado a tibble porque
-  ### `eph::organize_panels()` espera data.frames (no Arrow Tables). Como
-  ### df_eph_full ahora se carga como Arrow Table para reducir RAM
-  ### (ver ETL/01-extract.R), el filter() es lazy hasta el collect.
+  ### Modo runtime (default): usa el panel pre-computado en
+  ### data_output/panel_runtime.parquet (cargado en 01-extract.R como
+  ### df_panel_runtime). Solo filtra por (anio_0, trim_0) y devuelve
+  ### el panel ya armado. Footprint mínimo en RAM, ideal para shinyapps.io.
+  ###
+  ### Modo legacy (cuando se pasa `df`): mantiene la lógica original con
+  ### el microdato + organize_panels(). Lo usan los scripts ETL batch
+  ### (05-build, 07-build, 08-build) que regeneran los CSV históricos.
+  if (is.null(df)) {
+    if (!exists("df_panel_runtime", envir = .GlobalEnv)) {
+      stop("df_panel_runtime no disponible. Ejecutar ETL/01-extract.R o ",
+           "pasar `df` explícito (microdato).")
+    }
+    return(
+      get("df_panel_runtime", envir = .GlobalEnv) |>
+        dplyr::filter(anio_0 == !!anio_0, trim_0 == !!trimestre_0) |>
+        dplyr::select(-anio_0, -trim_0) |>
+        dplyr::collect()
+    )
+  }
+
+  ### Modo legacy: filtra el microdato y arma el panel via organize_panels().
+  if (is.null(variables)) variables <- c("ESTADO", "PONDERA")
   list_eph_panel <- list(
     df |> filter(ANO4 == anio_0 & TRIMESTRE == trimestre_0) |> dplyr::collect(),
     df |> filter(ANO4 == anio_1 & TRIMESTRE == trimestre_1) |> dplyr::collect())

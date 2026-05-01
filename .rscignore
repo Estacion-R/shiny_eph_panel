@@ -22,6 +22,13 @@ data_output/paneles_eph_Ocupado.csv
 data_raw/df_eph.parquet.bak
 data_raw/df_eph.parquet.bak2
 
+# Microdato completo (~40 MB). En runtime ya no se usa: la app levanta
+# data_output/panel_runtime.parquet (~21 MB) que tiene los paneles ya
+# armados para todos los dúos válidos. El microdato se mantiene en disco
+# (versionado en git LFS) para poder regenerar el panel runtime con
+# ETL/09-build_paneles_runtime.R cuando hay nuevos trimestres.
+data_raw/df_eph.parquet
+
 # Screenshots de revisiones UX con Playwright (no son parte de la app)
 .playwright-mcp/
 
@@ -31,3 +38,8 @@ documentacion_eph/
 
 # Backlog (markdown, no parte de la app)
 BACKLOG.md
+
+# Sandbox de prototipos exploratorios (issues de idea, viz preliminares, etc.)
+# No se despliega: los scripts de pruebas/ corren localmente y guardan
+# outputs en pruebas/<nombre>/output/.
+pruebas/
