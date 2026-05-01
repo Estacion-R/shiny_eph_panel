@@ -14,3 +14,7 @@ data_raw/df_eph.parquet.bak2
 
 # Screenshots de Playwright durante revisiones UX (no se commitean)
 .playwright-mcp/
+
+# Credenciales y metadata de deploy de rsconnect (token + secret).
+# La info útil del deploy (URL, account) ya está en ESTADO.md / README.
+rsconnect/
