@@ -21,11 +21,13 @@
 
 ### Measurement ID del stream GA4 dedicado a la app shiny_eph_panel
 ### (property compartida con estacion-r.com).
-GA4_MEASUREMENT_ID <- if (nzchar(Sys.getenv("GA4_DISABLE", ""))) {
-  ""
-} else {
-  "G-NQPB4BHWMM"
-}
+###
+### NOTA STAGING: en el branch `staging` el ID queda vacío para no
+### contaminar las métricas de prod con tráfico de testing. Al mergear
+### `staging → master` hay que conservar la versión de master de este
+### archivo (o restaurar el ID después del merge):
+###   git checkout master -- R/utils_analytics.R
+GA4_MEASUREMENT_ID <- ""
 
 
 ### Indica si tenemos un ID válido configurado. Cuando es FALSE, los

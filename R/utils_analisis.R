@@ -40,13 +40,24 @@ arma_matriz_transicion <- function(df_panel, var, etiquetas) {
     out
   }
 
+  ### Forzar el orden de filas y columnas según `etiquetas` (no alfabético
+  ### ni por orden de aparición en los datos). Permite, por ejemplo, mostrar
+  ### Ocupados / Desocupados / Inactivos / Trab. familiares en ese orden
+  ### consistente entre módulos. pivot_wider respeta el orden del factor.
+  niveles_orden <- remap(etiquetas)
+
   df_prep |>
     dplyr::transmute(
-      from = remap(stringr::str_replace(ESTADO, "_tant$", "")),
-      to   = remap(stringr::str_replace(ESTADO_t1, "_tpost$", "")),
+      from = factor(remap(stringr::str_replace(ESTADO, "_tant$", "")),
+                    levels = niveles_orden),
+      to   = factor(remap(stringr::str_replace(ESTADO_t1, "_tpost$", "")),
+                    levels = niveles_orden),
       porc = porc_base
     ) |>
-    tidyr::pivot_wider(names_from = to, values_from = porc, values_fill = 0)
+    dplyr::arrange(from, to) |>
+    tidyr::pivot_wider(names_from = to, values_from = porc, values_fill = 0,
+                       names_expand = TRUE) |>
+    dplyr::mutate(from = as.character(from))
 }
 
 
@@ -267,8 +278,9 @@ arma_line_chart_areaspline <- function(df_data,
     if (lado == "ini") matches[1] - 1L else matches[length(matches)] - 1L
   }
 
-  ### PlotBand pandemia COVID-19 (2020).
-  idx_pand_ini <- buscar_idx("2020_t1-t2", "2020", "ini")
+  ### PlotBand pandemia COVID-19. Extendido al dúo 2019_t4-t1 (= 2019-T4
+  ### → 2020-T1) para incluir el último corte previo al confinamiento ASPO.
+  idx_pand_ini <- buscar_idx("2019_t4-t1", "2019", "fin")
   idx_pand_fin <- buscar_idx("2020_t3-t4", "2020", "fin")
 
   ### PlotBand período de intervención INDEC (issue #20).
@@ -308,15 +320,50 @@ arma_line_chart_areaspline <- function(df_data,
     )))
   }
 
-  highcharter::hchart(df_data, "areaspline",
-                      highcharter::hcaes(periodo, weight, group = to)) |>
+  ### Construir nested categories: año (parent) + dúo trimestral (child).
+  ### Highcharts soporta categorías agrupadas pasando una lista de objetos
+  ### {name: <año>, categories: [<duos>]}. Esto produce el efecto de doble
+  ### leyenda en el eje X sin tener que rotar el texto.
+  ###
+  ### Como las categorías hijas son SOLO el dúo (sin año), los datos también
+  ### tienen que dejar de referenciar el periodo completo "YYYY_tA-tB" y
+  ### pasar a usar índices posicionales. Por eso pasamos `data` como vector
+  ### de y values en orden de las categorías aplanadas.
+  parsed <- stringr::str_match(periodos_visibles,
+                               "^(\\d{4})_(t\\d-t\\d)$")
+  anios_seq <- parsed[, 2]
+  duos_seq  <- parsed[, 3]
+
+  categorias_nested <- lapply(unique(anios_seq), function(a) {
+    list(name = a,
+         categories = as.list(duos_seq[anios_seq == a]))
+  })
+
+  ### Datos por serie: para cada `to` (categoría destino), un vector de
+  ### y values en el orden exacto de periodos_visibles. Cada punto se
+  ### emite como objeto {y, isExtremo} para que el filter de dataLabels
+  ### siga funcionando.
+  df_orden <- df_data |>
+    dplyr::mutate(periodo = as.character(periodo)) |>
+    dplyr::arrange(match(periodo, periodos_visibles))
+
+  series_lista <- df_orden |>
+    dplyr::group_split(to) |>
+    lapply(function(s) {
+      list(
+        name = as.character(unique(s$to)),
+        data = lapply(seq_len(nrow(s)), function(i) {
+          list(y = unname(s$weight[i]),
+               isExtremo = isTRUE(s$isExtremo[i]))
+        })
+      )
+    })
+
+  hc <- highcharter::highchart() |>
+    highcharter::hc_chart(type = "areaspline", zoomType = "x") |>
     highcharter::hc_add_theme(hc_theme_estacion_r) |>
     ### Paleta diferenciada para line charts con 3+ series (issue #26).
-    ### Evita repetir azul (en otro tono también) y mantiene identidad
-    ### con azul Estación R como primer color. Naranja y amarillo
-    ### Estación R como acentos. Verde como cuarto color.
     highcharter::hc_colors(c("#405BFF", "#FF7043", "#EAFF38", "#7CB342")) |>
-    highcharter::hc_chart(zoomType = "x") |>
     highcharter::hc_plotOptions(
       areaspline = list(
         fillOpacity = 0.18,
@@ -335,11 +382,18 @@ arma_line_chart_areaspline <- function(df_data,
       )
     ) |>
     highcharter::hc_xAxis(
-      title = list(text = NULL),
-      tickInterval = tick_interval,
+      title    = list(text = NULL),
+      categories = categorias_nested,
       plotBands = plot_bands,
-      labels = list(rotation = -45, style = list(fontSize = "0.85em"))
-    ) |>
+      labels   = list(rotation = 0,
+                      style = list(fontSize = "0.8em"))
+    )
+
+  for (s in series_lista) {
+    hc <- hc |> highcharter::hc_add_series(name = s$name, data = s$data)
+  }
+
+  hc |>
     highcharter::hc_yAxis(
       title = list(text = "% del total"),
       labels = list(format = "{value}%"),
