@@ -144,6 +144,28 @@ sankey_label_legible <- function(codigos) {
 }
 
 
+### Construye la lista de nodos para forzar el orden vertical de las
+### categorías en un Sankey de Highcharts. Sin esto, el Sankey ordena
+### los nodos por suma de flujo (mayor arriba), lo que hace que el orden
+### cambie dependiendo del dúo trimestral elegido. Resultado: jerarquía
+### visual inestable y comparaciones difíciles entre paneles.
+###
+### @param categorias_legibles vector char con las categorías ya legibles
+###   (ej: c("Ocupados", "Desocupados", "Inactivos", "Trab. familiares")).
+###   El orden del vector define el orden vertical de arriba hacia abajo.
+### @return lista compatible con hc_plotOptions(sankey = list(nodes = ...))
+sankey_nodes_orden <- function(categorias_legibles) {
+  c(
+    lapply(categorias_legibles, function(cat) {
+      list(id = paste0(cat, " (t0)"), column = 0)
+    }),
+    lapply(categorias_legibles, function(cat) {
+      list(id = paste0(cat, " (t1)"), column = 1)
+    })
+  )
+}
+
+
 ### Banner reactivo de aviso cuando el panel seleccionado cae dentro
 ### del período de intervención INDEC (ene-2007 a dic-2015). Se muestra
 ### debajo del filter_query en Foto y Comparar para alertar sobre la

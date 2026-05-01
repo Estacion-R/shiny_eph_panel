@@ -117,18 +117,33 @@ mod_formalidad_ui <- function(id) {
 
   tagList(
     toggle_definicion,
-    bslib::navset_card_tab(
+    bslib::navset_card_underline(
       bslib::nav_panel(
         title = "Foto",
         icon = icon("camera-retro"),
         fluidRow(filtros_foto),
         uiOutput(ns("alert_int_foto")),
 
-        ### Cuatro tarjetas destacadas: 3 tasas + población base. Jerarquía:
-        ### Persistencia primary (azul), Salida/Entrada/Población con borde
-        ### neutro (issues #16 + #21 + #34).
+        ### Cuatro tarjetas destacadas: población base (1ra, define el 100%)
+        ### + 3 tasas. Jerarquía: Persistencia primary (azul), las otras 3
+        ### con borde neutro (issues #16 + #21 + #34).
         layout_columns(
           col_widths = c(3, 3, 3, 3),
+          value_box(
+            title = tagList(
+              textOutput(ns("pob"), inline = TRUE),
+              bslib::popover(
+                bsicons::bs_icon("info-circle",
+                                 style = "color: #405BFF; cursor: help; margin-left: 8px; font-size: 0.85em;"),
+                "Las tarjetas de la derecha se calculan respecto a esta población, según la definición elegida (clásica o ampliada).",
+                placement = "right"
+              )
+            ),
+            value = textOutput(ns("pob_n")),
+            showcase = bs_icon("person-vcard"),
+            class = "value-box-bordered",
+            p(textOutput(ns("periodo")))
+          ),
           value_box(
             title = "Persistencia",
             value = textOutput(ns("tasa_persistencia")),
@@ -155,21 +170,6 @@ mod_formalidad_ui <- function(id) {
             p("vinieron de otra categoría"),
             p(textOutput(ns("delta_entrada")),
               style = "font-size: 0.8em; opacity: 0.85; margin-top: 4px;")
-          ),
-          value_box(
-            title = tagList(
-              textOutput(ns("pob"), inline = TRUE),
-              bslib::popover(
-                bsicons::bs_icon("info-circle",
-                                 style = "color: #405BFF; cursor: help; margin-left: 8px; font-size: 0.85em;"),
-                "Las tarjetas se calculan respecto a la categoría seleccionada y a la definición elegida (clásica o ampliada).",
-                placement = "left"
-              )
-            ),
-            value = textOutput(ns("pob_n")),
-            showcase = bs_icon("person-vcard"),
-            class = "value-box-bordered",
-            p(textOutput(ns("periodo")))
           )
         ),
 
@@ -504,6 +504,9 @@ mod_formalidad_server <- function(id) {
             "Panel {ifelse(trim_ant %in% 1:3, paste0(anio_ant, ' - ', 'trimestre ', trim_ant, ' y ', trim_post),
           paste0(anio_ant, ' - ', 'trimestre ', trim_ant, ' y ', anio_ant + 1, ' trimestre ', trim_post))}")) |>
           hc_caption(text = paste("Fuente: Elaboración propia en base a la EPH-INDEC.", caption_def)) |>
+          hc_plotOptions(sankey = list(
+            nodes = sankey_nodes_orden(c("Formales", "Informales"))
+          )) |>
           hc_add_theme(hc_theme_estacion_r)
       })
 
