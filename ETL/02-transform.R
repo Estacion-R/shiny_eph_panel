@@ -1,7 +1,5 @@
 ### Componentes UI compartidos y prep de datos del histórico.
 ### Las librerías shiny/dplyr ya vienen cargadas desde 00-libraries.R.
-### markdown se mantiene por includeMarkdown() de Shiny (uso futuro).
-library(markdown)
 
 
 ### Helper: ordena períodos cronológicamente como factor.

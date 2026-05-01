@@ -12,16 +12,20 @@
 # Mantener esta lista sincronizada con: ETL/00-libraries.R (library()) +
 # cualquier `pkg::fn()` referenciado en R/.
 
+### Lista mínima necesaria. Reducida agresivamente para mantener el
+### footprint de RAM bajo el límite del plan free de shinyapps.io.
+### Removidos: ggplot2, gghighlight (solo en data_viz.R local), thematic,
+### ragg, markdown, imola.
 my_packages <- c(
   # core shiny + theming
-  "shiny", "bslib", "bsicons", "brand.yml", "thematic",
-  # tidyverse
+  "shiny", "bslib", "bsicons", "brand.yml",
+  # tidyverse mínimo
   "dplyr", "tidyr", "purrr", "stringr", "tibble", "glue",
   # io / formatos
-  "arrow", "markdown",
+  "arrow",
   # visualización
-  "highcharter", "gghighlight", "ragg", "gt",
-  # utilidades shiny (imola removido: archivado en CRAN y no se usaba)
+  "highcharter", "gt",
+  # utilidades shiny
   "waiter",
   # dominio EPH
   "eph"

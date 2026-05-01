@@ -21,8 +21,9 @@ waiting_screen <- tagList(
   h4("Cargando datos...")
 )
 
-options(shiny.useragg = TRUE)
-thematic_shiny(font = "auto")
+### thematic_shiny() y options(shiny.useragg) removidos para reducir RAM.
+### Si vuelve a hacer falta sincronizar tema de ggplot con bslib, reactivar
+### library(thematic) en ETL/00-libraries.R y la llamada acá.
 
 
 ### --------------------------------------------------------------------------
