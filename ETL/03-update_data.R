@@ -213,6 +213,13 @@ regenerar_panel_historico(
   desde_panel = "2023-T4"
 )
 
+### Histórico de calidad del panel: % de personas-panel encontradas vs
+### total de la muestra t0, por dúo trimestral (issue #36).
+regenerar_calidad_panel(
+  path_csv     = "data_output/calidad_panel_pct_historico.csv",
+  df_microdato = df_eph_full
+)
+
 
 ### -----------------------------------------------------------------------
 ### 6. Escribir lista de períodos nuevos para CI

@@ -377,6 +377,100 @@ armo_tabla_sankey <- function(table, categoria){
 # }
 
 
+### Regenera incrementalmente el histórico de calidad del panel: para cada
+### dúo trimestral (t0 → t1) calcula cuántas personas de la muestra t0
+### aparecen también en t1 (panel matched), tanto en filas como ponderado.
+###
+### Replica el patrón idempotente de regenerar_panel_historico(): si el
+### CSV existe, agrega solo dúos faltantes; si no, lo crea completo.
+###
+### @param path_csv ruta al CSV histórico (ej "data_output/calidad_panel_pct_historico.csv")
+### @param df_microdato tibble con el microdato (necesita ANO4, TRIMESTRE,
+###   ESTADO, PONDERA, CODUSU, NRO_HOGAR, COMPONENTE).
+###
+### Schema del CSV:
+###   periodo, anio_0, trim_0, anio_1, trim_1,
+###   n_t0, pondera_t0, n_panel, pondera_panel,
+###   pct_encontrado_n, pct_encontrado_pondera
+regenerar_calidad_panel <- function(path_csv, df_microdato) {
+
+  hist_existente <- if (file.exists(path_csv)) {
+    readr::read_csv(path_csv, show_col_types = FALSE)
+  } else {
+    tibble::tibble(periodo = character())
+  }
+
+  periodos_existentes <- if (nrow(hist_existente) > 0) {
+    unique(hist_existente$periodo)
+  } else {
+    character(0)
+  }
+
+  ### Mismo cómputo de dúos válidos que regenerar_panel_historico().
+  duos_posibles <- df_microdato |>
+    dplyr::distinct(ANO4, TRIMESTRE) |>
+    dplyr::arrange(ANO4, TRIMESTRE) |>
+    dplyr::mutate(
+      anio_post  = dplyr::if_else(TRIMESTRE %in% 1:3, ANO4, ANO4 + 1L),
+      trim_post  = dplyr::if_else(TRIMESTRE %in% 1:3, TRIMESTRE + 1L, 1L),
+      tiene_post = paste(anio_post, trim_post) %in%
+        paste(df_microdato$ANO4, df_microdato$TRIMESTRE)
+    ) |>
+    dplyr::filter(tiene_post) |>
+    dplyr::mutate(periodo = glue::glue("{ANO4}_t{TRIMESTRE}-t{trim_post}"))
+
+  duos_a_calcular <- duos_posibles |>
+    dplyr::filter(!periodo %in% periodos_existentes)
+
+  if (nrow(duos_a_calcular) == 0) {
+    cat(glue::glue("  [{basename(path_csv)}] sin dúos nuevos.\n\n"))
+    return(invisible(hist_existente))
+  }
+
+  cat(glue::glue("  [{basename(path_csv)}] computando {nrow(duos_a_calcular)} dúo(s) nuevo(s)...\n"))
+
+  filas_nuevas <- duos_a_calcular |>
+    purrr::pmap(function(ANO4, TRIMESTRE, anio_post, trim_post, periodo, ...) {
+      base_t0 <- df_microdato |>
+        dplyr::filter(ANO4 == .env$ANO4, TRIMESTRE == .env$TRIMESTRE,
+                      ESTADO %in% 1:4)
+
+      panel <- armo_base_panel(
+        anio_0      = ANO4, trimestre_0 = TRIMESTRE,
+        anio_1      = anio_post, trimestre_1 = trim_post,
+        df          = df_microdato,
+        variables   = c("ESTADO", "PONDERA")
+      ) |>
+        dplyr::filter(ESTADO %in% 1:4)
+
+      tibble::tibble(
+        periodo            = as.character(periodo),
+        anio_0             = ANO4,
+        trim_0             = TRIMESTRE,
+        anio_1             = anio_post,
+        trim_1             = trim_post,
+        n_t0               = nrow(base_t0),
+        pondera_t0         = sum(base_t0$PONDERA, na.rm = TRUE),
+        n_panel            = nrow(panel),
+        pondera_panel      = sum(panel$PONDERA, na.rm = TRUE)
+      )
+    }) |>
+    purrr::list_rbind() |>
+    dplyr::mutate(
+      pct_encontrado_n       = round(n_panel / n_t0 * 100, 2),
+      pct_encontrado_pondera = round(pondera_panel / pondera_t0 * 100, 2)
+    )
+
+  hist_actualizado <- dplyr::bind_rows(hist_existente, filas_nuevas) |>
+    dplyr::arrange(anio_0, trim_0)
+
+  readr::write_csv(hist_actualizado, path_csv)
+  cat(glue::glue("  [{basename(path_csv)}] OK ({nrow(hist_actualizado)} filas)\n\n"))
+
+  invisible(hist_actualizado)
+}
+
+
 ### Notas para highcharter
 df_to_annotations_labels <- function(df, xAxis = 0, yAxis = 0) {
   

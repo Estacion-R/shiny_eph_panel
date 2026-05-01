@@ -74,6 +74,24 @@ df_tasas_cat_ocup        <- cargar_tasas_csv("data_output/tasas_cat_ocup_histori
 df_tasas_formalidad      <- cargar_tasas_csv("data_output/tasas_formalidad_historico.csv")
 df_tasas_formalidad_amp  <- cargar_tasas_csv("data_output/tasas_formalidad_ampliada_historico.csv")
 
+### Histórico de calidad del panel (issue #36). Pre-computado por
+### ETL/10-build_calidad_panel.R y mantenido al día por 03-update_data.R.
+### Schema: periodo, anio_0, trim_0, anio_1, trim_1, n_t0, pondera_t0,
+### n_panel, pondera_panel, pct_encontrado_n, pct_encontrado_pondera.
+path_calidad <- "data_output/calidad_panel_pct_historico.csv"
+df_calidad_panel <- if (file.exists(path_calidad)) {
+  arrow::read_csv_arrow(path_calidad) |>
+    dplyr::collect() |>
+    dplyr::arrange(anio_0, trim_0)
+} else {
+  tibble::tibble(periodo = character(), anio_0 = integer(), trim_0 = integer(),
+                 anio_1 = integer(), trim_1 = integer(),
+                 n_t0 = integer(), pondera_t0 = double(),
+                 n_panel = integer(), pondera_panel = double(),
+                 pct_encontrado_n = double(), pct_encontrado_pondera = double())
+}
+rm(path_calidad)
+
 ### Rango de períodos disponibles (insumo para los selectInput dinámicos).
 ### Se deriva del panel_runtime: cualquier (anio_0, trim_0) es un trimestre
 ### que existe como inicio de algún dúo, y los t1 también existen como t0

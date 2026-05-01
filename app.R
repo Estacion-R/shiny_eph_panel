@@ -14,6 +14,7 @@ source("R/utils_analisis.R")
 source("R/mod_analisis_cond_act.R")
 source("R/mod_analisis_cat_ocup.R")
 source("R/mod_analisis_formalidad.R")
+source("R/mod_calidad_panel.R")
 source("R/panels_metadata.R")
 
 waiting_screen <- tagList(
@@ -238,10 +239,10 @@ ui <- page_fillable(
         icon = icon("id-card"),
         mod_formalidad_ui("formalidad")
       ),
-      panel_proximamente(
-        titulo = "Calidad de la muestra",
-        icono_id = "magnifying-glass-chart",
-        descripcion = "Diagnóstico del panel real vs el ideal teórico (50% de la muestra). Va a mostrar el n efectivo en cada dúo trimestral, la atrición por aglomerado y categoría, y la cobertura del subset balanceado. Apunta a hacer transparente la calidad de los indicadores que mostramos en los otros tres análisis."
+      nav_panel(
+        title = "Calidad de la muestra",
+        icon  = icon("magnifying-glass-chart"),
+        mod_calidad_panel_ui("calidad")
       )
     ),
 
@@ -348,6 +349,7 @@ server <- function(input, output, session) {
   mod_cond_act_server("cond_act")
   mod_cat_ocup_server("cat_ocup")
   mod_formalidad_server("formalidad")
+  mod_calidad_panel_server("calidad")
 
   ### Navegación desde las tarjetas del landing. Cada actionLink dispara
   ### bslib::nav_select() para cambiar la pestaña activa del navset_pill_list
