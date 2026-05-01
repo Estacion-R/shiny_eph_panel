@@ -435,30 +435,62 @@ regenerar_calidad_panel <- function(path_csv, df_microdato) {
         dplyr::filter(ANO4 == .env$ANO4, TRIMESTRE == .env$TRIMESTRE,
                       ESTADO %in% 1:4)
 
+      ### Variables CH04 (sexo) y CH06 (edad) para detectar inconsistencias
+      ### entre t0 y t1 (issue #37). El campo `consistencia` que devuelve
+      ### eph::organize_panels() ya marca el flag general; con CH04/CH06
+      ### desglosamos por tipo de inconsistencia.
       panel <- armo_base_panel(
         anio_0      = ANO4, trimestre_0 = TRIMESTRE,
         anio_1      = anio_post, trimestre_1 = trim_post,
         df          = df_microdato,
-        variables   = c("ESTADO", "PONDERA")
+        variables   = c("ESTADO", "PONDERA", "CH04", "CH06")
       ) |>
         dplyr::filter(ESTADO %in% 1:4)
 
+      ### Detección de inconsistencias específicas:
+      ###   - sexo:  CH04 t0 ≠ CH04 t1 (debe ser invariante).
+      ###   - edad:  CH06_t1 fuera del rango [CH06, CH06 + 1] (en un panel
+      ###            de 1 trimestre, la edad sube como mucho 1 año).
+      ### Una persona puede tener ambas inconsistencias a la vez; la
+      ### "total" es el flag de eph::organize_panels (más amplio: incluye
+      ### otras cosas como saltos en NIVEL_ED si estuvieran).
+      panel_inc <- panel |>
+        dplyr::mutate(
+          inc_sexo = !is.na(CH04) & !is.na(CH04_t1) & CH04 != CH04_t1,
+          inc_edad = !is.na(CH06) & !is.na(CH06_t1) &
+                     (CH06_t1 < CH06 | CH06_t1 > CH06 + 1L),
+          inc_total = !consistencia
+        )
+
+      sum_w <- function(w, mask) sum(w[mask], na.rm = TRUE)
+
       tibble::tibble(
-        periodo            = as.character(periodo),
-        anio_0             = ANO4,
-        trim_0             = TRIMESTRE,
-        anio_1             = anio_post,
-        trim_1             = trim_post,
-        n_t0               = nrow(base_t0),
-        pondera_t0         = sum(base_t0$PONDERA, na.rm = TRUE),
-        n_panel            = nrow(panel),
-        pondera_panel      = sum(panel$PONDERA, na.rm = TRUE)
+        periodo                = as.character(periodo),
+        anio_0                 = ANO4,
+        trim_0                 = TRIMESTRE,
+        anio_1                 = anio_post,
+        trim_1                 = trim_post,
+        n_t0                   = nrow(base_t0),
+        pondera_t0             = sum(base_t0$PONDERA, na.rm = TRUE),
+        n_panel                = nrow(panel),
+        pondera_panel          = sum(panel$PONDERA, na.rm = TRUE),
+        n_inc_total            = sum(panel_inc$inc_total, na.rm = TRUE),
+        n_inc_sexo             = sum(panel_inc$inc_sexo, na.rm = TRUE),
+        n_inc_edad             = sum(panel_inc$inc_edad, na.rm = TRUE),
+        pondera_inc_total      = sum_w(panel_inc$PONDERA, panel_inc$inc_total),
+        pondera_inc_sexo       = sum_w(panel_inc$PONDERA, panel_inc$inc_sexo),
+        pondera_inc_edad       = sum_w(panel_inc$PONDERA, panel_inc$inc_edad)
       )
     }) |>
     purrr::list_rbind() |>
     dplyr::mutate(
       pct_encontrado_n       = round(n_panel / n_t0 * 100, 2),
-      pct_encontrado_pondera = round(pondera_panel / pondera_t0 * 100, 2)
+      pct_encontrado_pondera = round(pondera_panel / pondera_t0 * 100, 2),
+      ### Inconsistencias como % sobre el panel encontrado (no sobre t0).
+      ### La pregunta es: de los matched, cuántos vienen con problemas.
+      pct_inc_total          = round(n_inc_total / n_panel * 100, 2),
+      pct_inc_sexo           = round(n_inc_sexo  / n_panel * 100, 2),
+      pct_inc_edad           = round(n_inc_edad  / n_panel * 100, 2)
     )
 
   hist_actualizado <- dplyr::bind_rows(hist_existente, filas_nuevas) |>
