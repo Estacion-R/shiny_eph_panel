@@ -638,3 +638,100 @@ input:checked + .slider:before {
 .default-styling .shiny-input-container {
   min-width: 300px;
 }
+
+/* ─────────────────────────────────────────────────────────────────
+   Cookie consent banner (issue #38). Hidden por default; el JS de
+   R/utils_analytics.R::analytics_js() lo muestra solo si no hay
+   decisión previa en localStorage.
+   ───────────────────────────────────────────────────────────────── */
+.cookie-banner {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: none;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 24px;
+  background: var(--er-blanco);
+  border-top: 2px solid var(--er-azul);
+  box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.06);
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 0.9em;
+  color: var(--er-negro);
+  z-index: 10000;
+}
+
+.cookie-banner-text {
+  flex: 1 1 auto;
+  max-width: 70%;
+}
+
+.cookie-banner-text p {
+  margin: 0;
+  line-height: 1.4;
+}
+
+.cookie-banner-link {
+  color: var(--er-azul);
+  text-decoration: underline;
+}
+
+.cookie-banner-link:hover {
+  color: var(--er-azul-dark);
+}
+
+.cookie-banner-actions {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.cookie-btn {
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-family: 'Ubuntu', sans-serif;
+  font-weight: 500;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: background 150ms ease, border-color 150ms ease;
+}
+
+.cookie-btn-primary {
+  background: var(--er-azul);
+  color: var(--er-blanco);
+  border-color: var(--er-azul);
+}
+
+.cookie-btn-primary:hover {
+  background: var(--er-azul-dark);
+  border-color: var(--er-azul-dark);
+}
+
+.cookie-btn-secondary {
+  background: transparent;
+  color: var(--er-negro);
+  border-color: #DADADA;
+}
+
+.cookie-btn-secondary:hover {
+  background: var(--er-gris-claro);
+}
+
+@media (max-width: 768px) {
+  .cookie-banner {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+    padding: 12px 16px;
+  }
+
+  .cookie-banner-text {
+    max-width: 100%;
+  }
+
+  .cookie-banner-actions {
+    justify-content: flex-end;
+  }
+}

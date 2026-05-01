@@ -15,6 +15,7 @@ source("R/mod_analisis_cond_act.R")
 source("R/mod_analisis_cat_ocup.R")
 source("R/mod_analisis_formalidad.R")
 source("R/mod_calidad_panel.R")
+source("R/utils_analytics.R")
 source("R/panels_metadata.R")
 
 waiting_screen <- tagList(
@@ -190,6 +191,7 @@ ui <- page_fillable(
     tags$link(rel = "stylesheet",
               href = "https://api.fontshare.com/v2/css?f[]=array@400,600,700&display=swap")
   ),
+  ga4_head_tag(),
   useWaitress(color = "#405BFF"),
   include_styles,
 
@@ -336,7 +338,13 @@ ui <- page_fillable(
       style = "font-size: 0.9em; color: #555;"
     ),
     placement = "top"
-  )
+  ),
+
+  ### Banner de consent + handler de GA4 (issue #38). Solo se renderizan
+  ### si GA4_MEASUREMENT_ID está configurado en R/utils_analytics.R; si
+  ### no, devuelven NULL y no impactan la app.
+  cookie_consent_banner(),
+  analytics_js()
 )
 
 
