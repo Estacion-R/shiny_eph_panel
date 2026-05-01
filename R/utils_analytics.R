@@ -10,26 +10,22 @@
 ###   3. Tracking de cambios de nav_panel via 'shown.bs.tab' (bslib usa
 ###      Bootstrap, dispara este evento al cambiar de pestaña).
 ###
-### Configuración: el measurement ID viene de la env var
-### `GA4_MEASUREMENT_ID`. Si no está seteada o queda vacía, GA4 está
-### deshabilitado (la app sigue funcionando sin analytics y sin banner).
-### Es seguro deployar sin la env var configurada.
+### Configuración: el measurement ID está hardcodeado abajo. NO es un
+### secreto (está en el HTML de cualquier página que use GA, es público).
+### shinyapps.io plan free no permite env vars, así que hardcodear es
+### la opción más simple y honesta.
 ###
-### Para activarlo en shinyapps.io:
-###   rsconnect::setProperty(
-###     "application.environment.GA4_MEASUREMENT_ID",
-###     "G-XXXXXXXXXX",
-###     appName = "shiny_eph_panel",
-###     account = "estacionr"
-###   )
-###
-### O desde el dashboard de shinyapps.io: Settings → Advanced → Variables.
-### En local: export GA4_MEASUREMENT_ID=G-XXXXXXXXXX antes de runApp().
+### Para desactivar GA4 en local (testing sin contaminar metrics):
+###   GA4_DISABLE=1 Rscript -e 'shiny::runApp(".")'
 
 
 ### Measurement ID del stream GA4 dedicado a la app shiny_eph_panel
-### (property compartida con estacion-r.com). Formato: G-XXXXXXXXXX.
-GA4_MEASUREMENT_ID <- Sys.getenv("GA4_MEASUREMENT_ID", "")
+### (property compartida con estacion-r.com).
+GA4_MEASUREMENT_ID <- if (nzchar(Sys.getenv("GA4_DISABLE", ""))) {
+  ""
+} else {
+  "G-NQPB4BHWMM"
+}
 
 
 ### Indica si tenemos un ID válido configurado. Cuando es FALSE, los
