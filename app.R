@@ -279,6 +279,10 @@ ui <- page_fillable(
       nav_item_paquete_eph
     ),
 
+    ### Datos: descargas del panel longitudinal y diccionario (issue #35).
+    ### Va al mismo nivel que Metadata porque "datos" no es metadata.
+    panel_descarga,
+
     ### Footer con créditos, fuente y feedback. Como nav_item al pie del
     ### sidebar para que esté siempre visible sin estorbar la navegación.
     nav_item(
@@ -304,6 +308,10 @@ ui <- page_fillable(
           tags$a("Estación R", href = "https://estacion-r.com",
                  target = "_blank", class = "sidebar-footer-link"),
           " · App en desarrollo"
+        ),
+        tags$p(
+          class = "sidebar-footer-version",
+          paste0("v", APP_VERSION)
         )
       )
     )
@@ -392,6 +400,40 @@ server <- function(input, output, session) {
         locations = gt::cells_body(columns = Variable)
       )
   })
+
+  ### --------------------------------------------------------------------
+  ### Descargas del panel longitudinal (issue #35).
+  ### El parquet y el CSV gzip se sirven copiando archivos de
+  ### data_output/ (sin procesamiento en runtime). El diccionario se
+  ### genera on-demand a partir del tibble columnas_panel_runtime.
+  ### El tracking GA4 se dispara client-side (ver download_btn_tracked).
+  ### --------------------------------------------------------------------
+
+  servir_archivo <- function(ruta_relativa, nombre_descarga) {
+    shiny::downloadHandler(
+      filename = function() nombre_descarga,
+      content  = function(file) file.copy(ruta_relativa, file),
+      contentType = NA
+    )
+  }
+
+  output$descarga_panel_runtime_parquet <- servir_archivo(
+    "data_output/panel_runtime.parquet",
+    paste0("eph_panel_runtime_", format(Sys.Date(), "%Y%m%d"), ".parquet"))
+
+  output$descarga_panel_runtime_csv <- servir_archivo(
+    "data_output/panel_runtime.csv.gz",
+    paste0("eph_panel_runtime_", format(Sys.Date(), "%Y%m%d"), ".csv.gz"))
+
+  output$descarga_diccionario_csv <- shiny::downloadHandler(
+    filename = function() {
+      paste0("eph_panel_diccionario_", format(Sys.Date(), "%Y%m%d"), ".csv")
+    },
+    content = function(file) {
+      readr::write_csv(columnas_panel_runtime, file)
+    },
+    contentType = "text/csv"
+  )
 }
 
 

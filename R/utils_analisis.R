@@ -320,24 +320,47 @@ arma_line_chart_areaspline <- function(df_data,
     )))
   }
 
-  ### Construir nested categories: año (parent) + dúo trimestral (child).
-  ### Highcharts soporta categorías agrupadas pasando una lista de objetos
-  ### {name: <año>, categories: [<duos>]}. Esto produce el efecto de doble
-  ### leyenda en el eje X sin tener que rotar el texto.
-  ###
-  ### Como las categorías hijas son SOLO el dúo (sin año), los datos también
-  ### tienen que dejar de referenciar el periodo completo "YYYY_tA-tB" y
-  ### pasar a usar índices posicionales. Por eso pasamos `data` como vector
-  ### de y values en orden de las categorías aplanadas.
+  ### Categorías planas "YYYY t1-t2" (issue #40). Highcharts core NO
+  ### soporta nested {name, categories} sin el plugin grouped-categories
+  ### (que no está cargado): la estructura se serializa como
+  ### "[object Object],[object Object],..." y el eje X queda roto.
+  ### En lugar del plugin: categorías planas + plotBands fantasma por
+  ### año (color transparente, label = año debajo del eje X) que
+  ### simulan la doble jerarquía abarcando los 4 dúos del año.
   parsed <- stringr::str_match(periodos_visibles,
                                "^(\\d{4})_(t\\d-t\\d)$")
   anios_seq <- parsed[, 2]
   duos_seq  <- parsed[, 3]
 
-  categorias_nested <- lapply(unique(anios_seq), function(a) {
-    list(name = a,
-         categories = as.list(duos_seq[anios_seq == a]))
-  })
+  categorias_planas <- paste(anios_seq, duos_seq)
+
+  ### PlotBands fantasma por año: color transparente, label = año
+  ### posicionado debajo del eje X (verticalAlign='bottom' + y > 0
+  ### empuja el label fuera del plot area, sobre el espacio reservado
+  ### por chart.marginBottom). Cada band cubre los índices del año.
+  for (y in unique(anios_seq)) {
+    idxs <- which(anios_seq == y)
+    plot_bands <- c(plot_bands, list(list(
+      from = min(idxs) - 1L,
+      to   = max(idxs) - 1L,
+      color = "rgba(0,0,0,0)",
+      label = list(
+        text = y,
+        align = "center",
+        verticalAlign = "bottom",
+        ### y = offset hacia abajo desde el borde inferior del plot
+        ### area. 48 ubica el año en la franja entre las labels de
+        ### dúo (que ocupan los primeros ~30px) y la caption (que
+        ### highcharter posiciona en los últimos ~30px del chart).
+        y = 48,
+        style = list(
+          fontWeight = "600",
+          fontSize = "0.85em",
+          color = "#191919"
+        )
+      )
+    )))
+  }
 
   ### Datos por serie: para cada `to` (categoría destino), un vector de
   ### y values en el orden exacto de periodos_visibles. Cada punto se
@@ -360,7 +383,13 @@ arma_line_chart_areaspline <- function(df_data,
     })
 
   hc <- highcharter::highchart() |>
-    highcharter::hc_chart(type = "areaspline", zoomType = "x") |>
+    highcharter::hc_chart(type = "areaspline", zoomType = "x",
+                           ### Reserva espacio debajo del eje X para
+                           ### los labels de dúo (~30px), los labels de
+                           ### año del plotBand fantasma (~20px) y la
+                           ### caption (~30px), con margen entre cada
+                           ### bloque (issue #40).
+                           marginBottom = 110) |>
     highcharter::hc_add_theme(hc_theme_estacion_r) |>
     ### Paleta diferenciada para line charts con 3+ series (issue #26).
     highcharter::hc_colors(c("#405BFF", "#FF7043", "#EAFF38", "#7CB342")) |>
@@ -379,14 +408,61 @@ arma_line_chart_areaspline <- function(df_data,
                        color = "#191919",
                        fontWeight = "600")
         )
+      ),
+      ### Recalcular eje Y al togglear series via legend (issue #32).
+      ### Usa la misma lógica que el primer render: padding 15% del rango,
+      ### piso 1pp, clamp 0-100. setTimeout porque Highcharts actualiza
+      ### series.visible DESPUÉS de disparar el evento.
+      series = list(
+        events = list(
+          legendItemClick = htmlwidgets::JS("function() {
+            var chart = this.chart;
+            setTimeout(function() {
+              var visiblesY = [];
+              chart.series.forEach(function(s) {
+                if (s.visible) {
+                  s.points.forEach(function(p) {
+                    if (p.y !== null && p.y !== undefined) visiblesY.push(p.y);
+                  });
+                }
+              });
+              if (visiblesY.length === 0) return;
+              var minV = Math.min.apply(null, visiblesY);
+              var maxV = Math.max.apply(null, visiblesY);
+              var pad = Math.max(1, (maxV - minV) * 0.15);
+              chart.yAxis[0].update({
+                min: Math.max(0, minV - pad),
+                max: Math.min(100, maxV + pad)
+              }, true);
+            }, 50);
+          }")
+        )
       )
     ) |>
     highcharter::hc_xAxis(
       title    = list(text = NULL),
-      categories = categorias_nested,
+      categories = categorias_planas,
       plotBands = plot_bands,
-      labels   = list(rotation = 0,
-                      style = list(fontSize = "0.8em"))
+      labels   = list(
+        useHTML = TRUE,
+        rotation = 0,
+        style = list(fontSize = "0.65em"),
+        ### Muestra todos los dúos en 2 líneas (t1- arriba, t2 abajo)
+        ### con fuente reducida para evitar superposición con muchos
+        ### puntos en el eje. El año lo aporta el plotBand fantasma
+        ### posicionado debajo del eje. tick_interval queda sin uso
+        ### (legado de labels.step previo).
+        formatter = htmlwidgets::JS("function() {
+          var partes = String(this.value).split(' ');
+          if (partes.length < 2) return '';
+          var subs = partes[1].split('-');
+          if (subs.length < 2) return '';
+          return '<div style=\"text-align:center;line-height:1\">' +
+                 '<div>' + subs[0] + '-</div>' +
+                 '<div>' + subs[1] + '</div>' +
+                 '</div>';
+        }")
+      )
     )
 
   for (s in series_lista) {
