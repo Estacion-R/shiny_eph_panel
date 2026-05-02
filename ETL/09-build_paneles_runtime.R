@@ -88,6 +88,13 @@ tamanio_mb <- round(file.size(path_out) / 1024 / 1024, 2)
 cat(glue::glue("\n✔ Escrito: {path_out} ({tamanio_mb} MB en disco)\n"))
 cat(glue::glue("  Dúos contenidos: {dplyr::n_distinct(panel_runtime[, c('anio_0', 'trim_0')])}\n\n"))
 
+### CSV gzip espejo del parquet para descarga universal (issue #35).
+### Pesa ~23 MB con compresión, vs ~199 MB sin comprimir. readr::write_csv
+### detecta la extensión .gz y comprime automáticamente.
+path_out_csv <- "data_output/panel_runtime.csv.gz"
+readr::write_csv(panel_runtime, path_out_csv)
+cat(glue::glue("✔ Escrito: {path_out_csv} ({round(file.size(path_out_csv)/1024/1024, 2)} MB en disco)\n\n"))
+
 ### Sanity check: leer y filtrar uno de los dúos más recientes para
 ### verificar que el resultado coincide con armo_base_panel() directo.
 duo_test <- duos_validos |> dplyr::slice_tail(n = 1)

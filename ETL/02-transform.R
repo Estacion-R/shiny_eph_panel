@@ -41,11 +41,23 @@ if (nrow(df_tasas_formalidad_amp) > 0) {
 }
 
 
-### Application dependencies (CSS/JS estáticos)
+### Application dependencies (CSS/JS estáticos).
+### Cache-busting: append ?v=<mtime> a los assets propios para que el
+### navegador los invalide cuando cambiamos el archivo. Los CDN externos
+### (a11y-dark) van versionados upstream, no necesitan busting.
+asset_url <- function(file) {
+  ruta <- file.path("www", file)
+  if (file.exists(ruta)) {
+    paste0(file, "?v=", as.integer(file.info(ruta)$mtime))
+  } else {
+    file
+  }
+}
+
 include_styles <- tags$head(
-  tags$link(rel = "stylesheet", type = "text/css", href = "style.css"),
-  tags$script(src = "script.js"),
-  tags$script(src = "highlight.min.js"),
+  tags$link(rel = "stylesheet", type = "text/css", href = asset_url("style.css")),
+  tags$script(src = asset_url("script.js")),
+  tags$script(src = asset_url("highlight.min.js")),
   tags$script("hljs.highlightAll();"),
   tags$link(href = "a11y-dark.min.css", rel = "stylesheet")
 )
