@@ -11,6 +11,23 @@ versionado [SemVer](https://semver.org/lang/es/) adaptado a app web:
 
 ---
 
+## [0.7.1] · 2026-05-03
+
+### Changed
+
+- Pipeline mensual `update_eph_data.yml` ahora regenera
+  automáticamente los parquets runtime (intertrim + anual) cuando
+  hay un trimestre nuevo. Antes había que regenerarlos manualmente,
+  con riesgo de drift entre los CSVs históricos (auto) y los
+  parquets runtime (manuales). (#48)
+- `ETL/09-build_paneles_runtime.R` carga el microdato directamente
+  en lugar de depender de `01-extract.R` (que en runtime no lo
+  carga). Mismo patrón que `ETL/09b-build_paneles_runtime_anual.R`.
+- `add-paths` del PR auto incluye ahora todos los CSVs históricos +
+  los 4 parquets/csv.gz de runtime.
+
+---
+
 ## [0.7.0] · 2026-05-03
 
 ### Added

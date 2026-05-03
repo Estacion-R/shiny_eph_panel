@@ -21,10 +21,21 @@
 suppressPackageStartupMessages({
   source("ETL/00-libraries.R")
   source("ETL/99-functions.R")
-  source("ETL/01-extract.R")  ### carga df_eph_full como Arrow Table
 })
 
 cat("=== Pre-computando paneles runtime para shinyapps.io ===\n")
+
+### Cargar el microdato + sumar vars derivadas (formalidad,
+### formalidad_ampliada). 01-extract.R en runtime no carga el
+### microdato (solo el panel pre-computado), por eso lo levantamos
+### acá tal como hace 03-update_data.R y 09b. Issue #48.
+df_eph_full <- arrow::read_parquet("data_raw/df_eph.parquet") |>
+  agrega_vars_derivadas()
+
+### Enumerar periodos disponibles (ANO4, TRIMESTRE) en el microdato.
+periodos_disponibles <- df_eph_full |>
+  dplyr::distinct(ANO4, TRIMESTRE) |>
+  dplyr::arrange(ANO4, TRIMESTRE)
 
 ### Variables del microdato a propagar al panel armado. Superset de lo
 ### que cualquiera de los 3 análisis necesita: ESTADO + CAT_OCUP +
