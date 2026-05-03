@@ -354,6 +354,14 @@
   color: #888;
   margin-top: 0.4rem !important;
 }
+.sidebar-footer-version {
+  font-size: 0.7rem;
+  color: #b0b0b0;
+  font-family: 'Ubuntu Mono', monospace;
+  margin-top: 0.15rem !important;
+  margin-bottom: 0 !important;
+  letter-spacing: 0.02em;
+}
 
 /* Alerta del período de intervención INDEC (Foto y Comparar). Aparece
    debajo del filter_query cuando el panel seleccionado cae en 2007-2015.
@@ -372,6 +380,24 @@
 .alert-intervencion-indec .fa,
 .alert-intervencion-indec svg {
   color: #888;
+}
+
+/* Aviso para sub-tabs que aún no soportan modo Interanual (issue #44).
+   Estética similar a la alerta de intervención INDEC pero con el
+   azul Estación R para indicar "info" (no alerta). */
+.alert-modo-anual {
+  background-color: rgba(64, 91, 255, 0.07);
+  border-left: 3px solid #405BFF;
+  padding: 10px 16px;
+  border-radius: 4px;
+  font-size: 0.9em;
+  margin: 12px 0 16px 0;
+  color: #404040;
+  line-height: 1.5;
+}
+.alert-modo-anual .fa,
+.alert-modo-anual svg {
+  color: #405BFF;
 }
 
 #grid-page-wrapper {
@@ -734,4 +760,195 @@ input:checked + .slider:before {
   .cookie-banner-actions {
     justify-content: flex-end;
   }
+}
+
+/* ──────────────────────────────────────────────────────────────────
+   Panel "Datos" — sección de descarga (issue #35)
+   Reusa el lenguaje de las landing-cards de Inicio.
+   ────────────────────────────────────────────────────────────────── */
+
+.descarga-hero {
+  padding-bottom: 1.25rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(25, 25, 25, 0.07);
+}
+.descarga-hero-title {
+  font-family: 'Array', 'Ubuntu', sans-serif;
+  font-weight: 700;
+  font-size: 1.6rem;
+  color: #191919;
+  margin-bottom: 0.5rem;
+}
+.descarga-hero-subtitle {
+  font-size: 1.02em;
+  color: #505050;
+  line-height: 1.55;
+  margin-bottom: 0;
+  max-width: 720px;
+}
+
+/* Grid de tarjetas (mismo patrón que landing-cards-grid) */
+.descarga-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.75rem;
+}
+@media (max-width: 900px) {
+  .descarga-cards-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Tarjeta — mismo lenguaje visual que .landing-card pero sin link wrapper */
+.descarga-card {
+  background-color: #FFFFFF;
+  border: 1px solid rgba(64, 91, 255, 0.18);
+  border-radius: 12px;
+  padding: 1.5rem 1.25rem 1.25rem;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  display: flex;
+  flex-direction: column;
+}
+.descarga-card:hover {
+  border-color: #405BFF;
+  box-shadow: 0 6px 18px rgba(64, 91, 255, 0.12);
+}
+.descarga-card-icon {
+  font-size: 1.6rem;
+  color: #405BFF;
+  margin-bottom: 0.6rem;
+  display: block;
+}
+.descarga-card-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin: 0 0 0.4rem 0;
+  color: #191919;
+}
+.descarga-card-meta {
+  font-size: 0.85rem;
+  color: #405BFF;
+  font-weight: 600;
+  margin: 0 0 0.5rem 0;
+  letter-spacing: 0.01em;
+}
+.descarga-card-desc {
+  font-size: 0.92rem;
+  color: #555;
+  margin: 0 0 1rem 0;
+  line-height: 1.45;
+  flex-grow: 1;
+}
+
+/* Acción al pie de la tarjeta — botón único o dropdown */
+.descarga-card-action {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+/* Botón principal dentro de tarjeta (azul sólido, hover oscuro) */
+.btn-descarga {
+  background: #405BFF;
+  color: #FFFFFF !important;
+  border: 1.5px solid #405BFF;
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+  font-weight: 600;
+  font-size: 0.95em;
+  transition: background 140ms ease, border-color 140ms ease, box-shadow 140ms ease;
+  text-decoration: none !important;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.btn-descarga:hover {
+  background: #1839F4;
+  border-color: #1839F4;
+  color: #FFFFFF !important;
+  box-shadow: 0 2px 8px rgba(64, 91, 255, 0.25);
+}
+.btn-descarga:focus-visible {
+  outline: 2px solid #EAFF38;
+  outline-offset: 3px;
+}
+.btn-descarga .fa,
+.btn-descarga .fas,
+.btn-descarga .far {
+  font-size: 0.95em;
+}
+.descarga-btn-wrapper {
+  display: inline-block;
+}
+
+/* Dropdown de formatos (Bootstrap 5 nativo, restilado) */
+.descarga-card-action .dropdown-menu {
+  border: 1px solid rgba(64, 91, 255, 0.18);
+  border-radius: 8px;
+  box-shadow: 0 6px 18px rgba(64, 91, 255, 0.12);
+  padding: 0.4rem;
+  min-width: 220px;
+}
+.descarga-card-action .dropdown-item {
+  border-radius: 6px;
+  padding: 0.5rem 0.7rem;
+  font-size: 0.92rem;
+  color: #191919;
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  text-decoration: none;
+  transition: background 120ms ease, color 120ms ease;
+}
+.descarga-card-action .dropdown-item:hover,
+.descarga-card-action .dropdown-item:focus {
+  background: rgba(64, 91, 255, 0.08);
+  color: #405BFF;
+}
+.descarga-card-action .dropdown-item .fa,
+.descarga-card-action .dropdown-item .fas,
+.descarga-card-action .dropdown-item .far {
+  color: #405BFF;
+  font-size: 0.95em;
+  width: 1.1em;
+  text-align: center;
+}
+.descarga-card-action .dropdown-item-size {
+  margin-left: auto;
+  color: #707070;
+  font-size: 0.82em;
+  font-weight: 500;
+}
+
+/* Aviso metodológico — card horizontal, treatment amber */
+.descarga-aviso {
+  border: 1px solid #FDE68A;
+  border-left: 4px solid #B45309;
+  border-radius: 12px;
+  background: #FFFBEB;
+  padding: 1.25rem 1.5rem;
+}
+.descarga-aviso-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #191919;
+  margin: 0 0 0.75rem 0;
+}
+.descarga-aviso-title .fa,
+.descarga-aviso-title .fas {
+  color: #B45309;
+}
+.descarga-aviso ul {
+  color: #404040;
+  line-height: 1.6;
+  padding-left: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+.descarga-aviso ul li {
+  margin-bottom: 0.35rem;
 }

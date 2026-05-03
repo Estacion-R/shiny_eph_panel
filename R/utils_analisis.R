@@ -40,13 +40,24 @@ arma_matriz_transicion <- function(df_panel, var, etiquetas) {
     out
   }
 
+  ### Forzar el orden de filas y columnas según `etiquetas` (no alfabético
+  ### ni por orden de aparición en los datos). Permite, por ejemplo, mostrar
+  ### Ocupados / Desocupados / Inactivos / Trab. familiares en ese orden
+  ### consistente entre módulos. pivot_wider respeta el orden del factor.
+  niveles_orden <- remap(etiquetas)
+
   df_prep |>
     dplyr::transmute(
-      from = remap(stringr::str_replace(ESTADO, "_tant$", "")),
-      to   = remap(stringr::str_replace(ESTADO_t1, "_tpost$", "")),
+      from = factor(remap(stringr::str_replace(ESTADO, "_tant$", "")),
+                    levels = niveles_orden),
+      to   = factor(remap(stringr::str_replace(ESTADO_t1, "_tpost$", "")),
+                    levels = niveles_orden),
       porc = porc_base
     ) |>
-    tidyr::pivot_wider(names_from = to, values_from = porc, values_fill = 0)
+    dplyr::arrange(from, to) |>
+    tidyr::pivot_wider(names_from = to, values_from = porc, values_fill = 0,
+                       names_expand = TRUE) |>
+    dplyr::mutate(from = as.character(from))
 }
 
 
@@ -174,6 +185,29 @@ sankey_nodes_orden <- function(categorias_legibles) {
 ### @param anios vector numérico con los años de los paneles activos.
 ###   En Foto pasar 1 año (el del panel). En Comparar pasar 2 años.
 ### @return div HTML con el aviso, o NULL si ningún año cae en el período.
+### Banner que avisa que la vista actual no soporta modo anual aún
+### (issue #44 Fase 2/3). Se renderiza cuando tipo_duo() == "anual" en
+### sub-tabs Película y Tasas, que siguen usando los CSVs históricos
+### intertrim. Devuelve NULL en modo trimestral.
+###
+### @param tipo_duo string: "trimestral" o "anual".
+### @return div HTML con el aviso, o NULL si está en modo trimestral.
+alerta_modo_anual_no_soportado <- function(tipo_duo) {
+  if (is.null(tipo_duo) || tipo_duo != "anual") return(NULL)
+  shiny::div(
+    class = "alert-modo-anual",
+    shiny::icon("circle-info"),
+    shiny::HTML("&nbsp;Esta vista todavía no soporta el modo "),
+    shiny::tags$strong("Interanual"),
+    shiny::HTML(". Por ahora muestra datos "),
+    shiny::tags$strong("intertrimestrales"),
+    shiny::HTML(". Volvé a la pestaña "),
+    shiny::tags$em("Foto"),
+    shiny::HTML(" para ver el análisis interanual del dúo seleccionado.")
+  )
+}
+
+
 alerta_intervencion_indec <- function(anios) {
   anios <- suppressWarnings(as.numeric(anios))
   anios <- anios[!is.na(anios)]
@@ -267,8 +301,9 @@ arma_line_chart_areaspline <- function(df_data,
     if (lado == "ini") matches[1] - 1L else matches[length(matches)] - 1L
   }
 
-  ### PlotBand pandemia COVID-19 (2020).
-  idx_pand_ini <- buscar_idx("2020_t1-t2", "2020", "ini")
+  ### PlotBand pandemia COVID-19. Extendido al dúo 2019_t4-t1 (= 2019-T4
+  ### → 2020-T1) para incluir el último corte previo al confinamiento ASPO.
+  idx_pand_ini <- buscar_idx("2019_t4-t1", "2019", "fin")
   idx_pand_fin <- buscar_idx("2020_t3-t4", "2020", "fin")
 
   ### PlotBand período de intervención INDEC (issue #20).
@@ -308,15 +343,79 @@ arma_line_chart_areaspline <- function(df_data,
     )))
   }
 
-  highcharter::hchart(df_data, "areaspline",
-                      highcharter::hcaes(periodo, weight, group = to)) |>
+  ### Categorías planas "YYYY t1-t2" (issue #40). Highcharts core NO
+  ### soporta nested {name, categories} sin el plugin grouped-categories
+  ### (que no está cargado): la estructura se serializa como
+  ### "[object Object],[object Object],..." y el eje X queda roto.
+  ### En lugar del plugin: categorías planas + plotBands fantasma por
+  ### año (color transparente, label = año debajo del eje X) que
+  ### simulan la doble jerarquía abarcando los 4 dúos del año.
+  parsed <- stringr::str_match(periodos_visibles,
+                               "^(\\d{4})_(t\\d-t\\d)$")
+  anios_seq <- parsed[, 2]
+  duos_seq  <- parsed[, 3]
+
+  categorias_planas <- paste(anios_seq, duos_seq)
+
+  ### PlotBands fantasma por año: color transparente, label = año
+  ### posicionado debajo del eje X (verticalAlign='bottom' + y > 0
+  ### empuja el label fuera del plot area, sobre el espacio reservado
+  ### por chart.marginBottom). Cada band cubre los índices del año.
+  for (y in unique(anios_seq)) {
+    idxs <- which(anios_seq == y)
+    plot_bands <- c(plot_bands, list(list(
+      from = min(idxs) - 1L,
+      to   = max(idxs) - 1L,
+      color = "rgba(0,0,0,0)",
+      label = list(
+        text = y,
+        align = "center",
+        verticalAlign = "bottom",
+        ### y = offset hacia abajo desde el borde inferior del plot
+        ### area. 48 ubica el año en la franja entre las labels de
+        ### dúo (que ocupan los primeros ~30px) y la caption (que
+        ### highcharter posiciona en los últimos ~30px del chart).
+        y = 48,
+        style = list(
+          fontWeight = "600",
+          fontSize = "0.85em",
+          color = "#191919"
+        )
+      )
+    )))
+  }
+
+  ### Datos por serie: para cada `to` (categoría destino), un vector de
+  ### y values en el orden exacto de periodos_visibles. Cada punto se
+  ### emite como objeto {y, isExtremo} para que el filter de dataLabels
+  ### siga funcionando.
+  df_orden <- df_data |>
+    dplyr::mutate(periodo = as.character(periodo)) |>
+    dplyr::arrange(match(periodo, periodos_visibles))
+
+  series_lista <- df_orden |>
+    dplyr::group_split(to) |>
+    lapply(function(s) {
+      list(
+        name = as.character(unique(s$to)),
+        data = lapply(seq_len(nrow(s)), function(i) {
+          list(y = unname(s$weight[i]),
+               isExtremo = isTRUE(s$isExtremo[i]))
+        })
+      )
+    })
+
+  hc <- highcharter::highchart() |>
+    highcharter::hc_chart(type = "areaspline", zoomType = "x",
+                           ### Reserva espacio debajo del eje X para
+                           ### los labels de dúo (~30px), los labels de
+                           ### año del plotBand fantasma (~20px) y la
+                           ### caption (~30px), con margen entre cada
+                           ### bloque (issue #40).
+                           marginBottom = 110) |>
     highcharter::hc_add_theme(hc_theme_estacion_r) |>
     ### Paleta diferenciada para line charts con 3+ series (issue #26).
-    ### Evita repetir azul (en otro tono también) y mantiene identidad
-    ### con azul Estación R como primer color. Naranja y amarillo
-    ### Estación R como acentos. Verde como cuarto color.
     highcharter::hc_colors(c("#405BFF", "#FF7043", "#EAFF38", "#7CB342")) |>
-    highcharter::hc_chart(zoomType = "x") |>
     highcharter::hc_plotOptions(
       areaspline = list(
         fillOpacity = 0.18,
@@ -332,14 +431,68 @@ arma_line_chart_areaspline <- function(df_data,
                        color = "#191919",
                        fontWeight = "600")
         )
+      ),
+      ### Recalcular eje Y al togglear series via legend (issue #32).
+      ### Usa la misma lógica que el primer render: padding 15% del rango,
+      ### piso 1pp, clamp 0-100. setTimeout porque Highcharts actualiza
+      ### series.visible DESPUÉS de disparar el evento.
+      series = list(
+        events = list(
+          legendItemClick = htmlwidgets::JS("function() {
+            var chart = this.chart;
+            setTimeout(function() {
+              var visiblesY = [];
+              chart.series.forEach(function(s) {
+                if (s.visible) {
+                  s.points.forEach(function(p) {
+                    if (p.y !== null && p.y !== undefined) visiblesY.push(p.y);
+                  });
+                }
+              });
+              if (visiblesY.length === 0) return;
+              var minV = Math.min.apply(null, visiblesY);
+              var maxV = Math.max.apply(null, visiblesY);
+              var pad = Math.max(1, (maxV - minV) * 0.15);
+              chart.yAxis[0].update({
+                min: Math.max(0, minV - pad),
+                max: Math.min(100, maxV + pad)
+              }, true);
+            }, 50);
+          }")
+        )
       )
     ) |>
     highcharter::hc_xAxis(
-      title = list(text = NULL),
-      tickInterval = tick_interval,
+      title    = list(text = NULL),
+      categories = categorias_planas,
       plotBands = plot_bands,
-      labels = list(rotation = -45, style = list(fontSize = "0.85em"))
-    ) |>
+      labels   = list(
+        useHTML = TRUE,
+        rotation = 0,
+        style = list(fontSize = "0.65em"),
+        ### Muestra todos los dúos en 2 líneas (t1- arriba, t2 abajo)
+        ### con fuente reducida para evitar superposición con muchos
+        ### puntos en el eje. El año lo aporta el plotBand fantasma
+        ### posicionado debajo del eje. tick_interval queda sin uso
+        ### (legado de labels.step previo).
+        formatter = htmlwidgets::JS("function() {
+          var partes = String(this.value).split(' ');
+          if (partes.length < 2) return '';
+          var subs = partes[1].split('-');
+          if (subs.length < 2) return '';
+          return '<div style=\"text-align:center;line-height:1\">' +
+                 '<div>' + subs[0] + '-</div>' +
+                 '<div>' + subs[1] + '</div>' +
+                 '</div>';
+        }")
+      )
+    )
+
+  for (s in series_lista) {
+    hc <- hc |> highcharter::hc_add_series(name = s$name, data = s$data)
+  }
+
+  hc |>
     highcharter::hc_yAxis(
       title = list(text = "% del total"),
       labels = list(format = "{value}%"),
