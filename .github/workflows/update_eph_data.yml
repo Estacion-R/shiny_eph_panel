@@ -66,6 +66,19 @@ jobs:
             echo "No hay períodos nuevos. Workflow termina sin cambios."
           fi
 
+      ### Regenerar los parquets de runtime (issue #48). Sin estos
+      ### pasos, los CSVs históricos quedan con el último trimestre
+      ### pero panel_runtime.parquet (intertrim) y panel_runtime_anual
+      ### .parquet siguen apuntando al trimestre viejo, generando un
+      ### drift entre lo que muestra Foto vs el resto del dashboard.
+      - name: Regenerar panel runtime intertrim
+        if: steps.check.outputs.has_new == 'true'
+        run: Rscript ETL/09-build_paneles_runtime.R
+
+      - name: Regenerar panel runtime anual
+        if: steps.check.outputs.has_new == 'true'
+        run: Rscript ETL/09b-build_paneles_runtime_anual.R
+
       - name: Limpiar archivo temporal antes del commit
         if: steps.check.outputs.has_new == 'true'
         run: rm -f .new_periods.txt
@@ -98,6 +111,8 @@ jobs:
             - `data_raw/df_eph.parquet` (microdato bruto)
             - `data_output/df_tasas_mt.parquet` (totales por trimestre)
             - `data_output/panel_cond_act_historico.csv` (paneles para line chart)
+            - `data_output/panel_runtime.parquet` + `.csv.gz` (runtime intertrim)
+            - `data_output/panel_runtime_anual.parquet` + `.csv.gz` (runtime anual, issue #44)
 
             ---
             *Generado por `.github/workflows/update_eph_data.yml`*
@@ -107,6 +122,18 @@ jobs:
             data_raw/df_eph.parquet
             data_output/df_tasas_mt.parquet
             data_output/panel_cond_act_historico.csv
+            data_output/panel_cat_ocup_historico.csv
+            data_output/panel_formalidad_historico.csv
+            data_output/panel_formalidad_ampliada_historico.csv
+            data_output/tasas_cond_act_historico.csv
+            data_output/tasas_cat_ocup_historico.csv
+            data_output/tasas_formalidad_historico.csv
+            data_output/tasas_formalidad_ampliada_historico.csv
+            data_output/calidad_panel_pct_historico.csv
+            data_output/panel_runtime.parquet
+            data_output/panel_runtime.csv.gz
+            data_output/panel_runtime_anual.parquet
+            data_output/panel_runtime_anual.csv.gz
 
       - name: Auto-merge del PR
         if: steps.cpr.outputs.pull-request-number
