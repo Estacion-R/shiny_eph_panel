@@ -11,6 +11,26 @@ versionado [SemVer](https://semver.org/lang/es/) adaptado a app web:
 
 ---
 
+## [0.7.3] · 2026-05-03 · HOTFIX (continuación)
+
+### Fixed
+
+- **OOM al togglear a modo Interanual**. El v0.7.2 evitaba el OOM al
+  boot pero seguía rompiendo cuando el usuario cambiaba a Interanual.
+  Cada llamada a `armo_base_panel(window = "anual")` desde un módulo
+  hacía `arrow::read_parquet(path, as_data_frame = FALSE)` que carga
+  el parquet entero (~16 MB) como Arrow Table en memoria. En Foto hay
+  3-5 llamadas en cascada (sankey + matriz + 3 tasas + delta año
+  anterior), sumando ~80 MB que arrow no liberaba a tiempo.
+- **Reemplazado por `arrow::open_dataset()`**, que es realmente lazy:
+  solo lee el footer del parquet + los row groups que matchean al
+  filter. Footprint mínimo y predictible a través de múltiples
+  llamadas.
+- Mismo cambio aplicado a `01-extract.R` para los metadatos del panel
+  anual al boot.
+
+---
+
 ## [0.7.2] · 2026-05-03 · HOTFIX
 
 ### Fixed
