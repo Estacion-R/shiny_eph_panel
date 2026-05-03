@@ -192,6 +192,7 @@ mod_formalidad_ui <- function(id) {
       bslib::nav_panel(
         title = "Película",
         icon = icon("video"),
+        uiOutput(ns("aviso_anual_pelicula")),
         filtros_pelicula,
         div(
           style = "text-align: center; margin: 4px 0 12px 0;",
@@ -208,6 +209,7 @@ mod_formalidad_ui <- function(id) {
       bslib::nav_panel(
         title = "Tasas",
         icon = icon("chart-line"),
+        uiOutput(ns("aviso_anual_tasas")),
         filter_query(
           prefix_text = "",
           filter_preposition(
@@ -265,12 +267,20 @@ mod_formalidad_ui <- function(id) {
 
 # Server del módulo ----------------------------------------------------------
 
-mod_formalidad_server <- function(id) {
+mod_formalidad_server <- function(id, tipo_duo = shiny::reactive("trimestral")) {
   moduleServer(id, function(input, output, session) {
 
     ### Alerta del período de intervención INDEC (Foto).
     output$alert_int_foto <- renderUI({
       alerta_intervencion_indec(input$anio_ant)
+    })
+
+    ### Aviso de modo Interanual no soportado en Película/Tasas (#44).
+    output$aviso_anual_pelicula <- renderUI({
+      alerta_modo_anual_no_soportado(tipo_duo())
+    })
+    output$aviso_anual_tasas <- renderUI({
+      alerta_modo_anual_no_soportado(tipo_duo())
     })
 
     etiqueta_plural <- function(cat) {
@@ -279,11 +289,44 @@ mod_formalidad_server <- function(id) {
              Informal = "Informales")
     }
 
-    observeEvent(input$anio_ant, {
-      duos <- duos_disponibles_por_anio(input$anio_ant, periodos_disponibles)
+    ### Periodos / años válidos según el modo activo (issue #44).
+    periodos_actuales <- reactive({
+      if (tipo_duo() == "anual") periodos_disponibles_anual
+      else periodos_disponibles
+    })
+    anios_actuales <- reactive({
+      if (tipo_duo() == "anual") anios_disponibles_anual
+      else anios_disponibles
+    })
+
+    observeEvent(tipo_duo(), {
+      anios <- anios_actuales()
+      if (length(anios) == 0) return()
+
+      sel_actual <- isolate(input$anio_ant)
+      sel_nueva <- if (!is.null(sel_actual) &&
+                       as.numeric(sel_actual) %in% anios) {
+        sel_actual
+      } else {
+        max(anios)
+      }
+
+      updateSelectInput(session, "anio_ant",
+                        choices = anios, selected = sel_nueva)
+    })
+
+    observe({
+      anio <- input$anio_ant
+      tipo_duo()
+      req(anio)
+
+      duos <- duos_disponibles_por_anio(anio, periodos_actuales(),
+                                        window = tipo_duo())
+      if (length(duos) == 0) return()
 
       seleccion_actual <- isolate(input$trimestre_ant)
-      seleccion_nueva <- if (!is.null(seleccion_actual) && seleccion_actual %in% duos) {
+      seleccion_nueva <- if (!is.null(seleccion_actual) &&
+                             seleccion_actual %in% duos) {
         seleccion_actual
       } else {
         duos[1]
@@ -338,7 +381,8 @@ mod_formalidad_server <- function(id) {
         df_panel <- armo_base_panel(
           anio_0 = anio_ant, trimestre_0 = trim_ant,
           anio_1 = anio_post, trimestre_1 = trim_post,
-          variables = vars_panel_eph
+          variables = vars_panel_eph,
+          window = tipo_duo()
         )
 
         codigo <- match(input$category, c("Formal", "Informal"))
@@ -363,7 +407,8 @@ mod_formalidad_server <- function(id) {
         armo_base_panel(
           anio_0 = anio_ant, trimestre_0 = trim_ant,
           anio_1 = anio_post, trimestre_1 = trim_post,
-          variables = vars_panel_eph
+          variables = vars_panel_eph,
+          window = tipo_duo()
         )
       })
 
@@ -403,7 +448,8 @@ mod_formalidad_server <- function(id) {
         df_prev <- armo_base_panel(
           anio_0 = anio_prev, trimestre_0 = trim_ant,
           anio_1 = anio_post_prev, trimestre_1 = trim_post,
-          variables = vars_panel_eph
+          variables = vars_panel_eph,
+          window = tipo_duo()
         )
         ### Para definición ampliada en años pre-2023, NA en formalidad_ampliada.
         if (input$definicion == "ampliada") {
@@ -471,6 +517,10 @@ mod_formalidad_server <- function(id) {
       })
 
       output$sankey <- renderHighchart({
+        ### Issue #44: req() pausa el render durante transiciones del
+        ### toggle intertrim/anual cuando el panel queda vacío unos ms.
+        req(nrow(df_eph_panel()) > 0)
+
         ### Validar que la definición ampliada tenga datos en el panel
         ### seleccionado (solo aplica para 2023-T4+).
         if (input$definicion == "ampliada") {

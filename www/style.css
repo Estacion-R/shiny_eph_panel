@@ -382,6 +382,24 @@
   color: #888;
 }
 
+/* Aviso para sub-tabs que aún no soportan modo Interanual (issue #44).
+   Estética similar a la alerta de intervención INDEC pero con el
+   azul Estación R para indicar "info" (no alerta). */
+.alert-modo-anual {
+  background-color: rgba(64, 91, 255, 0.07);
+  border-left: 3px solid #405BFF;
+  padding: 10px 16px;
+  border-radius: 4px;
+  font-size: 0.9em;
+  margin: 12px 0 16px 0;
+  color: #404040;
+  line-height: 1.5;
+}
+.alert-modo-anual .fa,
+.alert-modo-anual svg {
+  color: #405BFF;
+}
+
 #grid-page-wrapper {
   justify-content: center;
   align-items: center;

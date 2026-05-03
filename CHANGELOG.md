@@ -11,6 +11,36 @@ versionado [SemVer](https://semver.org/lang/es/) adaptado a app web:
 
 ---
 
+## [0.7.0] · 2026-05-03
+
+### Added
+
+- Toggle **Tipo de dúo** en el FAB: alterna entre análisis
+  intertrimestral (T → T+1, default) e interanual (T año X → T año X+1).
+  La pestaña **Foto** de los 3 análisis (cond_act, cat_ocup, formalidad)
+  recalcula sobre el panel anual cuando se elige Interanual. (#44 Fase 1)
+- Nuevo dataset `data_output/panel_runtime_anual.parquet` (16 MB) +
+  `panel_runtime_anual.csv.gz` (18 MB) generado por
+  `ETL/09b-build_paneles_runtime_anual.R`.
+- Banner azul de aviso "Esta vista todavía no soporta Interanual" en
+  pestañas Película y Tasas mientras se completa la Fase 2 / Fase 3
+  (issues #46, #47).
+- Helper `alerta_modo_anual_no_soportado()` en `R/utils_analisis.R`.
+- Selectores de año y dúo se adaptan automáticamente al modo activo:
+  - En anual el dúo cambia formato `1-2 / 2-3 / 3-4 / 4-1` →
+    `T1 / T2 / T3 / T4`.
+  - El selector de año se limita a años con dúo anual válido (sin el
+    último año de la serie cuando todavía no hay t+1).
+
+### Fixed
+
+- `armo_tabla_sankey()` ahora es defensivo cuando recibe tabla vacía
+  (devuelve schema vacío en lugar de tirar error en el `if`).
+- `output$sankey` en los 3 módulos suma `req(nrow(panel) > 0)` para
+  pausar el render durante transiciones del toggle sin romper.
+
+---
+
 ## [0.6.0] · 2026-05-02
 
 Primer release con CHANGELOG. Versiones anteriores no están documentadas

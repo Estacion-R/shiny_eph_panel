@@ -171,6 +171,7 @@ mod_cond_act_ui <- function(id) {
     bslib::nav_panel(
       title = "Película",
       icon = icon("video"),
+      uiOutput(ns("aviso_anual_pelicula")),
       filtros_pelicula,
       div(
         style = "text-align: center; margin: 4px 0 12px 0;",
@@ -205,6 +206,7 @@ mod_cond_act_ui <- function(id) {
     bslib::nav_panel(
       title = "Tasas",
       icon = icon("chart-line"),
+      uiOutput(ns("aviso_anual_tasas")),
       filter_query(
         prefix_text = "",
         filter_preposition(
@@ -344,17 +346,56 @@ mod_cond_act_ui <- function(id) {
 
 # Server del módulo ----------------------------------------------------------
 
-mod_cond_act_server <- function(id) {
+mod_cond_act_server <- function(id, tipo_duo = shiny::reactive("trimestral")) {
   moduleServer(id, function(input, output, session) {
 
-    ### Recalcula los duos trimestrales válidos cuando cambia el año del
-    ### panel. Si el duo previamente seleccionado sigue disponible, se
-    ### preserva; si no, se cae al primer duo válido del año.
-    observeEvent(input$anio_ant, {
-      duos <- duos_disponibles_por_anio(input$anio_ant, periodos_disponibles)
+    ### Periodos / años válidos según el modo activo (issue #44).
+    ### En modo trimestral usamos el set completo del panel intertrim.
+    ### En modo anual restringimos a los dúos donde existe (anio_0+1, trim_0)
+    ### en el microdato (que es lo que pre-computa ETL/09b).
+    periodos_actuales <- reactive({
+      if (tipo_duo() == "anual") periodos_disponibles_anual
+      else periodos_disponibles
+    })
+    anios_actuales <- reactive({
+      if (tipo_duo() == "anual") anios_disponibles_anual
+      else anios_disponibles
+    })
+
+    ### Cuando cambia el modo, actualizar el selector de año para limitar
+    ### a los años válidos. Si el año actual sigue siendo válido se
+    ### preserva; si no, fallback al máximo año disponible.
+    observeEvent(tipo_duo(), {
+      anios <- anios_actuales()
+      if (length(anios) == 0) return()
+
+      sel_actual <- isolate(input$anio_ant)
+      sel_nueva <- if (!is.null(sel_actual) &&
+                       as.numeric(sel_actual) %in% anios) {
+        sel_actual
+      } else {
+        max(anios)
+      }
+
+      updateSelectInput(session, "anio_ant",
+                        choices = anios, selected = sel_nueva)
+    })
+
+    ### Recalcula los duos trimestrales válidos cuando cambia el año o
+    ### el modo del dúo. Si el duo previamente seleccionado sigue
+    ### disponible, se preserva; si no, se cae al primer duo válido.
+    observe({
+      anio <- input$anio_ant
+      modo <- tipo_duo()
+      req(anio)
+
+      duos <- duos_disponibles_por_anio(anio, periodos_actuales(),
+                                        window = modo)
+      if (length(duos) == 0) return()
 
       seleccion_actual <- isolate(input$trimestre_ant)
-      seleccion_nueva <- if (!is.null(seleccion_actual) && seleccion_actual %in% duos) {
+      seleccion_nueva <- if (!is.null(seleccion_actual) &&
+                             seleccion_actual %in% duos) {
         seleccion_actual
       } else {
         duos[1]
@@ -408,7 +449,8 @@ mod_cond_act_server <- function(id) {
         armo_base_panel(anio_0 = anio_ant,
                         trimestre_0 = trim_ant,
                         anio_1 = anio_post,
-                        trimestre_1 = trim_post)
+                        trimestre_1 = trim_post,
+                        window = tipo_duo())
       })
 
       ### Tarjetas con tasas destacadas (issue #16 · opción B).
@@ -436,7 +478,8 @@ mod_cond_act_server <- function(id) {
         if (!existe) return(NULL)
         df_prev <- armo_base_panel(
           anio_0 = anio_prev, trimestre_0 = trim_ant,
-          anio_1 = anio_post_prev, trimestre_1 = trim_post
+          anio_1 = anio_post_prev, trimestre_1 = trim_post,
+          window = tipo_duo()
         )
         arma_tasas_destacadas(
           df_panel = df_prev, var = "ESTADO",
@@ -489,7 +532,8 @@ mod_cond_act_server <- function(id) {
         trim_post <- if (trim %in% 1:3) trim + 1 else 1
 
         df_p <- armo_base_panel(anio_0 = anio, trimestre_0 = trim,
-                                anio_1 = anio_post, trimestre_1 = trim_post)
+                                anio_1 = anio_post, trimestre_1 = trim_post,
+                                window = tipo_duo())
 
         categoria_lab <- ifelse(input$comp_category == "Ocupado", "Ocupación",
                                 ifelse(input$comp_category == "Desocupado",
@@ -568,6 +612,14 @@ mod_cond_act_server <- function(id) {
         alerta_intervencion_indec(c(input$comp_anio_a, input$comp_anio_b))
       })
 
+      ### Aviso de modo Interanual no soportado en Película/Tasas (#44).
+      output$aviso_anual_pelicula <- renderUI({
+        alerta_modo_anual_no_soportado(tipo_duo())
+      })
+      output$aviso_anual_tasas <- renderUI({
+        alerta_modo_anual_no_soportado(tipo_duo())
+      })
+
       output$comp_header_a <- renderText({
         paste("Panel A · Año", input$comp_anio_a)
       })
@@ -582,12 +634,18 @@ mod_cond_act_server <- function(id) {
       })
 
       output$sankey <- renderHighchart({
+        ### Issue #44: durante el toggle intertrim/anual, el panel puede
+        ### estar vacío unos ms hasta que los selectores se actualicen.
+        ### req() pausa el render sin tirar error.
+        req(nrow(df_eph_panel()) > 0)
+
         tabla_sankey <- armo_tabla_sankey(
             table = preparo_base(
               df = df_eph_panel(),
               periodo_base = input$periodo_base),
             categoria = input$category) |>
           dplyr::mutate(dplyr::across(c(from, to), sankey_label_legible))
+        req(nrow(tabla_sankey) > 0)
 
         highcharter::hchart(
           object = tabla_sankey,

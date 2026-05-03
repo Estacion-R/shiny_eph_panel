@@ -185,6 +185,29 @@ sankey_nodes_orden <- function(categorias_legibles) {
 ### @param anios vector numérico con los años de los paneles activos.
 ###   En Foto pasar 1 año (el del panel). En Comparar pasar 2 años.
 ### @return div HTML con el aviso, o NULL si ningún año cae en el período.
+### Banner que avisa que la vista actual no soporta modo anual aún
+### (issue #44 Fase 2/3). Se renderiza cuando tipo_duo() == "anual" en
+### sub-tabs Película y Tasas, que siguen usando los CSVs históricos
+### intertrim. Devuelve NULL en modo trimestral.
+###
+### @param tipo_duo string: "trimestral" o "anual".
+### @return div HTML con el aviso, o NULL si está en modo trimestral.
+alerta_modo_anual_no_soportado <- function(tipo_duo) {
+  if (is.null(tipo_duo) || tipo_duo != "anual") return(NULL)
+  shiny::div(
+    class = "alert-modo-anual",
+    shiny::icon("circle-info"),
+    shiny::HTML("&nbsp;Esta vista todavía no soporta el modo "),
+    shiny::tags$strong("Interanual"),
+    shiny::HTML(". Por ahora muestra datos "),
+    shiny::tags$strong("intertrimestrales"),
+    shiny::HTML(". Volvé a la pestaña "),
+    shiny::tags$em("Foto"),
+    shiny::HTML(" para ver el análisis interanual del dúo seleccionado.")
+  )
+}
+
+
 alerta_intervencion_indec <- function(anios) {
   anios <- suppressWarnings(as.numeric(anios))
   anios <- anios[!is.na(anios)]
