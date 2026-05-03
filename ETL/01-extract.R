@@ -131,17 +131,19 @@ anio_max_disponible <- max(anios_disponibles)
 ### columnas anio_0/trim_0 + ANO4_t1/TRIMESTRE_t1, y lo cerramos.
 ### NO mantenemos la Arrow Table abierta en memoria (hotfix OOM).
 if (file.exists(PATH_PANEL_RUNTIME_ANUAL)) {
-  ds_anual_tmp <- arrow::read_parquet(
-    PATH_PANEL_RUNTIME_ANUAL,
-    col_select = c("anio_0", "trim_0", "ANO4_t1", "TRIMESTRE_t1"),
-    as_data_frame = FALSE
-  )
+  ### open_dataset es lazy real (solo lee footer + row groups
+  ### necesarios). Mucho más liviano que read_parquet (que carga
+  ### todo el archivo a memoria). Hotfix v0.7.3 sobre OOM al
+  ### togglear, mismo patrón que armo_base_panel(window = "anual").
+  ds_anual_tmp <- arrow::open_dataset(PATH_PANEL_RUNTIME_ANUAL)
   periodos_anual_t0 <- ds_anual_tmp |>
-    dplyr::distinct(anio_0, trim_0) |>
+    dplyr::select(anio_0, trim_0) |>
+    dplyr::distinct() |>
     dplyr::collect() |>
     dplyr::rename(ANO4 = anio_0, TRIMESTRE = trim_0)
   periodos_anual_t1 <- ds_anual_tmp |>
-    dplyr::distinct(ANO4_t1, TRIMESTRE_t1) |>
+    dplyr::select(ANO4_t1, TRIMESTRE_t1) |>
+    dplyr::distinct() |>
     dplyr::collect() |>
     dplyr::rename(ANO4 = ANO4_t1, TRIMESTRE = TRIMESTRE_t1)
   ### periodos_disponibles_anual: union (t0+t1) para validar dúos en

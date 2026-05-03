@@ -281,11 +281,18 @@ armo_base_panel <- function(anio_0, trimestre_0, anio_1 = NULL, trimestre_1 = NU
         stop("panel_runtime_anual.parquet no encontrado en ", path,
              ". Correr ETL/09b-build_paneles_runtime_anual.R.")
       }
-      ### read_parquet con as_data_frame = FALSE devuelve Arrow Table.
-      ### El filter de dplyr sobre Arrow hace pushdown: solo lee las
-      ### filas que matchean (anio_0, trim_0) del row group.
+      ### IMPORTANTE: usar arrow::open_dataset() en lugar de read_parquet().
+      ### read_parquet (incluso con as_data_frame = FALSE) carga el archivo
+      ### entero a una Arrow Table en memoria; cada llamada a este
+      ### armo_base_panel desde un módulo (sankey, matriz, tasas, delta
+      ### anio anterior) sumaba ~16 MB que arrow no liberaba a tiempo,
+      ### disparando OOM en el free tier al togglear modo anual.
+      ###
+      ### open_dataset es realmente lazy: solo lee el footer y los row
+      ### groups que matchean al filter. Footprint mínimo, predictible
+      ### a través de múltiples llamadas. Hotfix v0.7.3.
       return(
-        arrow::read_parquet(path, as_data_frame = FALSE) |>
+        arrow::open_dataset(path) |>
           dplyr::filter(anio_0 == !!anio_0, trim_0 == !!trimestre_0) |>
           dplyr::select(-anio_0, -trim_0) |>
           dplyr::collect()
