@@ -11,6 +11,26 @@ versionado [SemVer](https://semver.org/lang/es/) adaptado a app web:
 
 ---
 
+## [0.7.2] · 2026-05-03 · HOTFIX
+
+### Fixed
+
+- **OOM en producción**: `panel_runtime_anual.parquet` ya no se carga
+  como Arrow Table al boot (en `ETL/01-extract.R`). Mantener dos
+  Tables abiertas simultáneamente excedía el budget de RAM del free
+  tier de shinyapps.io y disparaba `oom (out of memory)` justo
+  después de cargar bslib.
+- En modo Interanual, `armo_base_panel()` ahora abre el parquet
+  on-demand con filter pushdown y lo cierra cada llamada. Cuesta un
+  poco más de I/O por refresh (lectura de 16 MB) pero el footprint
+  de RAM al boot vuelve al nivel intertrim solo.
+- Al boot, los metadatos del panel anual (`periodos_disponibles_anual`,
+  `anios_disponibles_anual`) se derivan abriendo el parquet
+  temporalmente con `col_select` solo de las 4 columnas necesarias y
+  llamando `gc()` después.
+
+---
+
 ## [0.7.1] · 2026-05-03
 
 ### Changed
