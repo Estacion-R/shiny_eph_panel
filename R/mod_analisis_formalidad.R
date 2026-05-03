@@ -192,7 +192,6 @@ mod_formalidad_ui <- function(id) {
       bslib::nav_panel(
         title = "Película",
         icon = icon("video"),
-        uiOutput(ns("aviso_anual_pelicula")),
         filtros_pelicula,
         div(
           style = "text-align: center; margin: 4px 0 12px 0;",
@@ -209,7 +208,6 @@ mod_formalidad_ui <- function(id) {
       bslib::nav_panel(
         title = "Tasas",
         icon = icon("chart-line"),
-        uiOutput(ns("aviso_anual_tasas")),
         filter_query(
           prefix_text = "",
           filter_preposition(
@@ -275,12 +273,18 @@ mod_formalidad_server <- function(id, tipo_duo = shiny::reactive("trimestral")) 
       alerta_intervencion_indec(input$anio_ant)
     })
 
-    ### Aviso de modo Interanual no soportado en Película/Tasas (#44).
-    output$aviso_anual_pelicula <- renderUI({
-      alerta_modo_anual_no_soportado(tipo_duo())
-    })
-    output$aviso_anual_tasas <- renderUI({
-      alerta_modo_anual_no_soportado(tipo_duo())
+    ### Choices del selector tasas_duo según modo (issue #46).
+    observeEvent(tipo_duo(), {
+      choices_nuevos <- if (tipo_duo() == "anual") {
+        c("Todos los trimestres" = "todos",
+          "T1" = "t1", "T2" = "t2", "T3" = "t3", "T4" = "t4")
+      } else {
+        c("Todos los trimestres" = "todos",
+          "1-2" = "t1-t2", "2-3" = "t2-t3", "3-4" = "t3-t4", "4-1" = "t4-t1")
+      }
+      updateSelectInput(session, "tasas_duo",
+                        choices = choices_nuevos,
+                        selected = "todos")
     })
 
     etiqueta_plural <- function(cat) {
@@ -360,7 +364,12 @@ mod_formalidad_server <- function(id, tipo_duo = shiny::reactive("trimestral")) 
       ###   - universo: "asalariados" o "ocupados", para textos del UI.
       ###   - caption_def: texto explicativo en el caption del sankey.
       var_panel <- if (input$definicion == "ampliada") "formalidad_ampliada" else "formalidad"
-      df_serie  <- if (input$definicion == "ampliada") df_formalidad_ampliada else df_formalidad
+      ### df_serie según definición Y modo (issue #46).
+      df_serie  <- if (input$definicion == "ampliada") {
+        if (tipo_duo() == "anual") df_formalidad_ampliada_anual else df_formalidad_ampliada
+      } else {
+        if (tipo_duo() == "anual") df_formalidad_anual else df_formalidad
+      }
       universo  <- if (input$definicion == "ampliada") "ocupados" else "asalariados"
       caption_def <- if (input$definicion == "ampliada") {
         "Definición ampliada (OIT 2023, EPH 2023+): asalariados con PP07H + cuenta propia/patrones con PP05I/PP05K."
@@ -561,17 +570,17 @@ mod_formalidad_server <- function(id, tipo_duo = shiny::reactive("trimestral")) 
       })
 
       ### Sub-tab "Tasas" (issue #22). Respeta el toggle clásica/ampliada
-      ### igual que sankey y line chart.
+      ### + el modo intertrim/anual (issue #46).
       output$tasas_chart <- renderHighchart({
         df_tasas_serie <- if (input$definicion == "ampliada") {
-          df_tasas_formalidad_amp
+          if (tipo_duo() == "anual") df_tasas_formalidad_amp_anual else df_tasas_formalidad_amp
         } else {
-          df_tasas_formalidad
+          if (tipo_duo() == "anual") df_tasas_formalidad_anual else df_tasas_formalidad
         }
 
         shiny::validate(shiny::need(
           nrow(df_tasas_serie) > 0,
-          "Histórico de tasas todavía no fue computado. Correr ETL/08-build_tasas_historico.R."
+          "Histórico de tasas todavía no fue computado para este modo. Correr ETL/08-build_tasas_historico.R o ETL/11-build_historicos_anuales.R."
         ))
 
         df_data <- df_tasas_serie |>
