@@ -10,4 +10,4 @@
 ###
 ### Se muestra en el sidebar footer (app.R) y queda disponible para
 ### eventuales evento GA4 con dimensión custom 'app_version'.
-APP_VERSION <- "0.7.1"
+APP_VERSION <- "0.7.2"
