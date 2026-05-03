@@ -317,10 +317,9 @@ ui <- page_fillable(
     )
   ),
 
-  ### Botón flotante (FAB) abajo a la derecha. Roadmap: alternar entre
-  ### dúos trimestrales consecutivos (T1-T2, T2-T3, etc., mismo año) y
-  ### dúos interanuales (T1 año X vs T1 año X+1). Por ahora va como
-  ### placeholder que abre un popover explicando la idea.
+  ### Botón flotante (FAB) abajo a la derecha. Toggle del tipo de dúo
+  ### que recorre toda la app: intertrimestral (default) vs interanual.
+  ### Issue #44.
   bslib::popover(
     tags$button(
       class = "fab-duo",
@@ -330,20 +329,29 @@ ui <- page_fillable(
       tags$span(class = "fab-duo-label", "Tipo de dúo")
     ),
     title = tagList(
-      bsicons::bs_icon("clock-history",
+      bsicons::bs_icon("calendar-week",
                        style = "color: #405BFF; margin-right: 6px;"),
-      "Próximamente"
+      "Tipo de dúo"
+    ),
+    radioButtons(
+      inputId = "tipo_duo",
+      label   = NULL,
+      choices = c(
+        "Intertrimestral (T → T+1)" = "trimestral",
+        "Interanual (T año X → T año X+1)" = "anual"
+      ),
+      selected = "trimestral"
     ),
     tags$p(
-      "Esta opción va a permitir alternar el tipo de dúo trimestral del análisis:"
-    ),
-    tags$ul(
-      tags$li(tags$strong("Consecutivos"), " (lo que hay hoy): T1-T2, T2-T3, T3-T4, T4-T1 dentro del mismo año o entre años contiguos."),
-      tags$li(tags$strong("Interanuales"), " (próximamente): T1 año X vs T1 año X+1, para neutralizar la estacionalidad y leer cambios anuales en la misma persona.")
+      tags$strong("Intertrimestral: "),
+      "T1-T2, T2-T3, T3-T4, T4-T1 dentro del mismo año o entre años contiguos.",
+      style = "font-size: 0.85em; color: #555; margin-bottom: 0.5rem;"
     ),
     tags$p(
-      tags$em("Útil cuando se quiere separar el efecto estacional del cambio estructural."),
-      style = "font-size: 0.9em; color: #555;"
+      tags$strong("Interanual: "),
+      "T1 año X vs T1 año X+1 (mismo trimestre). Neutraliza la estacionalidad ",
+      "y permite leer cambios estructurales anuales sobre las mismas personas.",
+      style = "font-size: 0.85em; color: #555; margin-bottom: 0;"
     ),
     placement = "top"
   ),
@@ -362,9 +370,17 @@ ui <- page_fillable(
 
 server <- function(input, output, session) {
 
-  mod_cond_act_server("cond_act")
-  mod_cat_ocup_server("cat_ocup")
-  mod_formalidad_server("formalidad")
+  ### Tipo de dúo (issue #44): reactive global que se propaga a los
+  ### módulos. Valores: "trimestral" (default) | "anual". Default si
+  ### el input aún no se inicializó (primer render).
+  tipo_duo <- reactive({
+    val <- input$tipo_duo
+    if (is.null(val) || !nzchar(val)) "trimestral" else val
+  })
+
+  mod_cond_act_server("cond_act", tipo_duo = tipo_duo)
+  mod_cat_ocup_server("cat_ocup", tipo_duo = tipo_duo)
+  mod_formalidad_server("formalidad", tipo_duo = tipo_duo)
   mod_calidad_panel_server("calidad")
 
   ### Navegación desde las tarjetas del landing. Cada actionLink dispara

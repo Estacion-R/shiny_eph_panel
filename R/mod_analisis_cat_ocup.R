@@ -168,6 +168,7 @@ mod_cat_ocup_ui <- function(id) {
     bslib::nav_panel(
       title = "Película",
       icon = icon("video"),
+      uiOutput(ns("aviso_anual_pelicula")),
       filtros_pelicula,
       div(
         style = "text-align: center; margin: 4px 0 12px 0;",
@@ -184,6 +185,7 @@ mod_cat_ocup_ui <- function(id) {
     bslib::nav_panel(
       title = "Tasas",
       icon = icon("chart-line"),
+      uiOutput(ns("aviso_anual_tasas")),
       filter_query(
         prefix_text = "",
         filter_preposition(
@@ -242,12 +244,20 @@ mod_cat_ocup_ui <- function(id) {
 
 # Server del módulo ----------------------------------------------------------
 
-mod_cat_ocup_server <- function(id) {
+mod_cat_ocup_server <- function(id, tipo_duo = shiny::reactive("trimestral")) {
   moduleServer(id, function(input, output, session) {
 
     ### Alerta del período de intervención INDEC (Foto).
     output$alert_int_foto <- renderUI({
       alerta_intervencion_indec(input$anio_ant)
+    })
+
+    ### Aviso de modo Interanual no soportado en Película/Tasas (#44).
+    output$aviso_anual_pelicula <- renderUI({
+      alerta_modo_anual_no_soportado(tipo_duo())
+    })
+    output$aviso_anual_tasas <- renderUI({
+      alerta_modo_anual_no_soportado(tipo_duo())
     })
 
     ### Etiquetas humanas para textos del UI (singular / plural / variable).
@@ -266,11 +276,46 @@ mod_cat_ocup_server <- function(id) {
              TFSR = "Trab familiares")
     }
 
-    observeEvent(input$anio_ant, {
-      duos <- duos_disponibles_por_anio(input$anio_ant, periodos_disponibles)
+    ### Periodos / años válidos según el modo activo (issue #44).
+    periodos_actuales <- reactive({
+      if (tipo_duo() == "anual") periodos_disponibles_anual
+      else periodos_disponibles
+    })
+    anios_actuales <- reactive({
+      if (tipo_duo() == "anual") anios_disponibles_anual
+      else anios_disponibles
+    })
+
+    ### Cuando cambia el modo, actualizar el selector de año.
+    observeEvent(tipo_duo(), {
+      anios <- anios_actuales()
+      if (length(anios) == 0) return()
+
+      sel_actual <- isolate(input$anio_ant)
+      sel_nueva <- if (!is.null(sel_actual) &&
+                       as.numeric(sel_actual) %in% anios) {
+        sel_actual
+      } else {
+        max(anios)
+      }
+
+      updateSelectInput(session, "anio_ant",
+                        choices = anios, selected = sel_nueva)
+    })
+
+    ### Recalcula los duos válidos cuando cambia año o modo.
+    observe({
+      anio <- input$anio_ant
+      tipo_duo()
+      req(anio)
+
+      duos <- duos_disponibles_por_anio(anio, periodos_actuales(),
+                                        window = tipo_duo())
+      if (length(duos) == 0) return()
 
       seleccion_actual <- isolate(input$trimestre_ant)
-      seleccion_nueva <- if (!is.null(seleccion_actual) && seleccion_actual %in% duos) {
+      seleccion_nueva <- if (!is.null(seleccion_actual) &&
+                             seleccion_actual %in% duos) {
         seleccion_actual
       } else {
         duos[1]
@@ -307,7 +352,8 @@ mod_cat_ocup_server <- function(id) {
         df_panel <- armo_base_panel(
           anio_0 = anio_ant, trimestre_0 = trim_ant,
           anio_1 = anio_post, trimestre_1 = trim_post,
-          variables = c("ESTADO", "CAT_OCUP", "PONDERA")
+          variables = c("ESTADO", "CAT_OCUP", "PONDERA"),
+          window = tipo_duo()
         )
 
         codigo_cat <- match(input$category,
@@ -329,7 +375,8 @@ mod_cat_ocup_server <- function(id) {
         armo_base_panel(
           anio_0 = anio_ant, trimestre_0 = trim_ant,
           anio_1 = anio_post, trimestre_1 = trim_post,
-          variables = c("ESTADO", "CAT_OCUP", "PONDERA")
+          variables = c("ESTADO", "CAT_OCUP", "PONDERA"),
+          window = tipo_duo()
         )
       })
 
@@ -356,7 +403,8 @@ mod_cat_ocup_server <- function(id) {
         df_prev <- armo_base_panel(
           anio_0 = anio_prev, trimestre_0 = trim_ant,
           anio_1 = anio_post_prev, trimestre_1 = trim_post,
-          variables = c("ESTADO", "CAT_OCUP", "PONDERA")
+          variables = c("ESTADO", "CAT_OCUP", "PONDERA"),
+          window = tipo_duo()
         )
         arma_tasas_destacadas(
           df_panel = df_prev, var = "CAT_OCUP",
@@ -438,6 +486,10 @@ mod_cat_ocup_server <- function(id) {
       })
 
       output$sankey <- renderHighchart({
+        ### Issue #44: req() pausa el render durante transiciones del
+        ### toggle intertrim/anual cuando el panel queda vacío unos ms.
+        req(nrow(df_eph_panel()) > 0)
+
         tabla_sankey <- armo_tabla_sankey(
             table = preparo_base(
               df = df_eph_panel(),
@@ -446,6 +498,7 @@ mod_cat_ocup_server <- function(id) {
               etiquetas = c("Patron", "Cuenta_propia", "Asalariado", "TFSR")),
             categoria = input$category) |>
           dplyr::mutate(dplyr::across(c(from, to), sankey_label_legible))
+        req(nrow(tabla_sankey) > 0)
 
         highcharter::hchart(
           object = tabla_sankey,

@@ -51,6 +51,40 @@
   Estación R va más adelante con un tip vinculado.
 - **Issue / commit:** issue #35.
 
+### 2026-05-03 · Toggle "Tipo de dúo": análisis interanual (T año X vs T año X+1)
+
+- **Estado:** pendiente
+- **Qué cambió:** el FAB abajo a la derecha del dashboard ahora permite
+  alternar entre análisis **intertrimestral** (T → T+1, default) y
+  **interanual** (T año X → T año X+1, mismo trimestre). En modo
+  interanual la **Foto** (matriz de transición + tasas + Sankey) se
+  recalcula sobre el panel anual armado con `eph::organize_panels(window
+  = "anual")`. Los selectores de año y dúo se adaptan automáticamente.
+  Película y Tasas todavía muestran datos intertrim con un aviso visible
+  (Fase 2/3 pendiente).
+- **Valor para el usuario:** la EPH como panel permite seguir a las
+  mismas personas entre años consecutivos (gracias al esquema 2-2-2), no
+  solo entre trimestres adyacentes. Comparar T1-2024 con T1-2025
+  **neutraliza la estacionalidad** y hace visibles cambios estructurales
+  que el corte transversal anual no captura. Hasta ahora la app solo
+  habilitaba el corte intertrim; ahora cubre la dimensión interanual,
+  que es la lectura más usada en publicaciones académicas y reportes
+  oficiales (cuando comparan trimestre con trimestre del año anterior).
+- **Ángulo de copy:**
+  1. *"Lo que pierde la foto trimestral, lo gana la película anual.
+     Sumamos al dashboard EPH la opción de comparar el mismo trimestre
+     entre años consecutivos sobre las mismas personas."*
+  2. Educativo: estacionalidad vs cambio estructural, cómo el panel 2-2-2
+     habilita ambos cortes, ejemplo concreto con tasa de informalidad.
+  3. Casos de uso: *"si querés saber cuántos asalariados informales del
+     T1-2024 siguen siendo informales en el T1-2025, esta es la vista".*
+- **Asset visual:** screenshot del toggle abierto + Foto en modo
+  interanual. Pendiente versión final con copy del trimestre seleccionado.
+- **Audiencia prioritaria:** Twitter + LinkedIn (analistas datos,
+  ciencias sociales, sector público). Telegram Estación R con un tip
+  específico de cómo se construye el panel anual con `{eph}`.
+- **Issue / commit:** issue #44 (Fase 1, Foto). Fase 2 + 3 pendientes.
+
 ---
 
 ## Publicados

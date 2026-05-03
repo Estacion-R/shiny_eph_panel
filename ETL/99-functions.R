@@ -192,22 +192,43 @@ build_tasas_historico <- function(df_microdato, var, etiquetas,
 }
 
 
-### Devuelve los duos trimestrales válidos para un año dado, evaluando contra
-### los períodos efectivamente disponibles en `periodos_disponibles` (data
+### Devuelve los duos válidos para un año dado, evaluando contra los
+### períodos efectivamente disponibles en `periodos_disponibles` (data
 ### frame con columnas ANO4 y TRIMESTRE). Un duo es válido cuando ambos
-### extremos del panel existen en la base. El duo "4-1" cruza años: requiere
-### (anio, T4) y (anio + 1, T1). Devuelve un named vector apto para usarse
-### como `choices` de selectInput, manteniendo el orden trimestral.
-duos_disponibles_por_anio <- function(anio, periodos_disponibles) {
+### extremos del panel existen en la base.
+###
+### @param window "trimestral" (default) o "anual" (issue #44).
+###   - trimestral: duos T1-T2, T2-T3, T3-T4, T4-T1 (consecutivos).
+###     El duo "4-1" cruza años: requiere (anio, T4) y (anio + 1, T1).
+###   - anual: duos T1, T2, T3, T4 (mismo trim entre años consecutivos).
+###     Cada duo "Tn" requiere (anio, Tn) y (anio + 1, Tn).
+###
+### Devuelve un named vector apto para usarse como `choices` de
+### selectInput, manteniendo el orden trimestral. El value es el
+### trim_0 (primer trimestre del dúo) en ambos modos: el código del
+### módulo lo usa como entrada a armo_base_panel(trimestre_0 = ...).
+duos_disponibles_por_anio <- function(anio, periodos_disponibles,
+                                      window = "trimestral") {
   anio <- as.integer(anio)
   periodos_set <- paste(periodos_disponibles$ANO4, periodos_disponibles$TRIMESTRE)
 
-  duos <- tibble::tibble(
-    label  = c("1-2", "2-3", "3-4", "4-1"),
-    value  = c(1L, 2L, 3L, 4L),
-    inicio = paste(anio, c(1L, 2L, 3L, 4L)),
-    fin    = paste(c(anio, anio, anio, anio + 1L), c(2L, 3L, 4L, 1L))
-  ) |>
+  duos <- if (window == "anual") {
+    tibble::tibble(
+      label  = c("T1", "T2", "T3", "T4"),
+      value  = c(1L, 2L, 3L, 4L),
+      inicio = paste(anio, c(1L, 2L, 3L, 4L)),
+      fin    = paste(anio + 1L, c(1L, 2L, 3L, 4L))
+    )
+  } else {
+    tibble::tibble(
+      label  = c("1-2", "2-3", "3-4", "4-1"),
+      value  = c(1L, 2L, 3L, 4L),
+      inicio = paste(anio, c(1L, 2L, 3L, 4L)),
+      fin    = paste(c(anio, anio, anio, anio + 1L), c(2L, 3L, 4L, 1L))
+    )
+  }
+
+  duos <- duos |>
     dplyr::filter(inicio %in% periodos_set & fin %in% periodos_set)
 
   setNames(duos$value, duos$label)
@@ -220,23 +241,33 @@ duos_disponibles_por_anio <- function(anio, periodos_disponibles) {
 ### incluir más columnas para análisis adicionales (CAT_OCUP, formalidad, etc.).
 armo_base_panel <- function(anio_0, trimestre_0, anio_1 = NULL, trimestre_1 = NULL,
                             df = NULL,
-                            variables = NULL){
+                            variables = NULL,
+                            window = "trimestral"){
 
-  ### Modo runtime (default): usa el panel pre-computado en
-  ### data_output/panel_runtime.parquet (cargado en 01-extract.R como
-  ### df_panel_runtime). Solo filtra por (anio_0, trim_0) y devuelve
-  ### el panel ya armado. Footprint mínimo en RAM, ideal para shinyapps.io.
+  ### Modo runtime (default): usa el panel pre-computado.
+  ### Según `window` lee uno u otro parquet:
+  ###   - "trimestral" (default): df_panel_runtime (panel intertrim).
+  ###   - "anual": df_panel_runtime_anual (panel interanual T_n año X ↔
+  ###     T_n año X+1, issue #44).
+  ### Ambos parquets tienen schema idéntico, lo único que cambia es el
+  ### contenido (qué pareja de trimestres se pareó).
   ###
   ### Modo legacy (cuando se pasa `df`): mantiene la lógica original con
   ### el microdato + organize_panels(). Lo usan los scripts ETL batch
   ### (05-build, 07-build, 08-build) que regeneran los CSV históricos.
   if (is.null(df)) {
-    if (!exists("df_panel_runtime", envir = .GlobalEnv)) {
-      stop("df_panel_runtime no disponible. Ejecutar ETL/01-extract.R o ",
-           "pasar `df` explícito (microdato).")
+    nombre_runtime <- switch(window,
+      "trimestral" = "df_panel_runtime",
+      "anual"      = "df_panel_runtime_anual",
+      stop("window debe ser 'trimestral' o 'anual', recibido: ", window)
+    )
+    if (!exists(nombre_runtime, envir = .GlobalEnv) ||
+        is.null(get(nombre_runtime, envir = .GlobalEnv))) {
+      stop(nombre_runtime, " no disponible. Ejecutar ETL/01-extract.R ",
+           "y verificar que el parquet exista en data_output/.")
     }
     return(
-      get("df_panel_runtime", envir = .GlobalEnv) |>
+      get(nombre_runtime, envir = .GlobalEnv) |>
         dplyr::filter(anio_0 == !!anio_0, trim_0 == !!trimestre_0) |>
         dplyr::select(-anio_0, -trim_0) |>
         dplyr::collect()
@@ -251,7 +282,7 @@ armo_base_panel <- function(anio_0, trimestre_0, anio_1 = NULL, trimestre_1 = NU
 
   organize_panels(bases = list_eph_panel,
                   variables = variables,
-                  window = "trimestral")
+                  window = window)
 }
 
 
@@ -324,10 +355,21 @@ preparo_base <- function(df,
 #test <- preparo_base(df = df_eph_panel, periodo_base = "t_anterior")
 
 armo_tabla_sankey <- function(table, categoria){
-  
+
+  ### Defensivo: si la tabla viene vacía (puede pasar durante un toggle
+  ### de tipo_duo cuando el dúo seleccionado aún no es válido en el modo
+  ### nuevo, antes de que los reactives se reasienten), devolvemos una
+  ### tabla vacía con el schema esperado para que el render no rompa.
+  if (nrow(table) == 0 || length(unique(table$periodo_base)) == 0) {
+    return(tibble::tibble(
+      from = character(), to = character(), weight = numeric(),
+      id = character(), periodo_base = character(), categoria = character()
+    ))
+  }
+
   if(unique(table$periodo_base) == "t_anterior"){
     periodo <- "tant"}
-  
+
   if(unique(table$periodo_base) == "t_posterior"){
     periodo <- "tpost"
   }
