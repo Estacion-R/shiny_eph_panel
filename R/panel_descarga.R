@@ -123,22 +123,22 @@ panel_descarga <- bslib::nav_panel(
       )
     ),
 
-    ### Grid de tarjetas: dataset + diccionario (mismo lenguaje que landing-cards)
+    ### Grid de tarjetas: dataset intertrim + dataset anual + diccionario.
     tags$div(
       class = "descarga-cards-grid",
 
-      ### Tarjeta 1: Dataset (con dropdown de formatos)
+      ### Tarjeta 1: Dataset intertrimestral (con dropdown de formatos)
       tags$div(
         class = "descarga-card",
         shiny::icon("database", class = "descarga-card-icon"),
-        tags$h4("Panel longitudinal completo",
+        tags$h4("Panel longitudinal · intertrimestral",
                 class = "descarga-card-title"),
         tags$p(class = "descarga-card-meta",
-               "1.86 M filas · 31 columnas · 2003-T1 a 2025-T4"),
+               "1.86 M filas · 31 columnas · dúos T → T+1"),
         tags$p(class = "descarga-card-desc",
-               "Personas EPH vinculadas entre t0 y t1 con todas las ",
-               "variables usadas por la app. CSV viene en gzip; R, Python ",
-               "y Stata 18+ lo leen directamente."),
+               "Personas EPH vinculadas entre t0 y t1 trimestres ",
+               "consecutivos. CSV viene en gzip; R, Python y ",
+               "Stata 18+ lo leen directamente."),
         tags$div(
           class = "descarga-card-action dropdown",
           tags$button(
@@ -169,7 +169,49 @@ panel_descarga <- bslib::nav_panel(
         )
       ),
 
-      ### Tarjeta 2: Diccionario (botón directo)
+      ### Tarjeta 2: Dataset interanual (issue #47)
+      tags$div(
+        class = "descarga-card",
+        shiny::icon("calendar-week", class = "descarga-card-icon"),
+        tags$h4("Panel longitudinal · interanual",
+                class = "descarga-card-title"),
+        tags$p(class = "descarga-card-meta",
+               "1.41 M filas · 31 columnas · dúos T año X → T año X+1"),
+        tags$p(class = "descarga-card-desc",
+               "Personas EPH vinculadas con el mismo trimestre del ",
+               "año siguiente. Útil para neutralizar la estacionalidad ",
+               "y leer cambios estructurales anuales."),
+        tags$div(
+          class = "descarga-card-action dropdown",
+          tags$button(
+            class = "btn-descarga dropdown-toggle",
+            type = "button",
+            `data-bs-toggle` = "dropdown",
+            `aria-expanded`  = "false",
+            shiny::icon("download"),
+            "Descargar"
+          ),
+          tags$ul(
+            class = "dropdown-menu",
+            download_dropdown_item(
+              "descarga_panel_runtime_anual_parquet",
+              label      = "Parquet",
+              dataset    = "panel_runtime_anual", format = "parquet",
+              size_label = "16 MB",
+              icon_name  = "file-zipper"
+            ),
+            download_dropdown_item(
+              "descarga_panel_runtime_anual_csv",
+              label      = "CSV (gzip)",
+              dataset    = "panel_runtime_anual", format = "csv_gz",
+              size_label = "18 MB",
+              icon_name  = "file-csv"
+            )
+          )
+        )
+      ),
+
+      ### Tarjeta 3: Diccionario (botón directo)
       tags$div(
         class = "descarga-card",
         shiny::icon("book", class = "descarga-card-icon"),

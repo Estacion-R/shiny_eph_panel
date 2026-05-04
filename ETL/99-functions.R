@@ -506,7 +506,8 @@ armo_tabla_sankey <- function(table, categoria){
 ###   periodo, anio_0, trim_0, anio_1, trim_1,
 ###   n_t0, pondera_t0, n_panel, pondera_panel,
 ###   pct_encontrado_n, pct_encontrado_pondera
-regenerar_calidad_panel <- function(path_csv, df_microdato) {
+regenerar_calidad_panel <- function(path_csv, df_microdato,
+                                    window = "trimestral") {
 
   hist_existente <- if (file.exists(path_csv)) {
     readr::read_csv(path_csv, show_col_types = FALSE)
@@ -520,18 +521,33 @@ regenerar_calidad_panel <- function(path_csv, df_microdato) {
     character(0)
   }
 
-  ### Mismo cómputo de dúos válidos que regenerar_panel_historico().
-  duos_posibles <- df_microdato |>
-    dplyr::distinct(ANO4, TRIMESTRE) |>
-    dplyr::arrange(ANO4, TRIMESTRE) |>
-    dplyr::mutate(
-      anio_post  = dplyr::if_else(TRIMESTRE %in% 1:3, ANO4, ANO4 + 1L),
-      trim_post  = dplyr::if_else(TRIMESTRE %in% 1:3, TRIMESTRE + 1L, 1L),
-      tiene_post = paste(anio_post, trim_post) %in%
-        paste(df_microdato$ANO4, df_microdato$TRIMESTRE)
-    ) |>
-    dplyr::filter(tiene_post) |>
-    dplyr::mutate(periodo = glue::glue("{ANO4}_t{TRIMESTRE}-t{trim_post}"))
+  ### Cómputo de dúos válidos según window (issue #47).
+  ### Mismo patrón que regenerar_panel_historico y build_tasas_historico.
+  duos_posibles <- if (window == "anual") {
+    df_microdato |>
+      dplyr::distinct(ANO4, TRIMESTRE) |>
+      dplyr::arrange(ANO4, TRIMESTRE) |>
+      dplyr::mutate(
+        anio_post  = ANO4 + 1L,
+        trim_post  = TRIMESTRE,
+        tiene_post = paste(anio_post, trim_post) %in%
+          paste(df_microdato$ANO4, df_microdato$TRIMESTRE)
+      ) |>
+      dplyr::filter(tiene_post) |>
+      dplyr::mutate(periodo = glue::glue("{ANO4}_t{TRIMESTRE}"))
+  } else {
+    df_microdato |>
+      dplyr::distinct(ANO4, TRIMESTRE) |>
+      dplyr::arrange(ANO4, TRIMESTRE) |>
+      dplyr::mutate(
+        anio_post  = dplyr::if_else(TRIMESTRE %in% 1:3, ANO4, ANO4 + 1L),
+        trim_post  = dplyr::if_else(TRIMESTRE %in% 1:3, TRIMESTRE + 1L, 1L),
+        tiene_post = paste(anio_post, trim_post) %in%
+          paste(df_microdato$ANO4, df_microdato$TRIMESTRE)
+      ) |>
+      dplyr::filter(tiene_post) |>
+      dplyr::mutate(periodo = glue::glue("{ANO4}_t{TRIMESTRE}-t{trim_post}"))
+  }
 
   duos_a_calcular <- duos_posibles |>
     dplyr::filter(!periodo %in% periodos_existentes)
@@ -557,22 +573,26 @@ regenerar_calidad_panel <- function(path_csv, df_microdato) {
         anio_0      = ANO4, trimestre_0 = TRIMESTRE,
         anio_1      = anio_post, trimestre_1 = trim_post,
         df          = df_microdato,
-        variables   = c("ESTADO", "PONDERA", "CH04", "CH06")
+        variables   = c("ESTADO", "PONDERA", "CH04", "CH06"),
+        window      = window
       ) |>
         dplyr::filter(ESTADO %in% 1:4)
 
       ### Detección de inconsistencias específicas:
       ###   - sexo:  CH04 t0 ≠ CH04 t1 (debe ser invariante).
-      ###   - edad:  CH06_t1 fuera del rango [CH06, CH06 + 1] (en un panel
-      ###            de 1 trimestre, la edad sube como mucho 1 año).
+      ###   - edad:  CH06_t1 fuera del rango esperado.
+      ###     * trimestral: [CH06, CH06 + 1] (1 trim → max +1 año).
+      ###     * anual: [CH06, CH06 + 2] (1 año → max +1, +2 si cumplió
+      ###       años en el medio del año móvil).
       ### Una persona puede tener ambas inconsistencias a la vez; la
       ### "total" es el flag de eph::organize_panels (más amplio: incluye
       ### otras cosas como saltos en NIVEL_ED si estuvieran).
+      max_delta_edad <- if (window == "anual") 2L else 1L
       panel_inc <- panel |>
         dplyr::mutate(
           inc_sexo = !is.na(CH04) & !is.na(CH04_t1) & CH04 != CH04_t1,
           inc_edad = !is.na(CH06) & !is.na(CH06_t1) &
-                     (CH06_t1 < CH06 | CH06_t1 > CH06 + 1L),
+                     (CH06_t1 < CH06 | CH06_t1 > CH06 + max_delta_edad),
           inc_total = !consistencia
         )
 

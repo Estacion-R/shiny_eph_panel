@@ -11,6 +11,37 @@ versionado [SemVer](https://semver.org/lang/es/) adaptado a app web:
 
 ---
 
+## [0.9.0] · 2026-05-04
+
+Cierra Sprint A (#44 Tipo de dúo end-to-end). El toggle Interanual
+ahora cubre toda la app: Foto, Película, Tasas, Calidad de la muestra,
+y descargas en sección Datos.
+
+### Added
+
+- **Calidad de la muestra en modo Interanual** (#47 Fase 3). El
+  módulo `mod_calidad_panel` recibe `tipo_duo` y muestra los KPIs +
+  charts del panel correspondiente. Selector "duplas" se adapta:
+  `1→2 / 2→3 / 3→4 / 4→1` (intertrim) ↔ `T1 vs T1 / T2 vs T2 / ... / T4 vs T4` (anual).
+- Nuevo dataset `data_output/calidad_panel_anual_pct_historico.csv`
+  generado por `regenerar_calidad_panel(window = "anual")`.
+- **Tarjeta de descarga del dataset anual** en sección Datos. Al lado
+  de "Panel longitudinal · intertrimestral" aparece "Panel
+  longitudinal · interanual" con dropdown Parquet/CSV gzip
+  (16 MB / 18 MB).
+
+### Changed
+
+- `regenerar_calidad_panel()` acepta parámetro `window`. En anual los
+  dúos van T_n año X → T_n año X+1, periodo formato `YYYY_tN`. La
+  detección de inconsistencia de edad usa rango `[CH06, CH06 + 2]` en
+  anual (vs +1 en trimestral) para reflejar que entre dos años
+  consecutivos la persona pudo haber cumplido años.
+- `duo_label()` acepta `window`: en anual devuelve `"tN"` en lugar
+  de `"tN-tM"`.
+
+---
+
 ## [0.8.1] · 2026-05-04
 
 ### Fixed
