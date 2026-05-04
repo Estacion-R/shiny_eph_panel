@@ -245,33 +245,61 @@ armo_base_panel <- function(anio_0, trimestre_0, anio_1 = NULL, trimestre_1 = NU
                             window = "trimestral"){
 
   ### Modo runtime (default): usa el panel pre-computado.
-  ### Según `window` lee uno u otro parquet:
-  ###   - "trimestral" (default): df_panel_runtime (panel intertrim).
-  ###   - "anual": df_panel_runtime_anual (panel interanual T_n año X ↔
-  ###     T_n año X+1, issue #44).
-  ### Ambos parquets tienen schema idéntico, lo único que cambia es el
-  ### contenido (qué pareja de trimestres se pareó).
+  ###
+  ### Trimestral: lee df_panel_runtime (Arrow Table cargada al boot en
+  ### 01-extract.R como lazy view).
+  ###
+  ### Anual: lee data_output/panel_runtime_anual.parquet ON-DEMAND con
+  ### filter pushdown sobre (anio_0, trim_0). NO mantenemos esa Arrow
+  ### Table en memoria al boot porque sumar dos Tables abiertas excede
+  ### el budget de RAM del free tier de shinyapps.io (hotfix OOM,
+  ### parte de issue #44). Cada llamada a armo_base_panel(window =
+  ### "anual") abre el parquet, filtra, devuelve y deja que arrow
+  ### libere el handle.
   ###
   ### Modo legacy (cuando se pasa `df`): mantiene la lógica original con
   ### el microdato + organize_panels(). Lo usan los scripts ETL batch
   ### (05-build, 07-build, 08-build) que regeneran los CSV históricos.
   if (is.null(df)) {
-    nombre_runtime <- switch(window,
-      "trimestral" = "df_panel_runtime",
-      "anual"      = "df_panel_runtime_anual",
+    if (window == "trimestral") {
+      if (!exists("df_panel_runtime", envir = .GlobalEnv)) {
+        stop("df_panel_runtime no disponible. Ejecutar ETL/01-extract.R.")
+      }
+      return(
+        get("df_panel_runtime", envir = .GlobalEnv) |>
+          dplyr::filter(anio_0 == !!anio_0, trim_0 == !!trimestre_0) |>
+          dplyr::select(-anio_0, -trim_0) |>
+          dplyr::collect()
+      )
+    } else if (window == "anual") {
+      path <- if (exists("PATH_PANEL_RUNTIME_ANUAL", envir = .GlobalEnv)) {
+        get("PATH_PANEL_RUNTIME_ANUAL", envir = .GlobalEnv)
+      } else {
+        "data_output/panel_runtime_anual.parquet"
+      }
+      if (!file.exists(path)) {
+        stop("panel_runtime_anual.parquet no encontrado en ", path,
+             ". Correr ETL/09b-build_paneles_runtime_anual.R.")
+      }
+      ### IMPORTANTE: usar arrow::open_dataset() en lugar de read_parquet().
+      ### read_parquet (incluso con as_data_frame = FALSE) carga el archivo
+      ### entero a una Arrow Table en memoria; cada llamada a este
+      ### armo_base_panel desde un módulo (sankey, matriz, tasas, delta
+      ### anio anterior) sumaba ~16 MB que arrow no liberaba a tiempo,
+      ### disparando OOM en el free tier al togglear modo anual.
+      ###
+      ### open_dataset es realmente lazy: solo lee el footer y los row
+      ### groups que matchean al filter. Footprint mínimo, predictible
+      ### a través de múltiples llamadas. Hotfix v0.7.3.
+      return(
+        arrow::open_dataset(path) |>
+          dplyr::filter(anio_0 == !!anio_0, trim_0 == !!trimestre_0) |>
+          dplyr::select(-anio_0, -trim_0) |>
+          dplyr::collect()
+      )
+    } else {
       stop("window debe ser 'trimestral' o 'anual', recibido: ", window)
-    )
-    if (!exists(nombre_runtime, envir = .GlobalEnv) ||
-        is.null(get(nombre_runtime, envir = .GlobalEnv))) {
-      stop(nombre_runtime, " no disponible. Ejecutar ETL/01-extract.R ",
-           "y verificar que el parquet exista en data_output/.")
     }
-    return(
-      get(nombre_runtime, envir = .GlobalEnv) |>
-        dplyr::filter(anio_0 == !!anio_0, trim_0 == !!trimestre_0) |>
-        dplyr::select(-anio_0, -trim_0) |>
-        dplyr::collect()
-    )
   }
 
   ### Modo legacy: filtra el microdato y arma el panel via organize_panels().

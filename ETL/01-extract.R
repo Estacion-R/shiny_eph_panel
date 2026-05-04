@@ -27,17 +27,13 @@ df_panel_runtime <- arrow::read_parquet("data_output/panel_runtime.parquet",
 ### Panel runtime ANUAL (issue #44): mismo schema, distinto contenido.
 ### Parea cada vivienda con el MISMO trimestre del año siguiente
 ### (T1 año X ↔ T1 año X+1) en lugar de trimestres consecutivos.
-### Lo usa armo_base_panel(window = "anual"). Ver
-### ETL/09b-build_paneles_runtime_anual.R. Carga condicional: si el
-### script aún no se corrió, queda como NULL y la app sigue funcionando
-### en modo intertrimestral (default).
-path_panel_anual <- "data_output/panel_runtime_anual.parquet"
-df_panel_runtime_anual <- if (file.exists(path_panel_anual)) {
-  arrow::read_parquet(path_panel_anual, as_data_frame = FALSE)
-} else {
-  NULL
-}
-rm(path_panel_anual)
+###
+### IMPORTANTE: NO se carga al boot (issue #44 hotfix OOM). Mantener
+### dos arrow Tables abiertas simultáneamente (intertrim + anual)
+### supera el budget de RAM del free tier de shinyapps.io. En su lugar,
+### guardamos solo el path; armo_base_panel(window = "anual") abre el
+### parquet on-demand y lo cierra después de filtrar.
+PATH_PANEL_RUNTIME_ANUAL <- "data_output/panel_runtime_anual.parquet"
 
 ### Histórico pre-computado por data_generator.R
 df_cond_act <- arrow::read_csv_arrow("data_output/panel_cond_act_historico.csv")
@@ -130,22 +126,24 @@ anios_disponibles <- sort(unique(periodos_disponibles$ANO4))
 anio_max_disponible <- max(anios_disponibles)
 
 
-### Análogos para el panel ANUAL (issue #44). Si df_panel_runtime_anual
-### existe, derivamos los periodos donde hay dúo anual válido. Si no
-### existe (no se corrió aún el ETL 09b), devolvemos vectores vacíos y
-### la app sigue funcionando solo en modo trimestral.
-###
-### Análogo a periodos_disponibles intertrim: hacemos UNION de los t0
-### (anio_0, trim_0) y t1 (ANO4_t1, TRIMESTRE_t1) del panel anual, así
-### duos_disponibles_por_anio puede chequear que ambos extremos del
-### dúo existen.
-if (!is.null(df_panel_runtime_anual)) {
-  periodos_anual_t0 <- df_panel_runtime_anual |>
-    dplyr::distinct(anio_0, trim_0) |>
+### Análogos para el panel ANUAL (issue #44). Derivamos periodos
+### disponibles abriendo el parquet TEMPORALMENTE para extraer las
+### columnas anio_0/trim_0 + ANO4_t1/TRIMESTRE_t1, y lo cerramos.
+### NO mantenemos la Arrow Table abierta en memoria (hotfix OOM).
+if (file.exists(PATH_PANEL_RUNTIME_ANUAL)) {
+  ### open_dataset es lazy real (solo lee footer + row groups
+  ### necesarios). Mucho más liviano que read_parquet (que carga
+  ### todo el archivo a memoria). Hotfix v0.7.3 sobre OOM al
+  ### togglear, mismo patrón que armo_base_panel(window = "anual").
+  ds_anual_tmp <- arrow::open_dataset(PATH_PANEL_RUNTIME_ANUAL)
+  periodos_anual_t0 <- ds_anual_tmp |>
+    dplyr::select(anio_0, trim_0) |>
+    dplyr::distinct() |>
     dplyr::collect() |>
     dplyr::rename(ANO4 = anio_0, TRIMESTRE = trim_0)
-  periodos_anual_t1 <- df_panel_runtime_anual |>
-    dplyr::distinct(ANO4_t1, TRIMESTRE_t1) |>
+  periodos_anual_t1 <- ds_anual_tmp |>
+    dplyr::select(ANO4_t1, TRIMESTRE_t1) |>
+    dplyr::distinct() |>
     dplyr::collect() |>
     dplyr::rename(ANO4 = ANO4_t1, TRIMESTRE = TRIMESTRE_t1)
   ### periodos_disponibles_anual: union (t0+t1) para validar dúos en
@@ -159,7 +157,8 @@ if (!is.null(df_panel_runtime_anual)) {
   ### existen como t1 (ej. 2025 cuando 2026 todavía no llegó), y el
   ### usuario podría seleccionar 2025 como base sin que tenga dúo válido.
   anios_disponibles_anual <- sort(unique(periodos_anual_t0$ANO4))
-  rm(periodos_anual_t0, periodos_anual_t1)
+  rm(periodos_anual_t0, periodos_anual_t1, ds_anual_tmp)
+  invisible(gc(verbose = FALSE))
 } else {
   periodos_disponibles_anual <- periodos_disponibles[0, ]
   anios_disponibles_anual <- integer(0)

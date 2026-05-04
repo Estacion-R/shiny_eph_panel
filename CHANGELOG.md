@@ -11,6 +11,63 @@ versionado [SemVer](https://semver.org/lang/es/) adaptado a app web:
 
 ---
 
+## [0.7.3] · 2026-05-03 · HOTFIX (continuación)
+
+### Fixed
+
+- **OOM al togglear a modo Interanual**. El v0.7.2 evitaba el OOM al
+  boot pero seguía rompiendo cuando el usuario cambiaba a Interanual.
+  Cada llamada a `armo_base_panel(window = "anual")` desde un módulo
+  hacía `arrow::read_parquet(path, as_data_frame = FALSE)` que carga
+  el parquet entero (~16 MB) como Arrow Table en memoria. En Foto hay
+  3-5 llamadas en cascada (sankey + matriz + 3 tasas + delta año
+  anterior), sumando ~80 MB que arrow no liberaba a tiempo.
+- **Reemplazado por `arrow::open_dataset()`**, que es realmente lazy:
+  solo lee el footer del parquet + los row groups que matchean al
+  filter. Footprint mínimo y predictible a través de múltiples
+  llamadas.
+- Mismo cambio aplicado a `01-extract.R` para los metadatos del panel
+  anual al boot.
+
+---
+
+## [0.7.2] · 2026-05-03 · HOTFIX
+
+### Fixed
+
+- **OOM en producción**: `panel_runtime_anual.parquet` ya no se carga
+  como Arrow Table al boot (en `ETL/01-extract.R`). Mantener dos
+  Tables abiertas simultáneamente excedía el budget de RAM del free
+  tier de shinyapps.io y disparaba `oom (out of memory)` justo
+  después de cargar bslib.
+- En modo Interanual, `armo_base_panel()` ahora abre el parquet
+  on-demand con filter pushdown y lo cierra cada llamada. Cuesta un
+  poco más de I/O por refresh (lectura de 16 MB) pero el footprint
+  de RAM al boot vuelve al nivel intertrim solo.
+- Al boot, los metadatos del panel anual (`periodos_disponibles_anual`,
+  `anios_disponibles_anual`) se derivan abriendo el parquet
+  temporalmente con `col_select` solo de las 4 columnas necesarias y
+  llamando `gc()` después.
+
+---
+
+## [0.7.1] · 2026-05-03
+
+### Changed
+
+- Pipeline mensual `update_eph_data.yml` ahora regenera
+  automáticamente los parquets runtime (intertrim + anual) cuando
+  hay un trimestre nuevo. Antes había que regenerarlos manualmente,
+  con riesgo de drift entre los CSVs históricos (auto) y los
+  parquets runtime (manuales). (#48)
+- `ETL/09-build_paneles_runtime.R` carga el microdato directamente
+  en lugar de depender de `01-extract.R` (que en runtime no lo
+  carga). Mismo patrón que `ETL/09b-build_paneles_runtime_anual.R`.
+- `add-paths` del PR auto incluye ahora todos los CSVs históricos +
+  los 4 parquets/csv.gz de runtime.
+
+---
+
 ## [0.7.0] · 2026-05-03
 
 ### Added
