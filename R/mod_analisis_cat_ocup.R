@@ -168,7 +168,6 @@ mod_cat_ocup_ui <- function(id) {
     bslib::nav_panel(
       title = "Película",
       icon = icon("video"),
-      uiOutput(ns("aviso_anual_pelicula")),
       filtros_pelicula,
       div(
         style = "text-align: center; margin: 4px 0 12px 0;",
@@ -185,7 +184,6 @@ mod_cat_ocup_ui <- function(id) {
     bslib::nav_panel(
       title = "Tasas",
       icon = icon("chart-line"),
-      uiOutput(ns("aviso_anual_tasas")),
       filter_query(
         prefix_text = "",
         filter_preposition(
@@ -252,13 +250,6 @@ mod_cat_ocup_server <- function(id, tipo_duo = shiny::reactive("trimestral")) {
       alerta_intervencion_indec(input$anio_ant)
     })
 
-    ### Aviso de modo Interanual no soportado en Película/Tasas (#44).
-    output$aviso_anual_pelicula <- renderUI({
-      alerta_modo_anual_no_soportado(tipo_duo())
-    })
-    output$aviso_anual_tasas <- renderUI({
-      alerta_modo_anual_no_soportado(tipo_duo())
-    })
 
     ### Etiquetas humanas para textos del UI (singular / plural / variable).
     etiqueta_singular <- function(cat) {
@@ -284,6 +275,28 @@ mod_cat_ocup_server <- function(id, tipo_duo = shiny::reactive("trimestral")) {
     anios_actuales <- reactive({
       if (tipo_duo() == "anual") anios_disponibles_anual
       else anios_disponibles
+    })
+
+    ### Datasets históricos según modo (issue #46).
+    df_cat_ocup_actual <- reactive({
+      if (tipo_duo() == "anual") df_cat_ocup_anual else df_cat_ocup
+    })
+    df_tasas_cat_ocup_actual <- reactive({
+      if (tipo_duo() == "anual") df_tasas_cat_ocup_anual else df_tasas_cat_ocup
+    })
+
+    ### Choices del selector tasas_duo según modo.
+    observeEvent(tipo_duo(), {
+      choices_nuevos <- if (tipo_duo() == "anual") {
+        c("Todos los trimestres" = "todos",
+          "T1" = "t1", "T2" = "t2", "T3" = "t3", "T4" = "t4")
+      } else {
+        c("Todos los trimestres" = "todos",
+          "1-2" = "t1-t2", "2-3" = "t2-t3", "3-4" = "t3-t4", "4-1" = "t4-t1")
+      }
+      updateSelectInput(session, "tasas_duo",
+                        choices = choices_nuevos,
+                        selected = "todos")
     })
 
     ### Cuando cambia el modo, actualizar el selector de año.
@@ -450,12 +463,13 @@ mod_cat_ocup_server <- function(id, tipo_duo = shiny::reactive("trimestral")) {
 
       ### Sub-tab "Tasas" (issue #22).
       output$tasas_chart <- renderHighchart({
+        df_tasas <- df_tasas_cat_ocup_actual()
         shiny::validate(shiny::need(
-          nrow(df_tasas_cat_ocup) > 0,
-          "Histórico de tasas todavía no fue computado. Correr ETL/08-build_tasas_historico.R."
+          nrow(df_tasas) > 0,
+          "Histórico de tasas todavía no fue computado para este modo. Correr ETL/08-build_tasas_historico.R o ETL/11-build_historicos_anuales.R."
         ))
 
-        df_data <- df_tasas_cat_ocup |>
+        df_data <- df_tasas |>
           filter(categoria == input$tasas_category) |>
           filter(input$tasas_duo == "todos" |
                    stringr::str_ends(as.character(periodo), input$tasas_duo)) |>
@@ -473,7 +487,7 @@ mod_cat_ocup_server <- function(id, tipo_duo = shiny::reactive("trimestral")) {
 
         arma_line_chart_areaspline(
           df_data = df_data,
-          levels_periodo = levels(df_tasas_cat_ocup$periodo),
+          levels_periodo = levels(df_tasas$periodo),
           mostrar_pandemia = input$tasas_duo == "todos",
           tick_interval = if (input$tasas_duo == "todos") 4 else 1,
           excluir_intervencion = isTRUE(input$excluir_int_tasas),
@@ -534,7 +548,12 @@ mod_cat_ocup_server <- function(id, tipo_duo = shiny::reactive("trimestral")) {
           }
         }
 
-        df_data <- df_cat_ocup |>
+        df_pelicula <- df_cat_ocup_actual()
+        shiny::validate(shiny::need(
+          nrow(df_pelicula) > 0,
+          "Histórico de Película todavía no fue computado para este modo. Correr ETL/11-build_historicos_anuales.R."
+        ))
+        df_data <- df_pelicula |>
           filter(from == input$desde, to %in% input$hacia) |>
           filter(input$duo == "todos" |
                    stringr::str_ends(as.character(periodo), input$duo)) |>
@@ -548,7 +567,7 @@ mod_cat_ocup_server <- function(id, tipo_duo = shiny::reactive("trimestral")) {
 
         arma_line_chart_areaspline(
           df_data = df_data,
-          levels_periodo = levels(df_cat_ocup$periodo),
+          levels_periodo = levels(df_pelicula$periodo),
           mostrar_pandemia = input$duo == "todos",
           tick_interval = if (input$duo == "todos") 4 else 1,
           excluir_intervencion = isTRUE(input$excluir_int_pelicula),
