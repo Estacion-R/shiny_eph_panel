@@ -297,6 +297,10 @@ mod_cat_ocup_server <- function(id, tipo_duo = shiny::reactive("trimestral")) {
       updateSelectInput(session, "tasas_duo",
                         choices = choices_nuevos,
                         selected = "todos")
+      ### Mismo selector "Trimestres" en sub-tab Película (input `duo`).
+      updateSelectInput(session, "duo",
+                        choices = choices_nuevos,
+                        selected = "todos")
     })
 
     ### Cuando cambia el modo, actualizar el selector de año.
