@@ -11,6 +11,47 @@ versionado [SemVer](https://semver.org/lang/es/) adaptado a app web:
 
 ---
 
+## [0.8.0] · 2026-05-03
+
+### Added
+
+- **Película + Tasas en modo Interanual** (#46 Fase 2). Las pestañas
+  Película y Tasas de los 3 análisis (cond_act, cat_ocup, formalidad)
+  ahora respetan el toggle Tipo de dúo. En modo Interanual leen los
+  CSVs anuales pre-computados en lugar de mostrar el banner azul de
+  "no soportado".
+- 8 datasets nuevos en `data_output/` (paneles agregados + tasas
+  históricas en formato anual):
+  - `panel_cond_act_anual_historico.csv`
+  - `panel_cat_ocup_anual_historico.csv`
+  - `panel_formalidad_anual_historico.csv`
+  - `panel_formalidad_ampliada_anual_historico.csv`
+  - `tasas_cond_act_anual_historico.csv`
+  - `tasas_cat_ocup_anual_historico.csv`
+  - `tasas_formalidad_anual_historico.csv`
+  - `tasas_formalidad_ampliada_anual_historico.csv`
+- Nuevo script `ETL/11-build_historicos_anuales.R` que genera los
+  8 CSVs anuales usando `regenerar_panel_historico(window = "anual")`
+  y `build_tasas_historico(window = "anual")`.
+- Selector "Trimestres" en sub-tab Tasas adapta sus choices al modo
+  activo: `1-2 / 2-3 / 3-4 / 4-1` (intertrim) ↔ `T1 / T2 / T3 / T4`
+  (anual).
+
+### Changed
+
+- `regenerar_panel_historico()` y `build_tasas_historico()` aceptan
+  parámetro `window`. En anual usan dúos T_n año X → T_n año X+1
+  (mismo trimestre) con label de período `"YYYY_tN"`.
+- `01-extract.R` carga los 8 datasets anuales con cargas condicionales
+  (fallback a tibble vacía).
+
+### Removed
+
+- Banner azul "Esta vista todavía no soporta Interanual" en pestañas
+  Película y Tasas (ya no aplica, los datos están).
+
+---
+
 ## [0.7.3] · 2026-05-03 · HOTFIX (continuación)
 
 ### Fixed

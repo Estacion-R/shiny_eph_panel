@@ -50,7 +50,8 @@ agrega_vars_derivadas <- function(df) {
 regenerar_panel_historico <- function(path_csv, df_microdato,
                                       var, etiquetas, categorias,
                                       vars_extra = character(),
-                                      desde_panel = NULL) {
+                                      desde_panel = NULL,
+                                      window = "trimestral") {
 
   panel_existente <- if (file.exists(path_csv)) {
     readr::read_csv(path_csv, show_col_types = FALSE)
@@ -64,17 +65,35 @@ regenerar_panel_historico <- function(path_csv, df_microdato,
     character(0)
   }
 
-  paneles_posibles <- df_microdato |>
-    dplyr::distinct(ANO4, TRIMESTRE) |>
-    dplyr::arrange(ANO4, TRIMESTRE) |>
-    dplyr::mutate(
-      anio_post  = dplyr::if_else(TRIMESTRE %in% 1:3, ANO4, ANO4 + 1L),
-      trim_post  = dplyr::if_else(TRIMESTRE %in% 1:3, TRIMESTRE + 1L, 1L),
-      tiene_post = paste(anio_post, trim_post) %in%
-        paste(df_microdato$ANO4, df_microdato$TRIMESTRE)
-    ) |>
-    dplyr::filter(tiene_post) |>
-    dplyr::mutate(periodo = glue::glue("{ANO4}_t{TRIMESTRE}-t{trim_post}"))
+  ### Cómputo de dúos válidos según window (issue #46).
+  ### - trimestral: T1-T2, T2-T3, T3-T4, T4-T1 (consecutivos), label
+  ###   formato "YYYY_t1-t2".
+  ### - anual: T_n año X → T_n año X+1 (mismo trim), label "YYYY_t1".
+  paneles_posibles <- if (window == "anual") {
+    df_microdato |>
+      dplyr::distinct(ANO4, TRIMESTRE) |>
+      dplyr::arrange(ANO4, TRIMESTRE) |>
+      dplyr::mutate(
+        anio_post  = ANO4 + 1L,
+        trim_post  = TRIMESTRE,
+        tiene_post = paste(anio_post, trim_post) %in%
+          paste(df_microdato$ANO4, df_microdato$TRIMESTRE)
+      ) |>
+      dplyr::filter(tiene_post) |>
+      dplyr::mutate(periodo = glue::glue("{ANO4}_t{TRIMESTRE}"))
+  } else {
+    df_microdato |>
+      dplyr::distinct(ANO4, TRIMESTRE) |>
+      dplyr::arrange(ANO4, TRIMESTRE) |>
+      dplyr::mutate(
+        anio_post  = dplyr::if_else(TRIMESTRE %in% 1:3, ANO4, ANO4 + 1L),
+        trim_post  = dplyr::if_else(TRIMESTRE %in% 1:3, TRIMESTRE + 1L, 1L),
+        tiene_post = paste(anio_post, trim_post) %in%
+          paste(df_microdato$ANO4, df_microdato$TRIMESTRE)
+      ) |>
+      dplyr::filter(tiene_post) |>
+      dplyr::mutate(periodo = glue::glue("{ANO4}_t{TRIMESTRE}-t{trim_post}"))
+  }
 
   ### Filtro de período mínimo (ej: formalidad_ampliada solo desde 2023-T4)
   if (!is.null(desde_panel)) {
@@ -103,7 +122,8 @@ regenerar_panel_historico <- function(path_csv, df_microdato,
         anio_0 = ANO4, trimestre_0 = TRIMESTRE,
         anio_1 = anio_post, trimestre_1 = trim_post,
         df = df_microdato,
-        variables = vars_panel
+        variables = vars_panel,
+        window = window
       )
 
       df_prep <- preparo_base(
@@ -139,23 +159,38 @@ regenerar_panel_historico <- function(path_csv, df_microdato,
 ### período. Issue #22.
 build_tasas_historico <- function(df_microdato, var, etiquetas,
                                   vars_extra = character(),
-                                  desde_panel = NULL) {
+                                  desde_panel = NULL,
+                                  window = "trimestral") {
 
   ### Necesitamos arma_tasas_destacadas (en R/utils_analisis.R). El script
   ### que llama a esta fn debe haber hecho source antes.
   stopifnot(exists("arma_tasas_destacadas"))
 
-  paneles <- df_microdato |>
-    dplyr::distinct(ANO4, TRIMESTRE) |>
-    dplyr::arrange(ANO4, TRIMESTRE) |>
-    dplyr::mutate(
-      anio_post  = dplyr::if_else(TRIMESTRE %in% 1:3, ANO4, ANO4 + 1L),
-      trim_post  = dplyr::if_else(TRIMESTRE %in% 1:3, TRIMESTRE + 1L, 1L),
-      tiene_post = paste(anio_post, trim_post) %in%
-        paste(df_microdato$ANO4, df_microdato$TRIMESTRE)
-    ) |>
-    dplyr::filter(tiene_post) |>
-    dplyr::mutate(periodo = glue::glue("{ANO4}_t{TRIMESTRE}-t{trim_post}"))
+  paneles <- if (window == "anual") {
+    df_microdato |>
+      dplyr::distinct(ANO4, TRIMESTRE) |>
+      dplyr::arrange(ANO4, TRIMESTRE) |>
+      dplyr::mutate(
+        anio_post  = ANO4 + 1L,
+        trim_post  = TRIMESTRE,
+        tiene_post = paste(anio_post, trim_post) %in%
+          paste(df_microdato$ANO4, df_microdato$TRIMESTRE)
+      ) |>
+      dplyr::filter(tiene_post) |>
+      dplyr::mutate(periodo = glue::glue("{ANO4}_t{TRIMESTRE}"))
+  } else {
+    df_microdato |>
+      dplyr::distinct(ANO4, TRIMESTRE) |>
+      dplyr::arrange(ANO4, TRIMESTRE) |>
+      dplyr::mutate(
+        anio_post  = dplyr::if_else(TRIMESTRE %in% 1:3, ANO4, ANO4 + 1L),
+        trim_post  = dplyr::if_else(TRIMESTRE %in% 1:3, TRIMESTRE + 1L, 1L),
+        tiene_post = paste(anio_post, trim_post) %in%
+          paste(df_microdato$ANO4, df_microdato$TRIMESTRE)
+      ) |>
+      dplyr::filter(tiene_post) |>
+      dplyr::mutate(periodo = glue::glue("{ANO4}_t{TRIMESTRE}-t{trim_post}"))
+  }
 
   if (!is.null(desde_panel)) {
     desde_anio <- as.integer(stringr::str_extract(desde_panel, "^[0-9]{4}"))
@@ -173,7 +208,8 @@ build_tasas_historico <- function(df_microdato, var, etiquetas,
         anio_0 = ANO4, trimestre_0 = TRIMESTRE,
         anio_1 = anio_post, trimestre_1 = trim_post,
         df = df_microdato,
-        variables = vars_panel
+        variables = vars_panel,
+        window = window
       )
 
       purrr::map_dfr(etiquetas, function(cat) {
@@ -260,6 +296,14 @@ armo_base_panel <- function(anio_0, trimestre_0, anio_1 = NULL, trimestre_1 = NU
   ### Modo legacy (cuando se pasa `df`): mantiene la lógica original con
   ### el microdato + organize_panels(). Lo usan los scripts ETL batch
   ### (05-build, 07-build, 08-build) que regeneran los CSV históricos.
+  ### Trimestral: lee df_panel_runtime (Arrow Table cargada al boot
+  ### como lazy view).
+  ### Anual: lee data_output/panel_runtime_anual.parquet ON-DEMAND con
+  ### filter pushdown sobre (anio_0, trim_0). NO mantenemos esa Arrow
+  ### Table en memoria al boot porque sumar dos Tables abiertas excede
+  ### el budget de RAM del free tier (hotfix v0.7.2). Cada llamada
+  ### armo_base_panel(window = "anual") abre el parquet, filtra, y
+  ### deja que arrow libere el handle.
   if (is.null(df)) {
     if (window == "trimestral") {
       if (!exists("df_panel_runtime", envir = .GlobalEnv)) {

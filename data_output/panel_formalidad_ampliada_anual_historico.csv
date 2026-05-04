@@ -1,0 +1,21 @@
+from,to,weight,id,periodo_base,categoria,periodo
+Formal_t0,Formal_t1,91.5,Formal_t0 - Formal_t1,t_anterior,Formal,2023_t4
+Formal_t0,Informal_t1,8.5,Formal_t0 - Informal_t1,t_anterior,Formal,2023_t4
+Informal_t0,Informal_t1,77.7,Informal_t0 - Informal_t1,t_anterior,Informal,2023_t4
+Informal_t0,Formal_t1,22.3,Informal_t0 - Formal_t1,t_anterior,Informal,2023_t4
+Formal_t0,Formal_t1,92.6,Formal_t0 - Formal_t1,t_anterior,Formal,2024_t1
+Formal_t0,Informal_t1,7.4,Formal_t0 - Informal_t1,t_anterior,Formal,2024_t1
+Informal_t0,Informal_t1,74,Informal_t0 - Informal_t1,t_anterior,Informal,2024_t1
+Informal_t0,Formal_t1,26,Informal_t0 - Formal_t1,t_anterior,Informal,2024_t1
+Formal_t0,Formal_t1,91.5,Formal_t0 - Formal_t1,t_anterior,Formal,2024_t2
+Formal_t0,Informal_t1,8.5,Formal_t0 - Informal_t1,t_anterior,Formal,2024_t2
+Informal_t0,Informal_t1,79.2,Informal_t0 - Informal_t1,t_anterior,Informal,2024_t2
+Informal_t0,Formal_t1,20.8,Informal_t0 - Formal_t1,t_anterior,Informal,2024_t2
+Formal_t0,Formal_t1,93.4,Formal_t0 - Formal_t1,t_anterior,Formal,2024_t3
+Formal_t0,Informal_t1,6.6,Formal_t0 - Informal_t1,t_anterior,Formal,2024_t3
+Informal_t0,Informal_t1,76.1,Informal_t0 - Informal_t1,t_anterior,Informal,2024_t3
+Informal_t0,Formal_t1,23.9,Informal_t0 - Formal_t1,t_anterior,Informal,2024_t3
+Formal_t0,Formal_t1,92.4,Formal_t0 - Formal_t1,t_anterior,Formal,2024_t4
+Formal_t0,Informal_t1,7.6,Formal_t0 - Informal_t1,t_anterior,Formal,2024_t4
+Informal_t0,Informal_t1,76.1,Informal_t0 - Informal_t1,t_anterior,Informal,2024_t4
+Informal_t0,Formal_t1,23.9,Informal_t0 - Formal_t1,t_anterior,Informal,2024_t4

@@ -28,7 +28,7 @@ df_panel_runtime <- arrow::read_parquet("data_output/panel_runtime.parquet",
 ### Parea cada vivienda con el MISMO trimestre del año siguiente
 ### (T1 año X ↔ T1 año X+1) en lugar de trimestres consecutivos.
 ###
-### IMPORTANTE: NO se carga al boot (issue #44 hotfix OOM). Mantener
+### IMPORTANTE: NO se carga al boot (hotfix v0.7.2 OOM). Mantener
 ### dos arrow Tables abiertas simultáneamente (intertrim + anual)
 ### supera el budget de RAM del free tier de shinyapps.io. En su lugar,
 ### guardamos solo el path; armo_base_panel(window = "anual") abre el
@@ -63,6 +63,23 @@ df_formalidad_ampliada <- if (file.exists(path_amp)) {
 }
 rm(path_amp)
 
+### Versiones ANUALES de los paneles agregados (issue #46).
+### Generadas por ETL/11-build_historicos_anuales.R. Carga condicional
+### con tibble vacía como fallback.
+cargar_panel_csv <- function(path) {
+  if (file.exists(path)) {
+    arrow::read_csv_arrow(path)
+  } else {
+    tibble::tibble(from = character(), to = character(), weight = numeric(),
+                   id = character(), categoria = character(),
+                   periodo = character())
+  }
+}
+df_cond_act_anual          <- cargar_panel_csv("data_output/panel_cond_act_anual_historico.csv")
+df_cat_ocup_anual          <- cargar_panel_csv("data_output/panel_cat_ocup_anual_historico.csv")
+df_formalidad_anual        <- cargar_panel_csv("data_output/panel_formalidad_anual_historico.csv")
+df_formalidad_ampliada_anual <- cargar_panel_csv("data_output/panel_formalidad_ampliada_anual_historico.csv")
+
 ### Tasas del mercado de trabajo (totales por trimestre)
 df_tasas_mt <- arrow::read_parquet("data_output/df_tasas_mt.parquet")
 
@@ -84,6 +101,13 @@ df_tasas_cond_act        <- cargar_tasas_csv("data_output/tasas_cond_act_histori
 df_tasas_cat_ocup        <- cargar_tasas_csv("data_output/tasas_cat_ocup_historico.csv")
 df_tasas_formalidad      <- cargar_tasas_csv("data_output/tasas_formalidad_historico.csv")
 df_tasas_formalidad_amp  <- cargar_tasas_csv("data_output/tasas_formalidad_ampliada_historico.csv")
+
+### Versiones ANUALES de las tasas históricas (issue #46).
+### Generadas por ETL/11-build_historicos_anuales.R. Mismo schema.
+df_tasas_cond_act_anual        <- cargar_tasas_csv("data_output/tasas_cond_act_anual_historico.csv")
+df_tasas_cat_ocup_anual        <- cargar_tasas_csv("data_output/tasas_cat_ocup_anual_historico.csv")
+df_tasas_formalidad_anual      <- cargar_tasas_csv("data_output/tasas_formalidad_anual_historico.csv")
+df_tasas_formalidad_amp_anual  <- cargar_tasas_csv("data_output/tasas_formalidad_ampliada_anual_historico.csv")
 
 ### Histórico de calidad del panel (issue #36). Pre-computado por
 ### ETL/10-build_calidad_panel.R y mantenido al día por 03-update_data.R.
@@ -129,7 +153,7 @@ anio_max_disponible <- max(anios_disponibles)
 ### Análogos para el panel ANUAL (issue #44). Derivamos periodos
 ### disponibles abriendo el parquet TEMPORALMENTE para extraer las
 ### columnas anio_0/trim_0 + ANO4_t1/TRIMESTRE_t1, y lo cerramos.
-### NO mantenemos la Arrow Table abierta en memoria (hotfix OOM).
+### NO mantenemos la Arrow Table abierta en memoria (hotfix v0.7.2 OOM).
 if (file.exists(PATH_PANEL_RUNTIME_ANUAL)) {
   ### open_dataset es lazy real (solo lee footer + row groups
   ### necesarios). Mucho más liviano que read_parquet (que carga

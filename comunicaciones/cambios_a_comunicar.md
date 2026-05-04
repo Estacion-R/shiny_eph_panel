@@ -85,6 +85,40 @@
   específico de cómo se construye el panel anual con `{eph}`.
 - **Issue / commit:** issue #44 (Fase 1, Foto). Fase 2 + 3 pendientes.
 
+### 2026-05-03 · Toggle "Tipo de dúo" se extiende a Película y Tasas
+
+- **Estado:** pendiente
+- **Qué cambió:** las pestañas **Película** (línea histórica) y
+  **Tasas** (Persistencia / Salida / Entrada) ahora respetan el toggle
+  Tipo de dúo. En modo Interanual muestran las series anuales reales,
+  ya no el cartel "no soportado". Los selectores de trimestre se
+  adaptan: `T1 / T2 / T3 / T4` en lugar de `1-2 / 2-3 / 3-4 / 4-1`.
+  Cierra el feature end-to-end (queda Fase 3 con Calidad + descarga).
+- **Valor para el usuario:** ahora el dashboard permite responder
+  preguntas como "¿la tasa de informalidad del T1 entre 2003 y 2025
+  cambió estructuralmente?" sin que el ruido estacional ensucie la
+  serie. Es la lectura que todo informe oficial de mercado de trabajo
+  hace al comparar trimestre con trimestre del año anterior, pero
+  ahora sobre el panel longitudinal (mismas personas, no muestras
+  independientes).
+- **Ángulo de copy:**
+  1. Continuación del post anterior: *"Lo prometido es deuda. Ahora
+     el toggle Interanual actúa sobre toda la app: Foto, Película y
+     Tasas."*
+  2. Comparativo visual: GIF del mismo análisis (informalidad
+     asalariada, por ejemplo) intertrim vs interanual, mostrando cómo
+     desaparece la estacionalidad en la versión anual.
+  3. Técnico-educativo: hilo corto sobre cómo se construye un panel
+     anual con `eph::organize_panels(window = "anual")`, qué tipo de
+     atrición tiene y por qué tiene mayor n por dúo de lo que parece.
+- **Asset visual:** GIF o video corto del toggle aplicado en
+  Película. Idealmente con la serie de tasa de Persistencia de
+  Ocupados como ejemplo (es la métrica más simple y demostrativa).
+- **Audiencia prioritaria:** misma que el post anterior (Twitter +
+  LinkedIn). Considerar publicar como "follow-up" del primer post,
+  no como pieza nueva.
+- **Issue / commit:** issue #46 (Fase 2). v0.8.0.
+
 ---
 
 ## Publicados
