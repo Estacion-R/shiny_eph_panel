@@ -1,14 +1,47 @@
 # Roadmap — shiny_eph_panel
 
 > Plan de prioridades vivo. Se actualiza al cerrar cada sprint.
-> Última revisión: **2026-05-03**.
+> Última revisión: **2026-05-04**.
 
 ---
 
 ## Versión actual
 
-**v0.7.0** — Tipo de dúo intertrim/interanual (Fase 1, Foto). Ver
-[CHANGELOG.md](CHANGELOG.md) para el detalle.
+**v0.8.1** en master/staging. PR #60 pendiente con v0.9.0 (cierre
+Sprint A). Ver [CHANGELOG.md](CHANGELOG.md) para el detalle.
+
+---
+
+## Sprint Testing · Sumar capa de tests automatizados (#61)
+
+**Objetivo:** sumar tests en 3 capas. Stack confirmado por research:
+`testthat 3.x` + `shiny::testServer()` + `shinytest2`.
+
+### Sprint test-1 · Funciones puras (~4-6 hs)
+
+- [x] Setup `tests/testthat/` + runner + helper-fixtures
+- [x] Fixture sintética `panel_mock.rds` (100 individuos × 3 ondas)
+- [x] Tests: `agrega_vars_derivadas`, `armo_tabla_sankey`,
+      `duos_disponibles_por_anio`, `duo_label` → **42 tests PASS**
+- [ ] Tests pendientes: `arma_tasas_destacadas`,
+      `regenerar_panel_historico`, `armo_base_panel` modo legacy
+- [ ] CI: GitHub Actions `tests-unit.yml`
+
+### Sprint test-2 · Server logic con testServer() (~3-4 hs)
+
+- [ ] Tests `mod_calidad_panel_server`, `mod_analisis_*_server`
+      (reactives, NO `update*()`)
+- [ ] Test de `armo_base_panel(window = "anual")` con `open_dataset`
+
+### Sprint test-3 · E2E con shinytest2 (~4-5 hs)
+
+- [ ] 5-7 tests E2E: toggle Tipo de dúo, descargas, regresión #40
+- [ ] CI: workflow `tests-e2e.yml` solo en PR a master
+- [ ] Codecov action
+
+**Pitfall confirmado por research:** `testServer()` NO refleja
+`updateSelectInput()` en `session$input`. Tests del toggle Tipo de dúo
+solo confiables con `shinytest2` AppDriver.
 
 ---
 
