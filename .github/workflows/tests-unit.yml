@@ -1,0 +1,49 @@
+name: Tests unitarios
+
+on:
+  push:
+    branches: [master, staging]
+  pull_request:
+    branches: [master, staging]
+
+jobs:
+  unit-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup R
+        uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: '4.5.3'
+          use-public-rspm: true
+
+      - name: Cache R packages
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.R_LIBS_USER }}
+          key: ${{ runner.os }}-r-tests-${{ hashFiles('ETL/00-libraries.R') }}
+          restore-keys: ${{ runner.os }}-r-tests-
+
+      ### Paquetes mínimos para correr los tests. NO instalamos
+      ### highcharter ni gt ni waiter (UI-only); las funciones puras
+      ### de ETL/99-functions.R y R/utils_analisis.R no los necesitan.
+      ###
+      ### bslib se instala porque ETL/02-transform.R lo requiere y
+      ### algunos tests sourcean ese archivo indirectamente.
+      - name: Instalar paquetes R
+        run: |
+          install.packages(c(
+            "testthat", "tibble", "dplyr", "tidyr", "purrr", "readr",
+            "stringr", "glue", "arrow", "withr", "rlang", "assertthat",
+            "shiny", "bslib", "eph"
+          ))
+        shell: Rscript {0}
+
+      - name: Correr tests
+        run: |
+          Rscript tests/testthat.R
+        env:
+          R_KEEP_PKG_SOURCE: yes
