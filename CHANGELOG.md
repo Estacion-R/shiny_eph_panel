@@ -11,6 +11,17 @@ versionado [SemVer](https://semver.org/lang/es/) adaptado a app web:
 
 ---
 
+## [Unreleased]
+
+### Added
+
+- Sprint test-1 batch 3: tests para `arma_matriz_transicion`,
+  `build_tasas_historico`, `regenerar_calidad_panel`, `formato_delta`,
+  `sankey_label_legible`, `sankey_nodes_orden`. Suite de testthat pasa
+  de 79 a **149 tests verde**. Cobertura aproximada del Sprint test-1
+  cerrada salvo `armo_base_panel` legacy (movido a Sprint test-2 para
+  combinarlo con cobertura de modo runtime via `testServer`).
+
 ## [0.9.0] · 2026-05-04
 
 Cierra Sprint A (#44 Tipo de dúo end-to-end). El toggle Interanual
