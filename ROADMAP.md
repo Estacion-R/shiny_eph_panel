@@ -21,11 +21,17 @@ Sprint A). Ver [CHANGELOG.md](CHANGELOG.md) para el detalle.
 
 - [x] Setup `tests/testthat/` + runner + helper-fixtures
 - [x] Fixture sintética `panel_mock.rds` (100 individuos × 3 ondas)
-- [x] Tests: `agrega_vars_derivadas`, `armo_tabla_sankey`,
-      `duos_disponibles_por_anio`, `duo_label` → **42 tests PASS**
-- [ ] Tests pendientes: `arma_tasas_destacadas`,
-      `regenerar_panel_historico`, `armo_base_panel` modo legacy
-- [ ] CI: GitHub Actions `tests-unit.yml`
+- [x] Tests batch 1: `agrega_vars_derivadas`, `armo_tabla_sankey`,
+      `duos_disponibles_por_anio`, `duo_label` → 42 tests
+- [x] Tests batch 2: `arma_tasas_destacadas`, `regenerar_panel_historico`,
+      `tests/testthat.R` aislado de `00-libraries.R` → 79 tests
+- [x] Tests batch 3: `arma_matriz_transicion`, `build_tasas_historico`,
+      `regenerar_calidad_panel`, `formato_delta`, `sankey_label_legible`,
+      `sankey_nodes_orden` → **149 tests PASS**
+- [x] CI: GitHub Actions `tests-unit.yml` ejecuta en cada push a master/staging
+- [ ] Pendiente para Sprint test-2: `armo_base_panel` modo legacy
+      (requiere `eph::organize_panels()` real, conviene cubrir junto
+      con runtime mode usando `testServer`).
 
 ### Sprint test-2 · Server logic con testServer() (~3-4 hs)
 
