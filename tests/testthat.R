@@ -11,11 +11,26 @@
 
 library(testthat)
 
-### Cargar funciones del proyecto. NO sourcear 01-extract.R porque
-### levantar todos los datasets lleva tiempo y los tests deberían
-### ser rápidos. Cada test que necesite datos usa los fixtures
-### sintéticos (tests/testthat/fixtures/).
-source("ETL/00-libraries.R")
+### Cargar SOLO los paquetes mínimos necesarios para los tests de
+### funciones puras. NO source-amos `ETL/00-libraries.R` (que carga
+### highcharter, gt, waiter, bsicons, brand.yml — UI-only) ni
+### `01-extract.R` (que levanta los datasets reales).
+###
+### Los tests de funciones que dependen de Shiny (testServer) se
+### moverán a su propio runner cuando arranque Sprint test-2.
+suppressPackageStartupMessages({
+  library(dplyr)
+  library(tidyr)
+  library(tibble)
+  library(eph)        # organize_panels usado por armo_base_panel modo legacy
+  library(arrow)      # read_parquet en armo_base_panel modo runtime
+  library(glue)
+})
+
+### Definir funciones del proyecto. source() solo define funciones;
+### no se ejecutan llamadas que requieran highcharter/gt/etc. hasta
+### que un test las invoque (y por ahora ningún test del Sprint
+### test-1 las invoca).
 source("ETL/99-functions.R")
 source("R/utils_analisis.R")
 
