@@ -285,6 +285,10 @@ mod_formalidad_server <- function(id, tipo_duo = shiny::reactive("trimestral")) 
       updateSelectInput(session, "tasas_duo",
                         choices = choices_nuevos,
                         selected = "todos")
+      ### Mismo selector "Trimestres" en sub-tab Película (input `duo`).
+      updateSelectInput(session, "duo",
+                        choices = choices_nuevos,
+                        selected = "todos")
     })
 
     etiqueta_plural <- function(cat) {

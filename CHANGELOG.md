@@ -11,6 +11,19 @@ versionado [SemVer](https://semver.org/lang/es/) adaptado a app web:
 
 ---
 
+## [0.8.1] · 2026-05-04
+
+### Fixed
+
+- Selector "Trimestres" en sub-tab **Película** no se actualizaba al
+  togglear modo Interanual (seguía mostrando `1-2 / 2-3 / 3-4 / 4-1`
+  en lugar de `T1 / T2 / T3 / T4`). En v0.8.0 el observer del
+  `tipo_duo` solo updateaba el selector `tasas_duo` (Tasas), faltaba
+  hacer lo mismo con el selector `duo` (Película) en los 3 módulos
+  (cond_act, cat_ocup, formalidad).
+
+---
+
 ## [0.8.0] · 2026-05-03
 
 ### Added
