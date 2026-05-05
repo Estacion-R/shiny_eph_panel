@@ -113,19 +113,23 @@ df_tasas_formalidad_amp_anual  <- cargar_tasas_csv("data_output/tasas_formalidad
 ### ETL/10-build_calidad_panel.R y mantenido al día por 03-update_data.R.
 ### Schema: periodo, anio_0, trim_0, anio_1, trim_1, n_t0, pondera_t0,
 ### n_panel, pondera_panel, pct_encontrado_n, pct_encontrado_pondera.
-path_calidad <- "data_output/calidad_panel_pct_historico.csv"
-df_calidad_panel <- if (file.exists(path_calidad)) {
-  arrow::read_csv_arrow(path_calidad) |>
-    dplyr::collect() |>
-    dplyr::arrange(anio_0, trim_0)
-} else {
-  tibble::tibble(periodo = character(), anio_0 = integer(), trim_0 = integer(),
-                 anio_1 = integer(), trim_1 = integer(),
-                 n_t0 = integer(), pondera_t0 = double(),
-                 n_panel = integer(), pondera_panel = double(),
-                 pct_encontrado_n = double(), pct_encontrado_pondera = double())
+cargar_calidad_csv <- function(path) {
+  if (file.exists(path)) {
+    arrow::read_csv_arrow(path) |>
+      dplyr::collect() |>
+      dplyr::arrange(anio_0, trim_0)
+  } else {
+    tibble::tibble(periodo = character(), anio_0 = integer(),
+                   trim_0 = integer(), anio_1 = integer(), trim_1 = integer(),
+                   n_t0 = integer(), pondera_t0 = double(),
+                   n_panel = integer(), pondera_panel = double(),
+                   pct_encontrado_n = double(),
+                   pct_encontrado_pondera = double())
+  }
 }
-rm(path_calidad)
+df_calidad_panel       <- cargar_calidad_csv("data_output/calidad_panel_pct_historico.csv")
+### Versión ANUAL (issue #47). Generada por ETL/11-build_historicos_anuales.R.
+df_calidad_panel_anual <- cargar_calidad_csv("data_output/calidad_panel_anual_pct_historico.csv")
 
 ### Rango de períodos disponibles (insumo para los selectInput dinámicos).
 ### Se deriva del panel_runtime: cualquier (anio_0, trim_0) es un trimestre

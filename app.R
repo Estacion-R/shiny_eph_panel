@@ -381,7 +381,7 @@ server <- function(input, output, session) {
   mod_cond_act_server("cond_act", tipo_duo = tipo_duo)
   mod_cat_ocup_server("cat_ocup", tipo_duo = tipo_duo)
   mod_formalidad_server("formalidad", tipo_duo = tipo_duo)
-  mod_calidad_panel_server("calidad")
+  mod_calidad_panel_server("calidad", tipo_duo = tipo_duo)
 
   ### Navegación desde las tarjetas del landing. Cada actionLink dispara
   ### bslib::nav_select() para cambiar la pestaña activa del navset_pill_list
@@ -440,6 +440,15 @@ server <- function(input, output, session) {
   output$descarga_panel_runtime_csv <- servir_archivo(
     "data_output/panel_runtime.csv.gz",
     paste0("eph_panel_runtime_", format(Sys.Date(), "%Y%m%d"), ".csv.gz"))
+
+  ### Panel anual (issue #47).
+  output$descarga_panel_runtime_anual_parquet <- servir_archivo(
+    "data_output/panel_runtime_anual.parquet",
+    paste0("eph_panel_runtime_anual_", format(Sys.Date(), "%Y%m%d"), ".parquet"))
+
+  output$descarga_panel_runtime_anual_csv <- servir_archivo(
+    "data_output/panel_runtime_anual.csv.gz",
+    paste0("eph_panel_runtime_anual_", format(Sys.Date(), "%Y%m%d"), ".csv.gz"))
 
   output$descarga_diccionario_csv <- shiny::downloadHandler(
     filename = function() {

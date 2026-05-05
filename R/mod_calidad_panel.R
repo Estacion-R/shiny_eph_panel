@@ -13,8 +13,14 @@
 
 
 ### Helper: deriva el código de dupla a partir de (trim_0, trim_1).
-duo_label <- function(t0, t1) {
-  paste0("t", t0, "-t", t1)
+### En modo trimestral: "tN-tM" (ej "t1-t2"). En anual: "tN"
+### (mismo trimestre entre años, ej "t1").
+duo_label <- function(t0, t1, window = "trimestral") {
+  if (window == "anual") {
+    paste0("t", t0)
+  } else {
+    paste0("t", t0, "-t", t1)
+  }
 }
 
 
@@ -156,23 +162,50 @@ mod_calidad_panel_ui <- function(id) {
 
 # Server ---------------------------------------------------------------------
 
-mod_calidad_panel_server <- function(id) {
+mod_calidad_panel_server <- function(id, tipo_duo = shiny::reactive("trimestral")) {
   moduleServer(id, function(input, output, session) {
+
+    ### Dataset según modo activo (issue #47).
+    df_calidad_actual <- reactive({
+      if (tipo_duo() == "anual") df_calidad_panel_anual else df_calidad_panel
+    })
+
+    ### Choices del selector "duos" según modo. En anual los dúos son
+    ### tN (mismo trimestre entre años); en trimestral son tN-tM.
+    observeEvent(tipo_duo(), {
+      choices_nuevos <- if (tipo_duo() == "anual") {
+        c("Todas" = "todas",
+          "T1 vs T1" = "t1", "T2 vs T2" = "t2",
+          "T3 vs T3" = "t3", "T4 vs T4" = "t4")
+      } else {
+        c("Todas"  = "todas",
+          "1 → 2"  = "t1-t2", "2 → 3"  = "t2-t3",
+          "3 → 4"  = "t3-t4", "4 → 1"  = "t4-t1")
+      }
+      updateSelectInput(session, "duos",
+                        choices = choices_nuevos, selected = "todas")
+    })
 
     ### Filtra el histórico según rango de años y tipos de dupla.
     datos_filtrados <- reactive({
-      req(nrow(df_calidad_panel) > 0)
+      df_base <- df_calidad_actual()
+      req(nrow(df_base) > 0)
 
       duos_sel <- input$duos %||% "todas"
+      todos_los_duos <- if (tipo_duo() == "anual") {
+        c("t1", "t2", "t3", "t4")
+      } else {
+        c("t1-t2", "t2-t3", "t3-t4", "t4-t1")
+      }
       if ("todas" %in% duos_sel || length(duos_sel) == 0) {
-        duos_sel <- c("t1-t2", "t2-t3", "t3-t4", "t4-t1")
+        duos_sel <- todos_los_duos
       }
 
-      anios_sel <- input$anios %||% c(min(df_calidad_panel$anio_0),
-                                      max(df_calidad_panel$anio_0))
+      anios_sel <- input$anios %||% c(min(df_base$anio_0),
+                                      max(df_base$anio_0))
 
-      df_calidad_panel |>
-        mutate(duo = duo_label(trim_0, trim_1)) |>
+      df_base |>
+        mutate(duo = duo_label(trim_0, trim_1, window = tipo_duo())) |>
         filter(anio_0 >= anios_sel[1],
                anio_0 <= anios_sel[2],
                duo %in% duos_sel) |>
@@ -206,8 +239,8 @@ mod_calidad_panel_server <- function(id) {
 
     output$hc_calidad <- renderHighchart({
 
-      ### Caso edge: CSV no generado todavía.
-      if (nrow(df_calidad_panel) == 0) {
+      ### Caso edge: CSV no generado todavía para el modo activo.
+      if (nrow(df_calidad_actual()) == 0) {
         return(
           highchart() |>
             hc_title(text = "Datos no disponibles") |>
@@ -278,7 +311,7 @@ mod_calidad_panel_server <- function(id) {
     ### Chart 2: % de inconsistencias por dúo trimestral. Tres series
     ### (total / sexo / edad) sobre el panel matched. Issue #37.
     output$hc_inconsistencias <- renderHighchart({
-      if (nrow(df_calidad_panel) == 0) {
+      if (nrow(df_calidad_actual()) == 0) {
         return(
           highchart() |>
             hc_title(text = "Datos no disponibles") |>
