@@ -27,12 +27,15 @@ jobs:
           key: ${{ runner.os }}-r-tests-${{ hashFiles('ETL/00-libraries.R') }}
           restore-keys: ${{ runner.os }}-r-tests-
 
-      ### Paquetes mínimos para correr los tests. NO instalamos
-      ### highcharter ni gt ni waiter (UI-only); las funciones puras
-      ### de ETL/99-functions.R y R/utils_analisis.R no los necesitan.
+      ### Paquetes mínimos para correr los tests del Sprint test-1.
+      ### tests/testthat.R NO sourcea 00-libraries.R, así evitamos
+      ### highcharter, gt, waiter, bsicons, brand.yml (UI-only) que
+      ### no son necesarias para tests de funciones puras.
       ###
-      ### bslib se instala porque ETL/02-transform.R lo requiere y
-      ### algunos tests sourcean ese archivo indirectamente.
+      ### shiny + bslib son requeridos porque algunos tests sourcean
+      ### R/mod_calidad_panel.R (que define funciones que adentro
+      ### usan NS, nav_panel, etc; el source solo las define, no
+      ### las ejecuta).
       - name: Instalar paquetes R
         run: |
           install.packages(c(
