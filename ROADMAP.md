@@ -35,9 +35,17 @@ Sprint A). Ver [CHANGELOG.md](CHANGELOG.md) para el detalle.
 
 ### Sprint test-2 · Server logic con testServer() (~3-4 hs)
 
-- [ ] Tests `mod_calidad_panel_server`, `mod_analisis_*_server`
-      (reactives, NO `update*()`)
-- [ ] Test de `armo_base_panel(window = "anual")` con `open_dataset`
+- [x] Tests `mod_calidad_panel_server` con `testServer()`: reactives
+      `df_calidad_actual()`, `datos_filtrados()`, KPIs.
+      Mock de globals + stub de `renderHighchart`. → 9 tests
+- [x] Test de `armo_base_panel(window = "anual")` con parquet fixture
+      sintético + `arrow::open_dataset`. Cubre filter pushdown, drop
+      de cols anio_0/trim_0, error si no existe el parquet, validación
+      de window. → 6 tests
+- [ ] Pendientes (diferidos): `mod_analisis_*_server` para los 3 módulos
+      (cond_act, cat_ocup, formalidad). Requieren mock de globals
+      complejo (df_cond_act, df_tasas_*, periodos_*). Cubrir con E2E
+      en Sprint test-3 sería más rentable que pelear el mock.
 
 ### Sprint test-3 · E2E con shinytest2 (~4-5 hs)
 
