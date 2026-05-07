@@ -18,9 +18,14 @@ versionado [SemVer](https://semver.org/lang/es/) adaptado a app web:
 - Sprint test-1 batch 3: tests para `arma_matriz_transicion`,
   `build_tasas_historico`, `regenerar_calidad_panel`, `formato_delta`,
   `sankey_label_legible`, `sankey_nodes_orden`. Suite de testthat pasa
-  de 79 a **149 tests verde**. Cobertura aproximada del Sprint test-1
-  cerrada salvo `armo_base_panel` legacy (movido a Sprint test-2 para
-  combinarlo con cobertura de modo runtime via `testServer`).
+  de 79 a 149 tests verde.
+- Sprint test-2: tests de server logic con `shiny::testServer()`.
+  Cubre `mod_calidad_panel_server` (switch trimestral/anual del dataset,
+  filtro por años y dúos, outputs KPI) y `armo_base_panel(window="anual")`
+  con parquet fixture sintético (filter pushdown, drop de cols
+  anio_0/trim_0, errores). Suite pasa a **185 tests verde**.
+  `mod_analisis_*_server` se difieren a Sprint test-3 (E2E con
+  shinytest2 es más rentable que pelear el mock de globales).
 
 ## [0.9.0] · 2026-05-04
 
