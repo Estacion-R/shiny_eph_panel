@@ -1,0 +1,85 @@
+name: Tests E2E (shinytest2)
+
+### Tests E2E pesados con shinytest2 + Chromote. Por costo (Chrome
+### headless + boot completo de la app + datasets pesados) NO se corren
+### en cada push. Triggers:
+###
+###   - workflow_dispatch: manual desde la UI de Actions, on demand.
+###   - schedule: weekly (domingo 6 AM UTC) como sanity check.
+###
+### El workflow tests-unit.yml sigue siendo la barrera obligatoria de
+### cada PR. Este es complemento, no reemplazo.
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 6 * * 0"  # domingos a las 06:00 UTC
+
+jobs:
+  e2e-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Chrome
+        uses: browser-actions/setup-chrome@v1
+
+      - name: Setup R
+        uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: '4.5.3'
+          use-public-rspm: true
+
+      - name: Cache R packages
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.R_LIBS_USER }}
+          key: ${{ runner.os }}-r-e2e-${{ hashFiles('ETL/00-libraries.R') }}
+          restore-keys: ${{ runner.os }}-r-e2e-
+
+      ### El stack E2E necesita TODOS los paquetes de la app (incluyendo
+      ### highcharter, gt, waiter, bsicons) porque shinytest2 levanta la
+      ### app entera. Es la diferencia más grande con tests-unit.yml.
+      - name: Instalar paquetes R (full stack app + shinytest2)
+        run: |
+          install.packages(c(
+            "testthat", "shinytest2", "chromote",
+            "tibble", "dplyr", "tidyr", "purrr", "readr", "stringr",
+            "glue", "arrow", "withr", "rlang", "assertthat",
+            "shiny", "bslib", "highcharter", "gt", "waiter", "bsicons",
+            "shinychat", "eph"
+          ))
+        shell: Rscript {0}
+
+      ### Datasets pre-computados: los E2E necesitan data_output/ con los
+      ### parquets/CSVs reales. Como están gitignored (~80 MB) hay que
+      ### regenerarlos. Workaround temporal: bajar fixture mínimo o correr
+      ### el ETL completo (lento).
+      ###
+      ### TODO: cuando el pipeline auto-update de issue #pipeline corra
+      ### en GH Actions, podemos descargar el último build.
+      ### Por ahora skipeamos los tests si los datos no están en el runner
+      ### (los tests usan skip() defensivo en helper new_app).
+      - name: Verificar datasets disponibles
+        run: |
+          ls -lh data_output/ || echo "No data_output/ (tests E2E saltarán)"
+
+      - name: Correr tests E2E
+        run: |
+          Rscript tests/testthat.R
+        env:
+          RUN_E2E: "true"
+          NOT_CRAN: "true"
+          R_KEEP_PKG_SOURCE: yes
+
+      ### Si shinytest2 generó snapshots/diffs, subirlos como artifact
+      ### para inspección post-mortem en caso de fallo.
+      - name: Upload snapshots si fallaron
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: shinytest2-snapshots
+          path: tests/testthat/_snaps/
+          if-no-files-found: ignore

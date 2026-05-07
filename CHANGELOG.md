@@ -23,9 +23,16 @@ versionado [SemVer](https://semver.org/lang/es/) adaptado a app web:
   Cubre `mod_calidad_panel_server` (switch trimestral/anual del dataset,
   filtro por años y dúos, outputs KPI) y `armo_base_panel(window="anual")`
   con parquet fixture sintético (filter pushdown, drop de cols
-  anio_0/trim_0, errores). Suite pasa a **185 tests verde**.
+  anio_0/trim_0, errores). Suite pasa a 185 tests verde.
   `mod_analisis_*_server` se difieren a Sprint test-3 (E2E con
   shinytest2 es más rentable que pelear el mock de globales).
+- Sprint test-3 lite: 3 tests E2E con `shinytest2` + Chromote para
+  smoke (boot + input `tipo_duo` registrado), toggle tipo_duo
+  (estado trim ↔ anual), y módulo Calidad (KPI render tras navegar
+  al panel). Suite total: **192 tests** (185 unit + 7 E2E con
+  `RUN_E2E=true`). Workflow CI separado `tests-e2e.yml` con
+  `workflow_dispatch` + cron semanal (no en cada PR para no
+  inflar el ciclo).
 
 ## [0.9.0] · 2026-05-04
 
