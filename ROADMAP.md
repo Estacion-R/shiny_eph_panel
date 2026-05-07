@@ -47,11 +47,27 @@ Sprint A). Ver [CHANGELOG.md](CHANGELOG.md) para el detalle.
       complejo (df_cond_act, df_tasas_*, periodos_*). Cubrir con E2E
       en Sprint test-3 sería más rentable que pelear el mock.
 
-### Sprint test-3 · E2E con shinytest2 (~4-5 hs)
+### Sprint test-3 lite · E2E con shinytest2 (~2 hs)
 
-- [ ] 5-7 tests E2E: toggle Tipo de dúo, descargas, regresión #40
-- [ ] CI: workflow `tests-e2e.yml` solo en PR a master
-- [ ] Codecov action
+Versión recortada del Sprint original (5-7 tests + Codecov diferidos):
+foco en cubrir el smoke + regresión del toggle Tipo de dúo + render de
+output post-navegación. ROI suficiente para el costo de mantenimiento.
+
+- [x] 3 tests E2E: smoke (input tipo_duo registrado), toggle tipo_duo
+      (state cambia trim ↔ anual y vuelve), módulo Calidad (KPI
+      renderiza valor numérico tras navegar al panel) → 7 expects
+- [x] CI: workflow `tests-e2e.yml` con `workflow_dispatch` + schedule
+      semanal (domingo 06:00 UTC). NO corre en cada PR.
+- [x] Guard `RUN_E2E=true` env var: corrida default de
+      `tests/testthat.R` salta los E2E (rápido para dev local).
+
+**Diferido (puede sumarse en Sprint test-4 si aparece la necesidad):**
+- Tests E2E de descarga (shinytest2 + Chromote tiene quirks con
+  `downloadHandler` que copia archivos vía `file.copy`).
+- Codecov action (precio actual del proyecto no lo justifica).
+- Tests E2E para Foto / Película línea charts (cubrir regresión #40
+  con interacción real de Highcharts; requiere snapshot testing
+  estable, hoy frágil).
 
 **Pitfall confirmado por research:** `testServer()` NO refleja
 `updateSelectInput()` en `session$input`. Tests del toggle Tipo de dúo
