@@ -102,11 +102,17 @@ anuales no entren en drift cuando se cargue un trimestre nuevo.
 **Objetivo:** robustez y limpieza después de meter Tipo de dúo
 completo.
 
-- **#45** Validación ETL paneles intertrim + anual · ~2 hs.
-  Schema, cobertura, tamaño, distribuciones, consistencia.
-- **#39** Pasada integral (parcial) · ~3-5 hs.
-  Anti-patterns dplyr/purrr, CSS muerto, dependencias no usadas.
-  Diferimos lo grande (refactor mayor) que se cubre en Sprint C.
+- [x] **#45** Validación ETL paneles intertrim + anual · ~2 hs.
+  Script `ETL/12-validate_paneles_runtime.R` con 29 tests testthat:
+  schema (31 cols + tipos), cobertura (≥75 dúos trim, ≥65 anual,
+  empieza 2003-T3), tamaño/atrición (n>5000 por dúo, ratio anual/trim
+  ∈ [40%, 120%]), cross-val tasas CSV vs parquet (tolerancia 0.5 pp).
+  Integrado al workflow `update_eph_data.yml` como gate post 09b.
+- [ ] **#39** Pasada integral (parcial) · ~2 hs (scope acotado).
+  Anti-patterns dplyr/purrr (`map_dfr` → `map() |> list_rbind()`,
+  `group_by + ungroup` → `.by`, joins `c("a"="b")` → `join_by()`),
+  comentarios obsoletos. Diferido a otro sprint: CSS muerto, perf
+  con profvis, accesibilidad, tests (ya cubierto por Sprint testing).
 
 **Cuándo:** después de Sprint A. Ya tendremos ~1.5 meses de GA4
 acumulado para guiar optimizaciones con datos reales.
