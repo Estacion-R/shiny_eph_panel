@@ -131,4 +131,18 @@ readr::write_csv(tasas_formalidad_amp_anual,
                  "data_output/tasas_formalidad_ampliada_anual_historico.csv")
 cat(glue::glue("  tasas_formalidad_ampliada_anual_historico.csv OK ({nrow(tasas_formalidad_amp_anual)} filas)\n\n"))
 
+
+### --------------------------------------------------------------------
+### Calidad del panel (issue #47)
+### --------------------------------------------------------------------
+
+cat("--- Calidad del panel anual ---\n\n")
+
+regenerar_calidad_panel(
+  path_csv     = "data_output/calidad_panel_anual_pct_historico.csv",
+  df_microdato = df_eph_full,
+  window       = "anual"
+)
+
+
 cat("=== Pre-cómputo de históricos anuales completo ===\n")

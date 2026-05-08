@@ -119,6 +119,34 @@
   no como pieza nueva.
 - **Issue / commit:** issue #46 (Fase 2). v0.8.0.
 
+### 2026-05-04 · Toggle Interanual end-to-end (Calidad + Datos)
+
+- **Estado:** pendiente
+- **Qué cambió:** cierre del feature Tipo de dúo. El toggle ahora
+  cubre **toda la app**: Foto, Película, Tasas, Calidad de la muestra
+  y la sección Datos descargables. Calidad muestra el % de pareo y
+  las inconsistencias para los dúos anuales con métrica adaptada
+  (rango de edad `[CH06, CH06 + 2]` para reflejar el cumpleaños). En
+  Datos hay una tarjeta nueva para bajar el panel anual (16 MB
+  parquet · 18 MB CSV gzip).
+- **Valor para el usuario:** quien quiera reproducir el análisis
+  longitudinal con el corte interanual ahora tiene el dataset
+  descargable + la métrica de calidad para reportar atrición y n
+  efectivo del panel anual. Cierra la promesa del feature.
+- **Ángulo de copy:**
+  1. *"Toggle Interanual completo. Foto, Película, Tasas y Calidad de
+     la muestra. Y el dataset anual descargable."*
+  2. Hilo educativo: cómo varían las tasas de inconsistencia entre el
+     panel intertrim y el anual (es esperable que en anual sean
+     mayores por la ventana más larga).
+- **Asset visual:** screenshot de la pestaña "Calidad de la muestra"
+  togglead a Interanual + screenshot de la sección Datos con la
+  tarjeta nueva.
+- **Audiencia prioritaria:** Twitter + LinkedIn (analistas datos,
+  sector público). Cerrar este como "post resumen" de los 3 anteriores
+  del feature.
+- **Issue / commit:** issue #47 (Fase 3). v0.9.0.
+
 ---
 
 ## Publicados

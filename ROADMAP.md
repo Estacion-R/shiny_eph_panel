@@ -1,14 +1,77 @@
 # Roadmap — shiny_eph_panel
 
 > Plan de prioridades vivo. Se actualiza al cerrar cada sprint.
-> Última revisión: **2026-05-03**.
+> Última revisión: **2026-05-04**.
 
 ---
 
 ## Versión actual
 
-**v0.7.0** — Tipo de dúo intertrim/interanual (Fase 1, Foto). Ver
-[CHANGELOG.md](CHANGELOG.md) para el detalle.
+**v0.8.1** en master/staging. PR #60 pendiente con v0.9.0 (cierre
+Sprint A). Ver [CHANGELOG.md](CHANGELOG.md) para el detalle.
+
+---
+
+## Sprint Testing · Sumar capa de tests automatizados (#61)
+
+**Objetivo:** sumar tests en 3 capas. Stack confirmado por research:
+`testthat 3.x` + `shiny::testServer()` + `shinytest2`.
+
+### Sprint test-1 · Funciones puras (~4-6 hs)
+
+- [x] Setup `tests/testthat/` + runner + helper-fixtures
+- [x] Fixture sintética `panel_mock.rds` (100 individuos × 3 ondas)
+- [x] Tests batch 1: `agrega_vars_derivadas`, `armo_tabla_sankey`,
+      `duos_disponibles_por_anio`, `duo_label` → 42 tests
+- [x] Tests batch 2: `arma_tasas_destacadas`, `regenerar_panel_historico`,
+      `tests/testthat.R` aislado de `00-libraries.R` → 79 tests
+- [x] Tests batch 3: `arma_matriz_transicion`, `build_tasas_historico`,
+      `regenerar_calidad_panel`, `formato_delta`, `sankey_label_legible`,
+      `sankey_nodes_orden` → **149 tests PASS**
+- [x] CI: GitHub Actions `tests-unit.yml` ejecuta en cada push a master/staging
+- [ ] Pendiente para Sprint test-2: `armo_base_panel` modo legacy
+      (requiere `eph::organize_panels()` real, conviene cubrir junto
+      con runtime mode usando `testServer`).
+
+### Sprint test-2 · Server logic con testServer() (~3-4 hs)
+
+- [x] Tests `mod_calidad_panel_server` con `testServer()`: reactives
+      `df_calidad_actual()`, `datos_filtrados()`, KPIs.
+      Mock de globals + stub de `renderHighchart`. → 9 tests
+- [x] Test de `armo_base_panel(window = "anual")` con parquet fixture
+      sintético + `arrow::open_dataset`. Cubre filter pushdown, drop
+      de cols anio_0/trim_0, error si no existe el parquet, validación
+      de window. → 6 tests
+- [ ] Pendientes (diferidos): `mod_analisis_*_server` para los 3 módulos
+      (cond_act, cat_ocup, formalidad). Requieren mock de globals
+      complejo (df_cond_act, df_tasas_*, periodos_*). Cubrir con E2E
+      en Sprint test-3 sería más rentable que pelear el mock.
+
+### Sprint test-3 lite · E2E con shinytest2 (~2 hs)
+
+Versión recortada del Sprint original (5-7 tests + Codecov diferidos):
+foco en cubrir el smoke + regresión del toggle Tipo de dúo + render de
+output post-navegación. ROI suficiente para el costo de mantenimiento.
+
+- [x] 3 tests E2E: smoke (input tipo_duo registrado), toggle tipo_duo
+      (state cambia trim ↔ anual y vuelve), módulo Calidad (KPI
+      renderiza valor numérico tras navegar al panel) → 7 expects
+- [x] CI: workflow `tests-e2e.yml` con `workflow_dispatch` + schedule
+      semanal (domingo 06:00 UTC). NO corre en cada PR.
+- [x] Guard `RUN_E2E=true` env var: corrida default de
+      `tests/testthat.R` salta los E2E (rápido para dev local).
+
+**Diferido (puede sumarse en Sprint test-4 si aparece la necesidad):**
+- Tests E2E de descarga (shinytest2 + Chromote tiene quirks con
+  `downloadHandler` que copia archivos vía `file.copy`).
+- Codecov action (precio actual del proyecto no lo justifica).
+- Tests E2E para Foto / Película línea charts (cubrir regresión #40
+  con interacción real de Highcharts; requiere snapshot testing
+  estable, hoy frágil).
+
+**Pitfall confirmado por research:** `testServer()` NO refleja
+`updateSelectInput()` en `session$input`. Tests del toggle Tipo de dúo
+solo confiables con `shinytest2` AppDriver.
 
 ---
 
