@@ -46,7 +46,7 @@ etiquetas_formalidad <- c("Formal", "Informal")
 categorias_sankey   <- etiquetas_formalidad
 
 paneles_nuevos <- paneles |>
-  pmap_dfr(function(ANO4, TRIMESTRE, anio_post, trim_post, periodo, ...) {
+  pmap(function(ANO4, TRIMESTRE, anio_post, trim_post, periodo, ...) {
     cat(glue("  panel {periodo}... "))
 
     df_panel <- armo_base_panel(
@@ -63,16 +63,18 @@ paneles_nuevos <- paneles |>
       etiquetas = etiquetas_formalidad
     )
 
-    res <- map_dfr(categorias_sankey, function(cat) {
+    res <- map(categorias_sankey, function(cat) {
       tryCatch({
         armo_tabla_sankey(table = df_prep, categoria = cat) |>
           mutate(periodo = as.character(periodo))
       }, error = function(e) tibble())
-    })
+    }) |>
+      list_rbind()
 
     cat(nrow(res), "filas\n")
     res
-  })
+  }) |>
+  list_rbind()
 
 cat("\nFilas totales:", nrow(paneles_nuevos), "\n")
 

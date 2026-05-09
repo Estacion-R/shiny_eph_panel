@@ -13,6 +13,16 @@ versionado [SemVer](https://semver.org/lang/es/) adaptado a app web:
 
 ## [Unreleased]
 
+### Changed
+
+- Sprint B · Calidad técnica (#39, scope acotado): pasada de
+  anti-patterns dplyr/purrr en todo el repo. `pmap_dfr` / `map_dfr`
+  reemplazados por `pmap()/map() |> list_rbind()` (10 ocurrencias en
+  ETL/04b, 05, 06, 07 y 99-functions). `group_by(X) |> mutate(...) |> ungroup()`
+  reemplazado por `mutate(..., .by = X)` en `preparo_base()` (2 casos).
+  `%>%` magrittr reemplazado por `|>` nativo en `df_to_annotations_labels()`
+  (3 líneas). Refactor sin cambio funcional: los 185 tests pasan igual.
+
 ### Added
 
 - Sprint B · Calidad técnica (#45): script `ETL/12-validate_paneles_runtime.R`

@@ -108,11 +108,13 @@ completo.
   empieza 2003-T3), tamaño/atrición (n>5000 por dúo, ratio anual/trim
   ∈ [40%, 120%]), cross-val tasas CSV vs parquet (tolerancia 0.5 pp).
   Integrado al workflow `update_eph_data.yml` como gate post 09b.
-- [ ] **#39** Pasada integral (parcial) · ~2 hs (scope acotado).
-  Anti-patterns dplyr/purrr (`map_dfr` → `map() |> list_rbind()`,
-  `group_by + ungroup` → `.by`, joins `c("a"="b")` → `join_by()`),
-  comentarios obsoletos. Diferido a otro sprint: CSS muerto, perf
-  con profvis, accesibilidad, tests (ya cubierto por Sprint testing).
+- [x] **#39** Pasada integral (parcial) · ~2 hs (scope acotado).
+  Anti-patterns dplyr/purrr barridos del repo: 10 ocurrencias de
+  `pmap_dfr` / `map_dfr` → `pmap()/map() |> list_rbind()`,
+  2 ocurrencias de `group_by + ungroup` → `.by`,
+  3 líneas de `%>%` magrittr → `|>` nativo. 185 tests siguen verde
+  (refactor sin cambio funcional). Diferido a otro sprint:
+  CSS muerto, perf con profvis, accesibilidad, deps no usadas.
 
 **Cuándo:** después de Sprint A. Ya tendremos ~1.5 meses de GA4
 acumulado para guiar optimizaciones con datos reales.
