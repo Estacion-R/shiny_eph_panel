@@ -15,6 +15,16 @@ versionado [SemVer](https://semver.org/lang/es/) adaptado a app web:
 
 ### Added
 
+- Sprint B · Calidad técnica (#45): script `ETL/12-validate_paneles_runtime.R`
+  con 29 validaciones testthat sobre los parquets de runtime
+  (intertrim + anual). Cubre schema (31 cols + tipos), cobertura
+  temporal (≥75 dúos trim / ≥65 anual, empieza 2003-T3), tamaño y
+  atrición (n>5000 por dúo, ratio anual/trim ∈ [40%, 120%]), y
+  cross-validation de tasas (CSV histórico vs recálculo on-demand,
+  tolerancia 0.5 pp). Integrado al workflow `update_eph_data.yml`
+  como gate después de regenerar los parquets y antes de crear el PR.
+  Si alguna validación falla, el workflow aborta y prod no recibe
+  datos corruptos.
 - Sprint test-1 batch 3: tests para `arma_matriz_transicion`,
   `build_tasas_historico`, `regenerar_calidad_panel`, `formato_delta`,
   `sankey_label_legible`, `sankey_nodes_orden`. Suite de testthat pasa

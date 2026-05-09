@@ -41,7 +41,7 @@ jobs:
 
       - name: Instalar paquetes R
         run: |
-          install.packages(c("dplyr", "arrow", "eph", "glue", "purrr", "readr", "assertthat", "stringr"))
+          install.packages(c("dplyr", "arrow", "eph", "glue", "purrr", "readr", "assertthat", "stringr", "testthat"))
         shell: Rscript {0}
 
       - name: Ejecutar script de actualización
@@ -78,6 +78,14 @@ jobs:
       - name: Regenerar panel runtime anual
         if: steps.check.outputs.has_new == 'true'
         run: Rscript ETL/09b-build_paneles_runtime_anual.R
+
+      ### Gate de validación (issue #45). Si los parquets recién regenerados
+      ### tienen drift de schema, gaps de cobertura, dúos con n anómalo o
+      ### las tasas no coinciden con los CSVs históricos, abortamos antes
+      ### de crear el PR. Evita propagar regresiones silenciosas a prod.
+      - name: Validar parquets de runtime
+        if: steps.check.outputs.has_new == 'true'
+        run: Rscript ETL/12-validate_paneles_runtime.R
 
       - name: Limpiar archivo temporal antes del commit
         if: steps.check.outputs.has_new == 'true'

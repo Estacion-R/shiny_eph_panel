@@ -27,7 +27,7 @@
 ### `staging → master` hay que conservar la versión de master de este
 ### archivo (o restaurar el ID después del merge):
 ###   git checkout master -- R/utils_analytics.R
-GA4_MEASUREMENT_ID <- ""
+GA4_MEASUREMENT_ID <- "G-NQPB4BHWMM"
 
 
 ### Indica si tenemos un ID válido configurado. Cuando es FALSE, los
