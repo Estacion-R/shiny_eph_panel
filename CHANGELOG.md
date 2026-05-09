@@ -13,6 +13,16 @@ versionado [SemVer](https://semver.org/lang/es/) adaptado a app web:
 
 ## [Unreleased]
 
+(Nada pendiente de release. Próximas líneas de trabajo en
+[ROADMAP.md](ROADMAP.md): Sprint C refactor `mod_analisis()` genérico,
+Sprint D decisión metodológica formal/informal, Sprint E features
+mayores #29/#30).
+
+## [0.9.1] · 2026-05-09
+
+Trabajo interno (no user-visible): cierre de Sprint Testing y Sprint B.
+Shipped vía PR #67 (testing infra + restore GA4) y PR #70 (Sprint B).
+
 ### Changed
 
 - Sprint B · Calidad técnica (#39, scope acotado): pasada de
@@ -35,24 +45,33 @@ versionado [SemVer](https://semver.org/lang/es/) adaptado a app web:
   como gate después de regenerar los parquets y antes de crear el PR.
   Si alguna validación falla, el workflow aborta y prod no recibe
   datos corruptos.
-- Sprint test-1 batch 3: tests para `arma_matriz_transicion`,
-  `build_tasas_historico`, `regenerar_calidad_panel`, `formato_delta`,
-  `sankey_label_legible`, `sankey_nodes_orden`. Suite de testthat pasa
-  de 79 a 149 tests verde.
-- Sprint test-2: tests de server logic con `shiny::testServer()`.
-  Cubre `mod_calidad_panel_server` (switch trimestral/anual del dataset,
-  filtro por años y dúos, outputs KPI) y `armo_base_panel(window="anual")`
-  con parquet fixture sintético (filter pushdown, drop de cols
-  anio_0/trim_0, errores). Suite pasa a 185 tests verde.
-  `mod_analisis_*_server` se difieren a Sprint test-3 (E2E con
-  shinytest2 es más rentable que pelear el mock de globales).
-- Sprint test-3 lite: 3 tests E2E con `shinytest2` + Chromote para
-  smoke (boot + input `tipo_duo` registrado), toggle tipo_duo
-  (estado trim ↔ anual), y módulo Calidad (KPI render tras navegar
-  al panel). Suite total: **192 tests** (185 unit + 7 E2E con
-  `RUN_E2E=true`). Workflow CI separado `tests-e2e.yml` con
-  `workflow_dispatch` + cron semanal (no en cada PR para no
-  inflar el ciclo).
+- Sprint Testing (#61): pirámide de tests automatizados en 3 capas.
+  - **test-1** Funciones puras (149 tests testthat): `agrega_vars_derivadas`,
+    `armo_tabla_sankey`, `duos_disponibles_por_anio`, `duo_label`,
+    `arma_tasas_destacadas`, `regenerar_panel_historico`,
+    `arma_matriz_transicion`, `build_tasas_historico`,
+    `regenerar_calidad_panel`, `formato_delta`, `sankey_label_legible`,
+    `sankey_nodes_orden`.
+  - **test-2** Server logic con `shiny::testServer()` (+36 tests):
+    `mod_calidad_panel_server` (switch trimestral/anual, filtros,
+    outputs KPI con stub de `renderHighchart`) y
+    `armo_base_panel(window="anual")` con parquet fixture sintético
+    (filter pushdown, drop de cols anio_0/trim_0, errores).
+  - **test-3 lite** E2E con `shinytest2` + Chromote (+7 expects):
+    smoke (input `tipo_duo` registrado), toggle tipo_duo
+    (trim ↔ anual y vuelve), módulo Calidad (KPI render tras navegar
+    al panel).
+  - Total: **192 tests** (185 unit + 7 E2E con `RUN_E2E=true`).
+  - CI: workflow `tests-unit.yml` corre en cada PR; `tests-e2e.yml`
+    con `workflow_dispatch` + cron semanal (no en cada PR para no
+    inflar el ciclo).
+
+### Fixed
+
+- GA4 measurement ID restaurado en producción (`R/utils_analytics.R`).
+  Master tenía `GA4_MEASUREMENT_ID <- ""` desde PR #50 (2026-05-03),
+  con tracking roto durante 4 días. Restaurado a `"G-NQPB4BHWMM"` en
+  el merge staging → master del 2026-05-08.
 
 ## [0.9.0] · 2026-05-04
 
