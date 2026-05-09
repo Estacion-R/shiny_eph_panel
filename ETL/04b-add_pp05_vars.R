@@ -64,7 +64,8 @@ descargar_pp05 <- function(anio, trim) {
 }
 
 descargas <- periodos_target |>
-  pmap_dfr(function(ANO4, TRIMESTRE) descargar_pp05(ANO4, TRIMESTRE))
+  pmap(function(ANO4, TRIMESTRE) descargar_pp05(ANO4, TRIMESTRE)) |>
+  list_rbind()
 
 cat("\nDescargas totales:", nrow(descargas), "filas\n")
 

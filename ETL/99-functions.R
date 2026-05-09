@@ -117,7 +117,7 @@ regenerar_panel_historico <- function(path_csv, df_microdato,
   vars_panel <- unique(c("ESTADO", "PONDERA", var, vars_extra))
 
   paneles_nuevos <- paneles_a_calcular |>
-    purrr::pmap_dfr(function(ANO4, TRIMESTRE, anio_post, trim_post, periodo, ...) {
+    purrr::pmap(function(ANO4, TRIMESTRE, anio_post, trim_post, periodo, ...) {
       df_panel <- armo_base_panel(
         anio_0 = ANO4, trimestre_0 = TRIMESTRE,
         anio_1 = anio_post, trimestre_1 = trim_post,
@@ -133,13 +133,15 @@ regenerar_panel_historico <- function(path_csv, df_microdato,
         etiquetas = etiquetas
       )
 
-      purrr::map_dfr(categorias, function(cat) {
+      purrr::map(categorias, function(cat) {
         tryCatch({
           armo_tabla_sankey(table = df_prep, categoria = cat) |>
             dplyr::mutate(periodo = as.character(periodo))
         }, error = function(e) tibble::tibble())
-      })
-    })
+      }) |>
+        purrr::list_rbind()
+    }) |>
+    purrr::list_rbind()
 
   panel_actualizado <- dplyr::bind_rows(panel_existente, paneles_nuevos) |>
     dplyr::filter(from != "from")  # cleanup defensivo
@@ -203,7 +205,7 @@ build_tasas_historico <- function(df_microdato, var, etiquetas,
   vars_panel <- unique(c("ESTADO", "PONDERA", var, vars_extra))
 
   paneles |>
-    purrr::pmap_dfr(function(ANO4, TRIMESTRE, anio_post, trim_post, periodo, ...) {
+    purrr::pmap(function(ANO4, TRIMESTRE, anio_post, trim_post, periodo, ...) {
       df_panel <- armo_base_panel(
         anio_0 = ANO4, trimestre_0 = TRIMESTRE,
         anio_1 = anio_post, trimestre_1 = trim_post,
@@ -212,7 +214,7 @@ build_tasas_historico <- function(df_microdato, var, etiquetas,
         window = window
       )
 
-      purrr::map_dfr(etiquetas, function(cat) {
+      purrr::map(etiquetas, function(cat) {
         tryCatch({
           tasas <- arma_tasas_destacadas(df_panel, var, etiquetas, cat)
           tibble::tibble(
@@ -223,8 +225,10 @@ build_tasas_historico <- function(df_microdato, var, etiquetas,
             entrada = tasas$entrada
           )
         }, error = function(e) tibble::tibble())
-      })
-    })
+      }) |>
+        purrr::list_rbind()
+    }) |>
+    purrr::list_rbind()
 }
 
 
@@ -402,10 +406,10 @@ preparo_base <- function(df,
     tabla <- tabla |>
       summarise(casos = sum(PONDERA),
                 .by = c("ESTADO", "ESTADO_t1")) |>
-      group_by(ESTADO) |>
       mutate(porc_base = round(casos / sum(casos) * 100, 1),
              periodo_base = "t_anterior",
-             id = paste(ESTADO, ESTADO_t1, sep = " - ")) |> ungroup() |>
+             id = paste(ESTADO, ESTADO_t1, sep = " - "),
+             .by = ESTADO) |>
       select(ESTADO, ESTADO_t1, porc_base, id, periodo_base)
   }
 
@@ -413,10 +417,10 @@ preparo_base <- function(df,
     tabla <- tabla |>
       summarise(casos = sum(PONDERA_t1),
                 .by = c("ESTADO_t1", "ESTADO")) |>
-      group_by(ESTADO_t1) |>
       mutate(porc_base = round(casos / sum(casos) * 100, 1),
              periodo_base = "t_posterior",
-             id = paste(ESTADO, ESTADO_t1, sep = " - ")) |> ungroup() |>
+             id = paste(ESTADO, ESTADO_t1, sep = " - "),
+             .by = ESTADO_t1) |>
       select(ESTADO, ESTADO_t1, porc_base, id, periodo_base)
   }
 
@@ -639,14 +643,12 @@ regenerar_calidad_panel <- function(path_csv, df_microdato,
 
 ### Notas para highcharter
 df_to_annotations_labels <- function(df, xAxis = 0, yAxis = 0) {
-  
   stopifnot(hasName(df, "x"))
   stopifnot(hasName(df, "y"))
   stopifnot(hasName(df, "text"))
-  
-  df %>% 
-    rowwise() %>% 
-    mutate(point = list(list(x = x, y = y, xAxis = 0, yAxis = 0))) %>% 
-    select(-x, -y)  
-  
+
+  df |>
+    rowwise() |>
+    mutate(point = list(list(x = x, y = y, xAxis = 0, yAxis = 0))) |>
+    select(-x, -y)
 }
