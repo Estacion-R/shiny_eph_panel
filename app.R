@@ -11,9 +11,8 @@ source("ETL/01-extract.R")
 source("ETL/02-transform.R")
 source("ETL/03-hc-theme.R")
 source("R/utils_analisis.R")
-source("R/mod_analisis_cond_act.R")
-source("R/mod_analisis_cat_ocup.R")
-source("R/mod_analisis_formalidad.R")
+source("R/configs_analisis.R")
+source("R/mod_analisis.R")
 source("R/mod_calidad_panel.R")
 source("R/utils_analytics.R")
 source("R/panels_metadata.R")
@@ -229,17 +228,17 @@ ui <- page_fillable(
       nav_panel(
         title = "Condición de actividad",
         icon = icon("people-arrows"),
-        mod_cond_act_ui("cond_act")
+        mod_analisis_ui("cond_act", config_cond_act)
       ),
       nav_panel(
         title = "Categoría ocupacional",
         icon = icon("user-tie"),
-        mod_cat_ocup_ui("cat_ocup")
+        mod_analisis_ui("cat_ocup", config_cat_ocup)
       ),
       nav_panel(
         title = "Formal / Informal",
         icon = icon("id-card"),
-        mod_formalidad_ui("formalidad")
+        mod_analisis_ui("formalidad", config_formalidad)
       ),
       nav_panel(
         title = "Calidad de la muestra",
@@ -378,9 +377,9 @@ server <- function(input, output, session) {
     if (is.null(val) || !nzchar(val)) "trimestral" else val
   })
 
-  mod_cond_act_server("cond_act", tipo_duo = tipo_duo)
-  mod_cat_ocup_server("cat_ocup", tipo_duo = tipo_duo)
-  mod_formalidad_server("formalidad", tipo_duo = tipo_duo)
+  mod_analisis_server("cond_act", config_cond_act, tipo_duo = tipo_duo)
+  mod_analisis_server("cat_ocup", config_cat_ocup, tipo_duo = tipo_duo)
+  mod_analisis_server("formalidad", config_formalidad, tipo_duo = tipo_duo)
   mod_calidad_panel_server("calidad", tipo_duo = tipo_duo)
 
   ### Navegación desde las tarjetas del landing. Cada actionLink dispara
