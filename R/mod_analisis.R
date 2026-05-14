@@ -849,5 +849,27 @@ mod_analisis_server <- function(id, config,
         arma_sankey_comparativo(input$comp_anio_b)
       })
     }
+
+    ### Issue #74 (hub-and-spoke): cuando el módulo vive dentro de un
+    ### conditionalPanel (vista no activa), Shiny por default suspende sus
+    ### outputs. Eso rompe el reflow de Highcharts al volver a la vista.
+    ### suspendWhenHidden = FALSE mantiene los outputs vivos y un JS handler
+    ### (www/reflow_charts.js) llama a chart.reflow() cuando cambia la vista.
+    ###
+    ### Los outputs se registran dentro de observe(), así que aplicamos
+    ### outputOptions desde session$onFlushed (que corre después del primer
+    ### flush, cuando ya existen).
+    session$onFlushed(function() {
+      nombres <- c("sankey", "line", "tasas_chart")
+      if (isTRUE(config$incluir_comparar_funcional)) {
+        nombres <- c(nombres, "sankey_a", "sankey_b")
+      }
+      for (n in nombres) {
+        tryCatch(
+          outputOptions(output, n, suspendWhenHidden = FALSE),
+          error = function(e) NULL
+        )
+      }
+    }, once = TRUE)
   })
 }

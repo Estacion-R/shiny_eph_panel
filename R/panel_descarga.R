@@ -102,13 +102,12 @@ download_dropdown_item <- function(output_id,
 }
 
 
-panel_descarga <- bslib::nav_panel(
-  title = "Datos",
-  icon  = bsicons::bs_icon("cloud-download"),
-
-  tags$div(
-    class = "panel-descarga",
-    style = "max-width: 1100px;",
+### Contenido de la sección Datos. Se expone como tagList para usarlo tanto
+### dentro de un nav_panel (sidebar global viejo) como directo en la vista
+### "datos" del patrón hub-and-spoke (issue #74).
+panel_descarga_content <- tags$div(
+  class = "panel-descarga",
+  style = "max-width: 1100px;",
 
     ### Hero
     tags$div(
@@ -280,4 +279,12 @@ panel_descarga <- bslib::nav_panel(
       )
     )
   )
+
+
+### Wrapper nav_panel para compatibilidad con el sidebar global viejo.
+### El refactor a hub-and-spoke (issue #74) usa panel_descarga_content directo.
+panel_descarga <- bslib::nav_panel(
+  title = "Datos",
+  icon  = bsicons::bs_icon("cloud-download"),
+  panel_descarga_content
 )

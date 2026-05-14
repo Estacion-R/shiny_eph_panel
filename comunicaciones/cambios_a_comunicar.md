@@ -24,9 +24,42 @@
 
 ## Pendientes
 
-### 2026-05-02 · Nueva sección "Datos" para descargar el panel longitudinal
+### 2026-05-14 · Rediseño de navegación (hub-and-spoke)
 
 - **Estado:** pendiente
+- **Qué cambió:** el dashboard estrena pantalla de entrada. Reemplazamos el
+  sidebar lateral por un Hub con 4 tarjetas grandes (Análisis de panel,
+  Análisis transversal, Metadata, Datos). Al entrar a una sección aparece un
+  sidebar interno con las sub-secciones (3 ejes + Calidad de la muestra).
+  El toggle "Tipo de dúo" deja de ser un FAB flotante y pasa al pie del
+  sidebar interno en formato compacto; un badge contextual arriba del
+  contenido muestra siempre qué modo (Intertrimestral / Interanual) está
+  activo. Las URLs ahora reflejan la vista activa (`?v=panel&s=cond_act`),
+  permite share y bookmark.
+- **Valor para el usuario:** menos fricción para encontrar qué hace cada
+  análisis (el landing organiza por caso de uso, no por jerga metodológica),
+  los filtros globales nunca se pierden con el scroll, y se puede compartir
+  un link directo a una vista específica.
+- **Ángulo de copy:**
+  - "Reordenamos el dashboard pensando en cómo se usa, no en cómo está
+    organizado el dato": pasamos de mostrar la metodología en la nav a
+    organizarla por caso de uso.
+  - Hub-and-spoke con filter rail sticky: detalle técnico para audiencia de
+    devs / analistas que aprecian buen Shiny.
+- **Asset visual:** screenshot del hub + GIF de navegación (Hub → sección →
+  vuelta al hub). Comparación antes/después si rinde.
+- **Audiencia prioritaria:** Twitter (ciencias sociales argentinas) +
+  LinkedIn (devs de R/Shiny, analistas sector público).
+- **Issue / commit:** issue #74 · branch `feat/hub-and-spoke-ux`.
+
+---
+
+## Publicados
+
+### 2026-05-02 · Nueva sección "Datos" para descargar el panel longitudinal
+
+- **Estado:** publicado en post combinado del 2026-05-04 (LinkedIn + Twitter).
+  Ver `2026-05-04_post_novedades_mayo.md`.
 - **Qué cambió:** se agregó una sección **Datos** en el sidebar del dashboard
   donde cualquiera puede bajar el panel longitudinal completo de la EPH ya
   armado, en Parquet o CSV (gzip). Suma también un diccionario de variables
@@ -53,7 +86,8 @@
 
 ### 2026-05-03 · Toggle "Tipo de dúo": análisis interanual (T año X vs T año X+1)
 
-- **Estado:** pendiente
+- **Estado:** publicado en post combinado del 2026-05-04 (LinkedIn + Twitter).
+  Ver `2026-05-04_post_novedades_mayo.md`.
 - **Qué cambió:** el FAB abajo a la derecha del dashboard ahora permite
   alternar entre análisis **intertrimestral** (T → T+1, default) y
   **interanual** (T año X → T año X+1, mismo trimestre). En modo
@@ -87,7 +121,8 @@
 
 ### 2026-05-03 · Toggle "Tipo de dúo" se extiende a Película y Tasas
 
-- **Estado:** pendiente
+- **Estado:** publicado en post combinado del 2026-05-04 (LinkedIn + Twitter).
+  Ver `2026-05-04_post_novedades_mayo.md`.
 - **Qué cambió:** las pestañas **Película** (línea histórica) y
   **Tasas** (Persistencia / Salida / Entrada) ahora respetan el toggle
   Tipo de dúo. En modo Interanual muestran las series anuales reales,
@@ -121,7 +156,20 @@
 
 ### 2026-05-04 · Toggle Interanual end-to-end (Calidad + Datos)
 
-- **Estado:** pendiente
+- **Estado:** decidido **no postear standalone** (2026-05-10). Se integra en
+  el tip técnico de R agendado para 11-14/5 (lectura del Parquet anual con
+  `arrow::read_parquet()` + análisis de transición simple).
+- **Decisión editorial (estacion-r-social-media, 2026-05-10):**
+  1. El post del 4/5 ya agotó la promesa narrativa del feature ("interanual
+     en Foto, Película y Tasas"). Calidad de la muestra y descarga del panel
+     anual son cierre técnico, no capacidad nueva inesperada.
+  2. Cadencia de 6 días sobre el mismo feature diluye el peso del post
+     anterior y manda señal de "el primero estaba incompleto".
+  3. Los cambios internos posteriores (149+ tests, CI, validación parquets,
+     refactor anti-patterns) no tienen cara pública sin sonar a justificación.
+  4. La mejora se comunica natural dentro del tip técnico ya agendado:
+     foco educativo (cómo usar el archivo descargado), con mención de pasada
+     al cierre del feature.
 - **Qué cambió:** cierre del feature Tipo de dúo. El toggle ahora
   cubre **toda la app**: Foto, Película, Tasas, Calidad de la muestra
   y la sección Datos descargables. Calidad muestra el % de pareo y
@@ -133,22 +181,4 @@
   longitudinal con el corte interanual ahora tiene el dataset
   descargable + la métrica de calidad para reportar atrición y n
   efectivo del panel anual. Cierra la promesa del feature.
-- **Ángulo de copy:**
-  1. *"Toggle Interanual completo. Foto, Película, Tasas y Calidad de
-     la muestra. Y el dataset anual descargable."*
-  2. Hilo educativo: cómo varían las tasas de inconsistencia entre el
-     panel intertrim y el anual (es esperable que en anual sean
-     mayores por la ventana más larga).
-- **Asset visual:** screenshot de la pestaña "Calidad de la muestra"
-  togglead a Interanual + screenshot de la sección Datos con la
-  tarjeta nueva.
-- **Audiencia prioritaria:** Twitter + LinkedIn (analistas datos,
-  sector público). Cerrar este como "post resumen" de los 3 anteriores
-  del feature.
 - **Issue / commit:** issue #47 (Fase 3). v0.9.0.
-
----
-
-## Publicados
-
-(vacío por ahora)
