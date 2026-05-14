@@ -382,5 +382,18 @@ mod_calidad_panel_server <- function(id, tipo_duo = shiny::reactive("trimestral"
         hc_credits(enabled = FALSE) |>
         hc_add_theme(hc_theme_estacion_r)
     })
+
+    ### Issue #74: mantener outputs vivos cuando el módulo vive dentro de un
+    ### conditionalPanel (hub-and-spoke). El JS de reflow se encarga del
+    ### resize tras volver a la vista. Aplicamos desde onFlushed por si los
+    ### outputs aún no están registrados al setup del moduleServer.
+    session$onFlushed(function() {
+      for (n in c("hc_calidad", "hc_inconsistencias")) {
+        tryCatch(
+          outputOptions(output, n, suspendWhenHidden = FALSE),
+          error = function(e) NULL
+        )
+      }
+    }, once = TRUE)
   })
 }
