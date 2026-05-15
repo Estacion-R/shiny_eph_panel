@@ -343,15 +343,16 @@ arma_line_chart_areaspline <- function(df_data,
     )))
   }
 
-  ### Categorías planas "YYYY t1-t2" (issue #40). Highcharts core NO
-  ### soporta nested {name, categories} sin el plugin grouped-categories
-  ### (que no está cargado): la estructura se serializa como
-  ### "[object Object],[object Object],..." y el eje X queda roto.
+  ### Categorías planas "YYYY t1-t2" (intertrim) o "YYYY t1" (anual,
+  ### issue #46). Highcharts core NO soporta nested {name, categories}
+  ### sin el plugin grouped-categories (que no está cargado): la estructura
+  ### se serializa como "[object Object],..." y el eje X queda roto.
   ### En lugar del plugin: categorías planas + plotBands fantasma por
   ### año (color transparente, label = año debajo del eje X) que
-  ### simulan la doble jerarquía abarcando los 4 dúos del año.
+  ### simulan la doble jerarquía abarcando los dúos / trimestres del año.
+  ### Regex acepta ambos formatos via grupo no capturador `(?:-tX)?`.
   parsed <- stringr::str_match(periodos_visibles,
-                               "^(\\d{4})_(t\\d-t\\d)$")
+                               "^(\\d{4})_(t\\d(?:-t\\d)?)$")
   anios_seq <- parsed[, 2]
   duos_seq  <- parsed[, 3]
 
@@ -387,11 +388,18 @@ arma_line_chart_areaspline <- function(df_data,
 
   ### Datos por serie: para cada `to` (categoría destino), un vector de
   ### y values en el orden exacto de periodos_visibles. Cada punto se
-  ### emite como objeto {y, isExtremo} para que el filter de dataLabels
-  ### siga funcionando.
+  ### emite con un flag `mostrarLabel` que combina extremos (max/min de
+  ### la serie) + primer punto + último punto. El filter del dataLabels
+  ### lo usa para mostrar etiquetas solo en esos puntos.
   df_orden <- df_data |>
     dplyr::mutate(periodo = as.character(periodo)) |>
-    dplyr::arrange(match(periodo, periodos_visibles))
+    dplyr::arrange(match(periodo, periodos_visibles)) |>
+    dplyr::mutate(
+      isPrimero = dplyr::row_number() == 1L,
+      isUltimo  = dplyr::row_number() == dplyr::n(),
+      mostrarLabel = isTRUE(isExtremo) | isPrimero | isUltimo,
+      .by = to
+    )
 
   series_lista <- df_orden |>
     dplyr::group_split(to) |>
@@ -400,7 +408,7 @@ arma_line_chart_areaspline <- function(df_data,
         name = as.character(unique(s$to)),
         data = lapply(seq_len(nrow(s)), function(i) {
           list(y = unname(s$weight[i]),
-               isExtremo = isTRUE(s$isExtremo[i]))
+               mostrarLabel = isTRUE(s$mostrarLabel[i]))
         })
       )
     })
@@ -424,7 +432,7 @@ arma_line_chart_areaspline <- function(df_data,
                       states = list(hover = list(enabled = TRUE, radius = 5))),
         dataLabels = list(
           enabled = TRUE,
-          filter = list(property = "isExtremo", operator = "==", value = TRUE),
+          filter = list(property = "mostrarLabel", operator = "==", value = TRUE),
           format = "{point.y}%",
           style = list(fontSize = "0.75em",
                        textOutline = "2px white",
@@ -470,16 +478,21 @@ arma_line_chart_areaspline <- function(df_data,
         useHTML = TRUE,
         rotation = 0,
         style = list(fontSize = "0.65em"),
-        ### Muestra todos los dúos en 2 líneas (t1- arriba, t2 abajo)
-        ### con fuente reducida para evitar superposición con muchos
-        ### puntos en el eje. El año lo aporta el plotBand fantasma
-        ### posicionado debajo del eje. tick_interval queda sin uso
-        ### (legado de labels.step previo).
+        ### Modo intertrim ("YYYY tX-tY"): muestra los dúos en 2 líneas
+        ### (tX- arriba, tY abajo) con fuente reducida para evitar
+        ### superposición con muchos puntos en el eje. Modo anual
+        ### ("YYYY tX"): muestra el trimestre en 1 línea. El año lo
+        ### aporta el plotBand fantasma posicionado debajo del eje.
+        ### tick_interval queda sin uso (legado de labels.step previo).
         formatter = htmlwidgets::JS("function() {
           var partes = String(this.value).split(' ');
           if (partes.length < 2) return '';
           var subs = partes[1].split('-');
-          if (subs.length < 2) return '';
+          if (subs.length < 2) {
+            return '<div style=\"text-align:center;line-height:1\">' +
+                   '<div>' + partes[1] + '</div>' +
+                   '</div>';
+          }
           return '<div style=\"text-align:center;line-height:1\">' +
                  '<div>' + subs[0] + '-</div>' +
                  '<div>' + subs[1] + '</div>' +

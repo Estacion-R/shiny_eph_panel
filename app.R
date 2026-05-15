@@ -4,19 +4,22 @@
 ###   01-extract   → carga datos en memoria (df_eph_full, df_cond_act, df_tasas_mt)
 ###   02-transform → componentes UI compartidos (helpers NLQ, factor periodo)
 ###   03-hc-theme  → tema Highcharts Estación R
-###   R/           → módulos Shiny (uno por análisis)
+###   R/           → módulos Shiny (uno por análisis) + helpers de layout
 source("ETL/00-libraries.R")
 source("ETL/99-functions.R")
 source("ETL/01-extract.R")
 source("ETL/02-transform.R")
 source("ETL/03-hc-theme.R")
 source("R/utils_analisis.R")
-source("R/mod_analisis_cond_act.R")
-source("R/mod_analisis_cat_ocup.R")
-source("R/mod_analisis_formalidad.R")
+source("R/configs_analisis.R")
+source("R/mod_analisis.R")
 source("R/mod_calidad_panel.R")
 source("R/utils_analytics.R")
 source("R/panels_metadata.R")
+source("R/panel_descarga.R")
+source("R/version.R")
+source("R/panel_hub.R")
+source("R/panel_seccion.R")
 
 waiting_screen <- tagList(
   spin_flower(),
@@ -29,143 +32,10 @@ waiting_screen <- tagList(
 
 
 ### --------------------------------------------------------------------------
-### Bloques de contenido estático (no reactivo): Sobre la app, Próximamente,
-### +Info. Se inyectan como nav_panel dentro del navset_pill_list lateral.
+### Links externos para la sección Metadata (issue #31). Se mantienen como
+### nav_item porque viajan dentro del navset_pill_list interno de Metadata.
 ### --------------------------------------------------------------------------
 
-### Tarjetas clicables que llevan al usuario directo a cada eje de análisis.
-### Renderizadas como actionLink para que el server pueda observar el click
-### y redireccionar via bslib::nav_select() (ver server).
-landing_card <- function(input_id, icon_id, titulo, descripcion) {
-  actionLink(
-    inputId = input_id,
-    label = tagList(
-      icon(icon_id, class = "landing-card-icon"),
-      tags$h4(titulo, class = "landing-card-title"),
-      tags$p(descripcion, class = "landing-card-desc")
-    ),
-    class = "landing-card"
-  )
-}
-
-panel_sobre_la_app <- nav_panel(
-  title = "Inicio",
-  icon = icon("house"),
-  card(
-    ### Hero: logo + propuesta de valor concreta para público amplio.
-    div(
-      class = "landing-hero",
-      tags$a(
-        href = "https://estacion-r.com/",
-        target = "_blank",
-        tags$img(src = "logos/logo_estacion_r_ancho.png",
-                 class = "landing-hero-logo",
-                 alt = "Estación R")
-      ),
-      tags$h2(
-        "Mercado de trabajo argentino, en clave de panel.",
-        class = "landing-hero-title"
-      ),
-      tags$p(
-        class = "landing-hero-subtitle",
-        "Seguimos a las mismas personas trimestre a trimestre con datos de la ",
-        tags$strong("EPH-INDEC"),
-        " y mostramos cómo cambia su situación laboral en el tiempo."
-      )
-    ),
-
-    ### Tarjetas de los 3 ejes de análisis. Click navega al panel.
-    div(
-      class = "landing-cards-row",
-      tags$h3("Empezá a explorar", class = "landing-cards-heading"),
-      div(
-        class = "landing-cards-grid",
-        landing_card(
-          input_id = "go_cond_act",
-          icon_id = "people-arrows",
-          titulo = "Condición de actividad",
-          descripcion = "Flujos entre ocupados, desocupados e inactivos."
-        ),
-        landing_card(
-          input_id = "go_cat_ocup",
-          icon_id = "user-tie",
-          titulo = "Categoría ocupacional",
-          descripcion = "Movilidad entre patrones, cuenta propia, asalariados y trabajadores familiares."
-        ),
-        landing_card(
-          input_id = "go_formalidad",
-          icon_id = "id-card",
-          titulo = "Formal · Informal",
-          descripcion = "Transiciones entre empleo formal e informal, definición clásica y ampliada (OIT 2023)."
-        )
-      )
-    ),
-
-    ### Sección informativa: qué es la EPH. Plegada bajo un title h3 para
-    ### que el contenido técnico no domine la primera impresión.
-    div(
-      class = "landing-info",
-      tags$h3("¿Qué es la EPH?", class = "landing-info-heading"),
-      p(
-        "La ",
-        tags$strong(em("Encuesta Permanente de Hogares")),
-        " (EPH) es la principal fuente de datos sobre mercado laboral del ",
-        a("Sistema Estadístico Nacional (SEN)",
-          href = "https://www.indec.gob.ar/indec/web/Institucional-Indec-SistemaEstadistico",
-          target = "_blank"),
-        " argentino. Aunque se la conoce sobre todo por la tasa de desocupación, permite caracterizar muchas otras dimensiones de las condiciones de vida."
-      ),
-      tags$h4("Foto vs. película"),
-      p(
-        "El abordaje habitual es ",
-        tags$strong("transversal"),
-        " (foto): describe a la población en un momento puntual, un trimestre. Pero la EPH también permite un análisis ",
-        tags$strong("longitudinal"),
-        " (película): seguir a las mismas personas en dos momentos consecutivos y medir cambios individuales. Si en el T1 alguien estaba ocupado, ¿sigue ocupado en el T2 o cambió de situación? Esa pregunta es la que esta app responde."
-      ),
-      tags$h4("¿Cómo es posible? El esquema 2-2-2"),
-      p(
-        "La muestra está diseñada con un esquema de rotación ",
-        tags$strong("2-2-2"),
-        ": cada vivienda es entrevistada ",
-        tags$strong("dos"),
-        " trimestres consecutivos, descansa ",
-        tags$strong("dos"),
-        " trimestres y vuelve a entrevistarse otros ",
-        tags$strong("dos"),
-        " trimestres antes de salir de la muestra. Este diseño permite construir paneles longitudinales con (teóricamente) el 50% de las personas en trimestres consecutivos y en el mismo trimestre de años consecutivos."
-      ),
-      p(
-        class = "landing-info-cta",
-        "Para detalles metodológicos, ver el ",
-        tags$strong("Glosario"),
-        " y las ",
-        tags$strong("Definiciones"),
-        " en el menú Metadata."
-      )
-    )
-  )
-)
-
-### Helper para placeholders de análisis aún no implementados (Fases 3-4 del epic).
-panel_proximamente <- function(titulo, icono_id, descripcion) {
-  nav_panel(
-    title = titulo,
-    icon = icon(icono_id),
-    card(
-      class = "text-center",
-      br(), br(),
-      h2("Próximamente", class = "hero-title"),
-      p(descripcion),
-      p(em("Esta sección está en desarrollo.")),
-      br(), br()
-    )
-  )
-}
-
-### Items de "+Info" que ahora viven dentro del nav_menu "Metadata"
-### (los links externos se exponen como nav_item para que el dropdown
-### del menú los muestre como entradas con icono).
 nav_item_doc_indec <- nav_item(
   a(icon("file-pdf"), " Documento metodológico INDEC",
     href = "https://www.indec.gob.ar/ftp/cuadros/sociedad/metodologia_eph_continua.pdf",
@@ -179,8 +49,13 @@ nav_item_paquete_eph <- nav_item(
 
 
 ### --------------------------------------------------------------------------
-### UI principal: page_navbar minimalista con sidebar lateral (navset_pill_list)
-### como navegación principal entre las secciones de la app.
+### UI principal: patrón hub-and-spoke (issue #74).
+###
+### La pantalla de entrada es un Hub con 4 tarjetas grandes (Análisis de
+### panel, Análisis transversal, Metadata, Datos). Cada tarjeta entra a una
+### vista de sección con su sidebar interno y contenido. El estado se
+### maneja con un reactiveVal en el server y conditionalPanel decide qué
+### vista mostrar. Ver R/panel_hub.R y R/panel_seccion.R para los helpers.
 ### --------------------------------------------------------------------------
 
 ui <- page_fillable(
@@ -189,171 +64,155 @@ ui <- page_fillable(
     tags$link(rel = "icon", type = "image/svg+xml",
               href = "logos/isotipo_estacion_r.svg"),
     tags$link(rel = "stylesheet",
-              href = "https://api.fontshare.com/v2/css?f[]=array@400,600,700&display=swap")
+              href = "https://api.fontshare.com/v2/css?f[]=array@400,600,700&display=swap"),
+    tags$script(src = "reflow_charts.js")
   ),
   ga4_head_tag(),
   useWaitress(color = "#405BFF"),
   include_styles,
 
-  ### Navegación principal: sidebar lateral con todas las secciones.
-  ### page_fillable + navset_pill_list(widget_size = "lg") da el patrón
-  ### "sidebar fijo a la izquierda + contenido a la derecha".
-  bslib::navset_pill_list(
-    id = "main_nav",
-    widths = c(2, 10),
-    well = FALSE,
+  ### Outputs de control para conditionalPanel. No son visuales: solo
+  ### exponen el estado del reactiveVal al cliente para que las condiciones
+  ### JS puedan evaluar qué vista está activa.
+  div(style = "display: none;",
+      textOutput("current_view"),
+      textOutput("current_subseccion")),
 
-    ### Branding + título de la app dentro del sidebar.
-    ### Link al sitio de Estación R en nueva pestaña.
-    nav_item(
-      div(
-        class = "sidebar-brand",
-        tags$a(
-          href = "https://estacion-r.com/",
-          target = "_blank",
-          tags$img(src = "logos/logo_estacion_r_ancho.png",
-                   alt = "Estación R",
-                   style = "max-width: 100%; height: auto; margin-bottom: 1rem;")
-        )
-      )
-    ),
+  ### ----- Vista "hub" -----
+  ### La condición acepta 'undefined' para evitar que la pantalla quede gris
+  ### en el primer render (mientras el output.current_view aún no llegó al
+  ### cliente). Default visual = hub.
+  conditionalPanel(
+    condition = "(typeof output.current_view === 'undefined') || (output.current_view == 'hub')",
+    panel_hub_ui()
+  ),
 
-    ### "Sobre la app" como landing: primer nav_panel del sidebar, fuera
-    ### de cualquier nav_menu, para que sea la pestaña activa al cargar.
-    panel_sobre_la_app,
+  ### ----- Vista "panel": análisis longitudinales -----
+  conditionalPanel(
+    condition = "output.current_view == 'panel'",
+    div(
+      class = "section-vista",
+      section_topbar("Análisis de panel"),
+      bslib::layout_columns(
+        col_widths = c(2, 10),
+        gap = "1rem",
 
-    ### Análisis de panel: agrupados bajo un nav_menu colapsable.
-    nav_menu(
-      title = "Análisis de panel",
-      icon = icon("layer-group"),
-      nav_panel(
-        title = "Condición de actividad",
-        icon = icon("people-arrows"),
-        mod_cond_act_ui("cond_act")
-      ),
-      nav_panel(
-        title = "Categoría ocupacional",
-        icon = icon("user-tie"),
-        mod_cat_ocup_ui("cat_ocup")
-      ),
-      nav_panel(
-        title = "Formal / Informal",
-        icon = icon("id-card"),
-        mod_formalidad_ui("formalidad")
-      ),
-      nav_panel(
-        title = "Calidad de la muestra",
-        icon  = icon("magnifying-glass-chart"),
-        mod_calidad_panel_ui("calidad")
-      )
-    ),
-
-    ### Análisis transversal (no panel): la "foto" del mercado de trabajo
-    ### en un trimestre puntual, sin seguir a las mismas personas en el
-    ### tiempo. Roadmap: tasas básicas (actividad/empleo/desocupación),
-    ### distribución por categoría ocupacional, calidad del empleo. Por
-    ### ahora va como placeholder.
-    nav_menu(
-      title = "Análisis transversal",
-      icon = icon("camera"),
-      panel_proximamente(
-        titulo = "Indicadores básicos",
-        icono_id = "chart-column",
-        descripcion = "Tasas de actividad, empleo, desocupación y subocupación para un trimestre puntual."
-      ),
-      panel_proximamente(
-        titulo = "Calidad del empleo",
-        icono_id = "briefcase",
-        descripcion = "Distribución del empleo por categoría ocupacional y formalidad en el corte transversal."
-      )
-    ),
-
-    ### Metadata: documentación consultable sin salir de la app
-    ### (Glosario + Definiciones) y links externos (issue #31).
-    nav_menu(
-      title = "Metadata",
-      icon = icon("book"),
-      panel_glosario,
-      panel_definiciones,
-      nav_item_doc_indec,
-      nav_item_paquete_eph
-    ),
-
-    ### Datos: descargas del panel longitudinal y diccionario (issue #35).
-    ### Va al mismo nivel que Metadata porque "datos" no es metadata.
-    panel_descarga,
-
-    ### Footer con créditos, fuente y feedback. Como nav_item al pie del
-    ### sidebar para que esté siempre visible sin estorbar la navegación.
-    nav_item(
-      div(
-        class = "sidebar-footer",
-        tags$p(
-          tags$span(class = "sidebar-footer-label", "Datos:"),
-          tags$br(),
-          "EPH-INDEC · hasta 2025 T4"
-        ),
-        tags$p(
-          tags$span(class = "sidebar-footer-label", "Feedback:"),
-          tags$br(),
-          tags$a(
-            "pablotiscornia@estacion-r.com",
-            href = "mailto:pablotiscornia@estacion-r.com?subject=Panel%20EPH",
-            class = "sidebar-footer-link"
+        ### Sidebar interno: sub-secciones (dinámicas para marcar item
+        ### activo) + toggle "Modo" al pie (estático para preservar estado).
+        div(
+          class = "section-sidebar-wrap",
+          uiOutput("sidebar_panel"),
+          div(
+            class = "section-sidebar-mode",
+            tags$h6("Modo", class = "section-sidebar-mode-heading"),
+            radioButtons(
+              inputId = "tipo_duo",
+              label   = NULL,
+              choices = c(
+                "Intertrimestral" = "trimestral",
+                "Interanual"      = "anual"
+              ),
+              selected = "trimestral"
+            ),
+            bslib::popover(
+              tags$span(
+                class = "section-sidebar-mode-info",
+                bsicons::bs_icon("info-circle"),
+                " ¿Qué es?"
+              ),
+              title = "Tipo de dúo",
+              tags$p(
+                tags$strong("Intertrimestral: "),
+                "T1-T2, T2-T3, T3-T4, T4-T1 dentro del mismo año o entre años contiguos.",
+                style = "font-size: 0.85em; margin-bottom: 0.5rem;"
+              ),
+              tags$p(
+                tags$strong("Interanual: "),
+                "T1 año X vs T1 año X+1 (mismo trimestre, neutraliza estacionalidad).",
+                style = "font-size: 0.85em; margin-bottom: 0;"
+              ),
+              placement = "right"
+            )
           )
         ),
-        tags$p(
-          class = "sidebar-footer-meta",
-          "Hecho con R + Shiny por ",
-          tags$a("Estación R", href = "https://estacion-r.com",
-                 target = "_blank", class = "sidebar-footer-link"),
-          " · App en desarrollo"
-        ),
-        tags$p(
-          class = "sidebar-footer-version",
-          paste0("v", APP_VERSION)
+
+        ### Contenido del análisis activo. Los 4 módulos están siempre
+        ### montados; conditionalPanel sólo cambia visibilidad. Esto
+        ### preserva el estado de los inputs entre cambios de sub-sección.
+        div(
+          class = "section-content",
+
+          ### Badge contextual: muestra el modo activo arriba del contenido,
+          ### así el usuario nunca pierde de vista qué "Tipo de dúo" está
+          ### viendo en los gráficos.
+          uiOutput("badge_modo_activo"),
+
+          conditionalPanel(
+            "output.current_subseccion == 'cond_act'",
+            mod_analisis_ui("cond_act", config_cond_act)
+          ),
+          conditionalPanel(
+            "output.current_subseccion == 'cat_ocup'",
+            mod_analisis_ui("cat_ocup", config_cat_ocup)
+          ),
+          conditionalPanel(
+            "output.current_subseccion == 'formalidad'",
+            mod_analisis_ui("formalidad", config_formalidad)
+          ),
+          conditionalPanel(
+            "output.current_subseccion == 'calidad'",
+            mod_calidad_panel_ui("calidad")
+          )
         )
       )
     )
   ),
 
-  ### Botón flotante (FAB) abajo a la derecha. Toggle del tipo de dúo
-  ### que recorre toda la app: intertrimestral (default) vs interanual.
-  ### Issue #44.
-  bslib::popover(
-    tags$button(
-      class = "fab-duo",
-      type = "button",
-      `aria-label` = "Alternar tipo de dúo",
-      bsicons::bs_icon("calendar-week"),
-      tags$span(class = "fab-duo-label", "Tipo de dúo")
-    ),
-    title = tagList(
-      bsicons::bs_icon("calendar-week",
-                       style = "color: #405BFF; margin-right: 6px;"),
-      "Tipo de dúo"
-    ),
-    radioButtons(
-      inputId = "tipo_duo",
-      label   = NULL,
-      choices = c(
-        "Intertrimestral (T → T+1)" = "trimestral",
-        "Interanual (T año X → T año X+1)" = "anual"
-      ),
-      selected = "trimestral"
-    ),
-    tags$p(
-      tags$strong("Intertrimestral: "),
-      "T1-T2, T2-T3, T3-T4, T4-T1 dentro del mismo año o entre años contiguos.",
-      style = "font-size: 0.85em; color: #555; margin-bottom: 0.5rem;"
-    ),
-    tags$p(
-      tags$strong("Interanual: "),
-      "T1 año X vs T1 año X+1 (mismo trimestre). Neutraliza la estacionalidad ",
-      "y permite leer cambios estructurales anuales sobre las mismas personas.",
-      style = "font-size: 0.85em; color: #555; margin-bottom: 0;"
-    ),
-    placement = "top"
+  ### ----- Vista "transversal": placeholder, en roadmap -----
+  conditionalPanel(
+    condition = "output.current_view == 'transversal'",
+    div(
+      class = "section-vista",
+      section_topbar("Análisis transversal"),
+      card(
+        class = "text-center proximamente-card",
+        br(), br(),
+        h2("Próximamente", class = "hero-title"),
+        p("Las tasas básicas (actividad, empleo, desocupación) y la calidad del empleo van a estar disponibles próximamente como análisis transversal."),
+        p(em("Esta sección está en desarrollo.")),
+        br(), br()
+      )
+    )
+  ),
+
+  ### ----- Vista "metadata" -----
+  conditionalPanel(
+    condition = "output.current_view == 'metadata'",
+    div(
+      class = "section-vista",
+      section_topbar("Metadata"),
+      ### Reusamos navset_pill_list a nivel sección: hace de sidebar interno
+      ### sin necesidad de reescribir panel_glosario / panel_definiciones.
+      bslib::navset_pill_list(
+        id = "metadata_nav",
+        widths = c(2, 10),
+        well = FALSE,
+        panel_glosario,
+        panel_definiciones,
+        nav_item_doc_indec,
+        nav_item_paquete_eph
+      )
+    )
+  ),
+
+  ### ----- Vista "datos" -----
+  conditionalPanel(
+    condition = "output.current_view == 'datos'",
+    div(
+      class = "section-vista",
+      section_topbar("Datos"),
+      panel_descarga_content
+    )
   ),
 
   ### Banner de consent + handler de GA4 (issue #38). Solo se renderizan
@@ -365,39 +224,146 @@ ui <- page_fillable(
 
 
 ### --------------------------------------------------------------------------
-### Server: solo orquestación. Cada análisis vive en su propio módulo.
+### Server: orquestación del estado hub-and-spoke + montaje de módulos.
 ### --------------------------------------------------------------------------
 
 server <- function(input, output, session) {
 
-  ### Tipo de dúo (issue #44): reactive global que se propaga a los
-  ### módulos. Valores: "trimestral" (default) | "anual". Default si
-  ### el input aún no se inicializó (primer render).
+  ### --- State machine -----------------------------------------------------
+  ###
+  ### vista: "hub" | "panel" | "transversal" | "metadata" | "datos"
+  ### subseccion: dentro de "panel" puede ser "cond_act", "cat_ocup",
+  ###             "formalidad" o "calidad". En las demás vistas es NULL.
+  estado_app <- reactiveVal(list(vista = "hub", subseccion = NULL))
+
+  ### Exponer estado al cliente para que conditionalPanel lo lea.
+  output$current_view <- renderText({ estado_app()$vista })
+  outputOptions(output, "current_view", suspendWhenHidden = FALSE)
+
+  output$current_subseccion <- renderText({
+    ss <- estado_app()$subseccion
+    if (is.null(ss)) "" else ss
+  })
+  outputOptions(output, "current_subseccion", suspendWhenHidden = FALSE)
+
+  ### --- Tipo de dúo (global, viene del filter rail) ---------------------
   tipo_duo <- reactive({
     val <- input$tipo_duo
     if (is.null(val) || !nzchar(val)) "trimestral" else val
   })
 
-  mod_cond_act_server("cond_act", tipo_duo = tipo_duo)
-  mod_cat_ocup_server("cat_ocup", tipo_duo = tipo_duo)
-  mod_formalidad_server("formalidad", tipo_duo = tipo_duo)
+  ### --- Módulos de análisis ----------------------------------------------
+  ### Se montan al inicio. conditionalPanel sólo cambia visibilidad, lo
+  ### que evita re-instanciar los reactives al cambiar sub-sección y
+  ### preserva el estado de los inputs del usuario.
+  mod_analisis_server("cond_act",   config_cond_act,   tipo_duo = tipo_duo)
+  mod_analisis_server("cat_ocup",   config_cat_ocup,   tipo_duo = tipo_duo)
+  mod_analisis_server("formalidad", config_formalidad, tipo_duo = tipo_duo)
   mod_calidad_panel_server("calidad", tipo_duo = tipo_duo)
 
-  ### Navegación desde las tarjetas del landing. Cada actionLink dispara
-  ### bslib::nav_select() para cambiar la pestaña activa del navset_pill_list
-  ### lateral. ignoreInit evita que se dispare al cargar la app.
-  observeEvent(input$go_cond_act, ignoreInit = TRUE, {
-    bslib::nav_select(id = "main_nav", selected = "Condición de actividad")
-  })
-  observeEvent(input$go_cat_ocup, ignoreInit = TRUE, {
-    bslib::nav_select(id = "main_nav", selected = "Categoría ocupacional")
-  })
-  observeEvent(input$go_formalidad, ignoreInit = TRUE, {
-    bslib::nav_select(id = "main_nav", selected = "Formal / Informal")
+  ### --- Badge contextual del modo activo ------------------------------
+  ### Aparece arriba del contenido en la vista "panel" para que el modo
+  ### "Intertrimestral/Interanual" sea visible sin tener que mirar el
+  ### sidebar. Cambia automático con input$tipo_duo.
+  output$badge_modo_activo <- renderUI({
+    modo <- tipo_duo()
+    label <- if (modo == "trimestral") "Intertrimestral" else "Interanual"
+    tags$span(
+      class = "badge-modo-duo",
+      bsicons::bs_icon("calendar-week"),
+      tags$span(class = "badge-modo-duo-label", label)
+    )
   })
 
-  ### Tabla del Glosario (issue #31). Se renderiza una sola vez,
-  ### contenido estático.
+  ### --- Sidebar interno de "panel" (dinámico con item activo) ----------
+  output$sidebar_panel <- renderUI({
+    ss <- estado_app()$subseccion %||% "cond_act"
+    section_sidebar_internal(list(
+      section_sidebar_item("go_sub_cond_act",   "people-arrows",
+                           "Condición de actividad",
+                           activa = ss == "cond_act"),
+      section_sidebar_item("go_sub_cat_ocup",   "user-tie",
+                           "Categoría ocupacional",
+                           activa = ss == "cat_ocup"),
+      section_sidebar_item("go_sub_formalidad", "id-card",
+                           "Formal · Informal",
+                           activa = ss == "formalidad"),
+      section_sidebar_item("go_sub_calidad",    "magnifying-glass-chart",
+                           "Calidad de la muestra",
+                           activa = ss == "calidad")
+    ))
+  })
+
+  ### --- Click handlers: tarjetas del hub --------------------------------
+  observeEvent(input$go_panel, ignoreInit = TRUE, {
+    estado_app(list(vista = "panel", subseccion = "cond_act"))
+  })
+  observeEvent(input$go_metadata, ignoreInit = TRUE, {
+    estado_app(list(vista = "metadata", subseccion = NULL))
+  })
+  observeEvent(input$go_datos, ignoreInit = TRUE, {
+    estado_app(list(vista = "datos", subseccion = NULL))
+  })
+  ### "Análisis transversal" está disabled en el hub (no dispara input),
+  ### pero el handler queda preparado para cuando se habilite la sección.
+  observeEvent(input$go_transversal, ignoreInit = TRUE, {
+    estado_app(list(vista = "transversal", subseccion = NULL))
+  })
+
+  ### --- Click handlers: sidebar interno de "panel" ----------------------
+  observeEvent(input$go_sub_cond_act, ignoreInit = TRUE, {
+    estado_app(list(vista = "panel", subseccion = "cond_act"))
+  })
+  observeEvent(input$go_sub_cat_ocup, ignoreInit = TRUE, {
+    estado_app(list(vista = "panel", subseccion = "cat_ocup"))
+  })
+  observeEvent(input$go_sub_formalidad, ignoreInit = TRUE, {
+    estado_app(list(vista = "panel", subseccion = "formalidad"))
+  })
+  observeEvent(input$go_sub_calidad, ignoreInit = TRUE, {
+    estado_app(list(vista = "panel", subseccion = "calidad"))
+  })
+
+  ### --- Click handler: "← Inicio" ---------------------------------------
+  observeEvent(input$back_to_hub, ignoreInit = TRUE, {
+    estado_app(list(vista = "hub", subseccion = NULL))
+  })
+
+  ### --- Reflow Highcharts al cambiar vista/sub-sección -----------------
+  ### El handler JS (www/reflow_charts.js) itera todos los charts visibles
+  ### y llama a chart.reflow() para que respeten el tamaño de su contenedor
+  ### después del cambio de display:none -> block del conditionalPanel.
+  observeEvent(estado_app(), ignoreInit = TRUE, {
+    session$sendCustomMessage("reflow_charts", TRUE)
+  })
+
+  ### --- URL state: escribir el estado en el query string ---------------
+  ### Permite F5/bookmark/share de la vista activa. El botón "atrás" del
+  ### browser no navega entre vistas internas (asumido como costo, ver
+  ### plan v2 sección "Riesgos asumidos").
+  observeEvent(estado_app(), ignoreInit = TRUE, {
+    s <- estado_app()
+    q <- if (s$vista == "hub") {
+      "?"
+    } else if (is.null(s$subseccion)) {
+      paste0("?v=", s$vista)
+    } else {
+      paste0("?v=", s$vista, "&s=", s$subseccion)
+    }
+    updateQueryString(q, mode = "push")
+  })
+
+  ### --- URL state: leer el estado inicial del query string -------------
+  observe({
+    q <- parseQueryString(session$clientData$url_search)
+    vistas_validas <- c("panel", "transversal", "metadata", "datos")
+    if (!is.null(q$v) && q$v %in% vistas_validas) {
+      estado_app(list(vista = q$v,
+                      subseccion = if (is.null(q$s)) NULL else q$s))
+    }
+  })
+
+  ### --- Tabla del Glosario (issue #31) ---------------------------------
   output$metadata_glosario_table <- gt::render_gt({
     gt::gt(glosario_vars) |>
       gt::tab_options(

@@ -952,3 +952,408 @@ input:checked + .slider:before {
 .descarga-aviso ul li {
   margin-bottom: 0.35rem;
 }
+
+
+/* ============================================================
+   Hub-and-spoke (issue #74)
+   Estilos del Hub principal + secciones internas + filter rail.
+   ============================================================ */
+
+/* ----- Hub: contenedor + hero ----- */
+.hub-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem 4rem 1.5rem;
+}
+.hub-header {
+  margin-bottom: 2.5rem;
+}
+.hub-header-logo {
+  max-width: 180px;
+  height: auto;
+}
+.hub-hero {
+  margin-bottom: 3rem;
+  text-align: left;
+}
+.hub-hero-title {
+  font-family: "Array", "Ubuntu", sans-serif;
+  font-weight: 700;
+  font-size: 2.4rem;
+  line-height: 1.15;
+  color: #191919;
+  margin: 0 0 1rem 0;
+}
+.hub-hero-subtitle {
+  font-size: 1.15rem;
+  color: #404040;
+  line-height: 1.5;
+  max-width: 720px;
+  margin: 0;
+}
+
+/* ----- Hub: grid 2x2 de tarjetas grandes ----- */
+.hub-grid-2x2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+  margin-bottom: 3rem;
+}
+
+/* ----- Hub: tarjetas grandes ----- */
+.hub-card-xl {
+  display: block;
+  padding: 2rem 1.75rem;
+  background-color: #FFFFFF;
+  border: 1px solid #E5E5E5;
+  border-radius: 12px;
+  color: #191919;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.15s ease,
+              box-shadow 0.15s ease,
+              border-color 0.15s ease;
+  position: relative;
+  min-height: 180px;
+}
+.hub-card-xl:hover,
+.hub-card-xl:focus-visible {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(64, 91, 255, 0.12);
+  border-color: #405BFF;
+  text-decoration: none;
+  color: #191919;
+  outline: none;
+}
+.hub-card-xl-icon {
+  display: block;
+  color: #405BFF;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+.hub-card-xl-title {
+  font-family: "Ubuntu", sans-serif;
+  font-weight: 700;
+  font-size: 1.35rem;
+  color: #191919;
+  margin: 0 0 0.5rem 0;
+}
+.hub-card-xl-desc {
+  font-size: 0.95rem;
+  color: #555555;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Estado deshabilitado: tarjeta de Análisis transversal mientras no se
+   implemente. Visible pero no clickable. */
+.hub-card-xl-disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+.hub-card-xl-disabled:hover {
+  transform: none;
+  box-shadow: none;
+  border-color: #E5E5E5;
+}
+.hub-card-xl-badge {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background-color: #F7F7F7;
+  color: #555555;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+  border: 1px solid #E5E5E5;
+}
+
+/* ----- Hub: footer ----- */
+.hub-footer {
+  border-top: 1px solid #E5E5E5;
+  padding-top: 1.5rem;
+  margin-top: 2rem;
+  font-size: 0.85rem;
+  color: #555555;
+}
+.hub-footer-line {
+  margin: 0 0 0.4rem 0;
+}
+.hub-footer-link {
+  color: #405BFF;
+  text-decoration: none;
+}
+.hub-footer-link:hover {
+  color: #1839F4;
+  text-decoration: underline;
+}
+.hub-footer-meta {
+  font-size: 0.78rem;
+  color: #777777;
+  margin: 0.75rem 0 0 0;
+}
+.hub-footer-version {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ----- Sección: contenedor + top bar ----- */
+.section-vista {
+  padding: 1.25rem 1.5rem 3rem 1.5rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+.section-topbar {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #E5E5E5;
+}
+.section-topbar-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: #405BFF;
+  font-weight: 500;
+  text-decoration: none;
+  padding: 0.4rem 0.6rem;
+  border-radius: 6px;
+  transition: background-color 0.15s ease;
+}
+.section-topbar-back:hover,
+.section-topbar-back:focus-visible {
+  background-color: rgba(64, 91, 255, 0.08);
+  color: #1839F4;
+  text-decoration: none;
+  outline: none;
+}
+.section-topbar-back-icon {
+  font-size: 0.85em;
+}
+.section-topbar-back-text {
+  font-size: 0.95rem;
+}
+.section-topbar-sep {
+  color: #CCCCCC;
+}
+.section-topbar-title {
+  font-family: "Ubuntu", sans-serif;
+  font-weight: 700;
+  font-size: 1.4rem;
+  color: #191919;
+  margin: 0;
+}
+
+/* ----- Sección: sidebar interno ----- */
+.section-sidebar-internal {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0.5rem 0;
+}
+.section-sidebar-internal-heading {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #777777;
+  margin: 0 0 0.75rem 0.4rem;
+}
+.section-sidebar-internal-item {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.55rem 0.75rem;
+  border-radius: 6px;
+  color: #404040;
+  text-decoration: none;
+  font-size: 0.95rem;
+  transition: background-color 0.12s ease, color 0.12s ease;
+}
+.section-sidebar-internal-item:hover,
+.section-sidebar-internal-item:focus-visible {
+  background-color: #F7F7F7;
+  color: #191919;
+  text-decoration: none;
+  outline: none;
+}
+.section-sidebar-internal-item-active {
+  background-color: rgba(64, 91, 255, 0.10);
+  color: #1839F4;
+  font-weight: 600;
+}
+.section-sidebar-internal-item-active:hover {
+  background-color: rgba(64, 91, 255, 0.14);
+  color: #1839F4;
+}
+.section-sidebar-internal-icon {
+  color: #405BFF;
+  font-size: 0.95em;
+  min-width: 1.2em;
+}
+
+/* ----- Toggle "Modo" al pie del sidebar interno (issue #74 iter 2) -----
+   El control "Tipo de dúo" pasó del filter rail (que ocupaba mucho ancho)
+   al pie del sidebar interno con presentación compacta. Las helpers
+   completas viven en un popover. */
+.section-sidebar-wrap {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  gap: 1rem;
+}
+.section-sidebar-mode {
+  border-top: 1px solid #E5E5E5;
+  padding-top: 0.9rem;
+  margin-top: 0.5rem;
+}
+.section-sidebar-mode-heading {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #777777;
+  margin: 0 0 0.5rem 0.4rem;
+}
+/* Compacta los radioButtons de Shiny dentro del sidebar */
+.section-sidebar-mode .shiny-options-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding-left: 0.4rem;
+}
+.section-sidebar-mode .radio label,
+.section-sidebar-mode .form-check-label {
+  font-size: 0.9rem;
+  color: #404040;
+}
+.section-sidebar-mode .form-check {
+  margin-bottom: 0.1rem;
+}
+.section-sidebar-mode-info {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.78rem;
+  color: #405BFF;
+  cursor: help;
+  margin-top: 0.5rem;
+  padding-left: 0.4rem;
+}
+.section-sidebar-mode-info:hover {
+  color: #1839F4;
+  text-decoration: underline;
+}
+
+/* ----- Badge contextual del modo activo ----- */
+.badge-modo-duo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background-color: #F7F7F7;
+  border: 1px solid #E5E5E5;
+  border-radius: 999px;
+  padding: 0.25rem 0.7rem 0.25rem 0.6rem;
+  font-size: 0.78rem;
+  color: #404040;
+  margin-bottom: 0.9rem;
+}
+.badge-modo-duo svg {
+  color: #405BFF;
+}
+.badge-modo-duo-label {
+  font-weight: 500;
+}
+
+/* ----- Filter rail (deprecated en iter 2, queda como fallback) ----- */
+.filter-rail {
+  position: sticky;
+  top: 1rem;
+  align-self: flex-start;
+  background-color: #FAFAFA;
+  border: 1px solid #E5E5E5;
+  border-radius: 8px;
+  padding: 1rem 1rem 1.25rem 1rem;
+  max-height: calc(100vh - 2rem);
+  overflow-y: auto;
+}
+.filter-rail-section {
+  margin-bottom: 1.25rem;
+}
+.filter-rail-section:last-child {
+  margin-bottom: 0;
+}
+.filter-rail-heading {
+  font-family: "Ubuntu", sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #555555;
+  margin: 0 0 0.75rem 0;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid #E5E5E5;
+}
+.filter-rail-helper {
+  font-size: 0.78em;
+  color: #555555;
+  margin: 0.5rem 0 0 0;
+  line-height: 1.4;
+}
+.filter-rail-helper strong {
+  color: #191919;
+}
+
+/* ----- Próximamente (placeholder de transversal) ----- */
+.proximamente-card {
+  text-align: center;
+  padding: 3rem 2rem;
+  border: 1px dashed #E5E5E5;
+  border-radius: 8px;
+  background-color: #FAFAFA;
+}
+
+/* ----- Responsive: mobile (1 col, sin sticky rail) ----- */
+@media (max-width: 768px) {
+  .hub-container {
+    padding: 1.5rem 1rem 2.5rem 1rem;
+  }
+  .hub-hero-title {
+    font-size: 1.8rem;
+  }
+  .hub-grid-2x2 {
+    grid-template-columns: 1fr;
+    gap: 0.875rem;
+  }
+  .hub-card-xl {
+    min-height: 140px;
+    padding: 1.5rem 1.25rem;
+  }
+  .section-vista {
+    padding: 1rem 0.875rem 2rem 0.875rem;
+  }
+  .section-topbar {
+    gap: 0.5rem;
+  }
+  .section-topbar-title {
+    font-size: 1.15rem;
+  }
+  .filter-rail {
+    position: static;
+    max-height: none;
+    margin-top: 1rem;
+  }
+}
+
+/* ----- FAB tipo de dúo: deprecated (issue #74) -----
+   La clase .fab-duo ya no se usa porque el control "Tipo de dúo" migró
+   al filter rail dentro de la vista panel. Se conserva el selector
+   visualmente oculto por si algún cache del browser tiene el botón viejo. */
+.fab-duo {
+  display: none !important;
+}
+
