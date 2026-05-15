@@ -176,12 +176,15 @@ config_cond_act <- list(
 
 config_cat_ocup <- local({
   ### Helpers locales para etiquetas singular/plural de las 4 categorías.
+  ### Lookup vectorizado: `pelicula_serie_label_fn` se invoca dentro de un
+  ### dplyr::mutate() con columnas como argumento, así que plural() debe
+  ### aceptar vectores. switch() solo soportaba escalares.
   plural <- function(cat) {
-    switch(cat,
-           Patron = "Patrones",
-           Cuenta_propia = "Cuenta propia",
-           Asalariado = "Asalariados",
-           TFSR = "Trab familiares")
+    lookup <- c(Patron        = "Patrones",
+                Cuenta_propia = "Cuenta propia",
+                Asalariado    = "Asalariados",
+                TFSR          = "Trab familiares")
+    unname(lookup[cat])
   }
 
   list(
@@ -288,10 +291,10 @@ config_cat_ocup <- local({
 ### ============================================================================
 
 config_formalidad <- local({
+  ### Lookup vectorizado (ver nota en config_cat_ocup).
   plural <- function(cat) {
-    switch(cat,
-           Formal = "Formales",
-           Informal = "Informales")
+    lookup <- c(Formal = "Formales", Informal = "Informales")
+    unname(lookup[cat])
   }
 
   ### Helpers que dependen del toggle definicion.
