@@ -42,7 +42,8 @@ periodos_disponibles <- df_eph_full |>
 ### formalidad/formalidad_ampliada + PONDERA. Los IDs (CODUSU, NRO_HOGAR,
 ### COMPONENTE) los agrega organize_panels() automáticamente.
 variables_runtime <- c("ESTADO", "CAT_OCUP", "PP07H", "PP05I", "PP05K",
-                       "formalidad", "formalidad_ampliada", "PONDERA")
+                       "formalidad", "formalidad_ampliada", "PONDERA",
+                       "AGLOMERADO")  ### #78: filtro Aglomerado en el Armador
 
 ### Enumerar todos los dúos válidos (existen ambos trimestres en el
 ### microdato). Esquema 2-2-2: trimestres consecutivos T1-T2, T2-T3,
@@ -90,7 +91,10 @@ cat(glue::glue("\nPanel runtime construido: {nrow(panel_runtime)} filas, ",
 panel_runtime <- panel_runtime |>
   dplyr::mutate(
     Periodo = as.character(Periodo)
-  )
+  ) |>
+  ### AGLOMERADO es un atributo fijo de la vivienda (no cambia entre t0 y t1):
+  ### conservamos sólo la versión t0 y descartamos la _t1 redundante (#78).
+  dplyr::select(-dplyr::any_of("AGLOMERADO_t1"))
 
 path_out <- "data_output/panel_runtime.parquet"
 arrow::write_parquet(panel_runtime, path_out, compression = "snappy")

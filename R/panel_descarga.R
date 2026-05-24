@@ -34,6 +34,7 @@ columnas_panel_runtime <- tibble::tribble(
   "TRIMESTRE",              "Trimestre del registro en t0.",
   "CH04",                   "Sexo (1=Varón, 2=Mujer).",
   "CH06",                   "Edad en años cumplidos.",
+  "AGLOMERADO",             "Aglomerado urbano EPH (código INDEC). Atributo fijo de la vivienda: no cambia entre t0 y t1, por eso no tiene versión _t1.",
   "ESTADO",                 "Condición de actividad en t0 (1=Ocupado, 2=Desocupado, 3=Inactivo, 4=Menor de 10 años).",
   "CAT_OCUP",               "Categoría ocupacional en t0 (1=Patrón, 2=Cuenta propia, 3=Asalariado, 4=Trab. familiar).",
   "PP07H",                  "Descuento jubilatorio (asalariados, t0). 1=Sí, 2=No.",

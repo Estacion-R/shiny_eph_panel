@@ -42,7 +42,8 @@ source("ETL/99-functions.R")
 vars_eph <- c("CODUSU", "NRO_HOGAR", "COMPONENTE", "ANO4", "TRIMESTRE",
               "CH04", "CH06", "ESTADO", "PONDERA",
               "CAT_OCUP", "PP07H", "PP07J", "PP07K",
-              "PP05I", "PP05K")
+              "PP05I", "PP05K",
+              "AGLOMERADO")  ### #78: filtro Aglomerado en el Armador
 
 path_parquet_raw <- "data_raw/df_eph.parquet"
 path_parquet_tasas <- "data_output/df_tasas_mt.parquet"

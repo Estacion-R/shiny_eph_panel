@@ -7,7 +7,7 @@
 ### tras un rebuild de 09-build_paneles_runtime.R o 09b-build_paneles_runtime_anual.R.
 ###
 ### Cubre 4 dimensiones:
-###   1. Schema y tipos: las 31 cols esperadas existen en ambos parquets.
+###   1. Schema y tipos: las 32 cols esperadas existen en ambos parquets.
 ###   2. Cobertura temporal: sin gaps inesperados en la secuencia de dúos.
 ###   3. Tamaño/atrición: n por dúo en rango esperado, ratio anual/trim
 ###      dentro del rango histórico observado.
@@ -45,7 +45,7 @@ source("R/utils_analisis.R")
 ### acá con justificación en el commit.
 ### -----------------------------------------------------------------------
 
-### 31 columnas esperadas en ambos parquets (orden importa para detectar
+### 32 columnas esperadas (incluye AGLOMERADO, #78) en ambos parquets (orden importa para detectar
 ### drift de eph::organize_panels). El primer par (anio_0, trim_0) es
 ### inyectado en 09/09b para soportar filter pushdown en runtime.
 COLS_ESPERADAS <- c(
@@ -56,6 +56,7 @@ COLS_ESPERADAS <- c(
   "PP07H", "PP05I", "PP05K",
   "formalidad", "formalidad_ampliada",
   "PONDERA", "Periodo",
+  "AGLOMERADO",  ### #78: atributo fijo de la vivienda, sólo t0 (sin _t1)
   "ANO4_t1", "TRIMESTRE_t1",
   "CH04_t1", "CH06_t1", "ESTADO_t1", "CAT_OCUP_t1",
   "PP07H_t1", "PP05I_t1", "PP05K_t1",
@@ -138,11 +139,11 @@ testthat::with_reporter(reporter_combinado, {
 
 ### --- 1. Schema y tipos ---
 
-test_that("schema trimestral: tiene las 31 cols esperadas", {
+test_that("schema trimestral: tiene las 32 cols esperadas", {
   expect_setequal(names(ds_trim$schema), COLS_ESPERADAS)
 })
 
-test_that("schema anual: tiene las 31 cols esperadas", {
+test_that("schema anual: tiene las 32 cols esperadas", {
   expect_setequal(names(ds_anual$schema), COLS_ESPERADAS)
 })
 

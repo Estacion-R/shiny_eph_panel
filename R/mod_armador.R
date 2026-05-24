@@ -51,18 +51,63 @@ ARMADOR_CATOCUP_CHOICES <- c(
 ### Trimestre del inicio del dúo (trim_0 ∈ 1:4). Filtro estable sobre t0.
 ARMADOR_TRIM_CHOICES <- c("T1" = "1", "T2" = "2", "T3" = "3", "T4" = "4")
 
-### Años del inicio del dúo (anio_0) disponibles, como opciones del multi-select.
-### Se derivan del global anios_disponibles (ETL/01-extract.R), que cubre el
-### superset intertrim+anual. Fallback 2003-2025 si el global no existe (tests
-### aislados). Multi-select: el usuario puede elegir años no contiguos; ninguno
-### seleccionado = todos los años (preserva "sin filtros = panel completo").
-armador_anios_opciones <- function() {
-  if (exists("anios_disponibles", envir = .GlobalEnv) &&
-      length(get("anios_disponibles", envir = .GlobalEnv)) > 0) {
-    sort(as.integer(get("anios_disponibles", envir = .GlobalEnv)))
+### Años del inicio del dúo (anio_0) disponibles para el dataset activo, como
+### opciones del multi-select. Intertrim usa anios_disponibles; anual usa
+### anios_disponibles_anual (un año menos, porque el último t0 necesita un t1 del
+### año siguiente). Fallback 2003-2025 si el global no existe (tests aislados).
+### Ninguno seleccionado = todos los años (preserva "sin filtros = panel completo").
+armador_anios_opciones <- function(panel = "trimestral") {
+  nombre <- if (identical(panel, "anual")) "anios_disponibles_anual" else "anios_disponibles"
+  if (exists(nombre, envir = .GlobalEnv) &&
+      length(get(nombre, envir = .GlobalEnv)) > 0) {
+    sort(as.integer(get(nombre, envir = .GlobalEnv)))
   } else {
     2003:2025
   }
+}
+
+### Último período disponible (dúo más reciente) del dataset activo, para
+### arrancar el Armador mostrando el panel más nuevo. Se deriva del histórico de
+### calidad (df_calidad_panel / _anual), que tiene una fila por dúo con anio_0 /
+### trim_0. Devuelve list(anio, trim) como enteros, o NULL si no hay datos.
+armador_ultimo_periodo <- function(panel = "trimestral") {
+  nombre <- if (identical(panel, "anual")) "df_calidad_panel_anual" else "df_calidad_panel"
+  if (!exists(nombre, envir = .GlobalEnv)) return(list(anio = NULL, trim = NULL))
+  cal <- get(nombre, envir = .GlobalEnv)
+  if (is.null(cal) || nrow(cal) == 0) return(list(anio = NULL, trim = NULL))
+  ult <- cal[order(-cal$anio_0, -cal$trim_0), , drop = FALSE][1, ]
+  list(anio = as.integer(ult$anio_0), trim = as.integer(ult$trim_0))
+}
+
+### Nombres legibles de aglomerados (código → nombre) vía eph::diccionario_
+### aglomerados. El código 0 (resto urbano de la EPH continua temprana, sólo
+### 2003-2006) no está en el diccionario: fallback explícito. Otros sin nombre
+### caen a "Aglomerado N". Usado por el filtro y por la frase resumen.
+armador_aglo_nombres <- function(codigos) {
+  dic <- tryCatch(eph::diccionario_aglomerados, error = function(e) NULL)
+  cod <- suppressWarnings(as.integer(codigos))
+  n <- if (!is.null(dic)) dic$aglo[match(cod, dic$codigo)] else rep(NA_character_, length(cod))
+  faltan <- is.na(n)
+  n[faltan] <- ifelse(cod[faltan] == 0, "Sin clasificar (0)",
+                      paste0("Aglomerado ", cod[faltan]))
+  n
+}
+
+### Opciones del multi-select de Aglomerado: códigos presentes en el panel
+### (df_panel_runtime), mapeados a nombre y ordenados alfabéticamente. Devuelve
+### named vector (nombre = etiqueta, valor = código como string). Vacío si la
+### columna AGLOMERADO todavía no existe (panel sin re-bootstrap).
+armador_aglo_opciones <- function() {
+  if (!exists("df_panel_runtime", envir = .GlobalEnv)) return(character(0))
+  tbl <- get("df_panel_runtime", envir = .GlobalEnv)
+  if (!"AGLOMERADO" %in% names(tbl)) return(character(0))
+  pres <- tbl |> dplyr::distinct(AGLOMERADO) |> dplyr::collect() |>
+    dplyr::pull(AGLOMERADO)
+  pres <- sort(pres[!is.na(pres)])
+  if (length(pres) == 0) return(character(0))
+  nombres <- armador_aglo_nombres(pres)
+  ord <- order(nombres)
+  stats::setNames(as.character(pres[ord]), nombres[ord])
 }
 
 ### Rango del slider de edad. CH06 en el microdato va de -1 (código EPH "menor
@@ -208,7 +253,7 @@ ARMADOR_LBL_CATOCUP <- list(
 ### vacíos. La frase del "trimestre siguiente" sólo es exacta cuando hay un único
 ### año y un único trimestre; si no, usa una forma genérica.
 armador_frase_filtros <- function(panel, momento, anios, trims, sexo, edad,
-                                  condact, catocup) {
+                                  condact, catocup, aglos = character(0)) {
 
   unir <- function(x, conector = "y") {
     x <- as.character(x)
@@ -236,6 +281,14 @@ armador_frase_filtros <- function(panel, momento, anios, trims, sexo, edad,
     paste0("de entre ", edad[1], " y ", edad[2], " años")
   }
   demografia <- paste(sujeto, edad_txt)
+
+  ### Aglomerado (geográfico). Hasta 3 se listan por nombre; más, se resumen.
+  if (length(aglos) > 0) {
+    nm <- armador_aglo_nombres(aglos)
+    aglo_txt <- if (length(nm) > 3) paste0("en ", length(nm), " aglomerados")
+                else paste("en", unir(nm, "y"))
+    demografia <- paste(demografia, aglo_txt)
+  }
 
   ### Período del inicio del dúo (t0): año(s) + trimestre(s).
   anios_i <- sort(as.integer(anios))
@@ -484,30 +537,51 @@ mod_armador_ui <- function(id) {
         tags$span("Filtros", style = "margin-left: 0.4rem;")
       ),
       bslib::layout_columns(
-        col_widths = c(4, 4, 4, 4, 4, 4),
+        col_widths = c(4, 4, 4, 4, 4, 4, 4),
 
         ### Año del inicio del dúo (anio_0, estable → t0). Multi-select: permite
-        ### elegir años no contiguos. Ninguno seleccionado = todos (panel completo).
+        ### elegir años no contiguos. Arranca en el último año disponible (panel
+        ### más reciente); vaciarlo incluye todos los años.
         tags$div(
           class = "armador-filtro",
           selectInput(
             inputId  = ns("anio"),
             label    = "Año (t0)",
-            choices  = armador_anios_opciones(),
-            selected = character(0),
+            choices  = armador_anios_opciones("trimestral"),
+            selected = {
+              a <- armador_ultimo_periodo("trimestral")$anio
+              if (is.null(a)) character(0) else as.character(a)
+            },
             multiple = TRUE
           )
         ),
 
-        ### Trimestre del inicio del dúo (trim_0, estable → t0).
+        ### Trimestre del inicio del dúo (trim_0, estable → t0). Arranca en el
+        ### trimestre del último dúo disponible.
         tags$div(
           class = "armador-filtro",
           checkboxGroupInput(
             inputId  = ns("trimestre"),
             label    = "Trimestre (t0)",
             choices  = ARMADOR_TRIM_CHOICES,
-            selected = character(0),
+            selected = {
+              t <- armador_ultimo_periodo("trimestral")$trim
+              if (is.null(t)) character(0) else as.character(t)
+            },
             inline   = TRUE
+          )
+        ),
+
+        ### Aglomerado (geográfico, atributo fijo de la vivienda → t0). Multi-
+        ### select buscable con nombres legibles. Ninguno = todos (#78).
+        tags$div(
+          class = "armador-filtro",
+          selectInput(
+            inputId  = ns("aglomerado"),
+            label    = "Aglomerado (t0)",
+            choices  = armador_aglo_opciones(),
+            selected = character(0),
+            multiple = TRUE
           )
         ),
 
@@ -707,6 +781,23 @@ mod_armador_server <- function(id) {
                                label = paste0("Categoría ocupacional (", m, ")"))
     })
 
+    ### Al cambiar de dataset, reajustar los años válidos (anual llega hasta un
+    ### año menos) y volver al último período disponible de ese panel. La UI ya
+    ### deja el default intertrim al arrancar, por eso ignoreInit = TRUE.
+    observeEvent(input$dataset, ignoreInit = TRUE, {
+      ds  <- if (identical(input$dataset, "anual")) "anual" else "trimestral"
+      ult <- armador_ultimo_periodo(ds)
+      updateSelectInput(
+        session, "anio",
+        choices  = armador_anios_opciones(ds),
+        selected = if (is.null(ult$anio)) character(0) else as.character(ult$anio)
+      )
+      updateCheckboxGroupInput(
+        session, "trimestre",
+        selected = if (is.null(ult$trim)) character(0) else as.character(ult$trim)
+      )
+    })
+
     ### Dataset activo como objeto Arrow LAZY según el selector.
     ###
     ### Intertrim: df_panel_runtime ya está cargado al boot como Arrow Table
@@ -768,6 +859,12 @@ mod_armador_server <- function(id) {
         q <- q |> dplyr::filter(trim_0 %in% vals_trim)
       }
 
+      ### Aglomerado (AGLOMERADO, atributo fijo de la vivienda → t0).
+      if (length(input$aglomerado) > 0) {
+        vals_aglo <- as.numeric(input$aglomerado)
+        q <- q |> dplyr::filter(AGLOMERADO %in% vals_aglo)
+      }
+
       ### Sexo (CH04, estable → t0).
       if (length(input$sexo) > 0) {
         vals_sexo <- as.numeric(input$sexo)
@@ -818,7 +915,8 @@ mod_armador_server <- function(id) {
         sexo    = input$sexo,
         edad    = input$edad,
         condact = input$cond_act,
-        catocup = input$cat_ocup
+        catocup = input$cat_ocup,
+        aglos   = input$aglomerado
       )
 
       ### Embudo anclado al período (pensando en dúos). Denominador único: la
