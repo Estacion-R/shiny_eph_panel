@@ -229,6 +229,53 @@ armador_preparar_salida <- function(df, etiquetar = FALSE) {
 }
 
 
+### Filtrado server-side (función pura, sin Shiny) -----------------------------
+###
+### Aplica los filtros del Armador a una query Arrow LAZY (ds) y la devuelve sin
+### materializar (no collect()). Construcción incremental: AND entre variables,
+### OR dentro de cada una (vía %in%). Un filtro vacío no se aplica → caso "sin
+### filtros = panel completo". Año/Trimestre/Aglomerado/Sexo/Edad son estables
+### (t0); Condición de actividad y Categoría ocupacional usan la columna t0 o t1
+### según `momento` (acceso programático .data[[col]], nunca eval(parse())).
+### El slider de edad en su rango completo es un no-op. Extraída del reactive
+### para poder testearla sin levantar el módulo Shiny (#77 F4).
+armador_filtrar <- function(ds, momento = "t0",
+                            anios = character(0), trims = character(0),
+                            aglos = character(0), sexo = character(0),
+                            edad = NULL, condact = character(0),
+                            catocup = character(0)) {
+  col_estado  <- if (identical(momento, "t1")) "ESTADO_t1"   else "ESTADO"
+  col_catocup <- if (identical(momento, "t1")) "CAT_OCUP_t1" else "CAT_OCUP"
+
+  q <- ds
+  if (length(anios) > 0) {
+    v <- as.numeric(anios); q <- q |> dplyr::filter(anio_0 %in% v)
+  }
+  if (length(trims) > 0) {
+    v <- as.numeric(trims); q <- q |> dplyr::filter(trim_0 %in% v)
+  }
+  if (length(aglos) > 0) {
+    v <- as.numeric(aglos); q <- q |> dplyr::filter(AGLOMERADO %in% v)
+  }
+  if (length(sexo) > 0) {
+    v <- as.numeric(sexo); q <- q |> dplyr::filter(CH04 %in% v)
+  }
+  ### Edad: sólo filtra si el rango se movió de los extremos (default = no-op).
+  if (!is.null(edad) &&
+      (edad[1] > ARMADOR_EDAD_MIN || edad[2] < ARMADOR_EDAD_MAX)) {
+    edad_lo <- edad[1]; edad_hi <- edad[2]
+    q <- q |> dplyr::filter(CH06 >= edad_lo, CH06 <= edad_hi)
+  }
+  if (length(condact) > 0) {
+    v <- as.numeric(condact); q <- q |> dplyr::filter(.data[[col_estado]] %in% v)
+  }
+  if (length(catocup) > 0) {
+    v <- as.numeric(catocup); q <- q |> dplyr::filter(.data[[col_catocup]] %in% v)
+  }
+  q
+}
+
+
 ### Resumen en lenguaje natural -----------------------------------------------
 ###
 ### Etiquetas (con concordancia de género) para describir los estados en la
@@ -839,61 +886,21 @@ mod_armador_server <- function(id) {
     ###
     ### NO hay collect() acá: devuelve la query lazy para que la consuma el
     ### conteo (nrow), el preview (head) y, en F2, la descarga (collect completo).
+    ### Query Arrow LAZY filtrada. Wrapper reactivo sobre armador_filtrar()
+    ### (función pura, testeable sin Shiny). NO hay collect() acá: la query lazy
+    ### la consumen el conteo (nrow), el preview (head) y la descarga (collect).
     panel_filtrado <- reactive({
-      q <- ds_activo()
-
-      momento     <- if (identical(input$momento, "t1")) "t1" else "t0"
-      col_estado  <- if (momento == "t1") "ESTADO_t1"   else "ESTADO"
-      col_catocup <- if (momento == "t1") "CAT_OCUP_t1" else "CAT_OCUP"
-
-      ### Año del inicio del dúo (anio_0, estable → t0). Multi-select: AND con
-      ### el resto, OR entre los años elegidos. Ninguno = todos los años.
-      if (length(input$anio) > 0) {
-        vals_anio <- as.numeric(input$anio)
-        q <- q |> dplyr::filter(anio_0 %in% vals_anio)
-      }
-
-      ### Trimestre del inicio del dúo (trim_0, estable → t0).
-      if (length(input$trimestre) > 0) {
-        vals_trim <- as.numeric(input$trimestre)
-        q <- q |> dplyr::filter(trim_0 %in% vals_trim)
-      }
-
-      ### Aglomerado (AGLOMERADO, atributo fijo de la vivienda → t0).
-      if (length(input$aglomerado) > 0) {
-        vals_aglo <- as.numeric(input$aglomerado)
-        q <- q |> dplyr::filter(AGLOMERADO %in% vals_aglo)
-      }
-
-      ### Sexo (CH04, estable → t0).
-      if (length(input$sexo) > 0) {
-        vals_sexo <- as.numeric(input$sexo)
-        q <- q |> dplyr::filter(CH04 %in% vals_sexo)
-      }
-
-      ### Edad (CH06, estable → t0). Sólo se aplica si el slider se movió fuera
-      ### del rango completo; en la posición default es un no-op (panel completo).
-      edad <- input$edad
-      if (!is.null(edad) &&
-          (edad[1] > ARMADOR_EDAD_MIN || edad[2] < ARMADOR_EDAD_MAX)) {
-        edad_lo <- edad[1]
-        edad_hi <- edad[2]
-        q <- q |> dplyr::filter(CH06 >= edad_lo, CH06 <= edad_hi)
-      }
-
-      ### Condición de actividad (ESTADO/ESTADO_t1 según toggle).
-      if (length(input$cond_act) > 0) {
-        vals_estado <- as.numeric(input$cond_act)
-        q <- q |> dplyr::filter(.data[[col_estado]] %in% vals_estado)
-      }
-
-      ### Categoría ocupacional (CAT_OCUP/CAT_OCUP_t1 según toggle).
-      if (length(input$cat_ocup) > 0) {
-        vals_catocup <- as.numeric(input$cat_ocup)
-        q <- q |> dplyr::filter(.data[[col_catocup]] %in% vals_catocup)
-      }
-
-      q
+      armador_filtrar(
+        ds       = ds_activo(),
+        momento  = input$momento,
+        anios    = input$anio,
+        trims    = input$trimestre,
+        aglos    = input$aglomerado,
+        sexo     = input$sexo,
+        edad     = input$edad,
+        condact  = input$cond_act,
+        catocup  = input$cat_ocup
+      )
     })
 
     ### Conteo de filas del subconjunto. Barato sobre la query lazy. Cada fila
