@@ -147,6 +147,7 @@ test_that("armador_diccionario_salida coincide con el esquema de salida", {
 ### -------------------------------------------------------------------------
 
 test_that("armador_etiquetar pone etiquetas EPH en t0 y t1 + AGLOMERADO", {
+  skip_if_not_installed("haven")  # haven (transitivo opcional de eph) → as_factor
   et <- armador_etiquetar(mock_panel_df())
   expect_true(is.factor(et$ESTADO) || is.character(et$ESTADO))
   expect_true(any(grepl("Ocupado", as.character(et$ESTADO))))
