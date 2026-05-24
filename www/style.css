@@ -1357,3 +1357,256 @@ input:checked + .slider:before {
   display: none !important;
 }
 
+
+/* ============================================================
+   Armador de panel (issue #77)
+   Sección "Armá tu panel": configuración + filtros + preview + descarga.
+   Reusa .descarga-hero, .descarga-aviso, .btn-descarga de la sección Datos.
+   ============================================================ */
+
+/* ----- Ayuda: cómo leer el dataset ----- */
+.armador-ayuda {
+  margin-bottom: 1.5rem;
+}
+.armador-ayuda code {
+  background: #F0F0F0;
+  color: #1839F4;
+  padding: 0.05rem 0.3rem;
+  border-radius: 4px;
+  font-size: 0.85em;
+}
+.armador-ayuda ul {
+  line-height: 1.55;
+  padding-left: 1.2rem;
+}
+.armador-ayuda ul li {
+  margin-bottom: 0.4rem;
+}
+.armador-ayuda-nota {
+  font-size: 0.85rem;
+  color: #666;
+  margin: 0.6rem 0 0 0;
+  font-style: italic;
+}
+
+/* ----- Configuración global: dataset + momento del dúo ----- */
+.armador-config {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem 2.5rem;
+  padding: 1rem 1.25rem;
+  background: #F7F7F7;
+  border-radius: 12px;
+  margin-bottom: 1.5rem;
+}
+.armador-config-item {
+  min-width: 240px;
+}
+.armador-config-helper {
+  font-size: 0.82rem;
+  color: #666;
+  margin: 0.1rem 0 0 0;
+  line-height: 1.4;
+}
+.armador-momento-label {
+  display: flex;
+  align-items: center;
+  font-weight: 500;
+  font-size: 0.95rem;
+  color: #191919;
+  margin-bottom: 0.4rem;
+}
+/* radioButtons inline más compactos */
+.armador-config .shiny-options-group {
+  margin-top: 0.15rem;
+}
+
+/* ----- Card de filtros ----- */
+.armador-filtros-card {
+  margin-bottom: 1.25rem;
+}
+.armador-filtro .control-label {
+  font-weight: 600;
+  font-size: 0.92rem;
+  color: #191919;
+}
+.armador-filtros-nota {
+  font-size: 0.82rem;
+  color: #666;
+  margin: 0.5rem 0 0 0;
+  font-style: italic;
+}
+
+/* ----- Resumen en lenguaje natural de la selección ----- */
+.armador-frase {
+  background: #F0F3FF;
+  border-left: 4px solid #405BFF;
+  border-radius: 8px;
+  padding: 0.7rem 1rem;
+  margin: 1rem 0 0.25rem 0;
+  line-height: 1.5;
+}
+.armador-frase-icon {
+  color: #405BFF;
+  margin-right: 0.4rem;
+  opacity: 0.7;
+}
+.armador-frase-label {
+  font-weight: 600;
+  color: #191919;
+}
+.armador-frase-texto {
+  color: #2A2A2A;
+}
+
+/* ----- Advertencia metodológica en el punto de descarga ----- */
+.armador-aviso-descarga {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  background: #FFFBEB;
+  border: 1px solid #FDE68A;
+  border-left: 4px solid #B45309;
+  border-radius: 8px;
+  padding: 0.7rem 1rem;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  color: #5C4400;
+}
+.armador-aviso-descarga .fa,
+.armador-aviso-descarga .fas {
+  color: #B45309;
+}
+.armador-aviso-link {
+  color: #405BFF;
+  font-weight: 600;
+  text-decoration: underline;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+/* ----- Embudo de muestra dentro de la caja "Estás por descargar" ----- */
+.armador-frase-funnel {
+  margin-top: 0.55rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid rgba(64, 91, 255, 0.18);
+  font-size: 0.92rem;
+}
+.armador-funnel-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  align-items: baseline;
+  gap: 0.5rem 0.9rem;
+  padding: 0.15rem 0;
+}
+.armador-funnel-lbl {
+  color: #404040;
+}
+.armador-funnel-val {
+  font-weight: 700;
+  color: #191919;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+.armador-funnel-pct {
+  color: #405BFF;
+  font-weight: 600;
+  white-space: nowrap;
+  min-width: 11rem;
+  text-align: right;
+}
+.armador-funnel-row-final {
+  margin-top: 0.2rem;
+  padding-top: 0.35rem;
+  border-top: 1px dashed rgba(64, 91, 255, 0.25);
+}
+.armador-funnel-row-final .armador-funnel-val {
+  color: #405BFF;
+}
+.armador-frase-tip {
+  border-bottom: 1px dotted #405BFF;
+  cursor: help;
+}
+
+/* ----- Warning de muestra chica / vacía (mismo lenguaje que descarga-aviso) ----- */
+.armador-warning {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: 1px solid #FDE68A;
+  border-left: 4px solid #B45309;
+  border-radius: 8px;
+  background: #FFFBEB;
+  color: #5C4400;
+  padding: 0.6rem 0.9rem;
+  font-size: 0.92rem;
+  margin: 0.4rem 0 0 0;
+}
+.armador-warning .fa,
+.armador-warning .fas {
+  color: #B45309;
+}
+
+/* ----- Formato de salida: con/sin etiquetas ----- */
+.armador-etiquetas {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.25rem 0.75rem;
+  margin-top: 1rem;
+}
+.armador-etiquetas .control-label {
+  font-weight: 600;
+  font-size: 0.92rem;
+  color: #191919;
+}
+.armador-etiquetas-nota {
+  font-size: 0.82rem;
+  color: #666;
+  font-style: italic;
+}
+
+/* ----- Preview ----- */
+.armador-preview-card {
+  margin: 1.25rem 0;
+}
+.armador-preview-sub {
+  font-size: 0.82rem;
+  font-weight: 400;
+  color: #888;
+  margin-left: 0.5rem;
+}
+.armador-preview-scroll {
+  overflow-x: auto;
+  max-width: 100%;
+}
+
+/* ----- Descarga ----- */
+.armador-descarga {
+  margin: 1.5rem 0;
+}
+.armador-descarga-titulo {
+  font-weight: 600;
+  font-size: 1rem;
+  color: #191919;
+  margin-bottom: 0.6rem;
+}
+.armador-descarga-botones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+.armador-descarga-extra {
+  font-size: 0.88rem;
+  color: #555;
+  margin: 0.85rem 0 0 0;
+}
+.armador-descarga-extra a {
+  color: #405BFF;
+  font-weight: 600;
+  text-decoration: none;
+}
+.armador-descarga-extra a:hover {
+  text-decoration: underline;
+}
+

@@ -103,9 +103,9 @@ panel_hub_ui <- function() {
 
         hub_card_xl(
           input_id = "go_datos",
-          icon_id = "database",
-          titulo = "Datos",
-          descripcion = "Descarga del panel longitudinal completo en Parquet o CSV, más diccionario de variables."
+          icon_id = "sliders",
+          titulo = "Armá tu panel",
+          descripcion = "Aplicá filtros (sexo, edad, condición de actividad, categoría ocupacional) y descargá tu propio subconjunto del panel en Parquet o CSV."
         )
       ),
 
