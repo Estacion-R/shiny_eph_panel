@@ -18,6 +18,9 @@ library(bsicons)
 library(waiter)
 library(tidyr)  ### pivot_wider en arma_matriz_transicion()
 library(gt)     ### tabla matriz de transición en Foto
+library(reactable)  ### backend de gt::opt_interactive() (preview ordenable del Armador, #77)
+### eph ya está cargado arriba; eph::organize_labels() etiqueta el dataset del
+### Armador. haven (transitivo de eph) provee as_factor() para el etiquetado.
 
 ### NOTA: ggplot2, gghighlight (solo en ETL/data_viz.R, script local de
 ### exploración, no runtime), thematic, ragg quedaron fuera para reducir

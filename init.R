@@ -22,13 +22,15 @@ my_packages <- c(
   # tidyverse mínimo
   "dplyr", "tidyr", "purrr", "stringr", "tibble", "glue",
   # io / formatos
-  "arrow",
+  "arrow", "readr",
   # visualización
-  "highcharter", "gt",
+  "highcharter", "gt", "reactable",
   # utilidades shiny
   "waiter",
   # dominio EPH
-  "eph"
+  "eph",
+  # etiquetado del dataset del Armador (organize_labels -> haven::as_factor)
+  "haven"
 )
 
 install_if_missing <- function(p) {
