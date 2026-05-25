@@ -1425,6 +1425,32 @@ input:checked + .slider:before {
 .armador-filtros-card {
   margin-bottom: 1.25rem;
 }
+
+/* Grupos temáticos de filtros (Período / Personas / Situación laboral) */
+.armador-grupo {
+  margin-bottom: 1.4rem;
+}
+.armador-grupo:last-of-type {
+  margin-bottom: 0.25rem;
+}
+.armador-grupo-titulo {
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #405BFF;
+  margin: 0 0 0.6rem 0;
+  padding-bottom: 0.3rem;
+  border-bottom: 1px solid rgba(64, 91, 255, 0.15);
+}
+.armador-grupo-nota {
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: 0;
+  color: #888;
+  font-size: 0.9em;
+  margin-left: 0.4rem;
+}
 .armador-filtro .control-label {
   font-weight: 600;
   font-size: 0.92rem;

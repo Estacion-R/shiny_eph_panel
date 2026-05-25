@@ -583,95 +583,124 @@ mod_armador_ui <- function(id) {
         icon("sliders"),
         tags$span("Filtros", style = "margin-left: 0.4rem;")
       ),
-      bslib::layout_columns(
-        col_widths = c(4, 4, 4, 4, 4, 4, 4),
+      ### Filtros agrupados por el FLUJO de armado: Período → Personas →
+      ### Situación laboral. Cada grupo es una fila con subtítulo, para que se
+      ### lea como "qué período, de qué personas, en qué situación laboral".
 
-        ### Año del inicio del dúo (anio_0, estable → t0). Multi-select: permite
-        ### elegir años no contiguos. Arranca en el último año disponible (panel
-        ### más reciente); vaciarlo incluye todos los años.
-        tags$div(
-          class = "armador-filtro",
-          selectInput(
-            inputId  = ns("anio"),
-            label    = "Año (t0)",
-            choices  = armador_anios_opciones("trimestral"),
-            selected = {
-              a <- armador_ultimo_periodo("trimestral")$anio
-              if (is.null(a)) character(0) else as.character(a)
-            },
-            multiple = TRUE
+      ### --- Grupo 1: Período (inicio del dúo) -----------------------------
+      tags$div(
+        class = "armador-grupo",
+        tags$h6(class = "armador-grupo-titulo", "Período"),
+        bslib::layout_columns(
+          col_widths = c(7, 5),
+
+          ### Año del inicio del dúo (anio_0, estable → t0). Multi-select: años
+          ### no contiguos. Arranca en el último año disponible; vaciar = todos.
+          tags$div(
+            class = "armador-filtro",
+            selectInput(
+              inputId  = ns("anio"),
+              label    = "Año (t0)",
+              choices  = armador_anios_opciones("trimestral"),
+              selected = {
+                a <- armador_ultimo_periodo("trimestral")$anio
+                if (is.null(a)) character(0) else as.character(a)
+              },
+              multiple = TRUE
+            )
+          ),
+
+          ### Trimestre del inicio del dúo (trim_0, estable → t0). Arranca en el
+          ### trimestre del último dúo disponible.
+          tags$div(
+            class = "armador-filtro",
+            checkboxGroupInput(
+              inputId  = ns("trimestre"),
+              label    = "Trimestre (t0)",
+              choices  = ARMADOR_TRIM_CHOICES,
+              selected = {
+                t <- armador_ultimo_periodo("trimestral")$trim
+                if (is.null(t)) character(0) else as.character(t)
+              },
+              inline   = TRUE
+            )
           )
-        ),
+        )
+      ),
 
-        ### Trimestre del inicio del dúo (trim_0, estable → t0). Arranca en el
-        ### trimestre del último dúo disponible.
-        tags$div(
-          class = "armador-filtro",
-          checkboxGroupInput(
-            inputId  = ns("trimestre"),
-            label    = "Trimestre (t0)",
-            choices  = ARMADOR_TRIM_CHOICES,
-            selected = {
-              t <- armador_ultimo_periodo("trimestral")$trim
-              if (is.null(t)) character(0) else as.character(t)
-            },
-            inline   = TRUE
+      ### --- Grupo 2: Personas (atributos fijos de la persona/vivienda → t0) -
+      tags$div(
+        class = "armador-grupo",
+        tags$h6(class = "armador-grupo-titulo", "Personas"),
+        bslib::layout_columns(
+          col_widths = c(3, 5, 4),
+
+          tags$div(
+            class = "armador-filtro",
+            checkboxGroupInput(
+              inputId  = ns("sexo"),
+              label    = "Sexo (t0)",
+              choices  = ARMADOR_SEXO_CHOICES,
+              selected = character(0)
+            )
+          ),
+
+          tags$div(
+            class = "armador-filtro",
+            sliderInput(
+              inputId = ns("edad"),
+              label   = "Edad (t0)",
+              min     = ARMADOR_EDAD_MIN,
+              max     = ARMADOR_EDAD_MAX,
+              value   = c(ARMADOR_EDAD_MIN, ARMADOR_EDAD_MAX),
+              step    = 1,
+              ticks   = FALSE
+            )
+          ),
+
+          ### Aglomerado (geográfico, atributo fijo de la vivienda → t0). Multi-
+          ### select buscable con nombres legibles. Ninguno = todos (#78).
+          tags$div(
+            class = "armador-filtro",
+            selectInput(
+              inputId  = ns("aglomerado"),
+              label    = "Aglomerado (t0)",
+              choices  = armador_aglo_opciones(),
+              selected = character(0),
+              multiple = TRUE
+            )
           )
-        ),
+        )
+      ),
 
-        ### Aglomerado (geográfico, atributo fijo de la vivienda → t0). Multi-
-        ### select buscable con nombres legibles. Ninguno = todos (#78).
-        tags$div(
-          class = "armador-filtro",
-          selectInput(
-            inputId  = ns("aglomerado"),
-            label    = "Aglomerado (t0)",
-            choices  = armador_aglo_opciones(),
-            selected = character(0),
-            multiple = TRUE
-          )
+      ### --- Grupo 3: Situación laboral (t0 o t1 según el toggle global) ----
+      tags$div(
+        class = "armador-grupo",
+        tags$h6(
+          class = "armador-grupo-titulo", "Situación laboral",
+          tags$span(class = "armador-grupo-nota", "· cambia con el toggle t0/t1")
         ),
+        bslib::layout_columns(
+          col_widths = c(6, 6),
 
-        tags$div(
-          class = "armador-filtro",
-          checkboxGroupInput(
-            inputId  = ns("sexo"),
-            label    = "Sexo (t0)",
-            choices  = ARMADOR_SEXO_CHOICES,
-            selected = character(0)
-          )
-        ),
+          tags$div(
+            class = "armador-filtro",
+            checkboxGroupInput(
+              inputId  = ns("cond_act"),
+              label    = "Condición de actividad (t0)",
+              choices  = ARMADOR_ESTADO_CHOICES,
+              selected = character(0)
+            )
+          ),
 
-        tags$div(
-          class = "armador-filtro",
-          sliderInput(
-            inputId = ns("edad"),
-            label   = "Edad (t0)",
-            min     = ARMADOR_EDAD_MIN,
-            max     = ARMADOR_EDAD_MAX,
-            value   = c(ARMADOR_EDAD_MIN, ARMADOR_EDAD_MAX),
-            step    = 1,
-            ticks   = FALSE
-          )
-        ),
-
-        tags$div(
-          class = "armador-filtro",
-          checkboxGroupInput(
-            inputId  = ns("cond_act"),
-            label    = "Condición de actividad (t0)",
-            choices  = ARMADOR_ESTADO_CHOICES,
-            selected = character(0)
-          )
-        ),
-
-        tags$div(
-          class = "armador-filtro",
-          checkboxGroupInput(
-            inputId  = ns("cat_ocup"),
-            label    = "Categoría ocupacional (t0)",
-            choices  = ARMADOR_CATOCUP_CHOICES,
-            selected = character(0)
+          tags$div(
+            class = "armador-filtro",
+            checkboxGroupInput(
+              inputId  = ns("cat_ocup"),
+              label    = "Categoría ocupacional (t0)",
+              choices  = ARMADOR_CATOCUP_CHOICES,
+              selected = character(0)
+            )
           )
         )
       ),
