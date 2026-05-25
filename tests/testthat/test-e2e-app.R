@@ -97,7 +97,10 @@ test_that("Armador: arranca en el último panel y la descarga entrega archivo", 
   frase <- app$get_value(output = "armador-frase_filtros")
   expect_true(!is.null(frase),
               info = "el descriptor frase_filtros no se renderizó")
-  expect_match(as.character(frase), "Estás por descargar",
+  ### El HTML del uiOutput puede venir como varios nodos: lo colapsamos a un
+  ### único string para que expect_match no exija que TODOS los nodos matcheen.
+  frase_txt <- paste(as.character(frase), collapse = " ")
+  expect_match(frase_txt, "Estás por descargar",
                info = "el descriptor no tiene el encabezado esperado")
 
   ### Descarga Parquet del subconjunto: el downloadHandler entrega un archivo
@@ -119,7 +122,9 @@ test_that("Armador: el filtro de Aglomerado reduce el conteo (#78)", {
   ### el panel del período. Verificamos que el descriptor mencione el aglomerado.
   app$set_inputs(`armador-aglomerado` = "32")
   app$wait_for_idle(timeout = 5000)
-  frase <- as.character(app$get_value(output = "armador-frase_filtros"))
+  ### Colapsamos el HTML multi-nodo a un string (ver test de descarga arriba).
+  frase <- paste(as.character(app$get_value(output = "armador-frase_filtros")),
+                 collapse = " ")
   expect_match(frase, "Bs\\. As\\.|Buenos Aires",
                info = "el descriptor no refleja el filtro de aglomerado")
 })

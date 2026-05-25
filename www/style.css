@@ -549,6 +549,15 @@
   margin-bottom: 0 !important;
 }
 
+/* Foco visible por teclado (a11y): los filtros NLQ ocultan el outline
+   nativo; lo restauramos sólo en :focus-visible para no afectar el hover. */
+.nlq-styling .selectize-input.focus,
+.nlq-styling .selectize-input:focus-visible,
+.nlq-styling .form-control:focus-visible {
+  outline: 2px solid var(--er-azul) !important;
+  outline-offset: 3px;
+}
+
 .nlq-styling .selectize-control.single .selectize-input:after {
   opacity: 0;
   display: block !important;
@@ -1023,7 +1032,10 @@ input:checked + .slider:before {
   border-color: #405BFF;
   text-decoration: none;
   color: #191919;
-  outline: none;
+}
+.hub-card-xl:focus-visible {
+  outline: 2px solid #405BFF;
+  outline-offset: 3px;
 }
 .hub-card-xl-icon {
   display: block;
@@ -1092,7 +1104,7 @@ input:checked + .slider:before {
 }
 .hub-footer-meta {
   font-size: 0.78rem;
-  color: #777777;
+  color: #595959;
   margin: 0.75rem 0 0 0;
 }
 .hub-footer-version {
@@ -1129,7 +1141,10 @@ input:checked + .slider:before {
   background-color: rgba(64, 91, 255, 0.08);
   color: #1839F4;
   text-decoration: none;
-  outline: none;
+}
+.section-topbar-back:focus-visible {
+  outline: 2px solid #405BFF;
+  outline-offset: 2px;
 }
 .section-topbar-back-icon {
   font-size: 0.85em;
@@ -1160,7 +1175,7 @@ input:checked + .slider:before {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  color: #777777;
+  color: #595959;
   margin: 0 0 0.75rem 0.4rem;
 }
 .section-sidebar-internal-item {
@@ -1179,7 +1194,10 @@ input:checked + .slider:before {
   background-color: #F7F7F7;
   color: #191919;
   text-decoration: none;
-  outline: none;
+}
+.section-sidebar-internal-item:focus-visible {
+  outline: 2px solid #405BFF;
+  outline-offset: 2px;
 }
 .section-sidebar-internal-item-active {
   background-color: rgba(64, 91, 255, 0.10);
@@ -1216,7 +1234,7 @@ input:checked + .slider:before {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  color: #777777;
+  color: #595959;
   margin: 0 0 0.5rem 0.4rem;
 }
 /* Compacta los radioButtons de Shiny dentro del sidebar */
@@ -1420,6 +1438,13 @@ input:checked + .slider:before {
 .armador-config .shiny-options-group {
   margin-top: 0.15rem;
 }
+/* Nota aclaratoria del toggle t0/t1 (visible, no sólo en tooltip) */
+.armador-momento-nota {
+  font-size: 0.82rem;
+  color: #595959;
+  margin: 0.35rem 0 0 0;
+  line-height: 1.4;
+}
 
 /* ----- Card de filtros ----- */
 .armador-filtros-card {
@@ -1447,7 +1472,7 @@ input:checked + .slider:before {
   font-weight: 400;
   text-transform: none;
   letter-spacing: 0;
-  color: #888;
+  color: #595959;
   font-size: 0.9em;
   margin-left: 0.4rem;
 }
@@ -1599,7 +1624,7 @@ input:checked + .slider:before {
 .armador-preview-sub {
   font-size: 0.82rem;
   font-weight: 400;
-  color: #888;
+  color: #595959;
   margin-left: 0.5rem;
 }
 .armador-preview-scroll {

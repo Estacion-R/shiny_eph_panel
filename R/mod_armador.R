@@ -569,6 +569,15 @@ mod_armador_ui <- function(id) {
           ),
           selected = "t0",
           inline   = TRUE
+        ),
+        ### Nota visible (no sólo en el tooltip): el toggle afecta SÓLO a los
+        ### dos filtros de situación laboral. Evita el error de creer que cambia
+        ### el momento de sexo/edad/período (ver issue #79, hallazgo UX A2/B4).
+        tags$p(
+          class = "armador-momento-nota",
+          "Aplica sólo a ", tags$strong("Condición de actividad"), " y ",
+          tags$strong("Categoría ocupacional"),
+          ". Sexo, edad, año y trimestre se leen siempre al inicio del dúo (t0)."
         )
       )
     ),
@@ -767,7 +776,7 @@ mod_armador_ui <- function(id) {
         icon("triangle-exclamation"),
         tags$span(
           tags$strong("Antes de descargar y usar estos datos"),
-          ", tené en cuenta sus limitaciones: intervención INDEC (2007-2015), ",
+          ", tené en cuenta sus limitaciones: consideraciones sobre los datos del INDEC (2007-2015), ",
           "panel balanceado (atrición) e inconsistencias entre t0 y t1. ",
           bslib::popover(
             tags$a(href = "#", class = "armador-aviso-link",
@@ -777,7 +786,7 @@ mod_armador_ui <- function(id) {
             tags$ul(
               style = "padding-left: 1.1rem; margin-bottom: 0.5rem;",
               tags$li(
-                tags$strong("Intervención INDEC 2007-2015: "),
+                tags$strong("Datos del INDEC 2007-2015: "),
                 "el propio organismo desestima estas series para el análisis ",
                 "del mercado de trabajo. Considerá excluirlas o reportarlas con reservas."
               ),
@@ -1020,12 +1029,14 @@ mod_armador_server <- function(id) {
       if (n == 0) {
         tags$div(
           class = "armador-warning",
+          role  = "alert",
           icon("triangle-exclamation"),
           tags$span("Ningún registro cumple los filtros seleccionados. Ajustá la selección.")
         )
       } else if (n < ARMADOR_N_MIN) {
         tags$div(
           class = "armador-warning",
+          role  = "alert",
           icon("triangle-exclamation"),
           tags$span(sprintf(
             "Muestra chica (menos de %d filas): leé los resultados con cautela.",
@@ -1073,7 +1084,22 @@ mod_armador_server <- function(id) {
 
     output$descarga_parquet <- downloadHandler(
       filename = function() nombre_archivo(".parquet"),
-      content  = function(file) arrow::write_parquet(df_descarga(), file),
+      content  = function(file) {
+        if (identical(input$etiquetas, "si")) {
+          ### Con etiquetas: organize_labels()/as_factor corren en R, así que
+          ### hace falta collect() (vía df_descarga()).
+          arrow::write_parquet(df_descarga(), file)
+        } else {
+          ### Sin etiquetas: el renombrado de salida (select + rename) se
+          ### resuelve lazy sobre Arrow; as_arrow_table() ejecuta la query en
+          ### el heap columnar de Arrow sin materializar el panel como tibble
+          ### de R. Baja el pico de RAM en el caso "panel completo" (free tier).
+          arrow::write_parquet(
+            arrow::as_arrow_table(armador_nombres_salida(panel_filtrado())),
+            file
+          )
+        }
+      },
       contentType = "application/octet-stream"
     )
 

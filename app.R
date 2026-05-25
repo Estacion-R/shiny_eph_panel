@@ -60,6 +60,8 @@ nav_item_paquete_eph <- nav_item(
 ### --------------------------------------------------------------------------
 
 ui <- page_fillable(
+  lang  = "es",
+  title = "Panel EPH · Mercado de trabajo en clave de panel · Estación R",
   theme = bslib::bs_theme(brand = "_brand.yml"),
   tags$head(
     tags$link(rel = "icon", type = "image/svg+xml",
@@ -70,6 +72,10 @@ ui <- page_fillable(
   ),
   ga4_head_tag(),
   useWaitress(color = "#405BFF"),
+  ### useWaiter() registra los handlers JS que necesitan los autoWaiter() de
+  ### los módulos de análisis/calidad (spinners por-card). Sin esto, los
+  ### autoWaiter() no muestran nada. useWaitress() es independiente (barra).
+  useWaiter(),
   include_styles,
 
   ### Outputs de control para conditionalPanel. No son visuales: solo
@@ -93,7 +99,7 @@ ui <- page_fillable(
     condition = "output.current_view == 'panel'",
     div(
       class = "section-vista",
-      section_topbar("Análisis de panel"),
+      section_topbar("Análisis de panel", back_input_id = "back_hub_panel"),
       bslib::layout_columns(
         col_widths = c(2, 10),
         gap = "1rem",
@@ -174,7 +180,7 @@ ui <- page_fillable(
     condition = "output.current_view == 'transversal'",
     div(
       class = "section-vista",
-      section_topbar("Análisis transversal"),
+      section_topbar("Análisis transversal", back_input_id = "back_hub_transversal"),
       card(
         class = "text-center proximamente-card",
         br(), br(),
@@ -191,7 +197,7 @@ ui <- page_fillable(
     condition = "output.current_view == 'metadata'",
     div(
       class = "section-vista",
-      section_topbar("Metadata"),
+      section_topbar("Metadata", back_input_id = "back_hub_metadata"),
       ### Reusamos navset_pill_list a nivel sección: hace de sidebar interno
       ### sin necesidad de reescribir panel_glosario / panel_definiciones.
       bslib::navset_pill_list(
@@ -214,7 +220,7 @@ ui <- page_fillable(
     condition = "output.current_view == 'datos'",
     div(
       class = "section-vista",
-      section_topbar("Armá tu panel"),
+      section_topbar("Armá tu panel", back_input_id = "back_hub_datos"),
       mod_armador_ui("armador")
     )
   ),
@@ -333,9 +339,17 @@ server <- function(input, output, session) {
   })
 
   ### --- Click handler: "← Inicio" ---------------------------------------
-  observeEvent(input$back_to_hub, ignoreInit = TRUE, {
-    estado_app(list(vista = "hub", subseccion = NULL))
-  })
+  ### Hay un topbar por vista y los 4 conviven en el DOM (conditionalPanel
+  ### sólo togglea display), así que cada uno usa un inputId único para
+  ### evitar "Duplicate input ID 'back_to_hub'". Todos vuelven al hub.
+  lapply(
+    c("back_hub_panel", "back_hub_transversal", "back_hub_metadata", "back_hub_datos"),
+    function(btn_id) {
+      observeEvent(input[[btn_id]], ignoreInit = TRUE, {
+        estado_app(list(vista = "hub", subseccion = NULL))
+      })
+    }
+  )
 
   ### --- Reflow Highcharts al cambiar vista/sub-sección -----------------
   ### El handler JS (www/reflow_charts.js) itera todos los charts visibles

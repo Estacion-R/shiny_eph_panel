@@ -142,7 +142,9 @@ config_cond_act <- list(
                             Ocupado = "Ocupación",
                             Desocupado = "Desocupación",
                             Inactivo = "Inactividad")
-    data <- arrow::read_parquet("data_output/df_tasas_mt.parquet") |>
+    ### df_tasas_mt ya está en memoria (cargado en ETL/01-extract.R, 86 filas):
+    ### lo referenciamos en vez de re-leer el parquet de disco en cada render.
+    data <- df_tasas_mt |>
       dplyr::filter(ANO4 == anio_ant & TRIMESTRE == trim_ant) |>
       dplyr::pull(switch(categoria_lab,
                          Ocupación = "pob_ocupada",
