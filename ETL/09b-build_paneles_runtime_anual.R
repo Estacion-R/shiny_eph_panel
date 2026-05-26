@@ -37,7 +37,8 @@ periodos_disponibles <- df_eph_full |>
 ### Mismo superset de variables que el panel intertrim, para que el
 ### switch en runtime no requiera distintos schemas.
 variables_runtime <- c("ESTADO", "CAT_OCUP", "PP07H", "PP05I", "PP05K",
-                       "formalidad", "formalidad_ampliada", "PONDERA")
+                       "formalidad", "formalidad_ampliada", "PONDERA",
+                       "AGLOMERADO")  ### #78: filtro Aglomerado en el Armador
 
 ### Enumerar dúos anuales válidos: cada periodo (ANO4, TRIMESTRE) se
 ### parea con (ANO4+1, TRIMESTRE) si éste existe en el microdato.
@@ -87,7 +88,9 @@ cat(glue::glue("\nPanel anual construido: {nrow(panel_runtime_anual)} filas, ",
 ### Forzar tipos consistentes antes de write_parquet (Periodo viene como
 ### yearq y arrow no lo soporta nativo).
 panel_runtime_anual <- panel_runtime_anual |>
-  dplyr::mutate(Periodo = as.character(Periodo))
+  dplyr::mutate(Periodo = as.character(Periodo)) |>
+  ### AGLOMERADO es atributo fijo de la vivienda: sólo t0, sin _t1 (#78).
+  dplyr::select(-dplyr::any_of("AGLOMERADO_t1"))
 
 path_out <- "data_output/panel_runtime_anual.parquet"
 arrow::write_parquet(panel_runtime_anual, path_out, compression = "snappy")

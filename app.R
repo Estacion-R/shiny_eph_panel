@@ -16,7 +16,8 @@ source("R/mod_analisis.R")
 source("R/mod_calidad_panel.R")
 source("R/utils_analytics.R")
 source("R/panels_metadata.R")
-source("R/panel_descarga.R")
+source("R/panel_descarga.R")  ### define columnas_panel_runtime (diccionario)
+source("R/mod_armador.R")     ### Armador de panel (#77), reemplaza panel_descarga_content
 source("R/version.R")
 source("R/panel_hub.R")
 source("R/panel_seccion.R")
@@ -59,6 +60,8 @@ nav_item_paquete_eph <- nav_item(
 ### --------------------------------------------------------------------------
 
 ui <- page_fillable(
+  lang  = "es",
+  title = "Panel EPH · Mercado de trabajo en clave de panel · Estación R",
   theme = bslib::bs_theme(brand = "_brand.yml"),
   tags$head(
     tags$link(rel = "icon", type = "image/svg+xml",
@@ -69,6 +72,10 @@ ui <- page_fillable(
   ),
   ga4_head_tag(),
   useWaitress(color = "#405BFF"),
+  ### useWaiter() registra los handlers JS que necesitan los autoWaiter() de
+  ### los módulos de análisis/calidad (spinners por-card). Sin esto, los
+  ### autoWaiter() no muestran nada. useWaitress() es independiente (barra).
+  useWaiter(),
   include_styles,
 
   ### Outputs de control para conditionalPanel. No son visuales: solo
@@ -92,7 +99,7 @@ ui <- page_fillable(
     condition = "output.current_view == 'panel'",
     div(
       class = "section-vista",
-      section_topbar("Análisis de panel"),
+      section_topbar("Análisis de panel", back_input_id = "back_hub_panel"),
       bslib::layout_columns(
         col_widths = c(2, 10),
         gap = "1rem",
@@ -173,7 +180,7 @@ ui <- page_fillable(
     condition = "output.current_view == 'transversal'",
     div(
       class = "section-vista",
-      section_topbar("Análisis transversal"),
+      section_topbar("Análisis transversal", back_input_id = "back_hub_transversal"),
       card(
         class = "text-center proximamente-card",
         br(), br(),
@@ -190,7 +197,7 @@ ui <- page_fillable(
     condition = "output.current_view == 'metadata'",
     div(
       class = "section-vista",
-      section_topbar("Metadata"),
+      section_topbar("Metadata", back_input_id = "back_hub_metadata"),
       ### Reusamos navset_pill_list a nivel sección: hace de sidebar interno
       ### sin necesidad de reescribir panel_glosario / panel_definiciones.
       bslib::navset_pill_list(
@@ -205,13 +212,16 @@ ui <- page_fillable(
     )
   ),
 
-  ### ----- Vista "datos" -----
+  ### ----- Vista "datos": Armador de panel (#77) -----
+  ### El Armador reemplaza a la sección "Datos descargables": misma descarga,
+  ### ahora con filtros. Conserva el view key "datos" para no romper bookmarks
+  ### (?v=datos). Ver R/mod_armador.R.
   conditionalPanel(
     condition = "output.current_view == 'datos'",
     div(
       class = "section-vista",
-      section_topbar("Datos"),
-      panel_descarga_content
+      section_topbar("Armá tu panel", back_input_id = "back_hub_datos"),
+      mod_armador_ui("armador")
     )
   ),
 
@@ -260,6 +270,10 @@ server <- function(input, output, session) {
   mod_analisis_server("cat_ocup",   config_cat_ocup,   tipo_duo = tipo_duo)
   mod_analisis_server("formalidad", config_formalidad, tipo_duo = tipo_duo)
   mod_calidad_panel_server("calidad", tipo_duo = tipo_duo)
+
+  ### Armador de panel (#77). Tiene su propio selector de dataset (intertrim/
+  ### anual) interno, no depende del tipo_duo global del análisis de panel.
+  mod_armador_server("armador")
 
   ### --- Badge contextual del modo activo ------------------------------
   ### Aparece arriba del contenido en la vista "panel" para que el modo
@@ -325,9 +339,17 @@ server <- function(input, output, session) {
   })
 
   ### --- Click handler: "← Inicio" ---------------------------------------
-  observeEvent(input$back_to_hub, ignoreInit = TRUE, {
-    estado_app(list(vista = "hub", subseccion = NULL))
-  })
+  ### Hay un topbar por vista y los 4 conviven en el DOM (conditionalPanel
+  ### sólo togglea display), así que cada uno usa un inputId único para
+  ### evitar "Duplicate input ID 'back_to_hub'". Todos vuelven al hub.
+  lapply(
+    c("back_hub_panel", "back_hub_transversal", "back_hub_metadata", "back_hub_datos"),
+    function(btn_id) {
+      observeEvent(input[[btn_id]], ignoreInit = TRUE, {
+        estado_app(list(vista = "hub", subseccion = NULL))
+      })
+    }
+  )
 
   ### --- Reflow Highcharts al cambiar vista/sub-sección -----------------
   ### El handler JS (www/reflow_charts.js) itera todos los charts visibles
@@ -383,48 +405,10 @@ server <- function(input, output, session) {
       )
   })
 
-  ### --------------------------------------------------------------------
-  ### Descargas del panel longitudinal (issue #35).
-  ### El parquet y el CSV gzip se sirven copiando archivos de
-  ### data_output/ (sin procesamiento en runtime). El diccionario se
-  ### genera on-demand a partir del tibble columnas_panel_runtime.
-  ### El tracking GA4 se dispara client-side (ver download_btn_tracked).
-  ### --------------------------------------------------------------------
-
-  servir_archivo <- function(ruta_relativa, nombre_descarga) {
-    shiny::downloadHandler(
-      filename = function() nombre_descarga,
-      content  = function(file) file.copy(ruta_relativa, file),
-      contentType = NA
-    )
-  }
-
-  output$descarga_panel_runtime_parquet <- servir_archivo(
-    "data_output/panel_runtime.parquet",
-    paste0("eph_panel_runtime_", format(Sys.Date(), "%Y%m%d"), ".parquet"))
-
-  output$descarga_panel_runtime_csv <- servir_archivo(
-    "data_output/panel_runtime.csv.gz",
-    paste0("eph_panel_runtime_", format(Sys.Date(), "%Y%m%d"), ".csv.gz"))
-
-  ### Panel anual (issue #47).
-  output$descarga_panel_runtime_anual_parquet <- servir_archivo(
-    "data_output/panel_runtime_anual.parquet",
-    paste0("eph_panel_runtime_anual_", format(Sys.Date(), "%Y%m%d"), ".parquet"))
-
-  output$descarga_panel_runtime_anual_csv <- servir_archivo(
-    "data_output/panel_runtime_anual.csv.gz",
-    paste0("eph_panel_runtime_anual_", format(Sys.Date(), "%Y%m%d"), ".csv.gz"))
-
-  output$descarga_diccionario_csv <- shiny::downloadHandler(
-    filename = function() {
-      paste0("eph_panel_diccionario_", format(Sys.Date(), "%Y%m%d"), ".csv")
-    },
-    content = function(file) {
-      readr::write_csv(columnas_panel_runtime, file)
-    },
-    contentType = "text/csv"
-  )
+  ### Descargas del panel longitudinal (issue #35): migradas al Armador de
+  ### panel (#77, R/mod_armador.R). Los downloadHandler ahora viven en el
+  ### módulo (descarga filtrada con collect() bajo demanda + diccionario).
+  ### La sección "Datos descargables" estática quedó retirada en F3.
 }
 
 

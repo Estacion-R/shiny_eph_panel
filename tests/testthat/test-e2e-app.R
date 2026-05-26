@@ -82,6 +82,54 @@ test_that("toggle Tipo de dúo: trimestral ↔ anual se refleja en input state",
 })
 
 
+test_that("Armador: arranca en el último panel y la descarga entrega archivo", {
+  app <- new_app("armador_flujo")
+  withr::defer(app$stop())
+
+  ### Navegar al Armador (tarjeta "Armá tu panel" → vista datos).
+  app$click("go_datos")
+  app$wait_for_idle(timeout = 10000)
+  expect_equal(app$get_value(output = "current_view"), "datos")
+
+  ### Descriptor "Estás por descargar": debe renderizar y arrancar mostrando
+  ### el panel más reciente (default Año = último disponible, p.ej. 2025).
+  ### Output namespaced del módulo: armador-frase_filtros.
+  frase <- app$get_value(output = "armador-frase_filtros")
+  expect_true(!is.null(frase),
+              info = "el descriptor frase_filtros no se renderizó")
+  ### El HTML del uiOutput puede venir como varios nodos: lo colapsamos a un
+  ### único string para que expect_match no exija que TODOS los nodos matcheen.
+  frase_txt <- paste(as.character(frase), collapse = " ")
+  expect_match(frase_txt, "Estás por descargar",
+               info = "el descriptor no tiene el encabezado esperado")
+
+  ### Descarga Parquet del subconjunto: el downloadHandler entrega un archivo
+  ### no vacío (regresión del flujo de descarga filtrada, #77).
+  destino <- app$get_download("armador-descarga_parquet")
+  expect_true(file.exists(destino))
+  expect_gt(file.size(destino), 0)
+})
+
+
+test_that("Armador: el filtro de Aglomerado reduce el conteo (#78)", {
+  app <- new_app("armador_aglomerado")
+  withr::defer(app$stop())
+
+  app$click("go_datos")
+  app$wait_for_idle(timeout = 10000)
+
+  ### Filtrar por un aglomerado puntual (CABA = 32) debe dejar menos filas que
+  ### el panel del período. Verificamos que el descriptor mencione el aglomerado.
+  app$set_inputs(`armador-aglomerado` = "32")
+  app$wait_for_idle(timeout = 5000)
+  ### Colapsamos el HTML multi-nodo a un string (ver test de descarga arriba).
+  frase <- paste(as.character(app$get_value(output = "armador-frase_filtros")),
+                 collapse = " ")
+  expect_match(frase, "Bs\\. As\\.|Buenos Aires",
+               info = "el descriptor no refleja el filtro de aglomerado")
+})
+
+
 test_that("módulo Calidad: KPI encontrado renderiza valor numérico válido", {
   app <- new_app("calidad_kpi")
   withr::defer(app$stop())

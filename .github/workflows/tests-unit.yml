@@ -41,7 +41,11 @@ jobs:
           install.packages(c(
             "testthat", "tibble", "dplyr", "tidyr", "purrr", "readr",
             "stringr", "glue", "arrow", "withr", "rlang", "assertthat",
-            "shiny", "bslib", "eph"
+            "shiny", "bslib", "eph",
+            ### haven: eph lo tiene en Suggests (no se instala con eph). El
+            ### Armador lo usa (armador_etiquetar -> haven::as_factor) y está
+            ### en init.R del runtime; el test del etiquetado lo necesita (#78).
+            "haven"
           ))
         shell: Rscript {0}
 

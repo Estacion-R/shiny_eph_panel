@@ -1,9 +1,20 @@
 ### Panel "Datos" (issue #35).
 ###
-### Expone el dataset principal del panel longitudinal en dos formatos
+### SUPERSEDED por el Armador de panel (#77, R/mod_armador.R) en F3
+### (2026-05-23): la vista "datos" ahora monta mod_armador_ui("armador") y la
+### descarga es filtrada. De este archivo SÓLO se sigue usando el tibble
+### `columnas_panel_runtime` (diccionario canónico de las 31 variables), que el
+### módulo referencia para su descarga de diccionario.
+###
+### `panel_descarga_content`, `panel_descarga` y los helpers download_*() ya no
+### se montan en ninguna vista. Se conservan para rollback; pueden eliminarse en
+### el housekeeping de código muerto (#39).
+###
+### --- (histórico) ---
+### Exponía el dataset principal del panel longitudinal en dos formatos
 ### (parquet + CSV gzip) y el diccionario de variables como CSV.
-### Server-side: los downloadHandler() viven en app.R y leen los archivos
-### de data_output/ directamente. No hay procesamiento en runtime.
+### Server-side: los downloadHandler() vivían en app.R y leían los archivos
+### de data_output/ directamente. No había procesamiento en runtime.
 ###
 ### Tracking: cada botón dispara un evento GA4 'dataset_download' con
 ### {dataset, format} via onclick (el click burbujea al wrapper). Si gtag
@@ -23,6 +34,7 @@ columnas_panel_runtime <- tibble::tribble(
   "TRIMESTRE",              "Trimestre del registro en t0.",
   "CH04",                   "Sexo (1=Varón, 2=Mujer).",
   "CH06",                   "Edad en años cumplidos.",
+  "AGLOMERADO",             "Aglomerado urbano EPH (código INDEC). Atributo fijo de la vivienda: no cambia entre t0 y t1, por eso no tiene versión _t1.",
   "ESTADO",                 "Condición de actividad en t0 (1=Ocupado, 2=Desocupado, 3=Inactivo, 4=Menor de 10 años).",
   "CAT_OCUP",               "Categoría ocupacional en t0 (1=Patrón, 2=Cuenta propia, 3=Asalariado, 4=Trab. familiar).",
   "PP07H",                  "Descuento jubilatorio (asalariados, t0). 1=Sí, 2=No.",
