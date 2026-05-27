@@ -515,276 +515,294 @@ mod_analisis_server <- function(id, config,
                         choices = duos, selected = seleccion_nueva)
     })
 
-    ### --- Observe principal: outputs de la tab Foto + helpers reactivos ---
-    observe({
+    ### --- Reactives de datos de la tab Foto (issue #79) ---
+    ###
+    ### Antes vivían dentro de un observe() que se reejecutaba ante cualquier
+    ### cambio de input (incluido el sentido del Sankey o la categoría),
+    ### recreando los reactives y perdiendo la memoización: armo_base_panel()
+    ### (la operación cara) corría de más. Ahora son reactives a nivel módulo
+    ### que sólo se invalidan cuando cambian sus verdaderas dependencias.
 
+    ### Dúo (t0, t1) derivado de los selectores año + trimestre.
+    periodo_duo <- reactive({
       anio_ant <- as.numeric(input$anio_ant)
-      anio_post <- ifelse(as.numeric(input$trimestre_ant) %in% c(1:3),
-                          as.numeric(input$anio_ant),
-                          as.numeric(input$anio_ant) + 1)
       trim_ant <- as.numeric(input$trimestre_ant)
-      trim_post <- ifelse(as.numeric(input$trimestre_ant) %in% c(1:3),
-                          as.numeric(input$trimestre_ant) + 1, 1)
+      req(!is.na(anio_ant), !is.na(trim_ant))
+      en_mismo_anio <- trim_ant %in% 1:3
+      list(
+        anio_ant  = anio_ant,
+        trim_ant  = trim_ant,
+        anio_post = if (en_mismo_anio) anio_ant else anio_ant + 1,
+        trim_post = if (en_mismo_anio) trim_ant + 1 else 1
+      )
+    })
 
-      sentido <- input$periodo_base
+    ### Panel base reusado por Sankey + matriz + tarjetas de tasas. Sólo
+    ### depende del dúo y del modo → queda cacheado mientras no cambien
+    ### (no se recomputa al cambiar sentido del Sankey ni categoría).
+    df_eph_panel <- reactive({
+      p <- periodo_duo()
+      ### Si el config no especifica vars_panel_eph, usar el default de
+      ### armo_base_panel (cond_act es el único caso así).
+      if (is.null(config$vars_panel_eph)) {
+        armo_base_panel(anio_0 = p$anio_ant, trimestre_0 = p$trim_ant,
+                        anio_1 = p$anio_post, trimestre_1 = p$trim_post,
+                        window = tipo_duo())
+      } else {
+        armo_base_panel(anio_0 = p$anio_ant, trimestre_0 = p$trim_ant,
+                        anio_1 = p$anio_post, trimestre_1 = p$trim_post,
+                        variables = config$vars_panel_eph,
+                        window = tipo_duo())
+      }
+    })
+
+    ### Tarjetas con tasas destacadas (issue #16 · opción B).
+    ### Si el config trae validate_pre_render_fn (formalidad ampliada),
+    ### devolvemos NA cuando no hay datos para no romper renders.
+    tasas <- reactive({
+      if (!is.null(config$validate_pre_render_fn)) {
+        msg <- config$validate_pre_render_fn(input, df_eph_panel(), definicion())
+        if (!is.null(msg)) {
+          return(list(persistencia = NA, salida = NA, entrada = NA))
+        }
+      }
+      arma_tasas_destacadas(
+        df_panel = df_eph_panel(),
+        var = var_panel_actual(),
+        etiquetas = config$etiquetas_codigo,
+        categoria = input$category
+      )
+    })
+
+    ### Delta vs mismo dúo trimestral del año anterior (issue #21).
+    tasas_anio_ant <- reactive({
+      p <- periodo_duo()
+      anio_prev <- p$anio_ant - 1
+      if (anio_prev < min(anios_disponibles)) return(NULL)
+      anio_post_prev <- p$anio_post - 1
+      existe <- paste(anio_prev, p$trim_ant) %in%
+                  paste(periodos_disponibles$ANO4, periodos_disponibles$TRIMESTRE) &&
+                paste(anio_post_prev, p$trim_post) %in%
+                  paste(periodos_disponibles$ANO4, periodos_disponibles$TRIMESTRE)
+      if (!existe) return(NULL)
+      df_prev <- if (is.null(config$vars_panel_eph)) {
+        armo_base_panel(anio_0 = anio_prev, trimestre_0 = p$trim_ant,
+                        anio_1 = anio_post_prev, trimestre_1 = p$trim_post,
+                        window = tipo_duo())
+      } else {
+        armo_base_panel(anio_0 = anio_prev, trimestre_0 = p$trim_ant,
+                        anio_1 = anio_post_prev, trimestre_1 = p$trim_post,
+                        variables = config$vars_panel_eph,
+                        window = tipo_duo())
+      }
+      if (!is.null(config$validate_pre_render_fn)) {
+        msg <- config$validate_pre_render_fn(input, df_prev, definicion())
+        if (!is.null(msg)) return(NULL)
+      }
+      arma_tasas_destacadas(
+        df_panel = df_prev, var = var_panel_actual(),
+        etiquetas = config$etiquetas_codigo,
+        categoria = input$category
+      )
+    })
+
+    delta_label <- reactive({
+      p <- periodo_duo()
+      anio_prev <- p$anio_ant - 1
+      glue::glue("vs {anio_prev} T{p$trim_ant}-T{p$trim_post}")
+    })
+
+    ### --- Outputs de la tab Foto ---
+
+    ### Etiqueta del value box "Población" (texto + número formateado).
+    output$pob <- renderText({
+      config$pob_label_fn(input, definicion = definicion())
+    })
+    output$pob_n <- renderText({
+      p <- periodo_duo()
+      config$pob_n_fn(input,
+                      anio_ant = p$anio_ant, trim_ant = p$trim_ant,
+                      anio_post = p$anio_post, trim_post = p$trim_post,
+                      tipo_duo = tipo_duo(),
+                      var_panel = var_panel_actual(), definicion = definicion())
+    })
+    output$periodo <- renderText({
+      p <- periodo_duo()
+      paste("Año ", p$anio_ant, ", trimestre ", p$trim_ant)
+    })
+
+    output$tasa_persistencia <- renderText({
+      v <- tasas()$persistencia
+      if (is.na(v)) "—" else paste0(v, "%")
+    })
+    output$tasa_salida <- renderText({
+      v <- tasas()$salida
+      if (is.na(v)) "—" else paste0(v, "%")
+    })
+    output$tasa_entrada <- renderText({
+      v <- tasas()$entrada
+      if (is.na(v)) "—" else paste0(v, "%")
+    })
+
+    output$delta_persistencia <- renderText({
+      ant <- tasas_anio_ant()
+      if (is.null(ant) || is.na(tasas()$persistencia)) return("sin comparación previa")
+      paste(formato_delta(tasas()$persistencia - ant$persistencia), delta_label())
+    })
+    output$delta_salida <- renderText({
+      ant <- tasas_anio_ant()
+      if (is.null(ant) || is.na(tasas()$salida)) return("sin comparación previa")
+      paste(formato_delta(tasas()$salida - ant$salida), delta_label())
+    })
+    output$delta_entrada <- renderText({
+      ant <- tasas_anio_ant()
+      if (is.null(ant) || is.na(tasas()$entrada)) return("sin comparación previa")
+      paste(formato_delta(tasas()$entrada - ant$entrada), delta_label())
+    })
+
+    ### Matriz de transición (issue #16 · opción A).
+    output$matriz_transicion <- gt::render_gt({
+      if (!is.null(config$validate_pre_render_fn)) {
+        msg <- config$validate_pre_render_fn(input, df_eph_panel(), definicion())
+        shiny::validate(shiny::need(is.null(msg), msg))
+      }
+      matriz <- arma_matriz_transicion(
+        df_panel = df_eph_panel(),
+        var = var_panel_actual(),
+        etiquetas = config$etiquetas_codigo
+      )
+      arma_matriz_transicion_gt(matriz, titulo = NULL)
+    })
+
+    ### Sankey principal (Foto).
+    output$sankey <- renderHighchart({
+      p   <- periodo_duo()
       def <- definicion()
-      vp <- var_panel_actual()
+      vp  <- var_panel_actual()
 
-      ### Etiqueta del value box "Población" (texto + número formateado).
-      output$pob <- renderText({
-        config$pob_label_fn(input, definicion = def)
-      })
-      output$pob_n <- renderText({
-        config$pob_n_fn(input,
-                        anio_ant = anio_ant, trim_ant = trim_ant,
-                        anio_post = anio_post, trim_post = trim_post,
-                        tipo_duo = tipo_duo(),
-                        var_panel = vp, definicion = def)
-      })
-      output$periodo <- renderText({
-        paste("Año ", anio_ant, ", trimestre ", trim_ant)
-      })
+      ### Issue #44: req() pausa el render durante transiciones del
+      ### toggle intertrim/anual cuando el panel queda vacío unos ms.
+      req(nrow(df_eph_panel()) > 0)
 
-      ### Panel base reusado por Sankey + matriz + tarjetas de tasas.
-      df_eph_panel <- reactive({
-        ### Si el config no especifica vars_panel_eph, usar el default de
-        ### armo_base_panel (cond_act es el único caso así).
-        if (is.null(config$vars_panel_eph)) {
-          armo_base_panel(anio_0 = anio_ant, trimestre_0 = trim_ant,
-                          anio_1 = anio_post, trimestre_1 = trim_post,
-                          window = tipo_duo())
-        } else {
-          armo_base_panel(anio_0 = anio_ant, trimestre_0 = trim_ant,
-                          anio_1 = anio_post, trimestre_1 = trim_post,
-                          variables = config$vars_panel_eph,
-                          window = tipo_duo())
-        }
-      })
+      if (!is.null(config$validate_pre_render_fn)) {
+        msg <- config$validate_pre_render_fn(input, df_eph_panel(), def)
+        shiny::validate(shiny::need(is.null(msg), msg))
+      }
 
-      ### Tarjetas con tasas destacadas (issue #16 · opción B).
-      ### Si el config trae validate_pre_render_fn (formalidad ampliada),
-      ### devolvemos NA cuando no hay datos para no romper renders.
-      tasas <- reactive({
-        if (!is.null(config$validate_pre_render_fn)) {
-          msg <- config$validate_pre_render_fn(input, df_eph_panel(), def)
-          if (!is.null(msg)) {
-            return(list(persistencia = NA, salida = NA, entrada = NA))
-          }
-        }
-        arma_tasas_destacadas(
-          df_panel = df_eph_panel(),
-          var = vp,
-          etiquetas = config$etiquetas_codigo,
-          categoria = input$category
-        )
-      })
+      tabla_sankey <- armo_tabla_sankey(
+          table = preparo_base(
+            df = df_eph_panel(),
+            periodo_base = input$periodo_base,
+            var = vp,
+            etiquetas = config$etiquetas_codigo),
+          categoria = input$category) |>
+        dplyr::mutate(dplyr::across(c(from, to), sankey_label_legible))
+      req(nrow(tabla_sankey) > 0)
 
-      ### Delta vs mismo dúo trimestral del año anterior (issue #21).
-      tasas_anio_ant <- reactive({
-        anio_prev <- anio_ant - 1
-        if (anio_prev < min(anios_disponibles)) return(NULL)
-        anio_post_prev <- anio_post - 1
-        existe <- paste(anio_prev, trim_ant) %in%
-                    paste(periodos_disponibles$ANO4, periodos_disponibles$TRIMESTRE) &&
-                  paste(anio_post_prev, trim_post) %in%
-                    paste(periodos_disponibles$ANO4, periodos_disponibles$TRIMESTRE)
-        if (!existe) return(NULL)
-        df_prev <- if (is.null(config$vars_panel_eph)) {
-          armo_base_panel(anio_0 = anio_prev, trimestre_0 = trim_ant,
-                          anio_1 = anio_post_prev, trimestre_1 = trim_post,
-                          window = tipo_duo())
-        } else {
-          armo_base_panel(anio_0 = anio_prev, trimestre_0 = trim_ant,
-                          anio_1 = anio_post_prev, trimestre_1 = trim_post,
-                          variables = config$vars_panel_eph,
-                          window = tipo_duo())
-        }
-        if (!is.null(config$validate_pre_render_fn)) {
-          msg <- config$validate_pre_render_fn(input, df_prev, def)
-          if (!is.null(msg)) return(NULL)
-        }
-        arma_tasas_destacadas(
-          df_panel = df_prev, var = vp,
-          etiquetas = config$etiquetas_codigo,
-          categoria = input$category
-        )
-      })
+      ### Caption del Sankey (con extra de definición si aplica).
+      caption_text <- "Fuente: Elaboración propia en base a la EPH-INDEC"
+      if (!is.null(config$caption_sankey_extra_fn)) {
+        caption_text <- paste(caption_text,
+                              config$caption_sankey_extra_fn(input, def))
+      }
 
-      delta_label <- reactive({
-        anio_prev <- anio_ant - 1
-        glue::glue("vs {anio_prev} T{trim_ant}-T{trim_post}")
-      })
+      highcharter::hchart(
+        object = tabla_sankey,
+        "sankey",
+        name = config$sentido_label_fn(input, sentido_t = input$periodo_base,
+                                        definicion = def)
+      ) |>
+        hc_title(text = config$titulo_sankey) |>
+        hc_subtitle(text = glue(
+          "Panel {ifelse(p$trim_ant %in% 1:3,
+            paste0(p$anio_ant, ' - ', 'trimestre ', p$trim_ant, ' y ', p$trim_post),
+            paste0(p$anio_ant, ' - ', 'trimestre ', p$trim_ant, ' y ', p$anio_ant + 1, ' trimestre ', p$trim_post))}")) |>
+        hc_caption(text = caption_text) |>
+        hc_plotOptions(sankey = list(
+          nodes = sankey_nodes_orden(config$sankey_nodes_labels)
+        )) |>
+        hc_add_theme(hc_theme_estacion_r)
+    })
 
-      output$tasa_persistencia <- renderText({
-        v <- tasas()$persistencia
-        if (is.na(v)) "—" else paste0(v, "%")
-      })
-      output$tasa_salida <- renderText({
-        v <- tasas()$salida
-        if (is.na(v)) "—" else paste0(v, "%")
-      })
-      output$tasa_entrada <- renderText({
-        v <- tasas()$entrada
-        if (is.na(v)) "—" else paste0(v, "%")
-      })
+    ### Sub-tab "Tasas": serie temporal de Persistencia/Salida/Entrada (issue #22).
+    output$tasas_chart <- renderHighchart({
+      df_tasas <- df_tasas_actual()
+      shiny::validate(shiny::need(
+        nrow(df_tasas) > 0,
+        "Histórico de tasas todavía no fue computado para este modo. Correr ETL/08-build_tasas_historico.R o ETL/11-build_historicos_anuales.R."
+      ))
+      ### En cond_act: validar que haya al menos un tipo de tasa elegida.
+      if (isTRUE(config$incluir_selector_tipo_tasa)) {
+        shiny::validate(shiny::need(
+          length(input$tasas_tipo) > 0,
+          "Seleccioná al menos un tipo de tasa."
+        ))
+      }
 
-      output$delta_persistencia <- renderText({
-        ant <- tasas_anio_ant()
-        if (is.null(ant) || is.na(tasas()$persistencia)) return("sin comparación previa")
-        paste(formato_delta(tasas()$persistencia - ant$persistencia), delta_label())
-      })
-      output$delta_salida <- renderText({
-        ant <- tasas_anio_ant()
-        if (is.null(ant) || is.na(tasas()$salida)) return("sin comparación previa")
-        paste(formato_delta(tasas()$salida - ant$salida), delta_label())
-      })
-      output$delta_entrada <- renderText({
-        ant <- tasas_anio_ant()
-        if (is.null(ant) || is.na(tasas()$entrada)) return("sin comparación previa")
-        paste(formato_delta(tasas()$entrada - ant$entrada), delta_label())
-      })
+      df_data <- df_tasas |>
+        dplyr::filter(categoria == input$tasas_category) |>
+        dplyr::filter(input$tasas_duo == "todos" |
+                        stringr::str_ends(as.character(periodo), input$tasas_duo)) |>
+        dplyr::arrange(periodo) |>
+        tidyr::pivot_longer(c(persistencia, salida, entrada),
+                            names_to = "to", values_to = "weight") |>
+        dplyr::mutate(to = dplyr::recode(to,
+                                          persistencia = "Persistencia",
+                                          salida = "Salida",
+                                          entrada = "Entrada"),
+                       id = paste0(categoria, "_", to))
 
-      ### Matriz de transición (issue #16 · opción A).
-      output$matriz_transicion <- gt::render_gt({
-        if (!is.null(config$validate_pre_render_fn)) {
-          msg <- config$validate_pre_render_fn(input, df_eph_panel(), def)
-          shiny::validate(shiny::need(is.null(msg), msg))
-        }
-        matriz <- arma_matriz_transicion(
-          df_panel = df_eph_panel(),
-          var = vp,
-          etiquetas = config$etiquetas_codigo
-        )
-        arma_matriz_transicion_gt(matriz, titulo = NULL)
-      })
+      ### Filtrar por tipo de tasa si el config lo expone.
+      if (isTRUE(config$incluir_selector_tipo_tasa)) {
+        df_data <- df_data |> dplyr::filter(to %in% input$tasas_tipo)
+      }
 
-      ### Sankey principal (Foto).
-      output$sankey <- renderHighchart({
-        ### Issue #44: req() pausa el render durante transiciones del
-        ### toggle intertrim/anual cuando el panel queda vacío unos ms.
-        req(nrow(df_eph_panel()) > 0)
+      df_data <- df_data |>
+        dplyr::mutate(isExtremo = (weight == max(weight, na.rm = TRUE)) |
+                                   (weight == min(weight, na.rm = TRUE)),
+                       .by = to)
 
-        if (!is.null(config$validate_pre_render_fn)) {
-          msg <- config$validate_pre_render_fn(input, df_eph_panel(), def)
-          shiny::validate(shiny::need(is.null(msg), msg))
-        }
+      arma_line_chart_areaspline(
+        df_data = df_data,
+        levels_periodo = levels(df_tasas$periodo),
+        mostrar_pandemia = config$mostrar_pandemia_fn(input, "tasas", definicion()),
+        tick_interval = if (input$tasas_duo == "todos") 4 else 1,
+        excluir_intervencion = isTRUE(input$excluir_int_tasas),
+        caption_text = config$tasas_caption_fn(input, definicion = definicion())
+      )
+    })
 
-        tabla_sankey <- armo_tabla_sankey(
-            table = preparo_base(
-              df = df_eph_panel(),
-              periodo_base = input$periodo_base,
-              var = vp,
-              etiquetas = config$etiquetas_codigo),
-            categoria = input$category) |>
-          dplyr::mutate(dplyr::across(c(from, to), sankey_label_legible))
-        req(nrow(tabla_sankey) > 0)
+    ### Sub-tab "Película": serie histórica del Sankey por categoría destino.
+    output$line <- renderHighchart({
+      df_pelicula <- df_pelicula_actual()
+      shiny::validate(shiny::need(
+        nrow(df_pelicula) > 0,
+        "Histórico de Película todavía no fue computado para este modo. Correr ETL/11-build_historicos_anuales.R o (formalidad ampliada) ETL/07-build_panel_formalidad_ampliada.R."
+      ))
 
-        ### Caption del Sankey (con extra de definición si aplica).
-        caption_text <- "Fuente: Elaboración propia en base a la EPH-INDEC"
-        if (!is.null(config$caption_sankey_extra_fn)) {
-          caption_text <- paste(caption_text,
-                                config$caption_sankey_extra_fn(input, def))
-        }
-
-        highcharter::hchart(
-          object = tabla_sankey,
-          "sankey",
-          name = config$sentido_label_fn(input, sentido_t = sentido,
-                                          definicion = def)
+      df_data <- df_pelicula |>
+        dplyr::filter(from == input$desde, to %in% input$hacia) |>
+        dplyr::filter(input$duo == "todos" |
+                        stringr::str_ends(as.character(periodo), input$duo)) |>
+        dplyr::arrange(periodo) |>
+        dplyr::mutate(
+          to = config$pelicula_serie_label_fn(from, to),
+          id = stringr::str_replace_all(id, "tant", "t0"),
+          id = stringr::str_replace_all(id, "tpost", "t2")
         ) |>
-          hc_title(text = config$titulo_sankey) |>
-          hc_subtitle(text = glue(
-            "Panel {ifelse(trim_ant %in% 1:3,
-              paste0(anio_ant, ' - ', 'trimestre ', trim_ant, ' y ', trim_post),
-              paste0(anio_ant, ' - ', 'trimestre ', trim_ant, ' y ', anio_ant + 1, ' trimestre ', trim_post))}")) |>
-          hc_caption(text = caption_text) |>
-          hc_plotOptions(sankey = list(
-            nodes = sankey_nodes_orden(config$sankey_nodes_labels)
-          )) |>
-          hc_add_theme(hc_theme_estacion_r)
-      })
+        dplyr::mutate(isExtremo = (weight == max(weight, na.rm = TRUE)) |
+                                   (weight == min(weight, na.rm = TRUE)),
+                       .by = to)
 
-      ### Sub-tab "Tasas": serie temporal de Persistencia/Salida/Entrada (issue #22).
-      output$tasas_chart <- renderHighchart({
-        df_tasas <- df_tasas_actual()
-        shiny::validate(shiny::need(
-          nrow(df_tasas) > 0,
-          "Histórico de tasas todavía no fue computado para este modo. Correr ETL/08-build_tasas_historico.R o ETL/11-build_historicos_anuales.R."
-        ))
-        ### En cond_act: validar que haya al menos un tipo de tasa elegida.
-        if (isTRUE(config$incluir_selector_tipo_tasa)) {
-          shiny::validate(shiny::need(
-            length(input$tasas_tipo) > 0,
-            "Seleccioná al menos un tipo de tasa."
-          ))
-        }
-
-        df_data <- df_tasas |>
-          dplyr::filter(categoria == input$tasas_category) |>
-          dplyr::filter(input$tasas_duo == "todos" |
-                          stringr::str_ends(as.character(periodo), input$tasas_duo)) |>
-          dplyr::arrange(periodo) |>
-          tidyr::pivot_longer(c(persistencia, salida, entrada),
-                              names_to = "to", values_to = "weight") |>
-          dplyr::mutate(to = dplyr::recode(to,
-                                            persistencia = "Persistencia",
-                                            salida = "Salida",
-                                            entrada = "Entrada"),
-                         id = paste0(categoria, "_", to))
-
-        ### Filtrar por tipo de tasa si el config lo expone.
-        if (isTRUE(config$incluir_selector_tipo_tasa)) {
-          df_data <- df_data |> dplyr::filter(to %in% input$tasas_tipo)
-        }
-
-        df_data <- df_data |>
-          dplyr::mutate(isExtremo = (weight == max(weight, na.rm = TRUE)) |
-                                     (weight == min(weight, na.rm = TRUE)),
-                         .by = to)
-
-        arma_line_chart_areaspline(
-          df_data = df_data,
-          levels_periodo = levels(df_tasas$periodo),
-          mostrar_pandemia = config$mostrar_pandemia_fn(input, "tasas", def),
-          tick_interval = if (input$tasas_duo == "todos") 4 else 1,
-          excluir_intervencion = isTRUE(input$excluir_int_tasas),
-          caption_text = config$tasas_caption_fn(input, definicion = def)
-        )
-      })
-
-      ### Sub-tab "Película": serie histórica del Sankey por categoría destino.
-      output$line <- renderHighchart({
-        df_pelicula <- df_pelicula_actual()
-        shiny::validate(shiny::need(
-          nrow(df_pelicula) > 0,
-          "Histórico de Película todavía no fue computado para este modo. Correr ETL/11-build_historicos_anuales.R o (formalidad ampliada) ETL/07-build_panel_formalidad_ampliada.R."
-        ))
-
-        df_data <- df_pelicula |>
-          dplyr::filter(from == input$desde, to %in% input$hacia) |>
-          dplyr::filter(input$duo == "todos" |
-                          stringr::str_ends(as.character(periodo), input$duo)) |>
-          dplyr::arrange(periodo) |>
-          dplyr::mutate(
-            to = config$pelicula_serie_label_fn(from, to),
-            id = stringr::str_replace_all(id, "tant", "t0"),
-            id = stringr::str_replace_all(id, "tpost", "t2")
-          ) |>
-          dplyr::mutate(isExtremo = (weight == max(weight, na.rm = TRUE)) |
-                                     (weight == min(weight, na.rm = TRUE)),
-                         .by = to)
-
-        arma_line_chart_areaspline(
-          df_data = df_data,
-          levels_periodo = levels(df_pelicula$periodo),
-          mostrar_pandemia = config$mostrar_pandemia_fn(input, "pelicula", def),
-          tick_interval = if (input$duo == "todos") 4 else 1,
-          excluir_intervencion = isTRUE(input$excluir_int_pelicula),
-          caption_text = "Elaboración propia en base a la EPH-INDEC. Arrastrá horizontalmente para hacer zoom · Click en una serie para mostrarla u ocultarla."
-        )
-      })
-
-    })  ### fin observe principal
+      arma_line_chart_areaspline(
+        df_data = df_data,
+        levels_periodo = levels(df_pelicula$periodo),
+        mostrar_pandemia = config$mostrar_pandemia_fn(input, "pelicula", definicion()),
+        tick_interval = if (input$duo == "todos") 4 else 1,
+        excluir_intervencion = isTRUE(input$excluir_int_pelicula),
+        caption_text = "Elaboración propia en base a la EPH-INDEC. Arrastrá horizontalmente para hacer zoom · Click en una serie para mostrarla u ocultarla."
+      )
+    })
 
     ### --- Tab "Comparar" (solo si config lo activa funcional) ---
     if (isTRUE(config$incluir_comparar_funcional)) {
@@ -856,20 +874,15 @@ mod_analisis_server <- function(id, config,
     ### suspendWhenHidden = FALSE mantiene los outputs vivos y un JS handler
     ### (www/reflow_charts.js) llama a chart.reflow() cuando cambia la vista.
     ###
-    ### Los outputs se registran dentro de observe(), así que aplicamos
-    ### outputOptions desde session$onFlushed (que corre después del primer
-    ### flush, cuando ya existen).
-    session$onFlushed(function() {
-      nombres <- c("sankey", "line", "tasas_chart")
-      if (isTRUE(config$incluir_comparar_funcional)) {
-        nombres <- c(nombres, "sankey_a", "sankey_b")
-      }
-      for (n in nombres) {
-        tryCatch(
-          outputOptions(output, n, suspendWhenHidden = FALSE),
-          error = function(e) NULL
-        )
-      }
-    }, once = TRUE)
+    ### Con los outputs ya registrados a nivel módulo (issue #79) los fijamos
+    ### directamente; antes hacía falta diferirlo a session$onFlushed porque
+    ### se registraban dentro de un observe().
+    nombres_charts <- c("sankey", "line", "tasas_chart")
+    if (isTRUE(config$incluir_comparar_funcional)) {
+      nombres_charts <- c(nombres_charts, "sankey_a", "sankey_b")
+    }
+    for (nombre_chart in nombres_charts) {
+      outputOptions(output, nombre_chart, suspendWhenHidden = FALSE)
+    }
   })
 }
