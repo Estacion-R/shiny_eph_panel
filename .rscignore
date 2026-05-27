@@ -11,7 +11,25 @@ app_test.R
 ETL/TEST_app.R
 ETL/data_generator.R
 ETL/data_viz.R
+
+# Scripts ETL de build: regeneran los datos pre-computados a partir del
+# microdato (data_raw/df_eph.parquet, que tampoco va al bundle). Corren solo
+# en local; la app productiva levanta los parquet ya armados de data_output/.
+# En runtime app.R sólo sourcea 00-libraries, 01-extract, 02-transform,
+# 03-hc-theme y 99-functions (#39).
 ETL/03-update_data.R
+ETL/04-rebuild_parquet.R
+ETL/04b-add_pp05_vars.R
+ETL/05-build_panel_cat_ocup.R
+ETL/06-build_panel_formalidad.R
+ETL/07-build_panel_formalidad_ampliada.R
+ETL/08-build_tasas_historico.R
+ETL/09-build_paneles_runtime.R
+ETL/09b-build_paneles_runtime_anual.R
+ETL/10-build_calidad_panel.R
+ETL/11-build_historicos_anuales.R
+ETL/12-validate_paneles_runtime.R
+ETL/_bootstrap_aglomerado.R
 
 # Outputs intermedios del data_generator legacy
 data_output/paneles_eph_Desocupado.csv
