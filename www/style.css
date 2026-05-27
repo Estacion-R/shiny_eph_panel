@@ -796,69 +796,7 @@ input:checked + .slider:before {
   max-width: 720px;
 }
 
-/* Grid de tarjetas (mismo patrón que landing-cards-grid) */
-.descarga-cards-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1rem;
-  margin-bottom: 1.75rem;
-}
-@media (max-width: 900px) {
-  .descarga-cards-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* Tarjeta — mismo lenguaje visual que .landing-card pero sin link wrapper */
-.descarga-card {
-  background-color: #FFFFFF;
-  border: 1px solid rgba(64, 91, 255, 0.18);
-  border-radius: 12px;
-  padding: 1.5rem 1.25rem 1.25rem;
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
-  display: flex;
-  flex-direction: column;
-}
-.descarga-card:hover {
-  border-color: #405BFF;
-  box-shadow: 0 6px 18px rgba(64, 91, 255, 0.12);
-}
-.descarga-card-icon {
-  font-size: 1.6rem;
-  color: #405BFF;
-  margin-bottom: 0.6rem;
-  display: block;
-}
-.descarga-card-title {
-  font-size: 1.1rem;
-  font-weight: 700;
-  margin: 0 0 0.4rem 0;
-  color: #191919;
-}
-.descarga-card-meta {
-  font-size: 0.85rem;
-  color: #405BFF;
-  font-weight: 600;
-  margin: 0 0 0.5rem 0;
-  letter-spacing: 0.01em;
-}
-.descarga-card-desc {
-  font-size: 0.92rem;
-  color: #555;
-  margin: 0 0 1rem 0;
-  line-height: 1.45;
-  flex-grow: 1;
-}
-
-/* Acción al pie de la tarjeta — botón único o dropdown */
-.descarga-card-action {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  flex-wrap: wrap;
-}
-
-/* Botón principal dentro de tarjeta (azul sólido, hover oscuro) */
+/* Botón principal (reusado por el Armador: descarga del subconjunto) */
 .btn-descarga {
   background: #405BFF;
   color: #FFFFFF !important;
@@ -890,76 +828,6 @@ input:checked + .slider:before {
 }
 .descarga-btn-wrapper {
   display: inline-block;
-}
-
-/* Dropdown de formatos (Bootstrap 5 nativo, restilado) */
-.descarga-card-action .dropdown-menu {
-  border: 1px solid rgba(64, 91, 255, 0.18);
-  border-radius: 8px;
-  box-shadow: 0 6px 18px rgba(64, 91, 255, 0.12);
-  padding: 0.4rem;
-  min-width: 220px;
-}
-.descarga-card-action .dropdown-item {
-  border-radius: 6px;
-  padding: 0.5rem 0.7rem;
-  font-size: 0.92rem;
-  color: #191919;
-  display: flex;
-  align-items: center;
-  gap: 0.55rem;
-  text-decoration: none;
-  transition: background 120ms ease, color 120ms ease;
-}
-.descarga-card-action .dropdown-item:hover,
-.descarga-card-action .dropdown-item:focus {
-  background: rgba(64, 91, 255, 0.08);
-  color: #405BFF;
-}
-.descarga-card-action .dropdown-item .fa,
-.descarga-card-action .dropdown-item .fas,
-.descarga-card-action .dropdown-item .far {
-  color: #405BFF;
-  font-size: 0.95em;
-  width: 1.1em;
-  text-align: center;
-}
-.descarga-card-action .dropdown-item-size {
-  margin-left: auto;
-  color: #707070;
-  font-size: 0.82em;
-  font-weight: 500;
-}
-
-/* Aviso metodológico — card horizontal, treatment amber */
-.descarga-aviso {
-  border: 1px solid #FDE68A;
-  border-left: 4px solid #B45309;
-  border-radius: 12px;
-  background: #FFFBEB;
-  padding: 1.25rem 1.5rem;
-}
-.descarga-aviso-title {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 1.05rem;
-  font-weight: 700;
-  color: #191919;
-  margin: 0 0 0.75rem 0;
-}
-.descarga-aviso-title .fa,
-.descarga-aviso-title .fas {
-  color: #B45309;
-}
-.descarga-aviso ul {
-  color: #404040;
-  line-height: 1.6;
-  padding-left: 1.25rem;
-  margin-bottom: 0.5rem;
-}
-.descarga-aviso ul li {
-  margin-bottom: 0.35rem;
 }
 
 
@@ -1287,45 +1155,6 @@ input:checked + .slider:before {
   font-weight: 500;
 }
 
-/* ----- Filter rail (deprecated en iter 2, queda como fallback) ----- */
-.filter-rail {
-  position: sticky;
-  top: 1rem;
-  align-self: flex-start;
-  background-color: #FAFAFA;
-  border: 1px solid #E5E5E5;
-  border-radius: 8px;
-  padding: 1rem 1rem 1.25rem 1rem;
-  max-height: calc(100vh - 2rem);
-  overflow-y: auto;
-}
-.filter-rail-section {
-  margin-bottom: 1.25rem;
-}
-.filter-rail-section:last-child {
-  margin-bottom: 0;
-}
-.filter-rail-heading {
-  font-family: "Ubuntu", sans-serif;
-  font-size: 0.75rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  color: #555555;
-  margin: 0 0 0.75rem 0;
-  padding-bottom: 0.4rem;
-  border-bottom: 1px solid #E5E5E5;
-}
-.filter-rail-helper {
-  font-size: 0.78em;
-  color: #555555;
-  margin: 0.5rem 0 0 0;
-  line-height: 1.4;
-}
-.filter-rail-helper strong {
-  color: #191919;
-}
-
 /* ----- Próximamente (placeholder de transversal) ----- */
 .proximamente-card {
   text-align: center;
@@ -1360,11 +1189,6 @@ input:checked + .slider:before {
   .section-topbar-title {
     font-size: 1.15rem;
   }
-  .filter-rail {
-    position: static;
-    max-height: none;
-    margin-top: 1rem;
-  }
 }
 
 /* ----- FAB tipo de dúo: deprecated (issue #74) -----
@@ -1379,7 +1203,7 @@ input:checked + .slider:before {
 /* ============================================================
    Armador de panel (issue #77)
    Sección "Armá tu panel": configuración + filtros + preview + descarga.
-   Reusa .descarga-hero, .descarga-aviso, .btn-descarga de la sección Datos.
+   Reusa .descarga-hero y .btn-descarga de la antigua sección Datos.
    ============================================================ */
 
 /* ----- Ayuda: cómo leer el dataset ----- */
@@ -1579,7 +1403,7 @@ input:checked + .slider:before {
   cursor: help;
 }
 
-/* ----- Warning de muestra chica / vacía (mismo lenguaje que descarga-aviso) ----- */
+/* ----- Warning de muestra chica / vacía (card horizontal, treatment amber) ----- */
 .armador-warning {
   display: flex;
   align-items: center;
