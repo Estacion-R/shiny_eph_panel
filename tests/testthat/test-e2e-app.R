@@ -111,6 +111,24 @@ test_that("Armador: arranca en el último panel y la descarga entrega archivo", 
 })
 
 
+test_that("Armador: descarga directa del panel completo entrega el parquet (#87)", {
+  app <- new_app("armador_panel_completo")
+  withr::defer(app$stop())
+
+  app$click("go_datos")
+  app$wait_for_idle(timeout = 10000)
+
+  ### Botón de descarga directa del panel completo intertrimestral: sirve el
+  ### parquet de disco tal cual (file.copy, sin collect()). Debe entregar el
+  ### dataset entero, sustancialmente más pesado que un subconjunto filtrado
+  ### (el parquet de runtime ronda ~22 MB). Verificamos que entrega un archivo
+  ### grande, lo que confirma que sirve el panel completo y no un vacío.
+  destino <- app$get_download("armador-descarga_completo_trim")
+  expect_true(file.exists(destino))
+  expect_gt(file.size(destino), 1e6)  # > 1 MB: es el panel completo, no un stub
+})
+
+
 test_that("Armador: el filtro de Aglomerado reduce el conteo (#78)", {
   app <- new_app("armador_aglomerado")
   withr::defer(app$stop())

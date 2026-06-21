@@ -1485,3 +1485,44 @@ input:checked + .slider:before {
   text-decoration: underline;
 }
 
+/* ----- Aviso informativo (variante azul del warning ámbar): subconjunto
+   grande → sugerir descarga directa (#87) ----- */
+.armador-warning-info {
+  border: 1px solid #C2CCFF;
+  border-left: 4px solid #405BFF;
+  background: #F4F6FF;
+  color: #29324D;
+}
+.armador-warning-info .fa,
+.armador-warning-info .fas {
+  color: #405BFF;
+}
+
+/* ----- Descarga directa del panel completo, sin filtros (#87) -----
+   Sección separada visualmente del bloque de descarga del subconjunto. */
+.armador-descarga-completo {
+  margin-top: 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid rgba(25, 25, 25, 0.08);
+}
+.armador-descarga-completo-titulo {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-weight: 600;
+  font-size: 1rem;
+  color: #191919;
+  margin-bottom: 0.4rem;
+}
+.armador-descarga-completo-titulo .fa,
+.armador-descarga-completo-titulo .fas {
+  color: #405BFF;
+}
+.armador-descarga-completo-desc {
+  font-size: 0.9rem;
+  color: #555;
+  line-height: 1.45;
+  margin-bottom: 0.75rem;
+  max-width: 640px;
+}
+

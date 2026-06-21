@@ -122,6 +122,13 @@ ARMADOR_EDAD_MAX <- 110L
 ### (criterio alineado con #29: subconjuntos con pocos casos son frágiles).
 ARMADOR_N_MIN <- 100L
 
+### Umbral de subconjunto grande. Por encima se sugiere usar la descarga
+### directa del panel completo (file.copy del parquet de disco) en vez del
+### collect() del subconjunto, que con casi todo el panel tensiona el free
+### tier de shinyapps.io (#87, OOM reportado por usuaria). El panel completo
+### ronda 1,86 M (intertrim) / 1,41 M (interanual) filas.
+ARMADOR_N_GRANDE <- 800000L
+
 
 ### downloadButton con tracking GA4 client-side. Mismo patrón que la sección
 ### Datos (R/panel_descarga.R): el onclick burbujea desde el wrapper, dispara
@@ -843,6 +850,38 @@ mod_armador_ui <- function(id) {
             label = "diccionario de variables (CSV)"
           )
         ), "."
+      ),
+
+      ### --- Descarga directa del panel completo, sin filtros (#87) ----------
+      ### Sirve el parquet pre-armado de disco tal cual (file.copy en el
+      ### server, sin collect() ni materialización en R), así bajar el panel
+      ### entero es instantáneo y no tensiona el free tier como sí lo haría un
+      ### collect() del subconjunto "todo seleccionado". Restaura la descarga
+      ### directa que ofrecía la vieja sección Datos antes del Armador.
+      tags$div(
+        class = "armador-descarga-completo",
+        tags$p(
+          class = "armador-descarga-completo-titulo",
+          icon("database"),
+          tags$span("¿Necesitás el panel completo, sin filtrar?")
+        ),
+        tags$p(
+          class = "armador-descarga-completo-desc",
+          "Bajá el dataset entero ya armado (todas las columnas, esquema ",
+          "runtime). Es una descarga directa: rápida y sin riesgo de que se ",
+          "caiga el servidor. Filtralo después con R, Python o Stata."
+        ),
+        tags$div(
+          class = "armador-descarga-botones",
+          armador_download_btn(ns("descarga_completo_trim"),
+                               "Panel intertrimestral (~22 MB)",
+                               format = "parquet_completo_trim",
+                               icon_name = "file-zipper"),
+          armador_download_btn(ns("descarga_completo_anual"),
+                               "Panel interanual (~16 MB)",
+                               format = "parquet_completo_anual",
+                               icon_name = "file-zipper")
+        )
       )
     )
   )
@@ -1042,6 +1081,24 @@ mod_armador_server <- function(id) {
             "Muestra chica (menos de %d filas): leé los resultados con cautela.",
             ARMADOR_N_MIN))
         )
+      } else if (n > ARMADOR_N_GRANDE) {
+        ### Subconjunto casi-completo: el collect() de descarga es pesado y, en
+        ### el free tier, riesgoso. Sugerimos la descarga directa del panel
+        ### completo (más abajo), que sirve el parquet de disco sin tocar RAM
+        ### (#87). Tono informativo (no de error): la descarga del subconjunto
+        ### sigue funcionando, sólo ofrecemos un camino más robusto.
+        tags$div(
+          class = "armador-warning armador-warning-info",
+          role  = "status",
+          icon("circle-info"),
+          tags$span(
+            sprintf("Tu selección es grande (%s filas). ",
+                    format(n, big.mark = ".", scientific = FALSE)),
+            "Si querés (casi) todo el panel, te conviene la ",
+            tags$strong("descarga directa del panel completo"),
+            " (al pie de esta sección): es instantánea y no sobrecarga el servidor."
+          )
+        )
       } else {
         NULL
       }
@@ -1126,6 +1183,40 @@ mod_armador_server <- function(id) {
       },
       content  = function(file) readr::write_csv(armador_diccionario_salida(), file),
       contentType = "text/csv"
+    )
+
+    ### --- Descarga directa del panel COMPLETO, sin filtros (#87) -----------
+    ### Sirve el parquet pre-armado de data_output/ tal cual con file.copy():
+    ### NO hay collect() ni materialización en R, así que el footprint de RAM
+    ### es ~0 y bajar el panel entero no puede tumbar el free tier (a
+    ### diferencia del collect() del subconjunto cuando el usuario no filtra).
+    ### El esquema es el runtime crudo, documentado por el diccionario.
+    descarga_completo_handler <- function(ruta, nombre) {
+      downloadHandler(
+        filename    = function() nombre,
+        content     = function(file) {
+          ### Defensa: si el parquet faltara del bundle, escribir un archivo
+          ### vacío deja una pista clara en vez de colgar el handler.
+          if (file.exists(ruta)) {
+            file.copy(ruta, file, overwrite = TRUE)
+          } else {
+            warning("Parquet de panel completo no encontrado: ", ruta)
+            file.create(file)
+          }
+        },
+        contentType = "application/octet-stream"
+      )
+    }
+
+    output$descarga_completo_trim <- descarga_completo_handler(
+      "data_output/panel_runtime.parquet",
+      paste0("eph_panel_completo_intertrim_", format(Sys.Date(), "%Y%m%d"),
+             ".parquet")
+    )
+    output$descarga_completo_anual <- descarga_completo_handler(
+      "data_output/panel_runtime_anual.parquet",
+      paste0("eph_panel_completo_interanual_", format(Sys.Date(), "%Y%m%d"),
+             ".parquet")
     )
 
     ### Contrato hacia la Fase 3 (integración al hub).
