@@ -1455,6 +1455,18 @@ input:checked + .slider:before {
   overflow-x: auto;
   max-width: 100%;
 }
+/* Tabla de preview (reactable): fuente compacta para que entren más columnas
+   sin scroll y se lea como una tabla de datos, no como texto de cuerpo. */
+.armador-preview-scroll .rt-th,
+.armador-preview-scroll .rt-td {
+  font-size: 0.8rem;
+}
+/* Una línea por celda: el CODUSU largo dejaba de leerse partido en 3 líneas e
+   inflaba la altura de cada fila (~66px). Con nowrap las filas quedan
+   compactas; el contenedor scrollea horizontal si alguna columna no entra. */
+.armador-preview-scroll .rt-td-inner {
+  white-space: nowrap;
+}
 
 /* ----- Descarga ----- */
 .armador-descarga {
@@ -1483,5 +1495,65 @@ input:checked + .slider:before {
 }
 .armador-descarga-extra a:hover {
   text-decoration: underline;
+}
+
+/* ----- Aviso informativo (variante azul del warning ámbar): subconjunto
+   grande → sugerir descarga directa (#87) ----- */
+.armador-warning-info {
+  border: 1px solid #C2CCFF;
+  border-left: 4px solid #405BFF;
+  background: #F4F6FF;
+  color: #29324D;
+}
+.armador-warning-info .fa,
+.armador-warning-info .fas {
+  color: #405BFF;
+}
+
+/* ----- Descarga directa del panel completo, sin filtros (#87) -----
+   Sección separada visualmente del bloque de descarga del subconjunto. */
+.armador-descarga-completo {
+  margin-top: 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid rgba(25, 25, 25, 0.08);
+}
+.armador-descarga-completo-titulo {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-weight: 600;
+  font-size: 1rem;
+  color: #191919;
+  margin-bottom: 0.4rem;
+}
+.armador-descarga-completo-titulo .fa,
+.armador-descarga-completo-titulo .fas {
+  color: #405BFF;
+}
+.armador-descarga-completo-desc {
+  font-size: 0.9rem;
+  color: #555;
+  line-height: 1.45;
+  margin-bottom: 0.75rem;
+  max-width: 640px;
+}
+/* Jerarquía: la descarga del subconjunto filtrado es el flujo principal del
+   Armador (botones azul sólido). La descarga del panel completo es la
+   alternativa, así que va en estilo secundario (outline) para distinguirla
+   sin competir por atención. Rellena en hover. */
+.armador-descarga-completo .btn-descarga {
+  background: #FFFFFF;
+  color: #405BFF !important;
+  border: 1.5px solid #405BFF;
+}
+.armador-descarga-completo .btn-descarga:hover {
+  background: #405BFF;
+  color: #FFFFFF !important;
+  box-shadow: 0 2px 8px rgba(64, 91, 255, 0.25);
+}
+.armador-descarga-completo .btn-descarga .fa,
+.armador-descarga-completo .btn-descarga .fas,
+.armador-descarga-completo .btn-descarga .far {
+  color: inherit;
 }
 
