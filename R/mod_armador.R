@@ -744,8 +744,8 @@ mod_armador_ui <- function(id) {
       radioButtons(
         inputId  = ns("etiquetas"),
         label    = "Categorías de las variables:",
-        choices  = c("Con etiquetas" = "si", "Sin etiquetas (códigos)" = "no"),
-        selected = "si",
+        choices  = c("Sin etiquetas (códigos)" = "no", "Con etiquetas" = "si"),
+        selected = "no",
         inline   = TRUE
       ),
       tags$span(class = "armador-etiquetas-nota",

@@ -1455,6 +1455,12 @@ input:checked + .slider:before {
   overflow-x: auto;
   max-width: 100%;
 }
+/* Tabla de preview (reactable): fuente compacta para que entren más columnas
+   sin scroll y se lea como una tabla de datos, no como texto de cuerpo. */
+.armador-preview-scroll .rt-th,
+.armador-preview-scroll .rt-td {
+  font-size: 0.8rem;
+}
 
 /* ----- Descarga ----- */
 .armador-descarga {
@@ -1524,5 +1530,24 @@ input:checked + .slider:before {
   line-height: 1.45;
   margin-bottom: 0.75rem;
   max-width: 640px;
+}
+/* Jerarquía: la descarga del subconjunto filtrado es el flujo principal del
+   Armador (botones azul sólido). La descarga del panel completo es la
+   alternativa, así que va en estilo secundario (outline) para distinguirla
+   sin competir por atención. Rellena en hover. */
+.armador-descarga-completo .btn-descarga {
+  background: #FFFFFF;
+  color: #405BFF !important;
+  border: 1.5px solid #405BFF;
+}
+.armador-descarga-completo .btn-descarga:hover {
+  background: #405BFF;
+  color: #FFFFFF !important;
+  box-shadow: 0 2px 8px rgba(64, 91, 255, 0.25);
+}
+.armador-descarga-completo .btn-descarga .fa,
+.armador-descarga-completo .btn-descarga .fas,
+.armador-descarga-completo .btn-descarga .far {
+  color: inherit;
 }
 
