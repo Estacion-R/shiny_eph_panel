@@ -1461,6 +1461,12 @@ input:checked + .slider:before {
 .armador-preview-scroll .rt-td {
   font-size: 0.8rem;
 }
+/* Una línea por celda: el CODUSU largo dejaba de leerse partido en 3 líneas e
+   inflaba la altura de cada fila (~66px). Con nowrap las filas quedan
+   compactas; el contenedor scrollea horizontal si alguna columna no entra. */
+.armador-preview-scroll .rt-td-inner {
+  white-space: nowrap;
+}
 
 /* ----- Descarga ----- */
 .armador-descarga {
