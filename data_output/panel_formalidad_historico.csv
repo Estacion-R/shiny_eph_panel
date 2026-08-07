@@ -319,3 +319,7 @@ Formal_t0,Formal_t1,93.6,Formal_t0 - Formal_t1,t_anterior,Formal,2025_t3-t4
 Formal_t0,Informal_t1,6.4,Formal_t0 - Informal_t1,t_anterior,Formal,2025_t3-t4
 Informal_t0,Informal_t1,87.5,Informal_t0 - Informal_t1,t_anterior,Informal,2025_t3-t4
 Informal_t0,Formal_t1,12.5,Informal_t0 - Formal_t1,t_anterior,Informal,2025_t3-t4
+Formal_t0,Formal_t1,93.6,Formal_t0 - Formal_t1,t_anterior,Formal,2025_t4-t1
+Formal_t0,Informal_t1,6.4,Formal_t0 - Informal_t1,t_anterior,Formal,2025_t4-t1
+Informal_t0,Formal_t1,15.2,Informal_t0 - Formal_t1,t_anterior,Informal,2025_t4-t1
+Informal_t0,Informal_t1,84.8,Informal_t0 - Informal_t1,t_anterior,Informal,2025_t4-t1
