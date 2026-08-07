@@ -36,12 +36,37 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ${{ env.R_LIBS_USER }}
-          key: ${{ runner.os }}-r-eph-update-${{ hashFiles('init.R') }}
+          ### Incluye 00-libraries.R y este workflow en la key: los scripts
+          ### de runtime dependen de ambos, así que un cambio en cualquiera
+          ### debe invalidar el cache de paquetes.
+          key: ${{ runner.os }}-r-eph-update-${{ hashFiles('init.R', 'ETL/00-libraries.R', '.github/workflows/update_eph_data.yml') }}
           restore-keys: ${{ runner.os }}-r-eph-update-
 
+      ### Dos bloques de dependencias:
+      ###
+      ###   1. ETL/03-update_data.R: descarga y paneles históricos. Solo
+      ###      necesita el stack de datos.
+      ###   2. ETL/09 y 09b (panel runtime): hacen source("ETL/00-libraries.R"),
+      ###      que carga el stack COMPLETO de la app (incluida la capa de UI)
+      ###      aunque los scripts solo procesen datos. Sin estos paquetes el
+      ###      step "Regenerar panel runtime" muere con
+      ###      `there is no package called 'shiny'`.
+      ###
+      ### Mantener sincronizado con ETL/00-libraries.R. La deuda de fondo es
+      ### que 09/09b no deberían depender de la capa de UI (ver ESTADO.md,
+      ### Fase 4). Este fallo no se detectó hasta el 2026-08-05 porque los
+      ### steps de runtime son condicionales a `has_new == 'true'` y hasta
+      ### entonces INDEC no había publicado un trimestre nuevo.
       - name: Instalar paquetes R
         run: |
-          install.packages(c("dplyr", "arrow", "eph", "glue", "purrr", "readr", "assertthat", "stringr", "testthat"))
+          install.packages(c(
+            # ETL de datos
+            "dplyr", "arrow", "eph", "glue", "purrr", "readr",
+            "assertthat", "stringr", "testthat",
+            # stack de la app, requerido por ETL/00-libraries.R
+            "shiny", "highcharter", "bslib", "brand.yml", "bsicons",
+            "waiter", "tidyr", "gt", "reactable"
+          ))
         shell: Rscript {0}
 
       - name: Ejecutar script de actualización

@@ -42,6 +42,11 @@ jobs:
       ### El stack E2E necesita TODOS los paquetes de la app (incluyendo
       ### highcharter, gt, waiter, bsicons) porque shinytest2 levanta la
       ### app entera. Es la diferencia más grande con tests-unit.yml.
+      ###
+      ### Mantener sincronizado con ETL/00-libraries.R: cualquier library()
+      ### que se agregue ahí tiene que aparecer acá o la app no levanta y
+      ### los 7 expects fallan en bloque. Pasó con brand.yml, que rompió el
+      ### cron semanal desde el 2026-06-07 (9 corridas rojas seguidas).
       - name: Instalar paquetes R (full stack app + shinytest2)
         run: |
           install.packages(c(
@@ -49,6 +54,7 @@ jobs:
             "tibble", "dplyr", "tidyr", "purrr", "readr", "stringr",
             "glue", "arrow", "withr", "rlang", "assertthat",
             "shiny", "bslib", "highcharter", "gt", "waiter", "bsicons",
+            "brand.yml", "reactable",
             "shinychat", "eph"
           ))
         shell: Rscript {0}
