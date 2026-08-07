@@ -205,6 +205,26 @@ jobs:
           install.packages("rsconnect")
         shell: Rscript {0}
 
+      ### Mismo workaround que deploy_shinyapps.yml. Este workflow tiene su
+      ### propio bloque de deploy (los workflows disparados por GITHUB_TOKEN
+      ### no encadenan otros), así que el pin hay que repetirlo acá o el
+      ### deploy del cron muere aunque el de on-push funcione. Pasó el
+      ### 2026-08-07: los datos de 2026-T1 se mergearon a master pero el
+      ### deploy falló con `Error building terra (1.9-34)`.
+      - name: Pinear terra a 1.9-11 (workaround build GDAL en shinyapps.io)
+        if: steps.cpr.outputs.pull-request-number
+        run: |
+          # terra >= 1.9-34 no compila en el builder de shinyapps.io por una
+          # incompatibilidad con la GDAL de su imagen base
+          # (GDALMDArray::AsClassicDataset). terra entra como dependencia
+          # transitiva de eph (sf/sp). Forzamos 1.9-11, que sí compila, para
+          # que rsconnect::deployApp lo registre con esa versión en el manifest
+          # y shinyapps.io reconstruya con ella. Revisar/levantar el pin cuando
+          # Posit actualice su imagen o salga un terra parcheado.
+          if (!requireNamespace("remotes", quietly = TRUE)) install.packages("remotes")
+          remotes::install_version("terra", version = "1.9-11", upgrade = "never")
+        shell: Rscript {0}
+
       - name: Configurar y deployar a shinyapps.io
         if: steps.cpr.outputs.pull-request-number
         env:
