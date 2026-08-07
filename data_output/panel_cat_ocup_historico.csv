@@ -952,3 +952,15 @@ Asalariado_t0,Asalariado_t1,92.9,Asalariado_t0 - Asalariado_t1,t_anterior,Asalar
 Asalariado_t0,Patron_t1,0.4,Asalariado_t0 - Patron_t1,t_anterior,Asalariado,2025_t3-t4
 Asalariado_t0,Cuenta_propia_t1,6.5,Asalariado_t0 - Cuenta_propia_t1,t_anterior,Asalariado,2025_t3-t4
 Asalariado_t0,TFSR_t1,0.1,Asalariado_t0 - TFSR_t1,t_anterior,Asalariado,2025_t3-t4
+Patron_t0,Patron_t1,53.6,Patron_t0 - Patron_t1,t_anterior,Patron,2025_t4-t1
+Patron_t0,Cuenta_propia_t1,30.5,Patron_t0 - Cuenta_propia_t1,t_anterior,Patron,2025_t4-t1
+Patron_t0,Asalariado_t1,15.8,Patron_t0 - Asalariado_t1,t_anterior,Patron,2025_t4-t1
+Patron_t0,TFSR_t1,0.1,Patron_t0 - TFSR_t1,t_anterior,Patron,2025_t4-t1
+Cuenta_propia_t0,Cuenta_propia_t1,75.7,Cuenta_propia_t0 - Cuenta_propia_t1,t_anterior,Cuenta_propia,2025_t4-t1
+Cuenta_propia_t0,Asalariado_t1,19,Cuenta_propia_t0 - Asalariado_t1,t_anterior,Cuenta_propia,2025_t4-t1
+Cuenta_propia_t0,Patron_t1,4.9,Cuenta_propia_t0 - Patron_t1,t_anterior,Cuenta_propia,2025_t4-t1
+Cuenta_propia_t0,TFSR_t1,0.3,Cuenta_propia_t0 - TFSR_t1,t_anterior,Cuenta_propia,2025_t4-t1
+Asalariado_t0,Asalariado_t1,92.4,Asalariado_t0 - Asalariado_t1,t_anterior,Asalariado,2025_t4-t1
+Asalariado_t0,Cuenta_propia_t1,6.6,Asalariado_t0 - Cuenta_propia_t1,t_anterior,Asalariado,2025_t4-t1
+Asalariado_t0,Patron_t1,0.8,Asalariado_t0 - Patron_t1,t_anterior,Asalariado,2025_t4-t1
+Asalariado_t0,TFSR_t1,0.2,Asalariado_t0 - TFSR_t1,t_anterior,Asalariado,2025_t4-t1
