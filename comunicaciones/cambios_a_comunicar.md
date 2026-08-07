@@ -26,7 +26,13 @@
 
 ### 2026-05-14 · Rediseño de navegación (hub-and-spoke)
 
-- **Estado:** pendiente
+- **Estado:** pendiente — publicar como follow-up del post del Armador
+  (2026-05-26). Drafts listos con 6 screenshots en
+  `assets/2026-05-14_hub-and-spoke/posts.md`. Decisión editorial
+  (estacion-r-social-media, 2026-05-26): el Armador es la novedad fuerte
+  del día; el hub-and-spoke se comunica solo en post separado para no
+  diluir el gancho. En el post del Armador se menciona como "pantalla de
+  inicio" (escenario contextual, no segundo tema).
 - **Qué cambió:** el dashboard estrena pantalla de entrada. Reemplazamos el
   sidebar lateral por un Hub con 4 tarjetas grandes (Análisis de panel,
   Análisis transversal, Metadata, Datos). Al entrar a una sección aparece un
@@ -55,6 +61,33 @@
 ---
 
 ## Publicados
+
+### 2026-05-26 · Armador de panel personalizado (#77 + #78)
+
+- **Estado:** PUBLICADO 2026-05-26 (publicado por Pablo en LinkedIn, Twitter y
+  Telegram). Copy final en `2026-05-26_post_armador.md`.
+- **Qué cambió:** nueva sección accesible desde el hub que permite armar un
+  subconjunto filtrado del panel longitudinal de la EPH y descargarlo en
+  Parquet o CSV. Filtros del MVP: sexo, edad, condición de actividad,
+  categoría ocupacional. Toggle global t0/t1 para variables que cambian
+  entre olas. Preview reactivo (N personas / N filas + tabla ~20 filas)
+  antes de descargar. El fast-follow (#78) suma filtro por aglomerado
+  (re-bootstrap microdato, 32 cols). Reemplaza la sección "Datos
+  descargables".
+- **Valor para el usuario:** elimina el paso de armar el panel desde cero
+  (`eph::organize_panels()`). El usuario se lleva el subconjunto que
+  necesita, con el pareo entre trimestres ya resuelto.
+- **Ángulo de copy:** "Armá tu propio panel de la EPH y descargalo listo
+  para usar". Caso ancla del post final: mujeres jóvenes desocupadas en t0
+  (decisión de Pablo, 2026-05-26). Aglomerado se integra como parte natural
+  de los filtros, no como anuncio separado.
+- **Asset visual:** screenshot del Armador (filtros + preview + descarga),
+  capturado y publicado por Pablo.
+- **Audiencia prioritaria:** LinkedIn (analistas sector público, consultores,
+  investigadores), Twitter (ciencias sociales argentinas, mercado de
+  trabajo), Telegram (alumnos Estación R, ángulo educativo con
+  `organize_panels()`).
+- **Issue / commit:** #77 (MVP) · #78 (Aglomerado fast-follow) · PR #80.
 
 ### 2026-05-02 · Nueva sección "Datos" para descargar el panel longitudinal
 
