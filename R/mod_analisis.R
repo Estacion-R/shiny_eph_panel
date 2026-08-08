@@ -42,7 +42,11 @@ mod_analisis_ui <- function(id, config) {
       selectInput(inputId = ns("anio_ant"),
                   label = "Año del panel",
                   choices = anios_disponibles,
-                  selected = anio_max_disponible),
+                  ### anio_max_con_duo (no anio_max_disponible): el año del
+                  ### último dúo COMPLETO, no el año máximo a secas (que
+                  ### puede ser un año nuevo con un solo trimestre publicado
+                  ### y sin dúo propio todavía). Ver ETL/01-extract.R.
+                  selected = anio_max_con_duo),
       ""
     ),
     filter_preposition(
@@ -50,7 +54,7 @@ mod_analisis_ui <- function(id, config) {
       selectInput(inputId = ns("trimestre_ant"),
                   label = "Panel (trimestres consecutivos)",
                   choices = c("1-2" = 1, "2-3" = 2, "3-4" = 3, "4-1" = 4),
-                  selected = 1),
+                  selected = trim_max_con_duo),
       ""
     ),
     suffix_text = ""
@@ -193,7 +197,10 @@ mod_analisis_ui <- function(id, config) {
           selectInput(inputId = ns("comp_anio_b"),
                       label = "Año B",
                       choices = anios_disponibles,
-                      selected = anio_max_disponible),
+                      ### anio_max_con_duo, mismo motivo que anio_ant arriba:
+                      ### evita armar un panel con un t1 inexistente cuando
+                      ### el año más nuevo tiene un solo trimestre publicado.
+                      selected = anio_max_con_duo),
           ""
         ),
         filter_preposition(
@@ -201,7 +208,12 @@ mod_analisis_ui <- function(id, config) {
           selectInput(inputId = ns("comp_trimestre"),
                       label = "Panel",
                       choices = c("1-2" = 1, "2-3" = 2, "3-4" = 3, "4-1" = 4),
-                      selected = 1),
+                      ### comp_trimestre es compartido por Panel A y Panel B.
+                      ### trim_max_con_duo pareja correctamente con el default
+                      ### de comp_anio_b (anio_max_con_duo); para comp_anio_a
+                      ### (año más viejo, siempre completo) cualquier
+                      ### trimestre es válido.
+                      selected = trim_max_con_duo),
           ""
         ),
         suffix_text = ""
