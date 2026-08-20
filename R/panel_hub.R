@@ -120,10 +120,12 @@ panel_hub_ui <- function() {
         ),
         tags$p(
           class = "hub-footer-line",
-          tags$strong("Feedback: "),
+          tags$strong("Feedback:"),
+          " ",
           tags$a(
-            "pablotiscornia@estacion-r.com",
-            href = "mailto:pablotiscornia@estacion-r.com?subject=Panel%20EPH",
+            "estacion-r.com",
+            href = "https://estacion-r.com",
+            target = "_blank",
             class = "hub-footer-link"
           )
         ),
