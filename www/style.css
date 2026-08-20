@@ -1,71 +1,79 @@
 /* Tipografía y colores base se manejan desde bslib::bs_theme(brand="_brand.yml")
-   en app.R con la paleta oficial Estación R (Ubuntu + #405BFF/#EAFF38).
-   Este archivo solo aporta estilos específicos de filtros y overlays. */
+   en app.R con la paleta oficial Estación R (Ubuntu + #447099/#EE6331).
+   Este archivo solo aporta estilos específicos de filtros y overlays.
+   Spec visual: https://github.com/Estacion-R/estacion-r-branding/blob/main/SPEC_VISUAL.md */
 
 :root {
-  --er-azul:       #405BFF;
-  --er-azul-dark:  #1839F4;
+  --er-blue:       #447099;
+  --er-orange:     #EE6331;
+  --er-green:      #72994E;
+  --er-teal:       #419599;
+  --er-burgundy:   #9A4665;
+  --er-secondary:  #707073;
+  --er-tertiary:   #C2C2C4;
+  --er-dark:       #404041;
   --er-amarillo:   #EAFF38;
-  --er-negro:      #191919;
+  --er-negro:      #151515;
   --er-blanco:     #FFFFFF;
-  --er-gris-claro: #F7F7F7;
 }
 
-/* Display: H1 hero con Array (cargada vía CDN Fontshare en tags$head) */
+/* Display: H1 hero con Ubuntu (sin Array) */
 .hero-title {
-  font-family: 'Array', 'Ubuntu', sans-serif;
+  font-family: 'Ubuntu', sans-serif;
   font-weight: 700;
 }
 
-/* Identidad de color (issue #24): texto principal negro, azul solo
-   como acento (sidebar/tab activo, links, filtros NLQ).
+/* Identidad de color (issue #24): texto principal negro, blue oficial
+   solo como acento (sidebar/tab activo, links, filtros NLQ).
 
    Estrategia: setear las variables CSS de Bootstrap que controlan
    los nav-pills/nav-tabs. Esto pisa los defaults de bs_theme sin
    pelear con prioridad de selectores ni !important. */
 :root {
   /* Sidebar (.nav-pills) */
-  --bs-nav-pills-link-color:        #191919;
-  --bs-nav-pills-link-active-color: #405BFF;
-  --bs-nav-pills-link-active-bg:    rgba(64, 91, 255, 0.08);
+  --bs-nav-pills-link-color:        #151515;
+  --bs-nav-pills-link-active-color: #447099;
+  --bs-nav-pills-link-active-bg:    rgba(68, 112, 153, 0.08);
 
   /* Tabs internos (.nav-tabs) */
-  --bs-nav-tabs-link-color:        #191919;
-  --bs-nav-tabs-link-active-color: #405BFF;
-  --bs-nav-link-color:             #191919;
-  --bs-nav-link-hover-color:       #1839F4;
+  --bs-nav-tabs-link-color:        #151515;
+  --bs-nav-tabs-link-active-color: #447099;
+  --bs-nav-link-color:             #151515;
+  --bs-nav-link-hover-color:       #447099;
 }
 
 /* Reforzar con selector directo por si bslib redeclara las vars en su
    theme. El !important final pisa cualquier override. */
 .nav-pills .nav-link {
-  color: #191919 !important;
+  color: #151515 !important;
   font-weight: 600;
+  border-radius: 0 !important;
 }
 .nav-pills .nav-link.active,
 .nav-pills .show > .nav-link {
-  color: #405BFF !important;
-  background-color: rgba(64, 91, 255, 0.08) !important;
+  color: #447099 !important;
+  background-color: rgba(68, 112, 153, 0.08) !important;
   font-weight: 700;
 }
 .nav-pills .nav-link:hover:not(.active) {
-  color: #1839F4 !important;
-  background-color: rgba(64, 91, 255, 0.04);
+  color: #447099 !important;
+  background-color: rgba(68, 112, 153, 0.04);
 }
 
 .nav-tabs .nav-link {
-  color: #191919 !important;
+  color: #151515 !important;
   font-weight: 500;
+  border-radius: 0 !important;
 }
 .nav-tabs .nav-link.active {
-  color: #405BFF !important;
+  color: #447099 !important;
   font-weight: 700;
-  border-bottom-color: #405BFF !important;
+  border-bottom-color: #447099 !important;
 }
 
-/* Card headers en negro (azul queda para acentos) */
+/* Card headers en negro (blue queda para acentos) */
 .card-header {
-  color: #191919;
+  color: #151515;
   font-weight: 600;
 }
 
@@ -91,21 +99,22 @@
   background-color: transparent !important;
   padding: 0 0 0 0.75rem !important;
   margin: 0 !important;
+  border-radius: 0 !important;
 }
 .nav-pills .dropdown-menu .dropdown-item {
   padding: 0.4rem 0.75rem;
-  border-radius: 0.375rem;
-  color: #191919 !important;
+  border-radius: 0;
+  color: #151515 !important;
   white-space: normal;
 }
 .nav-pills .dropdown-menu .dropdown-item:hover,
 .nav-pills .dropdown-menu .dropdown-item:focus {
-  color: #1839F4 !important;
-  background-color: rgba(64, 91, 255, 0.04);
+  color: #447099 !important;
+  background-color: rgba(68, 112, 153, 0.04);
 }
 .nav-pills .dropdown-menu .dropdown-item.active {
-  color: #405BFF !important;
-  background-color: rgba(64, 91, 255, 0.08);
+  color: #447099 !important;
+  background-color: rgba(68, 112, 153, 0.08);
   font-weight: 700;
 }
 /* Caret a la derecha del título del nav_menu */
@@ -120,7 +129,7 @@
 .landing-hero {
   text-align: center;
   padding: 1.5rem 1rem 1rem;
-  border-bottom: 1px solid rgba(25, 25, 25, 0.06);
+  border-bottom: 2px solid #151515;
   margin-bottom: 2rem;
 }
 .landing-hero-logo {
@@ -130,17 +139,17 @@
   margin-bottom: 1.25rem;
 }
 .landing-hero-title {
-  font-family: 'Array', 'Ubuntu', sans-serif;
+  font-family: 'Ubuntu', sans-serif;
   font-weight: 700;
   font-size: 1.7rem;
-  color: #191919;
+  color: #151515;
   margin: 0 auto 0.75rem;
   max-width: 740px;
   line-height: 1.2;
 }
 .landing-hero-subtitle {
   font-size: 1.05rem;
-  color: #555;
+  color: #707073;
   max-width: 700px;
   margin: 0 auto;
   line-height: 1.55;
@@ -152,7 +161,7 @@
 .landing-cards-heading {
   font-size: 1rem;
   font-weight: 700;
-  color: #191919;
+  color: #151515;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   margin-bottom: 1rem;
@@ -174,23 +183,24 @@
 .landing-card:focus {
   display: block;
   background-color: #FFFFFF;
-  border: 1px solid rgba(64, 91, 255, 0.18);
-  border-radius: 12px;
+  border: 2px solid #151515;
+  border-radius: 0;
   padding: 1.5rem 1.25rem;
   text-decoration: none !important;
-  color: #191919 !important;
-  transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+  color: #151515 !important;
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
   cursor: pointer;
   text-align: left;
+  box-shadow: 4px 4px 0 #EAFF38;
 }
 .landing-card:hover {
-  border-color: #405BFF;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 18px rgba(64, 91, 255, 0.12);
+  border-color: #447099;
+  transform: translateY(-4px);
+  box-shadow: 8px 8px 0 #EAFF38;
 }
 .landing-card-icon {
   font-size: 1.6rem;
-  color: #405BFF;
+  color: #447099;
   margin-bottom: 0.6rem;
   display: block;
 }
@@ -198,42 +208,42 @@
   font-size: 1.1rem;
   font-weight: 700;
   margin: 0 0 0.4rem 0;
-  color: #191919;
+  color: #151515;
 }
 .landing-card-desc {
   font-size: 0.9rem;
-  color: #555;
+  color: #707073;
   margin: 0;
   line-height: 1.45;
 }
 
 .landing-info {
   padding-top: 1rem;
-  border-top: 1px solid rgba(25, 25, 25, 0.06);
+  border-top: 2px solid #151515;
 }
 .landing-info-heading {
   font-size: 1.3rem;
   font-weight: 700;
-  color: #191919;
+  color: #151515;
   margin-bottom: 0.75rem;
 }
 .landing-info h4 {
   font-size: 1.05rem;
   font-weight: 600;
-  color: #191919;
+  color: #151515;
   margin-top: 1.25rem;
   margin-bottom: 0.5rem;
 }
 .landing-info p {
   line-height: 1.6;
-  color: #333;
+  color: #404041;
 }
 .landing-info-cta {
   margin-top: 1.5rem;
   padding: 0.85rem 1rem;
-  background-color: rgba(64, 91, 255, 0.06);
-  border-left: 3px solid #405BFF;
-  border-radius: 4px;
+  background-color: rgba(68, 112, 153, 0.06);
+  border-left: 3px solid #447099;
+  border-radius: 0;
   font-size: 0.95rem;
 }
 
@@ -243,7 +253,8 @@
    filtros NLQ del módulo. */
 .definicion-card {
   margin-bottom: 12px;
-  border-color: rgba(64, 91, 255, 0.18) !important;
+  border: 2px solid #151515 !important;
+  border-radius: 0 !important;
 }
 .definicion-card .card-body {
   padding: 0.5rem 1rem !important;
@@ -266,22 +277,23 @@
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  background-color: #405BFF;
+  background-color: #447099;
   color: #FFFFFF;
-  border: none;
-  border-radius: 999px;
+  border: 2px solid #151515;
+  border-radius: 0;
   padding: 0.7rem 1.1rem;
   font-size: 0.95rem;
   font-weight: 600;
   font-family: 'Ubuntu', sans-serif;
   cursor: pointer;
-  box-shadow: 0 4px 14px rgba(64, 91, 255, 0.35);
-  transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+  box-shadow: 4px 4px 0 #EAFF38;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
 }
 .fab-duo:hover {
-  background-color: #1839F4;
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(64, 91, 255, 0.45);
+  background-color: #151515;
+  color: #EE6331;
+  transform: translateY(-4px);
+  box-shadow: 8px 8px 0 #EAFF38;
 }
 .fab-duo:focus-visible {
   outline: 2px solid #EAFF38;
@@ -298,7 +310,6 @@
 @media (max-width: 600px) {
   .fab-duo {
     padding: 0.85rem;
-    border-radius: 50%;
   }
   .fab-duo-label {
     display: none;
@@ -306,18 +317,19 @@
 }
 
 /* Value boxes Salida/Entrada: estilo neutro con borde azul sutil para
-   no competir con la Persistencia (que va en azul primario relleno).
+   no competir con la Persistencia (que va en blue primario relleno).
    Esto invierte el patrón anterior donde Salida/Entrada llamaban más
    la atención que el dato estructural. */
 .value-box-bordered .card,
 .value-box-bordered.card {
   background-color: #FFFFFF !important;
-  border: 1px solid rgba(64, 91, 255, 0.18) !important;
-  color: #191919 !important;
+  border: 2px solid #151515 !important;
+  border-radius: 0 !important;
+  color: #151515 !important;
 }
 .value-box-bordered .value-box-showcase {
-  background-color: rgba(64, 91, 255, 0.06) !important;
-  color: #405BFF !important;
+  background-color: rgba(68, 112, 153, 0.06) !important;
+  color: #447099 !important;
 }
 
 /* Footer del sidebar: créditos, fuente, feedback. Tipografía y peso
@@ -325,38 +337,38 @@
 .sidebar-footer {
   margin-top: 2rem;
   padding: 1rem 0.5rem 0;
-  border-top: 1px solid rgba(25, 25, 25, 0.08);
+  border-top: 2px solid #151515;
   font-size: 0.78rem;
   line-height: 1.45;
-  color: #555;
+  color: #707073;
 }
 .sidebar-footer p {
   margin: 0 0 0.6rem 0;
 }
 .sidebar-footer-label {
   font-weight: 600;
-  color: #191919;
+  color: #151515;
   text-transform: uppercase;
   letter-spacing: 0.04em;
   font-size: 0.7rem;
 }
 .sidebar-footer-link {
-  color: #405BFF !important;
+  color: #EE6331 !important;
   text-decoration: none;
   word-break: break-all;
 }
 .sidebar-footer-link:hover {
-  color: #1839F4 !important;
+  color: #447099 !important;
   text-decoration: underline;
 }
 .sidebar-footer-meta {
   font-size: 0.72rem;
-  color: #888;
+  color: #707073;
   margin-top: 0.4rem !important;
 }
 .sidebar-footer-version {
   font-size: 0.7rem;
-  color: #b0b0b0;
+  color: #C2C2C4;
   font-family: 'Ubuntu Mono', monospace;
   margin-top: 0.15rem !important;
   margin-bottom: 0 !important;
@@ -368,36 +380,36 @@
    Diseño deliberadamente discreto: gris suave, no rojo, para informar
    sin alarmar. */
 .alert-intervencion-indec {
-  background-color: rgba(150, 150, 150, 0.12);
-  border-left: 3px solid #888;
+  background-color: rgba(112, 112, 115, 0.12);
+  border-left: 3px solid #707073;
   padding: 10px 16px;
-  border-radius: 4px;
+  border-radius: 0;
   font-size: 0.9em;
   margin: 12px 0 16px 0;
-  color: #404040;
+  color: #404041;
   line-height: 1.5;
 }
 .alert-intervencion-indec .fa,
 .alert-intervencion-indec svg {
-  color: #888;
+  color: #707073;
 }
 
 /* Aviso para sub-tabs que aún no soportan modo Interanual (issue #44).
    Estética similar a la alerta de intervención INDEC pero con el
-   azul Estación R para indicar "info" (no alerta). */
+   blue Estación R para indicar "info" (no alerta). */
 .alert-modo-anual {
-  background-color: rgba(64, 91, 255, 0.07);
-  border-left: 3px solid #405BFF;
+  background-color: rgba(68, 112, 153, 0.07);
+  border-left: 3px solid #447099;
   padding: 10px 16px;
-  border-radius: 4px;
+  border-radius: 0;
   font-size: 0.9em;
   margin: 12px 0 16px 0;
-  color: #404040;
+  color: #404041;
   line-height: 1.5;
 }
 .alert-modo-anual .fa,
 .alert-modo-anual svg {
-  color: #405BFF;
+  color: #447099;
 }
 
 #grid-page-wrapper {
@@ -427,12 +439,14 @@
   align-items: baseline;
   gap: 12px;
   padding: 24px 20px;
-  background-color: var(--er-gris-claro);
-  border-radius: 8px;
+  background-color: #FFFFFF;
+  border: 2px solid #151515;
+  border-radius: 0;
   margin: 16px 0;
   font-size: 1.2rem;
   font-weight: 500;
   line-height: 1.6;
+  box-shadow: 4px 4px 0 #EAFF38;
 }
 
 .shiny-input-container {
@@ -516,12 +530,12 @@
 
 .nlq-styling .selectize-input {
   background-color: transparent !important;
-  color: var(--er-azul) !important;
+  color: var(--er-blue) !important;
   border: none !important;
   font-size: 1.2rem;
   font-weight: 600;
   outline: none !important;
-  border-bottom: 2px dashed var(--er-azul) !important;
+  border-bottom: 2px dashed var(--er-blue) !important;
   border-radius: 0 !important;
   box-shadow: none !important;
   text-align: center;
@@ -531,17 +545,17 @@
   cursor: pointer;
 }
 .nlq-styling .selectize-input:hover {
-  background-color: rgba(64, 91, 255, 0.08) !important;
-  border-bottom-color: var(--er-azul-dark) !important;
+  background-color: rgba(68, 112, 153, 0.08) !important;
+  border-bottom-color: var(--er-blue) !important;
 }
 .nlq-styling .form-control {
   background-color: transparent !important;
-  color: var(--er-azul);
+  color: var(--er-blue);
   border: none !important;
   font-size: 1.2rem;
   font-weight: 600;
   outline: none !important;
-  border-bottom: 2px dashed var(--er-azul) !important;
+  border-bottom: 2px dashed var(--er-blue) !important;
   border-radius: 0;
   box-shadow: none !important;
   text-align: center;
@@ -554,7 +568,7 @@
 .nlq-styling .selectize-input.focus,
 .nlq-styling .selectize-input:focus-visible,
 .nlq-styling .form-control:focus-visible {
-  outline: 2px solid var(--er-azul) !important;
+  outline: 2px solid var(--er-blue) !important;
   outline-offset: 3px;
 }
 
@@ -605,7 +619,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #ccc;
+  background-color: #C2C2C4;
   -webkit-transition: .4s;
   transition: .4s;
 }
@@ -623,11 +637,11 @@
 }
 
 input:checked + .slider {
-  background-color: var(--er-azul);
+  background-color: var(--er-blue);
 }
 
 input:focus + .slider {
-  box-shadow: 0 0 1px var(--er-azul);
+  box-shadow: 0 0 1px var(--er-blue);
 }
 
 input:checked + .slider:before {
@@ -636,13 +650,13 @@ input:checked + .slider:before {
   transform: translateX(26px);
 }
 
-/* Rounded sliders */
-.slider.round {
-  border-radius: 34px;
+/* Sliders: sin redondeo (spec minimalista) */
+.slider {
+  border-radius: 0;
 }
 
-.slider.round:before {
-  border-radius: 50%;
+.slider:before {
+  border-radius: 0;
 }
 
 .toggle-filters-wrapper {
@@ -690,12 +704,13 @@ input:checked + .slider:before {
   gap: 16px;
   padding: 16px 24px;
   background: var(--er-blanco);
-  border-top: 2px solid var(--er-azul);
-  box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.06);
+  border-top: 2px solid var(--er-negro);
+  box-shadow: 4px 4px 0 #EAFF38;
   font-family: 'Ubuntu', sans-serif;
   font-size: 0.9em;
   color: var(--er-negro);
   z-index: 10000;
+  border-radius: 0;
 }
 
 .cookie-banner-text {
@@ -709,12 +724,12 @@ input:checked + .slider:before {
 }
 
 .cookie-banner-link {
-  color: var(--er-azul);
+  color: var(--er-blue);
   text-decoration: underline;
 }
 
 .cookie-banner-link:hover {
-  color: var(--er-azul-dark);
+  color: var(--er-orange);
 }
 
 .cookie-banner-actions {
@@ -725,33 +740,36 @@ input:checked + .slider:before {
 
 .cookie-btn {
   padding: 8px 16px;
-  border-radius: 4px;
+  border-radius: 0;
   font-family: 'Ubuntu', sans-serif;
   font-weight: 500;
   cursor: pointer;
-  border: 1px solid transparent;
-  transition: background 150ms ease, border-color 150ms ease;
+  border: 2px solid transparent;
+  transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
 }
 
 .cookie-btn-primary {
-  background: var(--er-azul);
+  background: var(--er-blue);
   color: var(--er-blanco);
-  border-color: var(--er-azul);
+  border-color: var(--er-negro);
 }
 
 .cookie-btn-primary:hover {
-  background: var(--er-azul-dark);
-  border-color: var(--er-azul-dark);
+  background: var(--er-negro);
+  color: var(--er-orange);
+  border-color: var(--er-negro);
+  transform: translateX(4px);
 }
 
 .cookie-btn-secondary {
   background: transparent;
   color: var(--er-negro);
-  border-color: #DADADA;
+  border-color: var(--er-negro);
 }
 
 .cookie-btn-secondary:hover {
-  background: var(--er-gris-claro);
+  background: var(--er-negro);
+  color: var(--er-orange);
 }
 
 @media (max-width: 768px) {
@@ -779,18 +797,18 @@ input:checked + .slider:before {
 .descarga-hero {
   padding-bottom: 1.25rem;
   margin-bottom: 1.5rem;
-  border-bottom: 1px solid rgba(25, 25, 25, 0.07);
+  border-bottom: 2px solid #151515;
 }
 .descarga-hero-title {
-  font-family: 'Array', 'Ubuntu', sans-serif;
+  font-family: 'Ubuntu', sans-serif;
   font-weight: 700;
   font-size: 1.6rem;
-  color: #191919;
+  color: #151515;
   margin-bottom: 0.5rem;
 }
 .descarga-hero-subtitle {
   font-size: 1.02em;
-  color: #505050;
+  color: #707073;
   line-height: 1.55;
   margin-bottom: 0;
   max-width: 720px;
@@ -798,24 +816,26 @@ input:checked + .slider:before {
 
 /* Botón principal (reusado por el Armador: descarga del subconjunto) */
 .btn-descarga {
-  background: #405BFF;
+  background: #447099;
   color: #FFFFFF !important;
-  border: 1.5px solid #405BFF;
-  border-radius: 6px;
+  border: 2px solid #151515;
+  border-radius: 0;
   padding: 0.5rem 1rem;
   font-weight: 600;
   font-size: 0.95em;
-  transition: background 140ms ease, border-color 140ms ease, box-shadow 140ms ease;
+  transition: background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
   text-decoration: none !important;
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
+  box-shadow: 4px 4px 0 #EAFF38;
 }
 .btn-descarga:hover {
-  background: #1839F4;
-  border-color: #1839F4;
-  color: #FFFFFF !important;
-  box-shadow: 0 2px 8px rgba(64, 91, 255, 0.25);
+  background: #151515;
+  border-color: #151515;
+  color: #EE6331 !important;
+  transform: translateY(-4px);
+  box-shadow: 8px 8px 0 #EAFF38;
 }
 .btn-descarga:focus-visible {
   outline: 2px solid #EAFF38;
@@ -854,16 +874,16 @@ input:checked + .slider:before {
   text-align: left;
 }
 .hub-hero-title {
-  font-family: "Array", "Ubuntu", sans-serif;
+  font-family: "Ubuntu", sans-serif;
   font-weight: 700;
   font-size: 2.4rem;
   line-height: 1.15;
-  color: #191919;
+  color: #151515;
   margin: 0 0 1rem 0;
 }
 .hub-hero-subtitle {
   font-size: 1.15rem;
-  color: #404040;
+  color: #404041;
   line-height: 1.5;
   max-width: 720px;
   margin: 0;
@@ -882,32 +902,33 @@ input:checked + .slider:before {
   display: block;
   padding: 2rem 1.75rem;
   background-color: #FFFFFF;
-  border: 1px solid #E5E5E5;
-  border-radius: 12px;
-  color: #191919;
+  border: 2px solid #151515 !important;
+  border-radius: 0 !important;
+  color: #151515;
   text-decoration: none;
   cursor: pointer;
-  transition: transform 0.15s ease,
-              box-shadow 0.15s ease,
-              border-color 0.15s ease;
+  transition: transform 0.2s ease,
+              box-shadow 0.2s ease,
+              border-color 0.2s ease;
   position: relative;
   min-height: 180px;
+  box-shadow: 4px 4px 0 #EAFF38 !important;
 }
 .hub-card-xl:hover,
 .hub-card-xl:focus-visible {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 24px rgba(64, 91, 255, 0.12);
-  border-color: #405BFF;
+  transform: translateY(-4px);
+  box-shadow: 8px 8px 0 #EAFF38 !important;
+  border-color: #447099 !important;
   text-decoration: none;
-  color: #191919;
+  color: #151515;
 }
 .hub-card-xl:focus-visible {
-  outline: 2px solid #405BFF;
+  outline: 2px solid #447099;
   outline-offset: 3px;
 }
 .hub-card-xl-icon {
   display: block;
-  color: #405BFF;
+  color: #447099;
   font-size: 2rem;
   margin-bottom: 1rem;
 }
@@ -915,12 +936,12 @@ input:checked + .slider:before {
   font-family: "Ubuntu", sans-serif;
   font-weight: 700;
   font-size: 1.35rem;
-  color: #191919;
+  color: #151515;
   margin: 0 0 0.5rem 0;
 }
 .hub-card-xl-desc {
   font-size: 0.95rem;
-  color: #555555;
+  color: #707073;
   line-height: 1.5;
   margin: 0;
 }
@@ -933,46 +954,46 @@ input:checked + .slider:before {
 }
 .hub-card-xl-disabled:hover {
   transform: none;
-  box-shadow: none;
-  border-color: #E5E5E5;
+  box-shadow: 4px 4px 0 #EAFF38;
+  border-color: #151515;
 }
 .hub-card-xl-badge {
   position: absolute;
   top: 1rem;
   right: 1rem;
-  background-color: #F7F7F7;
-  color: #555555;
+  background-color: #FFFFFF;
+  color: #707073;
   font-size: 0.7rem;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.04em;
   padding: 0.25rem 0.6rem;
-  border-radius: 999px;
-  border: 1px solid #E5E5E5;
+  border-radius: 0;
+  border: 2px solid #151515;
 }
 
 /* ----- Hub: footer ----- */
 .hub-footer {
-  border-top: 1px solid #E5E5E5;
+  border-top: 2px solid #151515;
   padding-top: 1.5rem;
   margin-top: 2rem;
   font-size: 0.85rem;
-  color: #555555;
+  color: #707073;
 }
 .hub-footer-line {
   margin: 0 0 0.4rem 0;
 }
 .hub-footer-link {
-  color: #405BFF;
+  color: #EE6331;
   text-decoration: none;
 }
 .hub-footer-link:hover {
-  color: #1839F4;
+  color: #447099;
   text-decoration: underline;
 }
 .hub-footer-meta {
   font-size: 0.78rem;
-  color: #595959;
+  color: #707073;
   margin: 0.75rem 0 0 0;
 }
 .hub-footer-version {
@@ -991,27 +1012,29 @@ input:checked + .slider:before {
   gap: 0.75rem;
   margin-bottom: 1.5rem;
   padding-bottom: 1rem;
-  border-bottom: 1px solid #E5E5E5;
+  border-bottom: 2px solid #151515;
 }
 .section-topbar-back {
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
-  color: #405BFF;
+  color: #447099;
   font-weight: 500;
   text-decoration: none;
   padding: 0.4rem 0.6rem;
-  border-radius: 6px;
-  transition: background-color 0.15s ease;
+  border-radius: 0;
+  border: 2px solid #151515;
+  transition: background-color 0.2s ease, transform 0.2s ease;
 }
 .section-topbar-back:hover,
 .section-topbar-back:focus-visible {
-  background-color: rgba(64, 91, 255, 0.08);
-  color: #1839F4;
+  background-color: #151515;
+  color: #EE6331;
   text-decoration: none;
+  transform: translateX(4px);
 }
 .section-topbar-back:focus-visible {
-  outline: 2px solid #405BFF;
+  outline: 2px solid #447099;
   outline-offset: 2px;
 }
 .section-topbar-back-icon {
@@ -1021,13 +1044,13 @@ input:checked + .slider:before {
   font-size: 0.95rem;
 }
 .section-topbar-sep {
-  color: #CCCCCC;
+  color: #C2C2C4;
 }
 .section-topbar-title {
   font-family: "Ubuntu", sans-serif;
   font-weight: 700;
   font-size: 1.4rem;
-  color: #191919;
+  color: #151515;
   margin: 0;
 }
 
@@ -1043,7 +1066,7 @@ input:checked + .slider:before {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  color: #595959;
+  color: #707073;
   margin: 0 0 0.75rem 0.4rem;
 }
 .section-sidebar-internal-item {
@@ -1051,33 +1074,36 @@ input:checked + .slider:before {
   align-items: center;
   gap: 0.6rem;
   padding: 0.55rem 0.75rem;
-  border-radius: 6px;
-  color: #404040;
+  border-radius: 0;
+  color: #404041;
   text-decoration: none;
   font-size: 0.95rem;
-  transition: background-color 0.12s ease, color 0.12s ease;
+  border: 2px solid transparent;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
 }
 .section-sidebar-internal-item:hover,
 .section-sidebar-internal-item:focus-visible {
-  background-color: #F7F7F7;
-  color: #191919;
+  background-color: #FFFFFF;
+  color: #151515;
   text-decoration: none;
+  border-color: #151515;
 }
 .section-sidebar-internal-item:focus-visible {
-  outline: 2px solid #405BFF;
+  outline: 2px solid #447099;
   outline-offset: 2px;
 }
 .section-sidebar-internal-item-active {
-  background-color: rgba(64, 91, 255, 0.10);
-  color: #1839F4;
+  background-color: rgba(68, 112, 153, 0.10);
+  color: #447099;
   font-weight: 600;
+  border-color: #151515;
 }
 .section-sidebar-internal-item-active:hover {
-  background-color: rgba(64, 91, 255, 0.14);
-  color: #1839F4;
+  background-color: rgba(68, 112, 153, 0.14);
+  color: #447099;
 }
 .section-sidebar-internal-icon {
-  color: #405BFF;
+  color: #447099;
   font-size: 0.95em;
   min-width: 1.2em;
 }
@@ -1093,7 +1119,7 @@ input:checked + .slider:before {
   gap: 1rem;
 }
 .section-sidebar-mode {
-  border-top: 1px solid #E5E5E5;
+  border-top: 2px solid #151515;
   padding-top: 0.9rem;
   margin-top: 0.5rem;
 }
@@ -1102,7 +1128,7 @@ input:checked + .slider:before {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  color: #595959;
+  color: #707073;
   margin: 0 0 0.5rem 0.4rem;
 }
 /* Compacta los radioButtons de Shiny dentro del sidebar */
@@ -1115,7 +1141,7 @@ input:checked + .slider:before {
 .section-sidebar-mode .radio label,
 .section-sidebar-mode .form-check-label {
   font-size: 0.9rem;
-  color: #404040;
+  color: #404041;
 }
 .section-sidebar-mode .form-check {
   margin-bottom: 0.1rem;
@@ -1125,13 +1151,13 @@ input:checked + .slider:before {
   align-items: center;
   gap: 0.3rem;
   font-size: 0.78rem;
-  color: #405BFF;
+  color: #447099;
   cursor: help;
   margin-top: 0.5rem;
   padding-left: 0.4rem;
 }
 .section-sidebar-mode-info:hover {
-  color: #1839F4;
+  color: #EE6331;
   text-decoration: underline;
 }
 
@@ -1140,16 +1166,16 @@ input:checked + .slider:before {
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
-  background-color: #F7F7F7;
-  border: 1px solid #E5E5E5;
-  border-radius: 999px;
+  background-color: #FFFFFF;
+  border: 2px solid #151515;
+  border-radius: 0;
   padding: 0.25rem 0.7rem 0.25rem 0.6rem;
   font-size: 0.78rem;
-  color: #404040;
+  color: #404041;
   margin-bottom: 0.9rem;
 }
 .badge-modo-duo svg {
-  color: #405BFF;
+  color: #447099;
 }
 .badge-modo-duo-label {
   font-weight: 500;
@@ -1159,9 +1185,9 @@ input:checked + .slider:before {
 .proximamente-card {
   text-align: center;
   padding: 3rem 2rem;
-  border: 1px dashed #E5E5E5;
-  border-radius: 8px;
-  background-color: #FAFAFA;
+  border: 2px dashed #151515;
+  border-radius: 0;
+  background-color: #FFFFFF;
 }
 
 /* ----- Responsive: mobile (1 col, sin sticky rail) ----- */
@@ -1211,10 +1237,11 @@ input:checked + .slider:before {
   margin-bottom: 1.5rem;
 }
 .armador-ayuda code {
-  background: #F0F0F0;
-  color: #1839F4;
+  background: #FFFFFF;
+  color: #447099;
   padding: 0.05rem 0.3rem;
-  border-radius: 4px;
+  border-radius: 0;
+  border: 1.5px solid #447099;
   font-size: 0.85em;
 }
 .armador-ayuda ul {
@@ -1226,7 +1253,7 @@ input:checked + .slider:before {
 }
 .armador-ayuda-nota {
   font-size: 0.85rem;
-  color: #666;
+  color: #707073;
   margin: 0.6rem 0 0 0;
   font-style: italic;
 }
@@ -1237,16 +1264,18 @@ input:checked + .slider:before {
   flex-wrap: wrap;
   gap: 1.5rem 2.5rem;
   padding: 1rem 1.25rem;
-  background: #F7F7F7;
-  border-radius: 12px;
+  background: #FFFFFF;
+  border: 2px solid #151515;
+  border-radius: 0;
   margin-bottom: 1.5rem;
+  box-shadow: 4px 4px 0 #EAFF38;
 }
 .armador-config-item {
   min-width: 240px;
 }
 .armador-config-helper {
   font-size: 0.82rem;
-  color: #666;
+  color: #707073;
   margin: 0.1rem 0 0 0;
   line-height: 1.4;
 }
@@ -1255,7 +1284,7 @@ input:checked + .slider:before {
   align-items: center;
   font-weight: 500;
   font-size: 0.95rem;
-  color: #191919;
+  color: #151515;
   margin-bottom: 0.4rem;
 }
 /* radioButtons inline más compactos */
@@ -1265,7 +1294,7 @@ input:checked + .slider:before {
 /* Nota aclaratoria del toggle t0/t1 (visible, no sólo en tooltip) */
 .armador-momento-nota {
   font-size: 0.82rem;
-  color: #595959;
+  color: #707073;
   margin: 0.35rem 0 0 0;
   line-height: 1.4;
 }
@@ -1273,6 +1302,8 @@ input:checked + .slider:before {
 /* ----- Card de filtros ----- */
 .armador-filtros-card {
   margin-bottom: 1.25rem;
+  border: 2px solid #151515 !important;
+  border-radius: 0 !important;
 }
 
 /* Grupos temáticos de filtros (Período / Personas / Situación laboral) */
@@ -1287,51 +1318,52 @@ input:checked + .slider:before {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: #405BFF;
+  color: #447099;
   margin: 0 0 0.6rem 0;
   padding-bottom: 0.3rem;
-  border-bottom: 1px solid rgba(64, 91, 255, 0.15);
+  border-bottom: 2px solid #151515;
 }
 .armador-grupo-nota {
   font-weight: 400;
   text-transform: none;
   letter-spacing: 0;
-  color: #595959;
+  color: #707073;
   font-size: 0.9em;
   margin-left: 0.4rem;
 }
 .armador-filtro .control-label {
   font-weight: 600;
   font-size: 0.92rem;
-  color: #191919;
+  color: #151515;
 }
 .armador-filtros-nota {
   font-size: 0.82rem;
-  color: #666;
+  color: #707073;
   margin: 0.5rem 0 0 0;
   font-style: italic;
 }
 
 /* ----- Resumen en lenguaje natural de la selección ----- */
 .armador-frase {
-  background: #F0F3FF;
-  border-left: 4px solid #405BFF;
-  border-radius: 8px;
+  background: #FFFFFF;
+  border: 2px solid #151515;
+  border-radius: 0;
   padding: 0.7rem 1rem;
   margin: 1rem 0 0.25rem 0;
   line-height: 1.5;
+  box-shadow: 4px 4px 0 #EAFF38;
 }
 .armador-frase-icon {
-  color: #405BFF;
+  color: #447099;
   margin-right: 0.4rem;
   opacity: 0.7;
 }
 .armador-frase-label {
   font-weight: 600;
-  color: #191919;
+  color: #151515;
 }
 .armador-frase-texto {
-  color: #2A2A2A;
+  color: #404041;
 }
 
 /* ----- Advertencia metodológica en el punto de descarga ----- */
@@ -1339,21 +1371,21 @@ input:checked + .slider:before {
   display: flex;
   align-items: baseline;
   gap: 0.5rem;
-  background: #FFFBEB;
-  border: 1px solid #FDE68A;
-  border-left: 4px solid #B45309;
-  border-radius: 8px;
+  background: #FFFFFF;
+  border: 2px solid #151515;
+  border-left: 4px solid #EE6331;
+  border-radius: 0;
   padding: 0.7rem 1rem;
   margin-bottom: 1rem;
   font-size: 0.9rem;
-  color: #5C4400;
+  color: #404041;
 }
 .armador-aviso-descarga .fa,
 .armador-aviso-descarga .fas {
-  color: #B45309;
+  color: #EE6331;
 }
 .armador-aviso-link {
-  color: #405BFF;
+  color: #447099;
   font-weight: 600;
   text-decoration: underline;
   cursor: pointer;
@@ -1364,7 +1396,7 @@ input:checked + .slider:before {
 .armador-frase-funnel {
   margin-top: 0.55rem;
   padding-top: 0.5rem;
-  border-top: 1px solid rgba(64, 91, 255, 0.18);
+  border-top: 2px solid #151515;
   font-size: 0.92rem;
 }
 .armador-funnel-row {
@@ -1375,16 +1407,16 @@ input:checked + .slider:before {
   padding: 0.15rem 0;
 }
 .armador-funnel-lbl {
-  color: #404040;
+  color: #404041;
 }
 .armador-funnel-val {
   font-weight: 700;
-  color: #191919;
+  color: #151515;
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 .armador-funnel-pct {
-  color: #405BFF;
+  color: #447099;
   font-weight: 600;
   white-space: nowrap;
   min-width: 11rem;
@@ -1393,13 +1425,13 @@ input:checked + .slider:before {
 .armador-funnel-row-final {
   margin-top: 0.2rem;
   padding-top: 0.35rem;
-  border-top: 1px dashed rgba(64, 91, 255, 0.25);
+  border-top: 2px dashed #151515;
 }
 .armador-funnel-row-final .armador-funnel-val {
-  color: #405BFF;
+  color: #447099;
 }
 .armador-frase-tip {
-  border-bottom: 1px dotted #405BFF;
+  border-bottom: 2px dotted #447099;
   cursor: help;
 }
 
@@ -1408,18 +1440,18 @@ input:checked + .slider:before {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  border: 1px solid #FDE68A;
-  border-left: 4px solid #B45309;
-  border-radius: 8px;
-  background: #FFFBEB;
-  color: #5C4400;
+  border: 2px solid #151515;
+  border-left: 4px solid #EE6331;
+  border-radius: 0;
+  background: #FFFFFF;
+  color: #404041;
   padding: 0.6rem 0.9rem;
   font-size: 0.92rem;
   margin: 0.4rem 0 0 0;
 }
 .armador-warning .fa,
 .armador-warning .fas {
-  color: #B45309;
+  color: #EE6331;
 }
 
 /* ----- Formato de salida: con/sin etiquetas ----- */
@@ -1433,22 +1465,24 @@ input:checked + .slider:before {
 .armador-etiquetas .control-label {
   font-weight: 600;
   font-size: 0.92rem;
-  color: #191919;
+  color: #151515;
 }
 .armador-etiquetas-nota {
   font-size: 0.82rem;
-  color: #666;
+  color: #707073;
   font-style: italic;
 }
 
 /* ----- Preview ----- */
 .armador-preview-card {
   margin: 1.25rem 0;
+  border: 2px solid #151515 !important;
+  border-radius: 0 !important;
 }
 .armador-preview-sub {
   font-size: 0.82rem;
   font-weight: 400;
-  color: #595959;
+  color: #707073;
   margin-left: 0.5rem;
 }
 .armador-preview-scroll {
@@ -1475,7 +1509,7 @@ input:checked + .slider:before {
 .armador-descarga-titulo {
   font-weight: 600;
   font-size: 1rem;
-  color: #191919;
+  color: #151515;
   margin-bottom: 0.6rem;
 }
 .armador-descarga-botones {
@@ -1485,29 +1519,31 @@ input:checked + .slider:before {
 }
 .armador-descarga-extra {
   font-size: 0.88rem;
-  color: #555;
+  color: #707073;
   margin: 0.85rem 0 0 0;
 }
 .armador-descarga-extra a {
-  color: #405BFF;
+  color: #447099;
   font-weight: 600;
   text-decoration: none;
 }
 .armador-descarga-extra a:hover {
   text-decoration: underline;
+  color: #EE6331;
 }
 
-/* ----- Aviso informativo (variante azul del warning ámbar): subconjunto
+/* ----- Aviso informativo (variante blue del warning naranja): subconjunto
    grande → sugerir descarga directa (#87) ----- */
 .armador-warning-info {
-  border: 1px solid #C2CCFF;
-  border-left: 4px solid #405BFF;
-  background: #F4F6FF;
-  color: #29324D;
+  border: 2px solid #151515;
+  border-left: 4px solid #447099;
+  border-radius: 0;
+  background: #FFFFFF;
+  color: #404041;
 }
 .armador-warning-info .fa,
 .armador-warning-info .fas {
-  color: #405BFF;
+  color: #447099;
 }
 
 /* ----- Descarga directa del panel completo, sin filtros (#87) -----
@@ -1515,7 +1551,7 @@ input:checked + .slider:before {
 .armador-descarga-completo {
   margin-top: 1.5rem;
   padding-top: 1.25rem;
-  border-top: 1px solid rgba(25, 25, 25, 0.08);
+  border-top: 2px solid #151515;
 }
 .armador-descarga-completo-titulo {
   display: flex;
@@ -1523,37 +1559,37 @@ input:checked + .slider:before {
   gap: 0.45rem;
   font-weight: 600;
   font-size: 1rem;
-  color: #191919;
+  color: #151515;
   margin-bottom: 0.4rem;
 }
 .armador-descarga-completo-titulo .fa,
 .armador-descarga-completo-titulo .fas {
-  color: #405BFF;
+  color: #447099;
 }
 .armador-descarga-completo-desc {
   font-size: 0.9rem;
-  color: #555;
+  color: #707073;
   line-height: 1.45;
   margin-bottom: 0.75rem;
   max-width: 640px;
 }
 /* Jerarquía: la descarga del subconjunto filtrado es el flujo principal del
-   Armador (botones azul sólido). La descarga del panel completo es la
+   Armador (botones blue sólido). La descarga del panel completo es la
    alternativa, así que va en estilo secundario (outline) para distinguirla
    sin competir por atención. Rellena en hover. */
 .armador-descarga-completo .btn-descarga {
   background: #FFFFFF;
-  color: #405BFF !important;
-  border: 1.5px solid #405BFF;
+  color: #447099 !important;
+  border: 2px solid #151515;
 }
 .armador-descarga-completo .btn-descarga:hover {
-  background: #405BFF;
+  background: #447099;
   color: #FFFFFF !important;
-  box-shadow: 0 2px 8px rgba(64, 91, 255, 0.25);
+  transform: translateY(-4px);
+  box-shadow: 8px 8px 0 #EAFF38;
 }
 .armador-descarga-completo .btn-descarga .fa,
 .armador-descarga-completo .btn-descarga .fas,
 .armador-descarga-completo .btn-descarga .far {
   color: inherit;
 }
-
