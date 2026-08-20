@@ -1,28 +1,34 @@
 # _brand.yml · Estación R (proyecto: shiny_eph_panel)
-# Copia local sincronizada con la fuente de verdad:
-#   /Pablo/Estación R/Proyectos/_activos/identidad_visual/_brand.yml
-# Mantenerla sincronizada cuando cambie la guía central.
+# Sincronizado con el spec visual oficial:
+#   https://github.com/Estacion-R/estacion-r-branding/blob/main/_brand.yml
 #
-# Diferencias vs. la fuente:
-# - typography.fonts: solo Ubuntu (Google). Array se carga aparte vía CDN
-#   Fontshare en tags$head() para usarlo en .hero-title del H1 hero.
-# - logo.small/medium: rutas relativas a www/ (lo que sirve Shiny).
+# Paleta oficial de marca (NO la del curso).
 
 color:
   palette:
-    azul:       "#405BFF"
-    azul-dark:  "#1839F4"
-    amarillo:   "#EAFF38"
-    negro:      "#191919"
-    blanco:     "#FFFFFF"
-    gris-claro: "#F7F7F7"
+    white:     "#FFFFFF"
+    black:     "#151515"
+    blue:      "#447099"
+    orange:    "#EE6331"
+    green:     "#72994E"
+    teal:      "#419599"
+    burgundy:  "#9A4665"
+    secondary: "#707073"
+    tertiary:  "#C2C2C4"
+    dark:      "#404041"
+    amarillo:  "#EAFF38"   # acento web (sombras), no color oficial
 
-  foreground: negro
-  background: blanco
-  primary:    azul
-  secondary:  amarillo
-  dark:       negro
-  light:      gris-claro
+  foreground: black
+  background: white
+  primary:    blue
+  secondary:  secondary
+  tertiary:   tertiary
+  success:    green
+  info:       teal
+  warning:    orange
+  danger:     burgundy
+  light:      white
+  dark:       dark
 
 typography:
   fonts:
@@ -34,7 +40,7 @@ typography:
   headings: Ubuntu
 
   monospace-block:
-    color: "#1839F4"
+    color: "#447099"
 
 logo:
   small:  www/logos/isotipo_estacion_r.svg
