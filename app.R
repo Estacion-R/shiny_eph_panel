@@ -66,12 +66,11 @@ ui <- page_fillable(
   tags$head(
     tags$link(rel = "icon", type = "image/svg+xml",
               href = "logos/isotipo_estacion_r.svg"),
-    tags$link(rel = "stylesheet",
-              href = "https://api.fontshare.com/v2/css?f[]=array@400,600,700&display=swap"),
+    /* Array font CDN removed — spec visual oficial usa solo Ubuntu */
     tags$script(src = "reflow_charts.js")
   ),
   ga4_head_tag(),
-  useWaitress(color = "#405BFF"),
+  useWaitress(color = "#447099"),
   ### useWaiter() registra los handlers JS que necesitan los autoWaiter() de
   ### los módulos de análisis/calidad (spinners por-card). Sin esto, los
   ### autoWaiter() no muestran nada. useWaitress() es independiente (barra).
@@ -392,7 +391,7 @@ server <- function(input, output, session) {
         table.font.names = "Ubuntu, sans-serif",
         table.font.size = "0.9em",
         column_labels.font.weight = "600",
-        column_labels.background.color = "#F7F7F7"
+        column_labels.background.color = "#FFFFFF"
       ) |>
       gt::cols_width(
         Variable ~ gt::px(110),
