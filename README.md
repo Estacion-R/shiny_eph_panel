@@ -167,6 +167,6 @@ Si actualizás el microdato manualmente (sin esperar al cron), correr en orden l
 
 Datos: **EPH-INDEC**, base de datos abierta del Instituto Nacional de Estadística y Censos de la República Argentina.
 
-App: **Estación R** · Pablo Tiscornia · pablotiscornia@estacion-r.com
+App: **Estación R**
 
 Reportar issues, sugerencias o errores: https://github.com/Estacion-R/shiny_eph_panel/issues
