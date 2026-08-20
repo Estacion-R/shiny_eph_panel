@@ -66,7 +66,6 @@ ui <- page_fillable(
   tags$head(
     tags$link(rel = "icon", type = "image/svg+xml",
               href = "logos/isotipo_estacion_r.svg"),
-    /* Array font CDN removed — spec visual oficial usa solo Ubuntu */
     tags$script(src = "reflow_charts.js")
   ),
   ga4_head_tag(),
