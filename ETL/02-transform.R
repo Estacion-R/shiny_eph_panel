@@ -55,11 +55,7 @@ asset_url <- function(file) {
 }
 
 include_styles <- tags$head(
-  tags$link(rel = "stylesheet", type = "text/css", href = asset_url("style.css")),
-  tags$script(src = asset_url("script.js")),
-  tags$script(src = asset_url("highlight.min.js")),
-  tags$script("hljs.highlightAll();"),
-  tags$link(href = "a11y-dark.min.css", rel = "stylesheet")
+  tags$link(rel = "stylesheet", type = "text/css", href = asset_url("style.css"))
 )
 
 ### Helpers de UI: filtros tipo "Natural Language Query" donde los selectInput
