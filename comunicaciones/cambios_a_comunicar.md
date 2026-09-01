@@ -58,6 +58,34 @@
   LinkedIn (devs de R/Shiny, analistas sector público).
 - **Issue / commit:** issue #74 · branch `feat/hub-and-spoke-ux`.
 
+### 2026-08-07 · Incorporación de 2026-T1 (última base publicada por INDEC)
+
+- **Estado:** programado por Pablo para el martes 2026-08-11. Draft en
+  `2026-08-07_post_dato_actualizado.md`. **BLOQUEANTE:** el deploy del
+  2026-08-07 introdujo una regresión real (vista Foto en blanco por
+  default en todo análisis, detalle abajo). Fix listo y validado en
+  PR #95, pendiente de deploy con confirmación de Pablo. El post no debe
+  salir el martes si el fix no está deployado y re-verificado antes.
+- **Qué cambió:** el panel longitudinal pasa a cubrir 2003 → 2026-T1
+  (antes 2025-T4). Se actualizaron las 5 series históricas (condición de
+  actividad, categoría ocupacional, formalidad clásica y ampliada, calidad
+  de la muestra) y los parquets de runtime que alimentan Foto y Armador.
+  El dúo nuevo es 2025-T4 → 2026-T1.
+- **Valor para el usuario:** es un post "activador", no de feature nueva —
+  la excusa es recordar que la app existe y está al día con la última
+  base de microdatos, no que haya algo nuevo para aprender a usar.
+- **Ángulo de copy:** *"la app se actualiza sola cada vez que el INDEC
+  publica una nueva base"* como refuerzo de confianza, sin entrar en
+  detalle técnico. Ejemplo de uso: desocupados de fines de 2025 que
+  consiguieron trabajo en los primeros meses de 2026.
+- **Asset visual:** screenshot de la Foto con el dúo 2025-T4 → 2026-T1
+  seleccionado (pendiente de captura, y solo después del fix — ahora la
+  Foto no renderiza nada por default). Alternativa simple: el hub.
+- **Audiencia prioritaria:** LinkedIn (pedido explícito, 2026-08-07).
+- **Issue / commit:** PR #94 (datos) · deploy `deploy_shinyapps.yml` run
+  31208846519 · PR #95 (fix de la regresión de la vista Foto, pendiente
+  de deploy).
+
 ---
 
 ## Publicados

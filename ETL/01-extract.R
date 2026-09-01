@@ -148,11 +148,31 @@ periodos_disponibles <- dplyr::bind_rows(periodos_disponibles_t0,
                                          periodos_disponibles_t1) |>
   dplyr::distinct() |>
   dplyr::arrange(ANO4, TRIMESTRE)
-rm(periodos_disponibles_t0, periodos_disponibles_t1)
 
 anios_disponibles <- sort(unique(periodos_disponibles$ANO4))
 anio_max_disponible <- max(anios_disponibles)
 
+### El último duo COMPLETO (t0 con su t1 correspondiente) no es lo mismo
+### que anio_max_disponible/anios_disponibles, que salen de la UNIÓN de
+### t0 y t1. Cuando INDEC publica el T1 de un año nuevo, ese trimestre
+### entra a periodos_disponibles como t1 del dúo 2025-T4→2026-T1, así que
+### anio_max_disponible pasa a ser 2026 aunque 2026 todavía no tenga
+### ningún dúo propio (le falta el T2 para completar "1-2"). Como el
+### default de los selectores año/trimestre en mod_analisis.R (Foto y
+### Comparar) usaba anio_max_disponible + trimestre fijo "1-2", la vista
+### de aterrizaje quedaba armando un panel con un t1 inexistente y no
+### renderizaba nada. Bug real detectado el 2026-08-08, primera vez que
+### el cron incorpora un año nuevo con un solo trimestre publicado.
+###
+### anio_max_con_duo/trim_max_con_duo son el t0 más reciente de
+### periodos_disponibles_t0: por construcción, todo t0 en el panel
+### runtime tiene su t1 pareado, así que siempre apuntan a un dúo válido.
+ultimo_duo_t0 <- periodos_disponibles_t0 |>
+  dplyr::arrange(dplyr::desc(ANO4), dplyr::desc(TRIMESTRE)) |>
+  dplyr::slice(1)
+anio_max_con_duo <- ultimo_duo_t0$ANO4
+trim_max_con_duo <- ultimo_duo_t0$TRIMESTRE
+rm(periodos_disponibles_t0, periodos_disponibles_t1, ultimo_duo_t0)
 
 ### Análogos para el panel ANUAL (issue #44). Derivamos periodos
 ### disponibles abriendo el parquet TEMPORALMENTE para extraer las
