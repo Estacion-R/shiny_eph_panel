@@ -152,10 +152,19 @@ test_that("módulo Calidad: KPI encontrado renderiza valor numérico válido", {
   app <- new_app("calidad_kpi")
   withr::defer(app$stop())
 
-  ### Shiny no renderiza outputs hasta que su UI es visible. Navegar al
-  ### nav_panel "Calidad de la muestra" via main_nav (bslib::navset_pill_list)
-  ### dispara el render del módulo calidad.
-  app$set_inputs(main_nav = "Calidad de la muestra")
+  ### Shiny no renderiza outputs hasta que su UI es visible. El rediseño
+  ### hub-and-spoke (6dbc7c9, 2026-05-14) eliminó el navset con input
+  ### main_nav: set_inputs sobre un input inexistente es un no-op, el
+  ### módulo nunca se renderizaba y calidad-kpi_encontrado quedaba en
+  ### NULL (issue #101, 8+ semanas de E2E en rojo). Se navega como el
+  ### flujo real: go_panel abre la vista "panel" desde el hub y
+  ### go_sub_calidad (actionLink del sidebar de subsecciones) cambia a
+  ### la subsección Calidad. Mismo mecanismo que los tests del Armador.
+  app$click("go_panel")
+  app$wait_for_idle(timeout = 10000)
+  expect_equal(app$get_value(output = "current_view"), "panel")
+
+  app$click("go_sub_calidad")
   app$wait_for_idle(timeout = 10000)
 
   vals <- app$get_values()
