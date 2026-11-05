@@ -892,3 +892,14 @@ Inactivo_t0,Inactivo_t1,88,Inactivo_t0 - Inactivo_t1,t_anterior,Inactivo,2025_t4
 Inactivo_t0,Desocupado_t1,3.4,Inactivo_t0 - Desocupado_t1,t_anterior,Inactivo,2025_t4-t1
 Inactivo_t0,Ocupado_t1,8.3,Inactivo_t0 - Ocupado_t1,t_anterior,Inactivo,2025_t4-t1
 Inactivo_t0,Trab_familiar_t1,0.2,Inactivo_t0 - Trab_familiar_t1,t_anterior,Inactivo,2025_t4-t1
+Ocupado_t0,Ocupado_t1,87.7,Ocupado_t0 - Ocupado_t1,t_anterior,Ocupado,2026_t1-t2
+Ocupado_t0,Inactivo_t1,8.6,Ocupado_t0 - Inactivo_t1,t_anterior,Ocupado,2026_t1-t2
+Ocupado_t0,Desocupado_t1,3.8,Ocupado_t0 - Desocupado_t1,t_anterior,Ocupado,2026_t1-t2
+Desocupado_t0,Inactivo_t1,23.2,Desocupado_t0 - Inactivo_t1,t_anterior,Desocupado,2026_t1-t2
+Desocupado_t0,Desocupado_t1,29,Desocupado_t0 - Desocupado_t1,t_anterior,Desocupado,2026_t1-t2
+Desocupado_t0,Ocupado_t1,47.8,Desocupado_t0 - Ocupado_t1,t_anterior,Desocupado,2026_t1-t2
+Desocupado_t0,Trab_familiar_t1,0,Desocupado_t0 - Trab_familiar_t1,t_anterior,Desocupado,2026_t1-t2
+Inactivo_t0,Inactivo_t1,88.4,Inactivo_t0 - Inactivo_t1,t_anterior,Inactivo,2026_t1-t2
+Inactivo_t0,Ocupado_t1,8,Inactivo_t0 - Ocupado_t1,t_anterior,Inactivo,2026_t1-t2
+Inactivo_t0,Trab_familiar_t1,0.4,Inactivo_t0 - Trab_familiar_t1,t_anterior,Inactivo,2026_t1-t2
+Inactivo_t0,Desocupado_t1,3.2,Inactivo_t0 - Desocupado_t1,t_anterior,Inactivo,2026_t1-t2
